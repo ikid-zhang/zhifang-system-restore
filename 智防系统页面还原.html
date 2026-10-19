@@ -72,8 +72,12 @@ a{color:var(--blue);text-decoration:none}
 .panel-bd{padding:14px 16px}
 .pop-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:14px}
 .pop-overview{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:hidden}
-.po-hd{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--txt);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.po-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:15px;font-weight:700;color:var(--txt);padding-bottom:10px;border-bottom:1px solid var(--line)}
 .po-hd::before{content:"";width:4px;height:15px;border-radius:2px;background:var(--blue)}
+.po-gender{display:flex;gap:12px}
+.pg-item{text-align:right;line-height:1.4}
+.pg-item b{display:block;font-size:14px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums}
+.pg-item span{font-size:11px;color:var(--txt2)}
 .po-total{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0 10px;text-align:center}
 .po-total .po-v{font-size:26px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums}
 .po-total .po-l{font-size:12px;color:var(--txt2);margin-top:2px}
@@ -242,7 +246,7 @@ table.grid tr:hover td{background:#f7faff}
   .pop-grid{grid-template-columns:1.1fr 1fr 1fr 1fr}
   .pop-grid .pop-overview{grid-row:1/3}
   .pop-grid .pop-flowtop{grid-row:1/3}
-  .data-row.pop-data{grid-template-columns:130px 1fr}
+  .data-row.pop-data{grid-template-columns:220px 1fr}
   .sc-kpis{grid-template-columns:repeat(10,1fr);gap:8px}
   .sc-kpi{padding:8px 6px}
   .sc-kpi .n{font-size:16px}
@@ -642,12 +646,17 @@ table.grid tr:hover td{background:#f7faff}
 
       <div class="pop-grid">
         <div class="pop-overview">
-          <div class="po-hd">实有人口</div>
+          <div class="po-hd">
+            <span>实有人口</span>
+            <div class="po-gender">
+              <div class="pg-item"><b>166,445</b><span>男性 60.9%</span></div>
+              <div class="pg-item"><b>107,005</b><span>女性 39.1%</span></div>
+            </div>
+          </div>
           <div class="po-total">
             <div><div class="po-v">345,557</div><div class="po-l">实有人口总数</div></div>
             <div><div class="po-v">273,835</div><div class="po-l">去重后总数</div></div>
           </div>
-          <div class="po-sex"><b>男性 166,445</b> 60.9% &nbsp;·&nbsp; <b>女性 107,005</b> 39.1%</div>
           <div class="po-trend">
             <div><b>896</b><span>昨</span><i>同比 +18.5%</i><i>环比 +18.4%</i></div>
             <div><b>519</b><span>今</span><i>同比 +15.8%</i><i>环比 +42.1%</i></div>
@@ -657,15 +666,15 @@ table.grid tr:hover td{background:#f7faff}
           <div class="po-cols">
             <div class="po-col">
               <div class="pc-t">从业人员</div>
+              <div class="chart-light" id="po_worker" style="height:110px"></div>
               <div class="pc-v">77,274</div>
-              <div class="pc-p">65.1%</div>
-              <div class="pc-g">男65.1% 女34.9%</div>
+              <div class="pc-g">男65.1% · 女34.9%</div>
             </div>
             <div class="po-col">
-              <div class="pc-t">居住人员 210,097 · 未关联房屋</div>
-              <div class="pc-v">135,460</div>
-              <div class="pc-p">53.1%</div>
-              <div class="pc-g">男53.1% 女46.9%</div>
+              <div class="pc-t">居住人员</div>
+              <div class="chart-light" id="po_resident" style="height:110px"></div>
+              <div class="pc-v">210,097</div>
+              <div class="pc-g">男53.1% · 女46.9%</div>
             </div>
           </div>
           <div class="po-3col">
@@ -684,6 +693,12 @@ table.grid tr:hover td{background:#f7faff}
       <div class="data-row pop-data">
         <div class="tree">
           <div class="tree-hd">行政区划</div>
+          <div class="tree-search">
+            <input type="text" placeholder="输入行政区划名称">
+            <button class="btn primary" data-op="演示：查询">查询</button>
+            <button class="btn" data-op="演示：重置">重置</button>
+            <button class="btn" data-op="演示：刷新">刷新</button>
+          </div>
           <div class="tree-item active" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>全部</div>
           <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>甲区</div>
           <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>乙县</div>
@@ -1116,6 +1131,26 @@ CHART_DEFS.population=[
     labelLine:{length:12,length2:8,lineStyle:{color:'#c9d6ee'}},
     itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
   }]
+}},
+{id:'po_worker',option:{
+  tooltip:{formatter:'{b}：{c}%'},
+  series:[{type:'pie',radius:['40%','68%'],center:['50%','46%'],
+    data:[
+      {value:65.1,name:'男',itemStyle:{color:'#2f6fed'}},
+      {value:34.9,name:'女',itemStyle:{color:'#36b8ff'}}
+    ],
+    label:{show:false},labelLine:{show:false},itemStyle:{borderColor:'#fff',borderWidth:1}}
+  ]
+}},
+{id:'po_resident',option:{
+  tooltip:{formatter:'{b}：{c}%'},
+  series:[{type:'pie',radius:['40%','68%'],center:['50%','46%'],
+    data:[
+      {value:53.1,name:'男',itemStyle:{color:'#2f6fed'}},
+      {value:46.9,name:'女',itemStyle:{color:'#36b8ff'}}
+    ],
+    label:{show:false},labelLine:{show:false},itemStyle:{borderColor:'#fff',borderWidth:1}}
+  ]
 }}
 ];
 
