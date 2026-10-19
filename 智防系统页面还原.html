@@ -236,9 +236,10 @@ table.grid tr:hover td{background:#f7faff}
   .main{margin-left:var(--nav-w)}
   .topbar{padding:0 20px}
   .content{padding:16px 20px}
-  .pop-grid{grid-template-columns:21% 1fr 1fr 1fr}
+  .pop-grid{grid-template-columns:1.1fr 1fr 1fr 1fr}
   .pop-grid .pop-overview{grid-row:1/3}
   .pop-grid .pop-flowtop{grid-row:1/3}
+  .data-row.pop-data{grid-template-columns:130px 1fr}
   .sc-kpis{grid-template-columns:repeat(10,1fr);gap:8px}
   .sc-kpi{padding:8px 6px}
   .sc-kpi .n{font-size:16px}
@@ -661,12 +662,12 @@ table.grid tr:hover td{background:#f7faff}
         </div>
         <div class="panel"><div class="panel-hd">按辖区统计实有人口情况分析（单位：人）</div><div class="panel-bd"><div class="chart-light" id="pop_area" style="height:280px"></div></div></div>
         <div class="panel"><div class="panel-hd">按年龄段统计实有人口分布</div><div class="panel-bd"><div class="chart-light" id="pop_age" style="height:280px"></div></div></div>
-        <div class="panel pop-flowtop"><div class="panel-hd">流动人口来源地排名 TOP20（本省外市及外省）</div><div class="panel-bd"><div class="chart-light" id="pop_flowtop" style="height:480px"></div></div></div>
+        <div class="panel pop-flowtop"><div class="panel-hd">流动人口来源地排名 TOP20（本省外市及外省）</div><div class="panel-bd"><div class="chart-light" id="pop_flowtop" style="height:520px"></div></div></div>
         <div class="panel"><div class="panel-hd">按辖区统计流动人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_flowarea" style="height:240px"></div></div></div>
         <div class="panel"><div class="panel-hd">按实有人口类型统计实有人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_type" style="height:240px"></div></div></div>
       </div>
 
-      <div class="data-row">
+      <div class="data-row pop-data">
         <div class="tree">
           <div class="tree-hd">行政区划</div>
           <div class="tree-item active" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>全部</div>
