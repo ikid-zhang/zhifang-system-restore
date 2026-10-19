@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>智防系统 · 页面还原（林芝市公安局治安管理支队）</title>
+<title>智防系统 · 页面还原（示例市公安局治安管理支队）</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231d4d8f' d='M12 2 3.5 5.5v5.2c0 5 3.4 9.6 8.5 11.3 5.1-1.7 8.5-6.3 8.5-11.3V5.5L12 2z'/%3E%3Cpath fill='%23fff' d='M11 6h2v6h-2zM11 14h2v2h-2z'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
@@ -277,7 +277,7 @@ table.grid tr:hover td{background:#f7faff}
     <div class="nav-item" data-toast><span class="dot"></span>芯党建</div>
     <div class="nav-item" data-toast><span class="dot"></span>拜访记录</div>
   </nav>
-  <div class="side-foot">林芝市公安局治安管理支队<br>2026 · 需求原型还原</div>
+  <div class="side-foot">示例市公安局治安管理支队<br>2026 · 需求原型还原</div>
 </aside>
 
 <!-- ============ 主区 ============ -->
@@ -289,8 +289,8 @@ table.grid tr:hover td{background:#f7faff}
     <div class="top-right">
       <div class="user-avatar">童</div>
       <div class="user-box">
-        <div class="u-name">童鹏(403031)</div>
-        <div class="u-org">林芝市公安局治安管理支队</div>
+        <div class="u-name">演示用户(000000)</div>
+        <div class="u-org">示例市公安局治安管理支队</div>
       </div>
       <button class="power-btn" data-toast title="退出登录"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 12V3"/></svg></button>
     </div>
@@ -633,13 +633,13 @@ table.grid tr:hover td{background:#f7faff}
         <div class="tree">
           <div class="tree-hd">行政区划</div>
           <div class="tree-item active" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>全部</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>巴宜区</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>工布江达县</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>墨脱县</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>波密县</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>察隅县</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>朗县</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>米林市</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>甲区</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>乙县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>丙县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>丁县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>戊县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>己县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>庚市</div>
         </div>
         <div class="panel" style="min-width:0">
           <div class="filter-bar">
@@ -660,10 +660,10 @@ table.grid tr:hover td{background:#f7faff}
               <colgroup><col style="width:5%"><col style="width:9%"><col style="width:16%"><col style="width:30%"><col style="width:9%"><col style="width:9%"><col style="width:13%"><col style="width:9%"></colgroup>
               <thead><tr><th>序号</th><th>姓名</th><th>证件号码</th><th>居住地址</th><th>人口类型</th><th>是否常住</th><th>管辖单位</th><th>操作</th></tr></thead>
               <tbody>
-                <tr><td>1</td><td>陈兴胜</td><td>5110231972112445…</td><td>西藏自治区林芝市墨脱县汗密工区6号</td><td><span class="tag">跨省流入</span></td><td>是</td><td>汗密警务室（拉格点位）</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
-                <tr><td>2</td><td>普布次仁</td><td>5426221979010400…</td><td>西藏自治区林芝市工布江达县娘蒲乡尼木朗村3号附1号</td><td><span class="tag green">人户一致</span></td><td>是</td><td>第一警务区</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
-                <tr><td>3</td><td>胡爱珍</td><td>4209211988020155…</td><td>西藏自治区林芝市巴宜区广东东路332号1栋1单元3楼10号</td><td><span class="tag">跨省流入</span></td><td>是</td><td>大桥便民警务站</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
-                <tr><td>4</td><td>白玛嘎松</td><td>540424016102425…</td><td>西藏自治区林芝市波密县康玉乡达曲村46号</td><td><span class="tag green">人户一致</span></td><td>是</td><td>第一警务区</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
+                <tr><td>1</td><td>张示范</td><td>5110231972112445…</td><td>某省示例市丙县示范工区6号</td><td><span class="tag">跨省流入</span></td><td>是</td><td>示范警务室（示范点位）</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
+                <tr><td>2</td><td>李示范</td><td>5426221979010400…</td><td>某省示例市乙县示范乡示范村3号附1号</td><td><span class="tag green">人户一致</span></td><td>是</td><td>第一警务区</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
+                <tr><td>3</td><td>王示范</td><td>4209211988020155…</td><td>某省示例市甲区示范东路332号1栋1单元3楼10号</td><td><span class="tag">跨省流入</span></td><td>是</td><td>示范便民警务站</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
+                <tr><td>4</td><td>赵示范</td><td>540424016102425…</td><td>某省示例市丁县示范乡示范村46号</td><td><span class="tag green">人户一致</span></td><td>是</td><td>第一警务区</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -709,7 +709,7 @@ table.grid tr:hover td{background:#f7faff}
 
       <div class="panel">
         <div class="filter-bar fb-guard">
-          <span class="f-item">所属辖区<select><option>请选择</option><option>巴宜分局</option><option>察隅县公安局</option><option>墨脱县公安局</option></select></span>
+          <span class="f-item">所属辖区<select><option>请选择</option><option>甲分局</option><option>戊县公安局</option><option>丙县公安局</option></select></span>
           <span class="f-item">学校名称<input type="text" placeholder="请输入"></span>
           <span class="f-item">身份类型<select><option>请选择</option><option>治安民辅警</option><option>老师</option><option>学校保安</option></select></span>
           <span class="f-item">打卡状态<select><option>请选择</option><option>有效打卡</option><option>无效打卡</option><option>迟到打卡</option></select></span>
@@ -724,12 +724,12 @@ table.grid tr:hover td{background:#f7faff}
             <colgroup><col style="width:8%"><col style="width:14%"><col style="width:15%"><col style="width:7%"><col style="width:9%"><col style="width:16%"><col style="width:11%"><col style="width:13%"><col style="width:7%"></colgroup>
             <thead><tr><th>学校所属分局</th><th>学校所属派出所</th><th>学校名称</th><th>打卡人姓名</th><th>打卡人身份</th><th>打卡人身份证号码</th><th>打卡人联系电话</th><th>打卡时间</th><th>打卡状态</th></tr></thead>
             <tbody>
-              <tr><td>察隅县公安局</td><td>察隅县公安局治安管理大队</td><td>察隅县幼儿园</td><td>达瓦次仁</td><td>学校保安</td><td>542626********0019</td><td>135****4520</td><td>2026-10-15 17:21:25</td><td><span class="tag green">有效打卡</span></td></tr>
-              <tr><td>察隅县公安局</td><td>察隅县公安局治安管理大队</td><td>察隅县幼儿园</td><td>达瓦次仁</td><td>学校保安</td><td>542626********0019</td><td>135****4520</td><td>2026-10-15 17:21:24</td><td><span class="tag green">有效打卡</span></td></tr>
-              <tr><td>墨脱县公安局</td><td>墨脱县公安局加热萨乡派出所</td><td>墨脱县加热萨乡龙岗村幼儿园</td><td>达瓦</td><td>治安民辅警</td><td>542624********0516</td><td>183****7278</td><td>2026-10-15 17:21:21</td><td><span class="tag green">有效打卡</span></td></tr>
-              <tr><td>察隅县公安局</td><td>察隅县公安局治安管理大队</td><td>察隅县幼儿园</td><td>布左</td><td>学校保安</td><td>542626********0014</td><td>180****1889</td><td>2026-10-15 17:21:14</td><td><span class="tag green">有效打卡</span></td></tr>
-              <tr><td>墨脱县公安局</td><td>墨脱县公安局加热萨乡派出所</td><td>墨脱县加热萨乡龙岗村幼儿园</td><td>西洛</td><td>老师</td><td>542621********0627</td><td>188****8731</td><td>2026-10-15 17:19:55</td><td><span class="tag green">有效打卡</span></td></tr>
-              <tr><td>墨脱县公安局</td><td>墨脱县公安局加热萨乡派出所</td><td>墨脱县加热萨乡龙岗村幼儿园</td><td>西洛</td><td>老师</td><td>542621********0627</td><td>188****8731</td><td>2026-10-15 17:19:26</td><td><span class="tag green">有效打卡</span></td></tr>
+              <tr><td>戊县公安局</td><td>戊县公安局治安管理大队</td><td>戊县示范幼儿园</td><td>人员甲</td><td>学校保安</td><td>542626********0019</td><td>135****4520</td><td>2026-10-15 17:21:25</td><td><span class="tag green">有效打卡</span></td></tr>
+              <tr><td>戊县公安局</td><td>戊县公安局治安管理大队</td><td>戊县示范幼儿园</td><td>人员甲</td><td>学校保安</td><td>542626********0019</td><td>135****4520</td><td>2026-10-15 17:21:24</td><td><span class="tag green">有效打卡</span></td></tr>
+              <tr><td>丙县公安局</td><td>丙县公安局示范乡派出所</td><td>丙县示范幼儿园</td><td>人员乙</td><td>治安民辅警</td><td>542624********0516</td><td>183****7278</td><td>2026-10-15 17:21:21</td><td><span class="tag green">有效打卡</span></td></tr>
+              <tr><td>戊县公安局</td><td>戊县公安局治安管理大队</td><td>戊县示范幼儿园</td><td>人员丙</td><td>学校保安</td><td>542626********0014</td><td>180****1889</td><td>2026-10-15 17:21:14</td><td><span class="tag green">有效打卡</span></td></tr>
+              <tr><td>丙县公安局</td><td>丙县公安局示范乡派出所</td><td>丙县示范幼儿园</td><td>人员丁</td><td>老师</td><td>542621********0627</td><td>188****8731</td><td>2026-10-15 17:19:55</td><td><span class="tag green">有效打卡</span></td></tr>
+              <tr><td>丙县公安局</td><td>丙县公安局示范乡派出所</td><td>丙县示范幼儿园</td><td>人员丁</td><td>老师</td><td>542621********0627</td><td>188****8731</td><td>2026-10-15 17:19:26</td><td><span class="tag green">有效打卡</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -758,13 +758,13 @@ table.grid tr:hover td{background:#f7faff}
         <div class="tree">
           <div class="tree-hd">行政区划</div>
           <div class="tree-item active" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>全部</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>巴宜区</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>工布江达县</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>墨脱县</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>波密县</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>察隅县</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>朗县</div>
-          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>米林市</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>甲区</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>乙县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>丙县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>丁县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>戊县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>己县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>庚市</div>
         </div>
         <div class="panel" style="min-width:0">
           <div class="table-wrap">
@@ -772,12 +772,12 @@ table.grid tr:hover td{background:#f7faff}
               <colgroup><col style="width:26%"><col style="width:24%"><col style="width:30%"><col style="width:20%"></colgroup>
               <thead><tr><th>街路巷名称</th><th>行政区划</th><th>公安管辖</th><th>操作</th></tr></thead>
               <tbody>
-                <tr><td>里果荣中路</td><td>亚东村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
-                <tr><td>亚东二路</td><td>亚东村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
-                <tr><td>更章门巴民族乡扎曲村</td><td>扎曲村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
-                <tr><td>易贡乡江拉村</td><td>江拉村委会</td><td>第一警务室</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
-                <tr><td>松宗镇角通村</td><td>角通村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
-                <tr><td>八一镇巴吉村</td><td>巴吉村委会</td><td>工布商业城便民警务站</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>示范中路</td><td>示范村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>示范二路</td><td>示范村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>示范民族乡示范村</td><td>示范村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>示范乡示范村</td><td>江拉村委会</td><td>第一警务室</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>示范镇示范村</td><td>示范村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>八一镇巴吉村</td><td>巴吉村委会</td><td>工示范商业城便民警务站</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
                 <tr><td>鲁康德路</td><td>罗布村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
                 <tr><td>布如村</td><td>觉布如村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
                 <tr><td>结牧村2组结巴村</td><td>结牧村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
@@ -827,7 +827,7 @@ function buildWatermark(){
       d.className='wm-line';
       d.style.left=(c*360+30)+'px';
       d.style.top=(r*160+40)+'px';
-      d.innerHTML='严禁泄露公民个人信息和警务工作秘密<span class="wm-time">2026-10-15 16:14:40 · 治安管理支队 · 54221198403250036</span>';
+      d.innerHTML='严禁泄露公民个人信息和警务工作秘密<span class="wm-time">2026-10-15 16:14:40 · 治安管理支队 · 000000000000000000</span>';
       wm.appendChild(d);
     }
   }
@@ -994,7 +994,7 @@ CHART_DEFS.population=[
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return (v/1000).toFixed(1)+'k';}}),
   legend:{data:['男性','女性'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
   grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'category',data:['巴宜分局','米林市','波密县','雅下公安分局','工布江达县','察隅县','朗县','墨脱县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','庚市','丁县','辛公安分局','乙县','戊县','己县','丙县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
   yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
   series:[
     {name:'男性',type:'bar',data:[67400,34500,28400,32400,15860,16490,13200,1700],barWidth:7,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]}},
@@ -1028,7 +1028,7 @@ CHART_DEFS.population=[
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString();}}),
   legend:{data:['跨县','跨市','跨省'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
   grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'category',data:['巴宜分局','雅下公安分局','米林市','波密县','墨脱县','察隅县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','辛公安分局','庚市','丁县','丙县','戊县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
   yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
   series:[
     {name:'跨县',type:'bar',stack:'t',data:[5620,4320,318,45,12,30],barWidth:10,itemStyle:{color:'#2f6fed'}},
@@ -1072,7 +1072,7 @@ CHART_DEFS.guard=[{id:'gd_schoolstat',option:{
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'}}),
   legend:{data:['实际打卡','未使用打卡'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
   grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'category',data:['朗县公安局','巴宜分局','墨脱县公安局','波密县公安局','米林市公安局','工布江达县公安局','察隅县公安局'],axisLabel:{color:LIGHT.text,fontSize:10,interval:0,rotate:45}}),
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['己县公安局','甲分局','丙县公安局','丁县公安局','庚市公安局','乙县公安局','戊县公安局'],axisLabel:{color:LIGHT.text,fontSize:10,interval:0,rotate:45}}),
   yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10}}),
   series:[
     {name:'实际打卡',type:'bar',data:[6,13,5,11,8,4,16],barWidth:8,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]},
