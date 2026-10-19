@@ -84,9 +84,12 @@ a{color:var(--blue);text-decoration:none}
 .po-trend b{display:block;font-size:17px;font-weight:700;color:var(--txt);font-variant-numeric:tabular-nums}
 .po-trend span{font-size:11px;color:var(--txt2)}
 .po-trend i{display:block;font-style:normal;font-size:10px;color:var(--txt3);margin-top:1px}
-.po-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--txt);border-bottom:1px dashed #e8eef8;padding:7px 0}
-.po-row b{color:var(--blue-deep)}
-.po-row span{color:var(--txt3);font-size:11px}
+.po-cols{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+.po-col{background:#f6f9ff;border:1px solid #e4edfb;border-radius:8px;padding:10px 12px}
+.po-col .pc-t{font-size:12px;color:var(--txt);font-weight:600;line-height:1.5}
+.po-col .pc-v{font-size:22px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums;margin:4px 0 2px}
+.po-col .pc-p{font-size:13px;color:var(--txt2);font-weight:600}
+.po-col .pc-g{font-size:11px;color:var(--txt3);margin-top:2px}
 .po-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;text-align:center}
 .po-3col div{background:#f2f6fd;border-radius:8px;padding:8px 4px}
 .po-3col b{display:block;font-size:16px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums}
@@ -651,9 +654,20 @@ table.grid tr:hover td{background:#f7faff}
             <div><b>3,741</b><span>周</span><i>同比 +18.6%</i><i>环比 +6.3%</i></div>
             <div><b>9,607</b><span>月</span><i>同比 +32.1%</i><i>环比 +79.7%</i></div>
           </div>
-          <div class="po-row"><b>从业人员</b><span>77,274</span><span>男65.1% 女34.9%</span></div>
-          <div class="po-row"><b>居住人员</b><span>210,097</span><span>未关联房屋 135,460</span></div>
-          <div class="po-row" style="border-bottom:none"><span style="margin-left:auto">性别构成：男53.1% 女46.9%</span></div>
+          <div class="po-cols">
+            <div class="po-col">
+              <div class="pc-t">从业人员</div>
+              <div class="pc-v">77,274</div>
+              <div class="pc-p">65.1%</div>
+              <div class="pc-g">男65.1% 女34.9%</div>
+            </div>
+            <div class="po-col">
+              <div class="pc-t">居住人员 210,097 · 未关联房屋</div>
+              <div class="pc-v">135,460</div>
+              <div class="pc-p">53.1%</div>
+              <div class="pc-g">男53.1% 女46.9%</div>
+            </div>
+          </div>
           <div class="po-3col">
             <div><b>112,783</b><span>人户一致</span></div>
             <div><b>42,315</b><span>人户分离</span></div>
