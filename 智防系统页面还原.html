@@ -70,11 +70,27 @@ a{color:var(--blue);text-decoration:none}
 .panel-hd{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:15px;font-weight:700;color:var(--txt)}
 .panel-hd::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--blue)}
 .panel-bd{padding:14px 16px}
-.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.kpi-card{background:linear-gradient(180deg,#f6f9ff,#eef4fd);border:1px solid #dbe7fb;border-radius:10px;padding:12px;text-align:center}
-.kpi-card .kpi-num{font-size:24px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums;letter-spacing:.5px}
-.kpi-card .kpi-label{font-size:12px;color:var(--txt2);margin-top:2px}
-.kpi-card .kpi-sub{font-size:11px;color:var(--txt3);margin-top:2px}
+.pop-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:14px}
+.pop-overview{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:hidden}
+.po-hd{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--txt);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.po-hd::before{content:"";width:4px;height:15px;border-radius:2px;background:var(--blue)}
+.po-total{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0 10px;text-align:center}
+.po-total .po-v{font-size:26px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums}
+.po-total .po-l{font-size:12px;color:var(--txt2);margin-top:2px}
+.po-sex{font-size:12px;color:var(--txt);background:#f2f6fd;border-radius:8px;padding:8px 10px;margin-bottom:12px}
+.po-sex b{color:var(--blue-deep);font-weight:700}
+.po-trend{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;text-align:center}
+.po-trend div{background:#f6f9ff;border:1px solid #e4edfb;border-radius:8px;padding:6px 2px}
+.po-trend b{display:block;font-size:17px;font-weight:700;color:var(--txt);font-variant-numeric:tabular-nums}
+.po-trend span{font-size:11px;color:var(--txt2)}
+.po-trend i{display:block;font-style:normal;font-size:10px;color:var(--txt3);margin-top:1px}
+.po-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--txt);border-bottom:1px dashed #e8eef8;padding:7px 0}
+.po-row b{color:var(--blue-deep)}
+.po-row span{color:var(--txt3);font-size:11px}
+.po-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;text-align:center}
+.po-3col div{background:#f2f6fd;border-radius:8px;padding:8px 4px}
+.po-3col b{display:block;font-size:16px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums}
+.po-3col span{font-size:11px;color:var(--txt2)}
 /* 筛选栏 */
 .filter-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
 .filter-bar .f-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--txt2)}
@@ -220,7 +236,9 @@ table.grid tr:hover td{background:#f7faff}
   .main{margin-left:var(--nav-w)}
   .topbar{padding:0 20px}
   .content{padding:16px 20px}
-  .kpi-grid{grid-template-columns:repeat(5,1fr)}
+  .pop-grid{grid-template-columns:21% 1fr 1fr 1fr}
+  .pop-grid .pop-overview{grid-row:1/3}
+  .pop-grid .pop-flowtop{grid-row:1/3}
   .sc-kpis{grid-template-columns:repeat(10,1fr);gap:8px}
   .sc-kpi{padding:8px 6px}
   .sc-kpi .n{font-size:16px}
@@ -618,25 +636,34 @@ table.grid tr:hover td{background:#f7faff}
         <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span><span style="color:var(--txt)">实有人口管理</span>
       </div>
 
-      <div class="kpi-grid">
-        <div class="kpi-card"><div class="kpi-num">345,557</div><div class="kpi-label">实有人口总数</div><div class="kpi-sub">去重后总数 273,835</div></div>
-        <div class="kpi-card"><div class="kpi-num">166,445</div><div class="kpi-label">男性（60.9%）</div><div class="kpi-sub">女性 107,005（39.1%）</div></div>
-        <div class="kpi-card"><div class="kpi-num">896</div><div class="kpi-label">昨日新增</div><div class="kpi-sub">同比 +18.5% 环比 +18.4%</div></div>
-        <div class="kpi-card"><div class="kpi-num">519</div><div class="kpi-label">今日新增</div><div class="kpi-sub">同比 +15.8% 环比 +42.1%</div></div>
-        <div class="kpi-card"><div class="kpi-num">3,741</div><div class="kpi-label">本周新增</div><div class="kpi-sub">同比 +18.6% 环比 +6.3%</div></div>
-        <div class="kpi-card"><div class="kpi-num">9,607</div><div class="kpi-label">本月新增</div><div class="kpi-sub">同比 +32.1% 环比 +79.7%</div></div>
-        <div class="kpi-card"><div class="kpi-num">77,274</div><div class="kpi-label">从业人员</div><div class="kpi-sub">男65.1% 女34.9%</div></div>
-        <div class="kpi-card"><div class="kpi-num">210,097</div><div class="kpi-label">居住人员</div><div class="kpi-sub">未关联房屋 135,460 · 男53.1% 女46.9%</div></div>
-        <div class="kpi-card"><div class="kpi-num">112,783</div><div class="kpi-label">人户一致</div><div class="kpi-sub">人户分离 42,315 · 流动人口 178,868</div></div>
-        <div class="kpi-card"><div class="kpi-num">178,868</div><div class="kpi-label">流动人口</div><div class="kpi-sub">境外人口 4 人</div></div>
-      </div>
-
-      <div class="grid-pop-charts">
-        <div class="panel"><div class="panel-hd">按辖区统计实有人口情况分析（单位：人）</div><div class="panel-bd"><div class="chart-light" id="pop_area" style="height:300px"></div></div></div>
-        <div class="panel"><div class="panel-hd">按年龄段统计实有人口分布</div><div class="panel-bd"><div class="chart-light" id="pop_age" style="height:300px"></div></div></div>
-        <div class="panel"><div class="panel-hd">流动人口来源地排名 TOP20（本省外市及外省）</div><div class="panel-bd"><div class="chart-light" id="pop_flowtop" style="height:480px"></div></div></div>
-        <div class="panel"><div class="panel-hd">按辖区统计流动人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_flowarea" style="height:300px"></div></div></div>
-        <div class="panel"><div class="panel-hd">按实有人口类型统计实有人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_type" style="height:300px"></div></div></div>
+      <div class="pop-grid">
+        <div class="pop-overview">
+          <div class="po-hd">实有人口</div>
+          <div class="po-total">
+            <div><div class="po-v">345,557</div><div class="po-l">实有人口总数</div></div>
+            <div><div class="po-v">273,835</div><div class="po-l">去重后总数</div></div>
+          </div>
+          <div class="po-sex"><b>男性 166,445</b> 60.9% &nbsp;·&nbsp; <b>女性 107,005</b> 39.1%</div>
+          <div class="po-trend">
+            <div><b>896</b><span>昨</span><i>同比 +18.5%</i><i>环比 +18.4%</i></div>
+            <div><b>519</b><span>今</span><i>同比 +15.8%</i><i>环比 +42.1%</i></div>
+            <div><b>3,741</b><span>周</span><i>同比 +18.6%</i><i>环比 +6.3%</i></div>
+            <div><b>9,607</b><span>月</span><i>同比 +32.1%</i><i>环比 +79.7%</i></div>
+          </div>
+          <div class="po-row"><b>从业人员</b><span>77,274</span><span>男65.1% 女34.9%</span></div>
+          <div class="po-row"><b>居住人员</b><span>210,097</span><span>未关联房屋 135,460</span></div>
+          <div class="po-row" style="border-bottom:none"><span style="margin-left:auto">性别构成：男53.1% 女46.9%</span></div>
+          <div class="po-3col">
+            <div><b>112,783</b><span>人户一致</span></div>
+            <div><b>42,315</b><span>人户分离</span></div>
+            <div><b>178,868</b><span>流动人口</span></div>
+          </div>
+        </div>
+        <div class="panel"><div class="panel-hd">按辖区统计实有人口情况分析（单位：人）</div><div class="panel-bd"><div class="chart-light" id="pop_area" style="height:280px"></div></div></div>
+        <div class="panel"><div class="panel-hd">按年龄段统计实有人口分布</div><div class="panel-bd"><div class="chart-light" id="pop_age" style="height:280px"></div></div></div>
+        <div class="panel pop-flowtop"><div class="panel-hd">流动人口来源地排名 TOP20（本省外市及外省）</div><div class="panel-bd"><div class="chart-light" id="pop_flowtop" style="height:480px"></div></div></div>
+        <div class="panel"><div class="panel-hd">按辖区统计流动人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_flowarea" style="height:240px"></div></div></div>
+        <div class="panel"><div class="panel-hd">按实有人口类型统计实有人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_type" style="height:240px"></div></div></div>
       </div>
 
       <div class="data-row">
@@ -659,9 +686,10 @@ table.grid tr:hover td{background:#f7faff}
             <button class="btn" data-op="演示：刷新">刷新</button>
             <span style="color:var(--txt2);font-size:13px">证件号码</span>
             <input type="text" placeholder="请输入正确的证件号码" style="flex:1;min-width:180px">
-            <button class="btn" data-op="演示：搜索">搜索</button>
+            <button class="btn" data-op="演示：搜索" style="padding:0 10px;display:inline-flex;align-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
             <button class="btn primary" data-op="演示：境内人员新增">境内人员新增</button>
             <button class="btn" data-op="演示：境外人员新增">境外人员新增</button>
+            <button class="btn" data-op="演示：重置">重置</button>
             <button class="btn" data-op="演示：高级搜索">高级搜索</button>
             <button class="btn" data-op="演示：导出">导出</button>
           </div>
