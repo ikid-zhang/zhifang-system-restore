@@ -1154,13 +1154,13 @@ CHART_DEFS.population=[
 {id:'pop_flowarea',option:{
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString();}}),
   legend:{data:['跨县','跨市','跨省'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
-  grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','辛公安分局','庚市','丁县','丙县','戊县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
-  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
+  grid:{left:4,right:44,top:30,bottom:4,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['甲分局','辛公安分局','庚市','丁县','丙县','戊县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
   series:[
-    {name:'跨县',type:'bar',stack:'t',data:[8623,4320,318,45,12,30],barWidth:10,itemStyle:{color:'#2f6fed'}},
-    {name:'跨市',type:'bar',stack:'t',data:[17512,8740,462,58,16,42],barWidth:10,itemStyle:{color:'#36b8ff'}},
-    {name:'跨省',type:'bar',stack:'t',data:[53065,31143,27645,16287,169,46],barWidth:10,itemStyle:{color:'#7fb4ff'}}
+    {name:'跨县',type:'bar',stack:'t',data:[8623,4320,318,45,12,30],barWidth:14,itemStyle:{color:'#2f6fed'}},
+    {name:'跨市',type:'bar',stack:'t',data:[17512,8740,462,58,16,42],barWidth:14,itemStyle:{color:'#36b8ff'}},
+    {name:'跨省',type:'bar',stack:'t',data:[53065,31143,27645,16287,169,46],barWidth:14,itemStyle:{color:'#7fb4ff'}}
   ]
 }},
 {id:'pop_type_all',option:{
