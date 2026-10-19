@@ -56,7 +56,9 @@ a{color:var(--blue);text-decoration:none}
 .user-box .u-org{color:#8fb7ef;font-size:11px}
 .power-btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#a8c4ef;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none}
 .content{padding:14px;max-width:1760px;width:100%;margin:0 auto;overflow-x:hidden}
-.content.screen-mode{max-width:none}
+body:has(.content.screen-mode){background:#071a33}
+.content.screen-mode{max-width:none;padding:0}
+.content.screen-mode .screen-body{width:100%;min-height:calc(100vh - var(--top-h))}
 
 /* ============ 视图容器 ============ */
 .view{display:none}
