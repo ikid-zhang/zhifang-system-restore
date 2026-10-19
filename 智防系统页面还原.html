@@ -98,6 +98,9 @@ a{color:var(--blue);text-decoration:none}
 .po-3col div{background:#f2f6fd;border-radius:8px;padding:8px 4px}
 .po-3col b{display:block;font-size:16px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums}
 .po-3col span{font-size:11px;color:var(--txt2)}
+.f3-sec{margin-top:6px}
+.f3-sec-hd{font-size:12px;color:var(--txt);font-weight:600;padding:4px 2px 2px}
+.f3-cols{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
 /* 筛选栏 */
 .filter-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
 .filter-bar .f-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--txt2)}
@@ -689,7 +692,13 @@ table.grid tr:hover td{background:#f7faff}
         </div>
         <div class="panel"><div class="panel-hd">按辖区统计实有人口情况分析（单位：人）</div><div class="panel-bd"><div class="chart-light" id="pop_area" style="height:280px"></div></div></div>
         <div class="panel pop-age-all"><div class="panel-hd">按年龄段统计户籍与流动人口分布</div><div class="panel-bd"><div class="chart-light" id="pop_age_all" style="height:500px"></div></div></div>
-        <div class="panel pop-flowtop"><div class="panel-hd">流动人口来源地排名 TOP20（本省外市及外省）</div><div class="panel-bd"><div class="chart-light" id="pop_flowtop" style="height:700px"></div></div></div>
+        <div class="panel pop-flowtop"><div class="panel-hd">流动人口来源地排名 TOP20（本省外市及外省）</div><div class="panel-bd">
+          <div class="f3-sec"><div class="f3-sec-hd">外省流入（倒序）</div><div class="chart-light" id="pop_out" style="height:330px"></div></div>
+          <div class="f3-cols">
+            <div class="f3-sec"><div class="f3-sec-hd">省内流入</div><div class="chart-light" id="pop_in" style="height:150px"></div></div>
+            <div class="f3-sec"><div class="f3-sec-hd">市域内流动</div><div class="chart-light" id="pop_city" style="height:150px"></div></div>
+          </div>
+        </div></div>
         <div class="panel"><div class="panel-hd">按辖区统计流动人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_flowarea" style="height:240px"></div></div></div>
         <div class="panel pop-type-all"><div class="panel-hd">户籍与流动人口类型分布</div><div class="panel-bd"><div class="chart-light" id="pop_type_all" style="height:230px"></div></div></div>
       </div>
@@ -1079,27 +1088,65 @@ CHART_DEFS.population=[
   ]
 }},
 {id:'pop_age_all',option:{
-  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+'%';}}),
-  legend:{data:['户籍人口','流动人口'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
-  grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'category',data:['0-10','11-20','21-30','31-40','41-50','51-60','61-70','71-80','80+'],axisLabel:{color:LIGHT.text,fontSize:11}}),
-  yAxis:Object.assign(lightAxis(),{type:'value',max:16,splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:'{value}%'}}),
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return Math.abs(v)+'%';}}),
+  legend:{data:['户籍男','流动男','户籍女','流动女'],textStyle:{color:LIGHT.legendText,fontSize:10.5},top:0,right:0,itemWidth:12,itemHeight:8},
+  grid:{left:4,right:4,top:30,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'value',max:12,splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return Math.abs(v)+'%';}}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['0-10','11-20','21-30','31-40','41-50','51-60','61-70','71-80','80+'],axisLabel:{color:LIGHT.text,fontSize:11}}),
   series:[
-    {name:'户籍人口',type:'bar',data:[2.1,3.8,7.8,11.3,9.0,7.3,2.1,0.7,0.3],barWidth:8,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]}},
-    {name:'流动人口',type:'bar',data:[2.5,4.5,9.7,14.0,11.5,9.3,2.8,1.1,0.3],barWidth:8,itemStyle:{color:'#17c39a',borderRadius:[3,3,0,0]}}
+    {name:'户籍男',type:'bar',data:[-1.1,-2.0,-4.6,-7.2,-6.0,-5.0,-1.1,-0.3,-0.1],barWidth:6,itemStyle:{color:'#2f6fed',borderRadius:[3,0,0,3]}},
+    {name:'流动男',type:'bar',data:[-1.3,-2.4,-5.7,-9.0,-7.6,-6.4,-1.5,-0.5,-0.1],barWidth:6,itemStyle:{color:'#17c39a',borderRadius:[3,0,0,3]},
+      label:{show:true,position:'left',color:'#17c39a',fontSize:9,formatter:function(p){return Math.abs(p.value)+'%';}}},
+    {name:'户籍女',type:'bar',data:[1.0,1.8,3.2,4.1,3.0,2.3,1.0,0.4,0.2],barWidth:6,itemStyle:{color:'#8fb4ff',borderRadius:[0,3,3,0]}},
+    {name:'流动女',type:'bar',data:[1.2,2.1,4.0,5.0,3.9,2.9,1.3,0.6,0.2],barWidth:6,itemStyle:{color:'#9be8c8',borderRadius:[0,3,3,0]},
+      label:{show:true,position:'right',color:'#9be8c8',fontSize:9,formatter:'{c}%'}}
   ]
 }},
-{id:'pop_flowtop',option:{
+{id:'pop_out',option:{
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString();}}),
-  grid:{left:4,right:40,top:6,bottom:0,containLabel:true},
+  grid:{left:4,right:40,top:4,bottom:0,containLabel:true},
   xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}}}),
   yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
-    data:['四川','云南','重庆','河南','昌都','甘肃','陕西','湖北','贵州','泉州','湖南','青海','拉萨','日喀则','山东','西藏','河北','山南','安徽','山西'],
-    axisLabel:{color:LIGHT.text,fontSize:11}}),
-  series:[{name:'流动人口',type:'bar',data:[55300,14553,9933,8689,8081,7053,6058,5735,5505,4681,3370,3340,3160,2770,2170,2130,2100,2090,2010,2010],
+    data:['四川','云南','重庆','河南','甘肃','陕西','湖北','贵州','湖南','青海','山东','河北','安徽','山西'],
+    axisLabel:{color:LIGHT.text,fontSize:10.5}}),
+  series:[{name:'外省流入',type:'bar',data:[55300,14553,9933,8689,7053,6058,5735,5505,3370,3340,2170,2100,2010,2010],
     barWidth:9,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
-    label:{show:true,position:'right',color:'#2f6fed',fontSize:10,formatter:function(p){return p.value.toLocaleString();}}}
+    label:{show:true,position:'right',color:'#2f6fed',fontSize:9,formatter:function(p){return p.value.toLocaleString();}}}
   ]
+}},
+{id:'pop_in',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 人（{d}%）'}),
+  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10},itemWidth:8,itemHeight:8},
+  series:[{
+    type:'pie',radius:['42%','66%'],center:['50%','42%'],
+    data:[
+      {value:8081,name:'昌都',itemStyle:{color:'#2f6fed'}},
+      {value:3160,name:'拉萨',itemStyle:{color:'#36b8ff'}},
+      {value:2770,name:'日喀则',itemStyle:{color:'#7fb4ff'}},
+      {value:2090,name:'山南',itemStyle:{color:'#b9d4ff'}}
+    ],
+    label:{show:true,formatter:'{b}\\n{d}%',color:LIGHT.text,fontSize:9.5},
+    labelLine:{length:8,length2:4,lineStyle:{color:'#c9d6ee'}},
+    itemStyle:{borderRadius:3,borderColor:'#fff',borderWidth:1.5}
+  }]
+}},
+{id:'pop_city',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 人（{d}%）'}),
+  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10},itemWidth:8,itemHeight:8},
+  series:[{
+    type:'pie',radius:['42%','66%'],center:['50%','42%'],
+    data:[
+      {value:8623,name:'巴宜',itemStyle:{color:'#17c39a'}},
+      {value:4320,name:'雅下',itemStyle:{color:'#2ee6a8'}},
+      {value:318,name:'米林',itemStyle:{color:'#9be8c8'}},
+      {value:45,name:'波密',itemStyle:{color:'#ffb03a'}},
+      {value:12,name:'墨脱',itemStyle:{color:'#ffd18a'}},
+      {value:30,name:'察隅',itemStyle:{color:'#c9d6ee'}}
+    ],
+    label:{show:true,formatter:'{b}\\n{d}%',color:LIGHT.text,fontSize:9.5},
+    labelLine:{length:8,length2:4,lineStyle:{color:'#c9d6ee'}},
+    itemStyle:{borderRadius:3,borderColor:'#fff',borderWidth:1.5}
+  }]
 }},
 {id:'pop_flowarea',option:{
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString();}}),
