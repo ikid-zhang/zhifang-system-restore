@@ -69,12 +69,12 @@ body:has(.content.screen-mode){background:#071a33}
 .breadcrumb .crumb-link{color:var(--blue);cursor:pointer}
 .breadcrumb .tab-tag{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:3px 10px;color:var(--txt);font-size:13px;box-shadow:0 1px 3px rgba(15,50,120,.06)}
 .breadcrumb .tab-tag .close-x{color:var(--txt3);cursor:pointer;font-size:12px}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 4px rgba(15,50,120,.05);margin-bottom:14px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 2px rgba(15,50,120,.04),0 6px 16px -4px rgba(15,50,120,.08),0 18px 40px -16px rgba(15,50,120,.10);margin-bottom:14px}
 .panel-hd{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:15px;font-weight:700;color:var(--txt)}
 .panel-hd::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--blue)}
 .panel-bd{padding:14px 16px}
 .pop-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:14px}
-.pop-overview{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:hidden}
+.pop-overview{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:hidden;box-shadow:0 1px 2px rgba(15,50,120,.04),0 6px 16px -4px rgba(15,50,120,.08),0 18px 40px -16px rgba(15,50,120,.10)}
 .po-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:15px;font-weight:700;color:var(--txt);padding-bottom:10px;border-bottom:1px solid var(--line)}
 .po-hd::before{content:"";width:4px;height:15px;border-radius:2px;background:var(--blue)}
 .po-gender{display:flex;gap:12px}
@@ -334,7 +334,7 @@ table.grid tr:hover td{background:#f7faff}
     <section class="view screen-body active" id="view-home1">
       <div class="sc-kpis">
         <div class="sc-kpi"><div class="n">323,930</div><div class="t">标准地址</div></div>
-        <div class="sc-kpi"><div class="n">345,664</div><div class="t">实有人口</div></div>
+        <div class="sc-kpi"><div class="n">345,557</div><div class="t">实有人口</div></div>
         <div class="sc-kpi"><div class="n">75,248</div><div class="t">实有房屋</div></div>
         <div class="sc-kpi"><div class="n">19,193</div><div class="t">实有单位</div></div>
         <div class="sc-kpi"><div class="n">77,368</div><div class="t">从业人员</div></div>
@@ -730,8 +730,8 @@ table.grid tr:hover td{background:#f7faff}
           <div class="po-hd">
             <span>实有人口</span>
             <div class="po-gender">
-              <div class="pg-item"><b>166,445</b><span>男性 60.9%</span></div>
-              <div class="pg-item"><b>107,005</b><span>女性 39.1%</span></div>
+              <div class="pg-item"><b>166,445</b><span>男性 60.8%</span></div>
+              <div class="pg-item"><b>107,390</b><span>女性 39.2%</span></div>
             </div>
           </div>
           <div class="po-total">
@@ -1376,7 +1376,7 @@ CHART_DEFS.guard=[{id:'gd_school',option:{
   grid:{left:4,right:44,top:6,bottom:0,containLabel:true},
   xAxis:Object.assign(lightAxis(),{type:'value',max:100,splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:'{value}%'}}),
   yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
-    data:['乙县公安局','丁县公安局','戊县公安局','甲分局','己县公安局','庚市公安局','丙县公安局'],axisLabel:{color:LIGHT.text,fontSize:10}}),
+    data:['乙区','丁区','戊区','甲区','丙区','己区','庚市'],axisLabel:{color:LIGHT.text,fontSize:10}}),
   series:[{name:'有效打卡率',type:'bar',data:[44.4,44.0,41.0,40.6,37.5,26.7,18.5],barWidth:12,
     itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
     label:{show:true,position:'right',color:'#2f6fed',fontSize:10,formatter:function(p){return p.value+'%';}}}
@@ -1422,7 +1422,7 @@ CHART_DEFS.address=[
   grid:{left:4,right:12,top:6,bottom:0,containLabel:true},
   xAxis:Object.assign(lightAxis(),{type:'category',data:['甲区','乙县','丙县','丁县','戊县','己县','庚市'],axisLabel:{color:LIGHT.text,fontSize:10,interval:0,rotate:30}}),
   yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10}}),
-  series:[{name:'地址数',type:'bar',data:[2860,1540,3120,2975,2430,1185,1590],barWidth:12,
+  series:[{name:'地址数',type:'bar',data:[59000,31770,64360,61360,50120,24430,32890],barWidth:12,
     itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
     label:{show:true,position:'top',color:'#2f6fed',fontSize:10,formatter:function(p){return p.value.toLocaleString();}}}
   ]
@@ -1431,14 +1431,14 @@ CHART_DEFS.address=[
   tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 条'}),
   legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:11},itemWidth:10,itemHeight:8},
   graphic:[
-    {type:'text',left:'center',top:'30%',style:{text:'15,700',fill:'#1f2d3d',fontSize:20,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'30%',style:{text:'323,930',fill:'#1f2d3d',fontSize:20,fontWeight:700,textAlign:'center'}},
     {type:'text',left:'center',top:'41%',style:{text:'地址总数',fill:'#8a97ad',fontSize:11,textAlign:'center'}}
   ],
   series:[{
     type:'pie',radius:['52%','76%'],center:['50%','42%'],
     data:[
-      {value:12486,name:'已绑定二维码',itemStyle:{color:'#2f6fed'}},
-      {value:3214,name:'未绑定二维码',itemStyle:{color:'#d3def2'}}
+      {value:62430,name:'已绑定二维码',itemStyle:{color:'#2f6fed'}},
+      {value:261500,name:'未绑定二维码',itemStyle:{color:'#d3def2'}}
     ],
     label:{show:false},labelLine:{show:false},
     itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
@@ -1450,9 +1450,9 @@ CHART_DEFS.address=[
   series:[{
     type:'pie',radius:['42%','66%'],center:['50%','42%'],
     data:[
-      {value:2358,name:'街路巷',itemStyle:{color:'#2f6fed'}},
-      {value:8742,name:'门楼',itemStyle:{color:'#36b8ff'}},
-      {value:4600,name:'层户',itemStyle:{color:'#ffb03a'}}
+      {value:14320,name:'街路巷',itemStyle:{color:'#2f6fed'}},
+      {value:213610,name:'门楼',itemStyle:{color:'#36b8ff'}},
+      {value:96000,name:'层户',itemStyle:{color:'#ffb03a'}}
     ],
     label:{show:true,formatter:'{b}\n{d}%',color:LIGHT.text,fontSize:11},
     labelLine:{length:12,length2:8,lineStyle:{color:'#c9d6ee'}},
