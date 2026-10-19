@@ -266,6 +266,7 @@ table.grid tr:hover td{background:#f7faff}
   .sc-kpi{padding:8px 6px}
   .sc-kpi .n{font-size:16px}
   .sc-kpi .t{font-size:10px}
+  .grid-home1-r6{grid-template-columns:repeat(2,1fr)}
   .data-row{grid-template-columns:3fr 7fr}
   .row-2col{grid-template-columns:1fr 1fr}
   .row-3col{grid-template-columns:repeat(3,1fr)}
@@ -277,6 +278,7 @@ table.grid tr:hover td{background:#f7faff}
   .grid-home1-r3{grid-template-columns:26% 50% 24%}
   .grid-home1-r4{grid-template-columns:repeat(4,1fr)}
   .grid-home1-r5{grid-template-columns:repeat(2,1fr)}
+  .grid-home1-r6{grid-template-columns:repeat(4,1fr)}
   .grid-home2-r2{grid-template-columns:25% 51% 24%}
   .grid-home2-r3{grid-template-columns:25% 51% 24%}
   .grid-pop-charts{grid-template-columns:repeat(5,1fr)}
@@ -564,6 +566,20 @@ table.grid tr:hover td{background:#f7faff}
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="sc-grid grid-home1-r6">
+        <div class="sc-card"><div class="sc-card-hd">安防小区</div><div class="sc-card-bd"><div class="sc-chart" style="height:210px" id="h1_comm"></div></div></div>
+        <div class="sc-card"><div class="sc-card-hd">矛盾纠纷排查与化解</div><div class="sc-card-bd"><div class="sc-chart" style="height:210px" id="h1_conflict"></div></div></div>
+        <div class="sc-card"><div class="sc-card-hd">犬只管理</div><div class="sc-card-bd"><div class="sc-chart" style="height:210px" id="h1_dog"></div></div></div>
+        <div class="sc-card"><div class="sc-card-hd">问卷调查管理</div><div class="sc-card-bd"><div class="sc-chart" style="height:210px" id="h1_survey"></div></div></div>
+        <div class="sc-card"><div class="sc-card-hd">平安信箱</div><div class="sc-card-bd"><div class="sc-chart" style="height:210px" id="h1_mail"></div></div></div>
+        <div class="sc-card"><div class="sc-card-hd">购买散装油管理</div><div class="sc-card-bd"><div class="sc-chart" style="height:210px" id="h1_oil"></div></div></div>
+        <div class="sc-card"><div class="sc-card-hd">无人机备案</div><div class="sc-card-bd"><div class="sc-chart" style="height:210px" id="h1_drone2"></div></div></div>
+        <div class="sc-card"><div class="sc-card-hd">烟花爆竹管理</div><div class="sc-card-bd"><div class="sc-chart" style="height:210px" id="h1_fire"></div></div></div>
+        <div class="sc-card"><div class="sc-card-hd">无人机飞行活动管理</div><div class="sc-card-bd"><div class="sc-chart" style="height:210px" id="h1_flight"></div></div></div>
+        <div class="sc-card"><div class="sc-card-hd">社区党建</div><div class="sc-card-bd"><div class="sc-chart" style="height:210px" id="h1_party"></div></div></div>
+        <div class="sc-card"><div class="sc-card-hd">智慧公交</div><div class="sc-card-bd"><div class="sc-chart" style="height:210px" id="h1_bus"></div></div></div>
       </div>
     </section>
 
@@ -1167,6 +1183,150 @@ CHART_DEFS.home1=[
     {type:'text',left:'center',top:'36%',style:{text:'19,193',fill:'#7fe4ff',fontSize:20,fontWeight:700,textAlign:'center'}},
     {type:'text',left:'center',top:'56%',style:{text:'实有单位总数',fill:'#8fb0dd',fontSize:11,textAlign:'center'}}
   ]
+}},
+{id:'h1_comm',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}个（{d}%）'}),
+  legend:{bottom:0,textStyle:{color:DARK.legendText,fontSize:10.5},itemWidth:10,itemHeight:8},
+  series:[{
+    type:'pie',radius:['52%','74%'],center:['50%','42%'],
+    data:[
+      {value:128,name:'已建成',itemStyle:{color:'#2ee6a8'}},
+      {value:26,name:'在建',itemStyle:{color:'#36d0ff'}},
+      {value:14,name:'未建',itemStyle:{color:'#ffb03a'}}
+    ],
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
+  }],
+  graphic:[
+    {type:'text',left:'center',top:'28%',style:{text:'168',fill:'#7fe4ff',fontSize:22,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'50%',style:{text:'小区总数',fill:'#8fb0dd',fontSize:11,textAlign:'center'}}
+  ]
+}},
+{id:'h1_conflict',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}起'}),
+  series:[{
+    type:'funnel',sort:'none',gap:2,left:10,right:30,top:6,bottom:0,width:'82%',
+    label:{show:true,position:'inside',formatter:'{b}\n{c}起',color:'#fff',fontSize:10.5},
+    labelLine:{show:false},
+    itemStyle:{borderRadius:3,borderColor:'#0a2144',borderWidth:1},
+    data:[
+      {value:3268,name:'排查',itemStyle:{color:'#2f6fed'}},
+      {value:3014,name:'化解',itemStyle:{color:'#36d0ff'}},
+      {value:2891,name:'回访满意',itemStyle:{color:'#2ee6a8'}}
+    ]
+  }]
+}},
+{id:'h1_dog',option:{
+  tooltip:Object.assign(darkTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 只';}}),
+  grid:{left:4,right:10,top:8,bottom:0,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'category',data:['甲区','乙县','丙县','丁县','戊县','己县','庚市'],axisLabel:{color:DARK.text,fontSize:10}}),
+  yAxis:Object.assign(darkAxis(),{type:'value',splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:10}}),
+  series:[{name:'登记犬只',type:'bar',data:[4320,2860,3150,2410,1980,1560,3720],barWidth:16,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#ffb03a'},{offset:1,color:'#ff7e5c'}]),borderRadius:4},
+    label:{show:true,position:'top',color:'#ffd18a',fontSize:10}}
+  ]
+}},
+{id:'h1_survey',option:{
+  tooltip:Object.assign(darkTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+'%';}}),
+  grid:{left:4,right:44,top:8,bottom:0,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'value',max:100,splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:10,formatter:'{value}%'}}),
+  yAxis:Object.assign(darkAxis(),{type:'category',inverse:true,data:['社区治理','执法规范','安全感','服务态度','治安满意度'],axisLabel:{color:DARK.text,fontSize:10}}),
+  series:[{name:'完成率',type:'bar',data:[85.8,87.6,89.3,91.2,92.5],barWidth:10,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36d0ff'}]),borderRadius:3},
+    label:{show:true,position:'right',color:'#7fe4ff',fontSize:10,formatter:function(p){return p.value+'%';}}}
+  ]
+}},
+{id:'h1_mail',option:{
+  tooltip:Object.assign(darkTooltip(),{trigger:'axis',valueFormatter:function(v){return v.toLocaleString()+' 件';}}),
+  legend:{top:0,right:0,textStyle:{color:DARK.legendText,fontSize:10},itemWidth:10,itemHeight:8},
+  grid:{left:4,right:10,top:26,bottom:0,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'category',boundaryGap:false,data:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月'],axisLabel:{color:DARK.text,fontSize:10}}),
+  yAxis:Object.assign(darkAxis(),{type:'value',splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:10}}),
+  series:[
+    {name:'来信',type:'line',smooth:true,symbol:'circle',symbolSize:4,data:[120,135,142,128,156,168,172,180,195,210],lineStyle:{width:2,color:'#36d0ff'},itemStyle:{color:'#36d0ff'},areaStyle:{color:'rgba(54,208,255,.10)'}},
+    {name:'办结',type:'line',smooth:true,symbol:'circle',symbolSize:4,data:[112,128,136,124,150,160,166,174,188,203],lineStyle:{width:2,color:'#2ee6a8'},itemStyle:{color:'#2ee6a8'},areaStyle:{color:'rgba(46,230,168,.08)'}}
+  ]
+}},
+{id:'h1_oil',option:{
+  tooltip:Object.assign(darkTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 次';}}),
+  legend:{top:0,right:0,textStyle:{color:DARK.legendText,fontSize:10},itemWidth:10,itemHeight:8},
+  grid:{left:4,right:10,top:26,bottom:0,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'category',data:['甲区','乙县','丙县','丁县','戊县','己县','庚市'],axisLabel:{color:DARK.text,fontSize:10}}),
+  yAxis:Object.assign(darkAxis(),{type:'value',splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:10}}),
+  series:[
+    {name:'登记购买',type:'bar',stack:'t',data:[1280,860,1050,720,540,380,1120],barWidth:10,itemStyle:{color:'#2f6fed'}},
+    {name:'核验通过',type:'bar',stack:'t',data:[1240,835,1012,698,521,366,1085],barWidth:10,itemStyle:{color:'#2ee6a8'}}
+  ]
+}},
+{id:'h1_drone2',option:{
+  tooltip:{formatter:'备案率 {c}%'},
+  series:[{
+    type:'gauge',radius:'98%',center:['50%','52%'],startAngle:210,endAngle:-30,min:0,max:100,
+    progress:{show:true,width:12,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36d0ff'}])}},
+    axisLine:{lineStyle:{width:12,color:[[1,'rgba(64,128,220,.18)']]}},
+    axisTick:{show:false},splitLine:{show:false},axisLabel:{show:false},pointer:{show:false},
+    detail:{valueAnimation:true,offsetCenter:[0,-6],formatter:'{value}%',color:'#7fe4ff',fontSize:26,fontWeight:700},
+    data:[{value:91.6}]
+  }],
+  graphic:[
+    {type:'text',left:'center',top:'72%',style:{text:'已备案 1,704 / 应备案 1,860',fill:'#8fb0dd',fontSize:10,textAlign:'center'}}
+  ]
+}},
+{id:'h1_fire',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}个（{d}%）'}),
+  legend:{bottom:0,textStyle:{color:DARK.legendText,fontSize:10.5},itemWidth:10,itemHeight:8},
+  series:[{
+    type:'pie',roseType:'radius',radius:['20%','72%'],center:['50%','42%'],
+    data:[
+      {value:86,name:'销售许可',itemStyle:{color:'#ff5c5c'}},
+      {value:42,name:'存储许可',itemStyle:{color:'#ffb03a'}},
+      {value:150,name:'燃放许可',itemStyle:{color:'#36d0ff'}},
+      {value:28,name:'运输许可',itemStyle:{color:'#b9a4ff'}}
+    ],
+    label:{show:true,formatter:'{b}\n{d}%',color:DARK.text,fontSize:10},
+    labelLine:{length:8,length2:4,lineStyle:{color:'rgba(64,128,220,.4)'}},
+    itemStyle:{borderRadius:3,borderColor:'#0a2144',borderWidth:1.5}
+  }]
+}},
+{id:'h1_flight',option:{
+  tooltip:Object.assign(darkTooltip(),{trigger:'axis',valueFormatter:function(v){return v.toLocaleString()+' 次';}}),
+  grid:{left:4,right:10,top:8,bottom:0,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'category',boundaryGap:false,data:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月'],axisLabel:{color:DARK.text,fontSize:10}}),
+  yAxis:Object.assign(darkAxis(),{type:'value',splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:10}}),
+  series:[{name:'飞行活动',type:'line',smooth:true,symbol:'circle',symbolSize:5,data:[45,62,78,95,112,138,156,182,210,245],
+    lineStyle:{width:2.5,color:'#2ee6a8'},itemStyle:{color:'#2ee6a8'},
+    areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(46,230,168,.35)'},{offset:1,color:'rgba(46,230,168,.02)'}])}}
+  ]
+}},
+{id:'h1_party',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c} 分'}),
+  radar:{
+    indicator:[{name:'组织生活',max:100},{name:'党员学习',max:100},{name:'志愿服务',max:100},{name:'社区活动',max:100},{name:'党群服务',max:100},{name:'结对帮扶',max:100}],
+    radius:'62%',center:['50%','52%'],
+    splitArea:{areaStyle:{color:['rgba(64,128,220,.06)','rgba(64,128,220,.10)']}},
+    splitLine:{lineStyle:{color:DARK.splitLine}},
+    axisLine:{lineStyle:{color:'rgba(64,128,220,.35)'}},
+    axisLabel:{show:false},
+    name:{textStyle:{color:DARK.text,fontSize:10}}
+  },
+  series:[{type:'radar',
+    data:[{value:[92,88,85,76,90,81],name:'社区党建',
+      itemStyle:{color:'#ffb03a'},
+      lineStyle:{color:'#ffb03a',width:2},
+      areaStyle:{color:'rgba(255,176,58,.22)'}}]
+  }]
+}},
+{id:'h1_bus',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:function(p){return '线路'+p.data[2]+'：日均客流 '+p.data[0]+' 万人次，日发班次 '+p.data[1]+' 班';}}),
+  grid:{left:4,right:10,top:8,bottom:0,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'value',name:'日均客流(万人次)',nameTextStyle:{color:DARK.axisLabel,fontSize:9},splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:9.5}}),
+  yAxis:Object.assign(darkAxis(),{type:'value',name:'日发班次(班)',nameTextStyle:{color:DARK.axisLabel,fontSize:9},splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:9.5}}),
+  series:[{name:'公交线路',type:'scatter',symbolSize:function(d){return Math.max(8,d[0]*9);},
+    data:[[0.8,120,1],[1.2,150,2],[0.6,90,3],[1.5,170,4],[0.9,110,5],[1.1,140,6],[1.8,200,7],[0.7,95,8],[1.3,160,9],[1.0,130,10],[2.1,220,11],[1.6,180,12]],
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#36d0ff'},{offset:1,color:'#2f6fed'}]),opacity:.85},
+    label:{show:false},
+    emphasis:{itemStyle:{borderColor:'#fff'}}
+  }]
 }}
 ];
 
