@@ -1045,19 +1045,21 @@ CHART_DEFS.population=[
   xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','庚市','丁县','辛公安分局','乙县','戊县','己县','丙县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
   yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
   series:[
-    {name:'男性',type:'bar',data:[67400,34500,28400,32400,15860,16490,13200,1700],barWidth:7,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]}},
+    {name:'男性',type:'bar',data:[67400,33100,34500,28400,32400,15860,16400,1700],barWidth:7,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]}},
     {name:'女性',type:'bar',data:[66100,32500,26600,30100,14700,15200,12000,1600],barWidth:7,itemStyle:{color:'#36b8ff',borderRadius:[3,3,0,0]}}
   ]
 }},
 {id:'pop_age',option:{
-  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+'%';}}),
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return Math.abs(v)+'%';}}),
   legend:{data:['男性','女性'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
-  grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'category',data:['0-10','11-20','21-30','31-40','41-50','51-60','61-70','71-80','80+'],axisLabel:{color:LIGHT.text,fontSize:11}}),
-  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:'{value}%'}}),
+  grid:{left:4,right:4,top:30,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'value',max:20,splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:'{value}%'}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['0-10','11-20','21-30','31-40','41-50','51-60','61-70','71-80','80+'],axisLabel:{color:LIGHT.text,fontSize:11}}),
   series:[
-    {name:'男性',type:'bar',data:[2.4,4.4,10.3,16.2,13.6,11.4,2.6,0.8,0.2],barWidth:7,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]}},
-    {name:'女性',type:'bar',data:[2.2,3.9,7.2,9.1,6.9,5.2,2.3,1.0,0.4],barWidth:7,itemStyle:{color:'#36b8ff',borderRadius:[3,3,0,0]}}
+    {name:'男性',type:'bar',data:[-2.4,-4.4,-10.3,-16.2,-13.6,-11.4,-2.6,-0.8,-0.2],barWidth:8,itemStyle:{color:'#2f6fed',borderRadius:[3,0,0,3]},
+      label:{show:true,position:'left',color:'#2f6fed',fontSize:10,formatter:function(p){return Math.abs(p.value)+'%';}}},
+    {name:'女性',type:'bar',data:[2.2,3.9,7.2,9.1,6.9,5.2,2.3,1.0,0.4],barWidth:8,itemStyle:{color:'#36b8ff',borderRadius:[0,3,3,0]},
+      label:{show:true,position:'right',color:'#36b8ff',fontSize:10,formatter:'{c}%'}}
   ]
 }},
 {id:'pop_flowtop',option:{
@@ -1067,7 +1069,7 @@ CHART_DEFS.population=[
   yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
     data:['四川','云南','重庆','河南','昌都','甘肃','陕西','湖北','贵州','泉州','湖南','青海','拉萨','日喀则','山东','西藏','河北','山南','安徽','山西'],
     axisLabel:{color:LIGHT.text,fontSize:11}}),
-  series:[{name:'流动人口',type:'bar',data:[55300,14553,9933,6889,6801,7053,6058,5735,5905,4681,3710,3340,3140,2770,2170,2130,2010,1990,1920,1410],
+  series:[{name:'流动人口',type:'bar',data:[55300,14553,9933,8689,8081,7053,6058,5735,5505,4681,3370,3340,3160,2770,2170,2130,2100,2090,2010,2010],
     barWidth:9,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
     label:{show:true,position:'right',color:'#2f6fed',fontSize:10,formatter:function(p){return p.value.toLocaleString();}}}
   ]
@@ -1079,9 +1081,9 @@ CHART_DEFS.population=[
   xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','辛公安分局','庚市','丁县','丙县','戊县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
   yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
   series:[
-    {name:'跨县',type:'bar',stack:'t',data:[5620,4320,318,45,12,30],barWidth:10,itemStyle:{color:'#2f6fed'}},
-    {name:'跨市',type:'bar',stack:'t',data:[11280,8740,462,58,16,42],barWidth:10,itemStyle:{color:'#36b8ff'}},
-    {name:'跨省',type:'bar',stack:'t',data:[31143,27645,1628,169,46,120],barWidth:10,itemStyle:{color:'#7fb4ff'}}
+    {name:'跨县',type:'bar',stack:'t',data:[8623,4320,318,45,12,30],barWidth:10,itemStyle:{color:'#2f6fed'}},
+    {name:'跨市',type:'bar',stack:'t',data:[17512,8740,462,58,16,42],barWidth:10,itemStyle:{color:'#36b8ff'}},
+    {name:'跨省',type:'bar',stack:'t',data:[53065,31143,27645,16287,169,46],barWidth:10,itemStyle:{color:'#7fb4ff'}}
   ]
 }},
 {id:'pop_type',option:{
