@@ -228,7 +228,7 @@ table.grid tr:hover td{background:#f7faff}
   .grid-home2-r2{grid-template-columns:25% 51% 24%}
   .grid-home2-r3{grid-template-columns:25% 51% 24%}
   .grid-pop-charts{grid-template-columns:repeat(5,1fr)}
-  .grid-guard-charts{grid-template-columns:repeat(5,1fr)}
+  .grid-guard-charts{grid-template-columns:repeat(4,1fr)}
   .sp-grid3{grid-template-columns:1fr 1fr 1fr}
   .dispute-grid{grid-template-columns:1fr 1fr}
   .sc-chart{height:250px}
@@ -700,7 +700,6 @@ table.grid tr:hover td{background:#f7faff}
             </div>
           </div>
         </div></div>
-        <div class="panel"><div class="panel-hd">学校打卡统计</div><div class="panel-bd"><div class="chart-light" id="gd_schoolstat" style="height:280px"></div></div></div>
         <div class="panel"><div class="panel-hd tip-wrap">辖区打卡学校（37/56）<span class="tip">实际打卡学校：37；总学校数：56；</span></div><div class="panel-bd"><div class="chart-light" id="gd_school" style="height:320px"></div></div></div>
         <div class="panel"><div class="panel-hd">打卡状态分布情况</div><div class="panel-bd"><div class="chart-light" id="gd_status" style="height:280px"></div></div></div>
         <div class="panel"><div class="panel-hd">护学岗有效打卡身份类型分布情况</div><div class="panel-bd"><div class="chart-light" id="gd_identity" style="height:280px"></div></div></div>
@@ -1056,19 +1055,7 @@ CHART_DEFS.population=[
 ];
 
 /* -------- 护学岗图表 -------- */
-CHART_DEFS.guard=[{id:'gd_schoolstat',option:{
-  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+' 所';}}),
-  grid:{left:4,right:40,top:6,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10}}),
-  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
-    data:['学校总数','应打卡学校','实际打卡学校','今日应打卡','今日实际打卡'],axisLabel:{color:LIGHT.text,fontSize:11}}),
-  series:[{name:'数量',type:'bar',data:[178,145,132,112,98],barWidth:12,
-    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
-    label:{show:true,position:'right',color:'#2f6fed',fontSize:11}}
-  ]
-}},
-
-{id:'gd_school',option:{
+CHART_DEFS.guard=[{id:'gd_school',option:{
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'}}),
   legend:{data:['实际打卡','未使用打卡'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
   grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
