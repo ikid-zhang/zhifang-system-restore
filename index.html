@@ -233,7 +233,7 @@ table.grid tr:hover td{background:#f7faff}
 .stats-toggle:hover{border-color:var(--blue);color:var(--blue)}
 .stats-toggle svg{width:14px;height:14px;transition:transform .2s}
 .stats-toggle.collapsed svg{transform:rotate(180deg)}
-#guardCharts.collapsed,#addrCharts.collapsed{display:none}
+#guardCharts.collapsed,#addrCharts.collapsed,#popCharts.collapsed{display:none}
 
 /* ============ 响应式：桌面 ============ */
 .grid-pop-charts,.grid-guard-charts,.grid-addr-charts,.data-row{display:grid;grid-template-columns:1fr;gap:14px}
@@ -644,7 +644,9 @@ table.grid tr:hover td{background:#f7faff}
         <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span><span style="color:var(--txt)">实有人口管理</span>
       </div>
 
-      <div class="pop-grid">
+      <div class="addr-stats pop-stats">
+        <div class="addr-stats-hd"><button class="stats-toggle" data-target="popCharts" onclick="toggleStats(this)" title="收起统计模块" aria-label="收起统计模块"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button></div>
+      <div class="pop-grid" id="popCharts">
         <div class="pop-overview">
           <div class="po-hd">
             <span>实有人口</span>
@@ -688,6 +690,7 @@ table.grid tr:hover td{background:#f7faff}
         <div class="panel pop-flowtop"><div class="panel-hd">流动人口来源地排名 TOP20（本省外市及外省）</div><div class="panel-bd"><div class="chart-light" id="pop_flowtop" style="height:520px"></div></div></div>
         <div class="panel"><div class="panel-hd">按辖区统计流动人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_flowarea" style="height:240px"></div></div></div>
         <div class="panel"><div class="panel-hd">按实有人口类型统计实有人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_type" style="height:240px"></div></div></div>
+      </div>
       </div>
 
       <div class="data-row pop-data">
