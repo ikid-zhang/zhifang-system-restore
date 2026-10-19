@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>智防系统 · 页面还原（林芝市公安局治安管理支队）</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231d4d8f' d='M12 2 3.5 5.5v5.2c0 5 3.4 9.6 8.5 11.3 5.1-1.7 8.5-6.3 8.5-11.3V5.5L12 2z'/%3E%3Cpath fill='%23fff' d='M11 6h2v6h-2zM11 14h2v2h-2z'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+/* ============ 基础与移动优先 ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --nav-w:248px;--top-h:56px;
+  --blue:#2f6fed;--blue-d:#1d4d8f;--blue-deep:#0a2a5e;
+  --bg:#eef2f9;--card:#fff;--line:#e3eaf6;
+  --txt:#1f2d3d;--txt2:#5f6f8a;--txt3:#8a97ad;
+  --cyan:#36d0ff;--orange:#ffb03a;--green:#2ee6a8;--red:#ff6b6b;
+}
+html,body{height:100%}
+body{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font-family:inherit}
+a{color:var(--blue);text-decoration:none}
+
+/* ============ 侧栏导航 ============ */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--nav-w);background:linear-gradient(180deg,#0b2a5e 0%,#071c40 100%);z-index:60;transform:translateX(-100%);transition:transform .25s ease;display:flex;flex-direction:column}
+.sidebar.open{transform:translateX(0)}
+.side-logo{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.side-logo .logo-mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#36d0ff,#2f6fed);display:flex;align-items:center;justify-content:center;flex:none}
+.side-logo .logo-mark svg{width:20px;height:20px}
+.side-logo .logo-txt{color:#fff;font-size:19px;font-weight:700;letter-spacing:2px}
+.side-logo .logo-sub{color:#7f9dd0;font-size:10px;letter-spacing:1px}
+.side-nav{flex:1;overflow-y:auto;padding:8px 0 20px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent}
+.nav-item{position:relative;display:flex;align-items:center;gap:10px;padding:11px 20px;color:#aec4e6;font-size:14px;cursor:pointer;user-select:none;transition:all .15s}
+.nav-item:hover{color:#fff;background:rgba(64,160,255,.10)}
+.nav-item.active{color:#fff;background:linear-gradient(90deg,rgba(47,111,237,.9),rgba(47,111,237,.25));box-shadow:inset 3px 0 0 var(--cyan)}
+.nav-item .dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.7;flex:none}
+.nav-item .arr{margin-left:auto;font-size:10px;color:#7f9dd0;transition:transform .2s}
+.nav-item.open .arr{transform:rotate(90deg)}
+.subnav{display:none;background:rgba(0,0,0,.22)}
+.nav-item.open + .subnav{display:block}
+.subnav .nav-item{padding-left:44px;font-size:13px;color:#8fb0dd}
+.subnav .nav-item.active{background:linear-gradient(90deg,rgba(54,208,255,.25),transparent);box-shadow:inset 3px 0 0 var(--cyan)}
+.side-foot{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);color:#5f7fb5;font-size:12px;line-height:1.6}
+
+/* ============ 主区 ============ */
+.main{min-height:100%;display:flex;flex-direction:column}
+.topbar{height:var(--top-h);background:linear-gradient(90deg,#0b2a5e 0%,#14428f 55%,#0b2a5e 100%);display:flex;align-items:center;gap:14px;padding:0 14px;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(7,26,51,.35)}
+.menu-btn{width:38px;height:38px;border:1px solid rgba(255,255,255,.25);border-radius:8px;background:rgba(255,255,255,.06);color:#fff;font-size:16px;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center}
+.sys-name{color:#fff;font-size:17px;font-weight:700;letter-spacing:2px;white-space:nowrap}
+.sys-slogan{color:#8fb7ef;font-size:12px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.user-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#36d0ff,#2f6fed);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.user-box{text-align:right;line-height:1.3}
+.user-box .u-name{color:#fff;font-size:13px;font-weight:500}
+.user-box .u-org{color:#8fb7ef;font-size:11px}
+.power-btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#a8c4ef;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none}
+.content{padding:14px;max-width:1760px;width:100%;margin:0 auto;overflow-x:hidden}
+
+/* ============ 视图容器 ============ */
+.view{display:none}
+.view.active{display:block}
+
+/* ============ 后台通用组件（蓝白） ============ */
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--txt2);margin-bottom:12px;flex-wrap:wrap}
+.breadcrumb .crumb-link{color:var(--blue);cursor:pointer}
+.breadcrumb .tab-tag{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:3px 10px;color:var(--txt);font-size:13px;box-shadow:0 1px 3px rgba(15,50,120,.06)}
+.breadcrumb .tab-tag .close-x{color:var(--txt3);cursor:pointer;font-size:12px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 4px rgba(15,50,120,.05);margin-bottom:14px}
+.panel-hd{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:15px;font-weight:700;color:var(--txt)}
+.panel-hd::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--blue)}
+.panel-bd{padding:14px 16px}
+.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.kpi-card{background:linear-gradient(180deg,#f6f9ff,#eef4fd);border:1px solid #dbe7fb;border-radius:10px;padding:12px;text-align:center}
+.kpi-card .kpi-num{font-size:24px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums;letter-spacing:.5px}
+.kpi-card .kpi-label{font-size:12px;color:var(--txt2);margin-top:2px}
+.kpi-card .kpi-sub{font-size:11px;color:var(--txt3);margin-top:2px}
+/* 筛选栏 */
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.filter-bar .f-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--txt2)}
+.filter-bar input[type=text],.filter-bar select{height:32px;border:1px solid #d3def2;border-radius:6px;padding:0 10px;font-size:13px;color:var(--txt);background:#fff;min-width:120px;outline:none}
+.filter-bar input:focus,.filter-bar select:focus{border-color:var(--blue)}
+/* 护学岗：查询条件单行自适应 */
+.filter-bar.fb-guard{flex-wrap:nowrap;gap:8px}
+.filter-bar.fb-guard .f-item{flex:1 1 0;min-width:0;gap:5px}
+.filter-bar.fb-guard .f-item.time-item{flex:1.8 1 0}
+.filter-bar.fb-guard .f-item input[type=text],.filter-bar.fb-guard .f-item select{min-width:0;width:auto;flex:1 1 0;padding:0 8px}
+.filter-bar.fb-guard .f-item .time-to{flex:0 0 auto;color:var(--txt2)}
+.filter-bar.fb-guard .btn{flex:0 0 auto}
+.btn{height:32px;padding:0 16px;border-radius:6px;border:1px solid #d3def2;background:#fff;color:var(--txt);font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:all .15s;white-space:nowrap}
+.btn:hover{border-color:var(--blue);color:var(--blue)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{background:#1f5bd8}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--blue)}
+/* 表格 */
+.table-wrap{overflow-x:auto}
+table.grid{width:100%;table-layout:fixed;border-collapse:collapse;font-size:13px}
+table.grid th{background:#f2f6fd;color:var(--txt2);font-weight:600;padding:10px 8px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+table.grid td{padding:10px 8px;border-bottom:1px solid #eef2f9;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
+table.grid tr:hover td{background:#f7faff}
+.tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;background:#e8f2ff;color:var(--blue)}
+.tag.green{background:#e5f9f0;color:#16a35f}
+.tag.orange{background:#fff3e0;color:#e8890c}
+.tag.red{background:#fdeaea;color:#e5484d}
+.op-link{color:var(--blue);cursor:pointer;margin-right:10px;font-size:13px}
+.op-link.danger{color:#e5484d}
+.pager{display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:12px 16px;font-size:13px;color:var(--txt2)}
+.pager input{width:52px;height:28px;border:1px solid #d3def2;border-radius:6px;text-align:center;font-size:13px}
+/* 树形 */
+.tree{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.tree-hd{padding:10px 14px;font-weight:700;font-size:13px;color:var(--txt);background:#f2f6fd;border-bottom:1px solid var(--line)}
+.tree-item{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:13px;color:var(--txt);cursor:pointer;border-bottom:1px solid #f0f4fa}
+.tree-item:last-child{border-bottom:none}
+.tree-item:hover{background:#f0f6ff}
+.tree-item.active{background:#e8f2ff;color:var(--blue);font-weight:500}
+.tree-item .t-arr{font-size:10px;color:var(--txt3);transition:transform .2s}
+.tree-item.open .t-arr{transform:rotate(90deg)}
+.tree-children{display:none}
+.tree-item.open + .tree-children{display:block}
+.tree-children .tree-item{padding-left:34px}
+/* 水印 */
+.watermark{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.watermark .wm-line{position:absolute;color:rgba(47,80,130,.13);font-size:15px;font-weight:700;letter-spacing:2px;white-space:nowrap;transform:rotate(-18deg);text-align:center;width:420px}
+.watermark .wm-time{display:block;font-size:11px;font-weight:400;letter-spacing:1px;margin-top:4px}
+
+/* ============ 大屏（首页）组件 ============ */
+.screen-body{background:radial-gradient(1200px 600px at 20% -10%,rgba(38,120,255,.16),transparent 60%),radial-gradient(1000px 500px at 90% 10%,rgba(54,208,255,.10),transparent 55%),#071a33;min-height:calc(100vh - var(--top-h) - 28px);padding:0 2px}
+.sc-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
+.sc-kpi{position:relative;background:linear-gradient(180deg,rgba(16,48,96,.9),rgba(9,31,66,.9));border:1px solid #1d4d8f;border-radius:10px;padding:10px 12px 8px;overflow:hidden}
+.sc-kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#36d0ff,transparent)}
+.sc-kpi .n{font-size:22px;font-weight:700;color:#7fe4ff;font-variant-numeric:tabular-nums;text-shadow:0 0 12px rgba(54,208,255,.45)}
+.sc-kpi .t{font-size:11px;color:#8fb0dd;margin-top:1px}
+.sc-grid{display:grid;gap:12px;margin-bottom:12px}
+.sc-grid>*,.sc-card-bd>*,.sc-card-bd>div>*{min-width:0}
+.sc-card{background:linear-gradient(180deg,rgba(16,48,96,.92),rgba(9,31,66,.92));border:1px solid #1d4d8f;border-radius:10px;position:relative;overflow:hidden}
+.sc-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#36d0ff 30%,#2f6fed 70%,transparent)}
+.sc-card-hd{display:flex;align-items:center;gap:8px;padding:12px 14px 4px;font-size:14px;font-weight:700;color:#dcebff}
+.sc-card-hd::before{content:"";width:4px;height:14px;border-radius:2px;background:linear-gradient(180deg,#36d0ff,#2f6fed)}
+.sc-card-hd .hint{font-size:11px;font-weight:400;color:#6f92c0}
+.sc-card-bd{padding:6px 10px 12px}
+.sc-chart{width:100%;height:230px}
+.sc-chart.tall{height:420px}
+.sc-numlist{display:flex;flex-wrap:wrap;gap:14px 20px;padding:6px 4px}
+.sc-num{text-align:center}
+.sc-num .v{font-size:22px;font-weight:700;color:#7fe4ff;font-variant-numeric:tabular-nums}
+.sc-num .l{font-size:11px;color:#8fb0dd}
+.sc-bars{display:flex;flex-direction:column;gap:8px;padding:4px 2px}
+.sc-bar-row{display:grid;grid-template-columns:86px 1fr 62px;gap:8px;align-items:center;font-size:12px}
+.sc-bar-row .nm{color:#bcd6f5;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-bar-row .track{height:12px;background:rgba(64,128,220,.14);border-radius:6px;overflow:hidden}
+.sc-bar-row .fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#2f6fed,#36d0ff)}
+.sc-bar-row .vl{color:#7fe4ff;font-variant-numeric:tabular-nums}
+.sc-metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sc-metric{background:rgba(64,128,220,.10);border:1px solid rgba(64,128,220,.25);border-radius:8px;padding:8px 4px;text-align:center}
+.sc-metric .v{font-size:18px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums}
+.sc-metric .l{font-size:11px;color:#8fb0dd}
+.sc-donut-wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sc-donut-wrap .sc-chart{flex:1;min-width:0;height:180px}
+.sp-grid3{display:grid;grid-template-columns:1fr;gap:10px}
+.dispute-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.sc-legend{font-size:12px;color:#bcd6f5;line-height:2;flex:1;min-width:130px}
+.sc-legend .row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed rgba(64,128,220,.22);padding:3px 0}
+.sc-legend .k{display:flex;align-items:center;gap:6px}
+.sc-legend .k i{width:8px;height:8px;border-radius:2px;display:inline-block}
+.sc-legend .v{color:#7fe4ff;font-variant-numeric:tabular-nums}
+/* 大屏：数字卡片 / 列表（对齐原图） */
+.unit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.unit-card{background:rgba(64,128,220,.10);border:1px solid rgba(64,128,220,.28);border-radius:8px;padding:8px 10px}
+.unit-card .u-num{font-size:15px;font-weight:700;color:#7fe4ff;font-variant-numeric:tabular-nums}
+.unit-card .u-num small{font-size:11px;color:#6f92c0;font-weight:400;margin-left:5px}
+.unit-card .u-name{font-size:12px;color:#bcd6f5;margin-top:2px}
+.top5{display:flex;flex-direction:column;gap:6px}
+.t5-row{display:grid;grid-template-columns:42px 1fr 34px;gap:6px;align-items:center;font-size:12px;color:#bcd6f5;background:rgba(64,128,220,.08);border:1px solid rgba(64,128,220,.18);border-radius:6px;padding:5px 8px}
+.t5-row .rk{color:#ffb03a;font-size:11px}
+.t5-row .vl{text-align:right;color:#7fe4ff;font-variant-numeric:tabular-nums}
+.flow-list{display:flex;flex-direction:column}
+.fl-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:5px 2px;border-bottom:1px dashed rgba(64,128,220,.22);font-size:12px;color:#bcd6f5}
+.fl-row:last-child{border-bottom:none}
+.fl-row .v{color:#7fe4ff;font-variant-numeric:tabular-nums;font-weight:600}
+.drone-wrap{display:flex;align-items:center;gap:8px}
+.drone-wrap .sc-chart{flex:1;min-width:0;height:150px}
+.drone-legend{flex:1;min-width:118px;display:flex;flex-direction:column;gap:7px}
+.dl-row{display:grid;grid-template-columns:10px 1fr auto;gap:6px;align-items:center;font-size:12px;color:#bcd6f5;border-bottom:1px dashed rgba(64,128,220,.22);padding-bottom:6px}
+.dl-row i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.dl-row b{color:#7fe4ff;font-variant-numeric:tabular-nums}
+.popdist-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.popdist-card{background:rgba(64,128,220,.10);border:1px solid rgba(64,128,220,.28);border-radius:8px;padding:10px 6px;text-align:center}
+.popdist-card .v{font-size:19px;font-weight:700;color:#7fe4ff;font-variant-numeric:tabular-nums}
+.popdist-card .l{font-size:12px;color:#8fb0dd;margin-top:2px}
+.gd-kpi{display:flex;flex-direction:column;justify-content:center;height:100%;min-height:175px}
+.gd-total{text-align:center;margin-bottom:8px}
+.gd-total .v{font-size:34px;font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1.1}
+.gd-total .l{font-size:13px;color:var(--txt2);margin-top:2px}
+.gd-sub{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;text-align:center}
+.gd-sub .v{font-size:17px;font-weight:700;color:var(--txt);font-variant-numeric:tabular-nums}
+.gd-sub .l{font-size:11px;color:var(--txt2);margin-top:2px}
+/* 护学岗：统计模块折叠 */
+.guard-stats{position:relative;margin-bottom:14px}
+.tip-wrap{position:relative;cursor:help}
+.tip-wrap .tip{position:absolute;top:calc(100% + 8px);left:0;z-index:30;background:#123c7e;color:#fff;font-size:12px;padding:6px 10px;border-radius:6px;white-space:nowrap;box-shadow:0 2px 8px rgba(15,50,120,.25);opacity:0;visibility:hidden;transition:opacity .15s;pointer-events:none;font-weight:400}
+.tip-wrap:hover .tip{opacity:1;visibility:visible}
+.stats-toggle{width:30px;height:30px;border:1px solid #d3def2;border-radius:8px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--txt2);transition:all .15s;box-shadow:0 1px 3px rgba(15,50,120,.08)}
+.stats-toggle:hover{border-color:var(--blue);color:var(--blue)}
+.stats-toggle svg{width:14px;height:14px;transition:transform .2s}
+.stats-toggle.collapsed svg{transform:rotate(180deg)}
+#guardCharts.collapsed{display:none}
+
+/* ============ 响应式：桌面 ============ */
+.grid-pop-charts,.grid-guard-charts,.data-row{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:768px){
+  .sidebar{transform:none}
+  .menu-btn{display:none}
+  .main{margin-left:var(--nav-w)}
+  .topbar{padding:0 20px}
+  .content{padding:16px 20px}
+  .kpi-grid{grid-template-columns:repeat(5,1fr)}
+  .sc-kpis{grid-template-columns:repeat(5,1fr);gap:12px}
+  .sc-kpi .n{font-size:26px}
+  .data-row{grid-template-columns:200px 1fr}
+  .row-2col{grid-template-columns:1fr 1fr}
+  .row-3col{grid-template-columns:repeat(3,1fr)}
+  .row-4col{grid-template-columns:repeat(4,1fr)}
+  .grid-pop-charts .chart-light,.grid-guard-charts .chart-light{height:175px!important}
+}
+@media (min-width:1200px){
+  .grid-home1-r2{grid-template-columns:27% 48% 25%}
+  .grid-home1-r3{grid-template-columns:26% 50% 24%}
+  .grid-home2-r2{grid-template-columns:25% 51% 24%}
+  .grid-home2-r3{grid-template-columns:25% 51% 24%}
+  .grid-pop-charts{grid-template-columns:repeat(5,1fr)}
+  .grid-guard-charts{grid-template-columns:repeat(5,1fr)}
+  .sp-grid3{grid-template-columns:1fr 1fr 1fr}
+  .dispute-grid{grid-template-columns:1fr 1fr}
+  .sc-chart{height:250px}
+  .sc-chart.tall{height:440px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 侧栏导航 ============ -->
+<aside class="sidebar" id="sidebar">
+  <div class="side-logo">
+    <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2 3.5 5.5v5.2c0 5 3.4 9.6 8.5 11.3 5.1-1.7 8.5-6.3 8.5-11.3V5.5L12 2z" fill="#fff"/><path d="M11 6h2v6h-2zM11 14h2v2h-2z" fill="#123c7e"/></svg></div>
+    <div><div class="logo-txt">智防系统</div><div class="logo-sub">治安管理综合应用</div></div>
+  </div>
+  <nav class="side-nav" id="sideNav">
+    <div class="nav-item" data-target="home1"><span class="dot"></span>智慧安防小区<span class="arr">›</span></div>
+    <div class="nav-item" data-toast><span class="dot"></span>审批任务</div>
+    <div class="nav-item" data-toggle><span class="dot"></span>一标三实管理<span class="arr">›</span></div>
+    <div class="subnav">
+      <div class="nav-item" data-target="address"><span class="dot"></span>标准地址管理</div>
+      <div class="nav-item" data-target="population"><span class="dot"></span>实有人口管理</div>
+      <div class="nav-item" data-toast><span class="dot"></span>实有房屋管理</div>
+      <div class="nav-item" data-toast><span class="dot"></span>实有单位管理</div>
+    </div>
+    <div class="nav-item" data-toast><span class="dot"></span>维护社区秩序</div>
+    <div class="nav-item" data-toast><span class="dot"></span>流程管理</div>
+    <div class="nav-item" data-toast><span class="dot"></span>服务辖区群众</div>
+    <div class="nav-item" data-toast><span class="dot"></span>警务区及警力管理</div>
+    <div class="nav-item" data-toast><span class="dot"></span>组织安全防范</div>
+    <div class="nav-item" data-toast><span class="dot"></span>掌握社情民意</div>
+    <div class="nav-item" data-toast><span class="dot"></span>基础管控中心</div>
+    <div class="nav-item" data-toggle><span class="dot"></span>校园安全<span class="arr">›</span></div>
+    <div class="subnav">
+      <div class="nav-item" data-target="guard"><span class="dot"></span>护学岗管理</div>
+      <div class="nav-item" data-toast><span class="dot"></span>重点人员管理</div>
+      <div class="nav-item" data-toast><span class="dot"></span>布控区域</div>
+      <div class="nav-item" data-toast><span class="dot"></span>我的布控</div>
+    </div>
+    <div class="nav-item" data-toast><span class="dot"></span>街面巡防</div>
+    <div class="nav-item" data-toast><span class="dot"></span>智慧公交</div>
+    <div class="nav-item" data-toast><span class="dot"></span>勤务管理</div>
+    <div class="nav-item" data-toast><span class="dot"></span>环林卡口</div>
+    <div class="nav-item" data-toast><span class="dot"></span>娱乐特行</div>
+    <div class="nav-item" data-toast><span class="dot"></span>预警中心</div>
+    <div class="nav-item" data-toast><span class="dot"></span>芯党建</div>
+    <div class="nav-item" data-toast><span class="dot"></span>拜访记录</div>
+  </nav>
+  <div class="side-foot">林芝市公安局治安管理支队<br>2026 · 需求原型还原</div>
+</aside>
+
+<!-- ============ 主区 ============ -->
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" aria-label="菜单"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <span class="sys-name">智防系统</span>
+    <span class="sys-slogan">内容体系化，任务可量化，过程可控制，成效可评价</span>
+    <div class="top-right">
+      <div class="user-avatar">童</div>
+      <div class="user-box">
+        <div class="u-name">童鹏(403031)</div>
+        <div class="u-org">林芝市公安局治安管理支队</div>
+      </div>
+      <button class="power-btn" data-toast title="退出登录"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 12V3"/></svg></button>
+    </div>
+  </header>
+
+  <div class="content" id="content">
+
+    <!-- ===== 视图：首页大屏 v1 ===== -->
+    <section class="view screen-body active" id="view-home1">
+      <div class="sc-kpis">
+        <div class="sc-kpi"><div class="n">323,930</div><div class="t">标准地址</div></div>
+        <div class="sc-kpi"><div class="n">345,664</div><div class="t">实有人口</div></div>
+        <div class="sc-kpi"><div class="n">75,248</div><div class="t">实有房屋</div></div>
+        <div class="sc-kpi"><div class="n">19,193</div><div class="t">实有单位</div></div>
+        <div class="sc-kpi"><div class="n">77,368</div><div class="t">从业人员</div></div>
+        <div class="sc-kpi"><div class="n">706</div><div class="t">无人机备案</div></div>
+        <div class="sc-kpi"><div class="n">146</div><div class="t">飞行活动备案</div></div>
+        <div class="sc-kpi"><div class="n">2,549</div><div class="t">烟花爆竹登记</div></div>
+        <div class="sc-kpi"><div class="n">1,023</div><div class="t">人员预警</div></div>
+        <div class="sc-kpi"><div class="n">32,761</div><div class="t">居住登记卡</div></div>
+      </div>
+
+      <div class="sc-grid grid-home1-r2">
+        <div class="sc-card">
+          <div class="sc-card-hd">辖区重点单位分布</div>
+          <div class="sc-card-bd">
+            <div class="unit-grid">
+              <div class="unit-card"><div class="u-num">324<small>已采:223</small></div><div class="u-name">教育场所</div></div>
+              <div class="unit-card"><div class="u-num">1,385<small>已采:842</small></div><div class="u-name">旅店业</div></div>
+              <div class="unit-card"><div class="u-num">78<small>已采:59</small></div><div class="u-name">医院</div></div>
+              <div class="unit-card"><div class="u-num">280<small>已采:262</small></div><div class="u-name">娱乐场所</div></div>
+              <div class="unit-card"><div class="u-num">121<small>已采:75</small></div><div class="u-name">危险品单位</div></div>
+              <div class="unit-card"><div class="u-num">29<small>已采:6</small></div><div class="u-name">旅游景点</div></div>
+              <div class="unit-card"><div class="u-num">113<small>已采:105</small></div><div class="u-name">金融服务场所</div></div>
+              <div class="unit-card"><div class="u-num">11,108<small>已采:9,937</small></div><div class="u-name">公共服务场所</div></div>
+              <div class="unit-card"><div class="u-num">93<small>已采:55</small></div><div class="u-name">宗教场所</div></div>
+              <div class="unit-card"><div class="u-num">1,570<small>已采:1,423</small></div><div class="u-name">特种行业</div></div>
+              <div class="unit-card"><div class="u-num">339<small>已采:223</small></div><div class="u-name">政府机关</div></div>
+              <div class="unit-card"><div class="u-num">434<small>已采:120</small></div><div class="u-name">事业单位</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">辖区基本情况</div>
+          <div class="sc-card-bd">
+            <div style="font-size:12px;color:#8fb0dd;margin:2px 0 6px">警务要素</div>
+            <div class="sc-metric-grid" style="grid-template-columns:repeat(4,1fr)">
+              <div class="sc-metric"><div class="v">165</div><div class="l">责任区</div></div>
+              <div class="sc-metric"><div class="v">672</div><div class="l">派出所民警</div></div>
+              <div class="sc-metric"><div class="v">378</div><div class="l">社区民警</div></div>
+              <div class="sc-metric"><div class="v">191</div><div class="l">派出所辅警</div></div>
+              <div class="sc-metric"><div class="v">2</div><div class="l">街道</div></div>
+              <div class="sc-metric"><div class="v">54</div><div class="l">乡镇</div></div>
+              <div class="sc-metric"><div class="v">14</div><div class="l">社区</div></div>
+              <div class="sc-metric"><div class="v">517</div><div class="l">村居</div></div>
+            </div>
+            <div class="dispute-grid">
+              <div>
+                <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷情况（本月：107）</div>
+                <div class="sc-chart" style="height:170px" id="h1_dispute"></div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷类型 TOP5</div>
+                <div class="top5">
+                  <div class="t5-row"><span class="rk">TOP1</span><span>其它</span><span class="vl">79</span></div>
+                  <div class="t5-row"><span class="rk">TOP2</span><span>婚恋家庭纠纷</span><span class="vl">12</span></div>
+                  <div class="t5-row"><span class="rk">TOP3</span><span>邻里纠纷</span><span class="vl">6</span></div>
+                  <div class="t5-row"><span class="rk">TOP4</span><span>劳动人事争议</span><span class="vl">4</span></div>
+                  <div class="t5-row"><span class="rk">TOP5</span><span>金融借贷纠纷</span><span class="vl">1</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">流动人员（外省+外市）来源分布 <span class="hint">TOP10</span></div>
+          <div class="sc-card-bd">
+            <div class="flow-list">
+              <div class="fl-row"><span>那曲市</span><span class="v">4,616</span></div>
+              <div class="fl-row"><span>贵州省</span><span class="v">5,507</span></div>
+              <div class="fl-row"><span>湖北省</span><span class="v">5,738</span></div>
+              <div class="fl-row"><span>陕西省</span><span class="v">6,060</span></div>
+              <div class="fl-row"><span>甘肃省</span><span class="v">7,053</span></div>
+              <div class="fl-row"><span>昌都市</span><span class="v">8,077</span></div>
+              <div class="fl-row"><span>河南省</span><span class="v">8,489</span></div>
+              <div class="fl-row"><span>重庆市</span><span class="v">9,943</span></div>
+              <div class="fl-row"><span>云南省</span><span class="v">14,561</span></div>
+              <div class="fl-row"><span>四川省</span><span class="v">5,532</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc-grid grid-home1-r3">
+        <div class="sc-card">
+          <div class="sc-card-hd">护学岗打卡</div>
+          <div class="sc-card-bd">
+            <div class="sc-numlist">
+              <div class="sc-num" style="flex:1 1 100%"><div class="v" style="font-size:30px">8,497</div><div class="l">累计打卡数</div></div>
+              <div class="sc-num"><div class="v">199</div><div class="l">昨日新增</div></div>
+              <div class="sc-num"><div class="v">167</div><div class="l">今日新增</div></div>
+              <div class="sc-num"><div class="v">728</div><div class="l">本周新增</div></div>
+              <div class="sc-num"><div class="v">1,197</div><div class="l">本月新增</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">特殊行业备案概况</div>
+          <div class="sc-card-bd">
+            <div class="sp-grid3">
+              <div>
+                <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">无人机备案分布</div>
+                <div class="drone-wrap">
+                  <div class="sc-chart" id="h1_drone"></div>
+                  <div class="drone-legend">
+                    <div class="dl-row"><i style="background:#36d0ff"></i><span>个人备案(架)</span><b>364</b></div>
+                    <div class="dl-row"><i style="background:#2f6fed"></i><span>单位备案(架)</span><b>334</b></div>
+                    <div class="dl-row"><i style="background:#ffb03a"></i><span>警用备案(架)</span><b>8</b></div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">飞行活动备案</div>
+                <div class="sc-numlist" style="flex-direction:column;gap:10px">
+                  <div class="sc-num" style="text-align:left"><div class="v">146</div><div class="l">备案总量（次）</div></div>
+                  <div class="sc-num" style="text-align:left"><div class="v">144</div><div class="l">单位备案（次）</div></div>
+                  <div class="sc-num" style="text-align:left"><div class="v">2</div><div class="l">个人备案（次）</div></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">烟花爆竹登记</div>
+                <div class="sc-numlist" style="flex-direction:column;gap:10px">
+                  <div class="sc-num" style="text-align:left"><div class="v">22</div><div class="l">备案企业（家）</div></div>
+                  <div class="sc-num" style="text-align:left"><div class="v">0</div><div class="l">单位备案（次）</div></div>
+                  <div class="sc-num" style="text-align:left"><div class="v">2,549</div><div class="l">个人备案（次）</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">居住登记卡</div>
+          <div class="sc-card-bd">
+            <div class="sc-numlist">
+              <div class="sc-num" style="flex:1 1 100%"><div class="v" style="font-size:30px">32,761</div><div class="l">累积申领数</div></div>
+            </div>
+            <div class="sc-metric-grid" style="grid-template-columns:1fr 1fr;margin-top:8px">
+              <div class="sc-metric"><div class="v">32,182</div><div class="l">已审核</div></div>
+              <div class="sc-metric"><div class="v">579</div><div class="l">待审核</div></div>
+            </div>
+            <div class="sc-numlist" style="margin-top:10px">
+              <div class="sc-num"><div class="v">11</div><div class="l">昨日新增</div></div>
+              <div class="sc-num"><div class="v">65</div><div class="l">今日新增</div></div>
+              <div class="sc-num"><div class="v">126</div><div class="l">本周新增</div></div>
+              <div class="sc-num"><div class="v">4,355</div><div class="l">本月新增</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 视图：首页大屏 v2 ===== -->
+    <section class="view screen-body" id="view-home2">
+      <div class="sc-kpis">
+        <div class="sc-kpi"><div class="n">323,930</div><div class="t">标准地址</div></div>
+        <div class="sc-kpi"><div class="n">345,557</div><div class="t">实有人口</div></div>
+        <div class="sc-kpi"><div class="n">75,231</div><div class="t">实有房屋</div></div>
+        <div class="sc-kpi"><div class="n">19,164</div><div class="t">实有单位</div></div>
+        <div class="sc-kpi"><div class="n">77,274</div><div class="t">从业人员</div></div>
+        <div class="sc-kpi"><div class="n">706</div><div class="t">无人机备案</div></div>
+        <div class="sc-kpi"><div class="n">146</div><div class="t">飞行活动备案</div></div>
+        <div class="sc-kpi"><div class="n">2,549</div><div class="t">烟花爆竹登记</div></div>
+        <div class="sc-kpi"><div class="n">1,023</div><div class="t">人员预警</div></div>
+        <div class="sc-kpi"><div class="n">32,745</div><div class="t">居住登记卡</div></div>
+      </div>
+
+      <div class="sc-grid grid-home2-r2">
+        <div class="sc-card">
+          <div class="sc-card-hd">辖区重点单位分布</div>
+          <div class="sc-card-bd">
+            <div class="unit-grid">
+              <div class="unit-card"><div class="u-num">324<small>已采:223</small></div><div class="u-name">教育场所</div></div>
+              <div class="unit-card"><div class="u-num">1,385<small>已采:838</small></div><div class="u-name">旅店业</div></div>
+              <div class="unit-card"><div class="u-num">78<small>已采:59</small></div><div class="u-name">医院</div></div>
+              <div class="unit-card"><div class="u-num">280<small>已采:260</small></div><div class="u-name">娱乐场所</div></div>
+              <div class="unit-card"><div class="u-num">121<small>已采:74</small></div><div class="u-name">危险品单位</div></div>
+              <div class="unit-card"><div class="u-num">29<small>已采:6</small></div><div class="u-name">旅游景点</div></div>
+              <div class="unit-card"><div class="u-num">113<small>已采:105</small></div><div class="u-name">金融服务场所</div></div>
+              <div class="unit-card"><div class="u-num">11,108<small>已采:9,920</small></div><div class="u-name">公共服务场所</div></div>
+              <div class="unit-card"><div class="u-num">93<small>已采:55</small></div><div class="u-name">宗教场所</div></div>
+              <div class="unit-card"><div class="u-num">1,570<small>已采:1,418</small></div><div class="u-name">特种行业</div></div>
+              <div class="unit-card"><div class="u-num">339<small>已采:222</small></div><div class="u-name">政府机关</div></div>
+              <div class="unit-card"><div class="u-num">434<small>已采:120</small></div><div class="u-name">事业单位</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">辖区基本情况</div>
+          <div class="sc-card-bd">
+            <div style="font-size:12px;color:#8fb0dd;margin:2px 0 6px">警务要素</div>
+            <div class="sc-metric-grid" style="grid-template-columns:repeat(4,1fr)">
+              <div class="sc-metric"><div class="v">165</div><div class="l">责任区</div></div>
+              <div class="sc-metric"><div class="v">672</div><div class="l">派出所民警</div></div>
+              <div class="sc-metric"><div class="v">378</div><div class="l">社区民警</div></div>
+              <div class="sc-metric"><div class="v">191</div><div class="l">派出所辅警</div></div>
+              <div class="sc-metric"><div class="v">2</div><div class="l">街道</div></div>
+              <div class="sc-metric"><div class="v">54</div><div class="l">乡镇</div></div>
+              <div class="sc-metric"><div class="v">14</div><div class="l">社区</div></div>
+              <div class="sc-metric"><div class="v">517</div><div class="l">村居</div></div>
+            </div>
+            <div class="dispute-grid">
+              <div>
+                <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷情况（本月：107）</div>
+                <div class="sc-chart" style="height:170px" id="h2_dispute"></div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷类型 TOP5</div>
+                <div class="top5">
+                  <div class="t5-row"><span class="rk">TOP1</span><span>其它</span><span class="vl">79</span></div>
+                  <div class="t5-row"><span class="rk">TOP2</span><span>婚恋家庭纠纷</span><span class="vl">12</span></div>
+                  <div class="t5-row"><span class="rk">TOP3</span><span>邻里纠纷</span><span class="vl">6</span></div>
+                  <div class="t5-row"><span class="rk">TOP4</span><span>劳动人事争议</span><span class="vl">4</span></div>
+                  <div class="t5-row"><span class="rk">TOP5</span><span>金融借贷纠纷</span><span class="vl">1</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">流动人口（外省+外市）来源分布 <span class="hint">TOP10</span></div>
+          <div class="sc-card-bd">
+            <div class="flow-list">
+              <div class="fl-row"><span>那曲市</span><span class="v">4,616</span></div>
+              <div class="fl-row"><span>贵州省</span><span class="v">5,505</span></div>
+              <div class="fl-row"><span>湖北省</span><span class="v">5,735</span></div>
+              <div class="fl-row"><span>陕西省</span><span class="v">6,058</span></div>
+              <div class="fl-row"><span>甘肃省</span><span class="v">7,053</span></div>
+              <div class="fl-row"><span>昌都市</span><span class="v">8,081</span></div>
+              <div class="fl-row"><span>河南省</span><span class="v">8,489</span></div>
+              <div class="fl-row"><span>重庆市</span><span class="v">9,933</span></div>
+              <div class="fl-row"><span>云南省</span><span class="v">14,553</span></div>
+              <div class="fl-row"><span>四川省</span><span class="v">5,530</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc-grid grid-home2-r3">
+        <div class="sc-card">
+          <div class="sc-card-hd">房屋分布情况</div>
+          <div class="sc-card-bd">
+            <div class="drone-wrap">
+              <div class="sc-chart" id="h2_house"></div>
+              <div class="drone-legend">
+                <div class="dl-row"><i style="background:#36d0ff"></i><span>自用</span><b>42,627</b></div>
+                <div class="dl-row"><i style="background:#2f6fed"></i><span>出借</span><b>5,172</b></div>
+                <div class="dl-row"><i style="background:#ffb03a"></i><span>出租</span><b>2,342</b></div>
+                <div class="dl-row"><i style="background:#2ee6a8"></i><span>空置</span><b>85</b></div>
+                <div class="dl-row"><i style="background:#7f8fb0"></i><span>其他</span><b>25,005</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">特殊行业备案概况</div>
+          <div class="sc-card-bd">
+            <div class="sp-grid3">
+              <div>
+                <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">无人机备案分布</div>
+                <div class="drone-wrap">
+                  <div class="sc-chart" id="h2_drone"></div>
+                  <div class="drone-legend">
+                    <div class="dl-row"><i style="background:#36d0ff"></i><span>个人备案(架)</span><b>364</b></div>
+                    <div class="dl-row"><i style="background:#2f6fed"></i><span>单位备案(架)</span><b>334</b></div>
+                    <div class="dl-row"><i style="background:#ffb03a"></i><span>警用备案(架)</span><b>8</b></div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">飞行活动备案</div>
+                <div class="sc-numlist" style="flex-direction:column;gap:10px">
+                  <div class="sc-num" style="text-align:left"><div class="v">146</div><div class="l">备案总量（次）</div></div>
+                  <div class="sc-num" style="text-align:left"><div class="v">144</div><div class="l">单位备案（次）</div></div>
+                  <div class="sc-num" style="text-align:left"><div class="v">2</div><div class="l">个人备案（次）</div></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">烟花爆竹登记</div>
+                <div class="sc-numlist" style="flex-direction:column;gap:10px">
+                  <div class="sc-num" style="text-align:left"><div class="v">22</div><div class="l">备案企业（家）</div></div>
+                  <div class="sc-num" style="text-align:left"><div class="v">0</div><div class="l">单位备案（次）</div></div>
+                  <div class="sc-num" style="text-align:left"><div class="v">2,549</div><div class="l">个人备案（次）</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">实有人口分布</div>
+          <div class="sc-card-bd">
+            <div class="popdist-grid">
+              <div class="popdist-card"><div class="v">112,783</div><div class="l">人户一致</div></div>
+              <div class="popdist-card"><div class="v">42,315</div><div class="l">人户分离</div></div>
+              <div class="popdist-card"><div class="v">178,868</div><div class="l">流动人口</div></div>
+              <div class="popdist-card"><div class="v">4</div><div class="l">境外人口</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 视图：实有人口管理 ===== -->
+    <section class="view" id="view-population">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span><span style="color:var(--txt)">实有人口管理</span>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-num">345,557</div><div class="kpi-label">实有人口总数</div><div class="kpi-sub">去重后总数 273,835</div></div>
+        <div class="kpi-card"><div class="kpi-num">166,445</div><div class="kpi-label">男性（60.9%）</div><div class="kpi-sub">女性 107,005（39.1%）</div></div>
+        <div class="kpi-card"><div class="kpi-num">896</div><div class="kpi-label">昨日新增</div><div class="kpi-sub">同比 +18.5% 环比 +18.4%</div></div>
+        <div class="kpi-card"><div class="kpi-num">519</div><div class="kpi-label">今日新增</div><div class="kpi-sub">同比 +15.8% 环比 +42.1%</div></div>
+        <div class="kpi-card"><div class="kpi-num">3,741</div><div class="kpi-label">本周新增</div><div class="kpi-sub">同比 +18.6% 环比 +6.3%</div></div>
+        <div class="kpi-card"><div class="kpi-num">9,607</div><div class="kpi-label">本月新增</div><div class="kpi-sub">同比 +32.1% 环比 +79.7%</div></div>
+        <div class="kpi-card"><div class="kpi-num">77,274</div><div class="kpi-label">从业人员</div><div class="kpi-sub">男65.1% 女34.9%</div></div>
+        <div class="kpi-card"><div class="kpi-num">210,097</div><div class="kpi-label">居住人员</div><div class="kpi-sub">未关联房屋 135,460 · 男53.1% 女46.9%</div></div>
+        <div class="kpi-card"><div class="kpi-num">112,783</div><div class="kpi-label">人户一致</div><div class="kpi-sub">人户分离 42,315 · 流动人口 178,868</div></div>
+        <div class="kpi-card"><div class="kpi-num">178,868</div><div class="kpi-label">流动人口</div><div class="kpi-sub">境外人口 4 人</div></div>
+      </div>
+
+      <div class="grid-pop-charts">
+        <div class="panel"><div class="panel-hd">按辖区统计实有人口情况分析（单位：人）</div><div class="panel-bd"><div class="chart-light" id="pop_area" style="height:300px"></div></div></div>
+        <div class="panel"><div class="panel-hd">按年龄段统计实有人口分布</div><div class="panel-bd"><div class="chart-light" id="pop_age" style="height:300px"></div></div></div>
+        <div class="panel"><div class="panel-hd">流动人口来源地排名 TOP20（本省外市及外省）</div><div class="panel-bd"><div class="chart-light" id="pop_flowtop" style="height:480px"></div></div></div>
+        <div class="panel"><div class="panel-hd">按辖区统计流动人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_flowarea" style="height:300px"></div></div></div>
+        <div class="panel"><div class="panel-hd">按实有人口类型统计实有人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_type" style="height:300px"></div></div></div>
+      </div>
+
+      <div class="data-row">
+        <div class="tree">
+          <div class="tree-hd">行政区划</div>
+          <div class="tree-item active" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>全部</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>巴宜区</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>工布江达县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>墨脱县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>波密县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>察隅县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>朗县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>米林市</div>
+        </div>
+        <div class="panel" style="min-width:0">
+          <div class="filter-bar">
+            <input type="text" placeholder="输入关键字进行过滤" style="flex:1;min-width:140px">
+            <button class="btn primary" data-op="演示：搜索">搜索</button>
+            <button class="btn" data-op="演示：重置">重置</button>
+            <button class="btn" data-op="演示：刷新">刷新</button>
+            <span style="color:var(--txt2);font-size:13px">证件号码</span>
+            <input type="text" placeholder="请输入正确的证件号码" style="flex:1;min-width:180px">
+            <button class="btn" data-op="演示：搜索">搜索</button>
+            <button class="btn primary" data-op="演示：境内人员新增">境内人员新增</button>
+            <button class="btn" data-op="演示：境外人员新增">境外人员新增</button>
+            <button class="btn" data-op="演示：高级搜索">高级搜索</button>
+            <button class="btn" data-op="演示：导出">导出</button>
+          </div>
+          <div class="table-wrap">
+            <table class="grid">
+              <colgroup><col style="width:5%"><col style="width:9%"><col style="width:16%"><col style="width:30%"><col style="width:9%"><col style="width:9%"><col style="width:13%"><col style="width:9%"></colgroup>
+              <thead><tr><th>序号</th><th>姓名</th><th>证件号码</th><th>居住地址</th><th>人口类型</th><th>是否常住</th><th>管辖单位</th><th>操作</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>陈兴胜</td><td>5110231972112445…</td><td>西藏自治区林芝市墨脱县汗密工区6号</td><td><span class="tag">跨省流入</span></td><td>是</td><td>汗密警务室（拉格点位）</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
+                <tr><td>2</td><td>普布次仁</td><td>5426221979010400…</td><td>西藏自治区林芝市工布江达县娘蒲乡尼木朗村3号附1号</td><td><span class="tag green">人户一致</span></td><td>是</td><td>第一警务区</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
+                <tr><td>3</td><td>胡爱珍</td><td>4209211988020155…</td><td>西藏自治区林芝市巴宜区广东东路332号1栋1单元3楼10号</td><td><span class="tag">跨省流入</span></td><td>是</td><td>大桥便民警务站</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
+                <tr><td>4</td><td>白玛嘎松</td><td>540424016102425…</td><td>西藏自治区林芝市波密县康玉乡达曲村46号</td><td><span class="tag green">人户一致</span></td><td>是</td><td>第一警务区</td><td><span class="op-link" data-op="查看人员详情" onclick="toast(this.getAttribute('data-op'))">查看</span><span class="op-link danger" data-op="注销居住轨迹" onclick="toast(this.getAttribute('data-op'))">注销居住轨迹</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pager"><span>共 4 条</span><span>10条/页</span><span>前往</span><input value="1"><span>页</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 视图：护学岗管理 ===== -->
+    <section class="view" id="view-guard">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
+        <span class="tab-tag">护学岗管理<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center">
+        <button class="btn tab-btn" data-tab="今日" onclick="pickTab(this)">今日</button>
+        <button class="btn tab-btn" data-tab="本周" onclick="pickTab(this)">本周</button>
+        <button class="btn tab-btn" data-tab="本月" onclick="pickTab(this)">本月</button>
+        <button class="btn tab-btn primary" data-tab="本季度" onclick="pickTab(this)">本季度</button>
+        <button class="btn tab-btn" data-tab="本年" onclick="pickTab(this)">本年</button>
+        <button class="stats-toggle" style="margin-left:auto" onclick="toggleStats(this)" title="收起统计模块" aria-label="收起统计模块"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      </div>
+
+      <div class="guard-stats">
+        <div class="grid-guard-charts" id="guardCharts">
+        <div class="panel"><div class="panel-hd">护学岗打卡</div><div class="panel-bd">
+          <div class="gd-kpi">
+            <div class="gd-total"><div class="v">8,497</div><div class="l">累计打卡数</div></div>
+            <div class="gd-sub">
+              <div><div class="v">199</div><div class="l">昨日打卡</div></div>
+              <div><div class="v">167</div><div class="l">今日打卡</div></div>
+              <div><div class="v">728</div><div class="l">本周打卡</div></div>
+              <div><div class="v">1,197</div><div class="l">本月打卡</div></div>
+            </div>
+          </div>
+        </div></div>
+        <div class="panel"><div class="panel-hd">学校打卡统计</div><div class="panel-bd"><div class="chart-light" id="gd_schoolstat" style="height:280px"></div></div></div>
+        <div class="panel"><div class="panel-hd tip-wrap">辖区打卡学校（37/56）<span class="tip">实际打卡学校：37；总学校数：56；</span></div><div class="panel-bd"><div class="chart-light" id="gd_school" style="height:320px"></div></div></div>
+        <div class="panel"><div class="panel-hd">打卡状态分布情况</div><div class="panel-bd"><div class="chart-light" id="gd_status" style="height:280px"></div></div></div>
+        <div class="panel"><div class="panel-hd">护学岗有效打卡身份类型分布情况</div><div class="panel-bd"><div class="chart-light" id="gd_identity" style="height:280px"></div></div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="filter-bar fb-guard">
+          <span class="f-item">所属辖区<select><option>请选择</option><option>巴宜分局</option><option>察隅县公安局</option><option>墨脱县公安局</option></select></span>
+          <span class="f-item">学校名称<input type="text" placeholder="请输入"></span>
+          <span class="f-item">身份类型<select><option>请选择</option><option>治安民辅警</option><option>老师</option><option>学校保安</option></select></span>
+          <span class="f-item">打卡状态<select><option>请选择</option><option>有效打卡</option><option>无效打卡</option><option>迟到打卡</option></select></span>
+          <span class="f-item">打卡人姓名<input type="text" placeholder="请输入"></span>
+          <span class="f-item time-item">打卡时间<input type="text" placeholder="请选择时间"><span class="time-to">至</span><input type="text" placeholder="请选择时间"></span>
+          <button class="btn primary" data-op="演示：查询">查询</button>
+          <button class="btn" data-op="演示：重置">重置</button>
+          <button class="btn" data-op="演示：导出">导出</button>
+        </div>
+        <div class="table-wrap">
+          <table class="grid">
+            <colgroup><col style="width:8%"><col style="width:14%"><col style="width:15%"><col style="width:7%"><col style="width:9%"><col style="width:16%"><col style="width:11%"><col style="width:13%"><col style="width:7%"></colgroup>
+            <thead><tr><th>学校所属分局</th><th>学校所属派出所</th><th>学校名称</th><th>打卡人姓名</th><th>打卡人身份</th><th>打卡人身份证号码</th><th>打卡人联系电话</th><th>打卡时间</th><th>打卡状态</th></tr></thead>
+            <tbody>
+              <tr><td>察隅县公安局</td><td>察隅县公安局治安管理大队</td><td>察隅县幼儿园</td><td>达瓦次仁</td><td>学校保安</td><td>542626********0019</td><td>135****4520</td><td>2026-10-15 17:21:25</td><td><span class="tag green">有效打卡</span></td></tr>
+              <tr><td>察隅县公安局</td><td>察隅县公安局治安管理大队</td><td>察隅县幼儿园</td><td>达瓦次仁</td><td>学校保安</td><td>542626********0019</td><td>135****4520</td><td>2026-10-15 17:21:24</td><td><span class="tag green">有效打卡</span></td></tr>
+              <tr><td>墨脱县公安局</td><td>墨脱县公安局加热萨乡派出所</td><td>墨脱县加热萨乡龙岗村幼儿园</td><td>达瓦</td><td>治安民辅警</td><td>542624********0516</td><td>183****7278</td><td>2026-10-15 17:21:21</td><td><span class="tag green">有效打卡</span></td></tr>
+              <tr><td>察隅县公安局</td><td>察隅县公安局治安管理大队</td><td>察隅县幼儿园</td><td>布左</td><td>学校保安</td><td>542626********0014</td><td>180****1889</td><td>2026-10-15 17:21:14</td><td><span class="tag green">有效打卡</span></td></tr>
+              <tr><td>墨脱县公安局</td><td>墨脱县公安局加热萨乡派出所</td><td>墨脱县加热萨乡龙岗村幼儿园</td><td>西洛</td><td>老师</td><td>542621********0627</td><td>188****8731</td><td>2026-10-15 17:19:55</td><td><span class="tag green">有效打卡</span></td></tr>
+              <tr><td>墨脱县公安局</td><td>墨脱县公安局加热萨乡派出所</td><td>墨脱县加热萨乡龙岗村幼儿园</td><td>西洛</td><td>老师</td><td>542621********0627</td><td>188****8731</td><td>2026-10-15 17:19:26</td><td><span class="tag green">有效打卡</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pager"><span>共 6 条</span><span>10条/页</span><span>前往</span><input value="1"><span>页</span></div>
+      </div>
+    </section>
+
+    <!-- ===== 视图：标准地址管理 ===== -->
+    <section class="view" id="view-address">
+      <div class="watermark" id="wm"></div>
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span><span style="color:var(--txt)">标准地址管理</span>
+      </div>
+      <div class="panel">
+        <div class="filter-bar">
+          <input type="text" placeholder="输入关键字进行过滤" style="flex:1;min-width:150px">
+          <button class="btn primary" data-op="演示：搜索">搜索</button>
+          <button class="btn" data-op="演示：重置">重置</button>
+          <button class="btn" data-op="演示：刷新">刷新</button>
+          <input type="text" placeholder="请输入街路巷名称" style="flex:1;min-width:170px">
+          <button class="btn" data-op="演示：高级搜索">高级搜索</button>
+          <button class="btn" data-op="演示：导出">导出</button>
+        </div>
+      </div>
+      <div class="data-row">
+        <div class="tree">
+          <div class="tree-hd">行政区划</div>
+          <div class="tree-item active" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>全部</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>巴宜区</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>工布江达县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>墨脱县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>波密县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>察隅县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>朗县</div>
+          <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>米林市</div>
+        </div>
+        <div class="panel" style="min-width:0">
+          <div class="table-wrap">
+            <table class="grid">
+              <colgroup><col style="width:26%"><col style="width:24%"><col style="width:30%"><col style="width:20%"></colgroup>
+              <thead><tr><th>街路巷名称</th><th>行政区划</th><th>公安管辖</th><th>操作</th></tr></thead>
+              <tbody>
+                <tr><td>里果荣中路</td><td>亚东村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>亚东二路</td><td>亚东村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>更章门巴民族乡扎曲村</td><td>扎曲村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>易贡乡江拉村</td><td>江拉村委会</td><td>第一警务室</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>松宗镇角通村</td><td>角通村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>八一镇巴吉村</td><td>巴吉村委会</td><td>工布商业城便民警务站</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>鲁康德路</td><td>罗布村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>布如村</td><td>觉布如村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>结牧村2组结巴村</td><td>结牧村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+                <tr><td>米瑞乡玉容增村</td><td>玉容增村委会</td><td>第一警务区</td><td><span class="op-link" data-op="查看地址详情" onclick="toast(this.getAttribute('data-op'))">详情</span><span class="op-link" data-op="核实地址信息" onclick="toast(this.getAttribute('data-op'))">核实</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pager"><span>共 10 条</span><span>10条/页</span><span>前往</span><input value="1"><span>页</span></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;left:50%;bottom:42px;transform:translateX(-50%) translateY(20px);background:rgba(15,35,80,.92);color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:all .25s;z-index:99;box-shadow:0 6px 20px rgba(0,0,0,.25)"></div>
+
+<script>
+/* ============ 路由与导航 ============ */
+var VIEWS=['home1','home2','population','guard','address'];
+var charts={};
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';
+  clearTimeout(t._h);t._h=setTimeout(function(){t.style.opacity='0';t.style.transform='translateX(-50%) translateY(20px)';},1800);
+}
+function showView(name){
+  if(VIEWS.indexOf(name)<0)return;
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
+  var el=document.getElementById('view-'+name);
+  el.classList.add('active');
+  document.querySelectorAll('.nav-item[data-target]').forEach(function(n){n.classList.toggle('active',n.getAttribute('data-target')===name);});
+  if(location.hash!=='#'+name)location.hash=name;
+  window.scrollTo(0,0);
+  initViewCharts(name);
+  if(name==='address')buildWatermark();
+  if(window.innerWidth<768)document.getElementById('sidebar').classList.remove('open');
+}
+function buildWatermark(){
+  var wm=document.getElementById('wm');
+  if(!wm||wm.children.length)return;
+  var cols=Math.max(2,Math.ceil(window.innerWidth/360));
+  var rows=Math.max(4,Math.ceil(window.innerHeight/160));
+  for(var r=0;r<rows;r++){
+    for(var c=0;c<cols;c++){
+      var d=document.createElement('div');
+      d.className='wm-line';
+      d.style.left=(c*360+30)+'px';
+      d.style.top=(r*160+40)+'px';
+      d.innerHTML='严禁泄露公民个人信息和警务工作秘密<span class="wm-time">2026-10-15 16:14:40 · 治安管理支队 · 54221198403250036</span>';
+      wm.appendChild(d);
+    }
+  }
+}
+function initViewCharts(name){
+  if(!window.echarts)return;
+  if(!charts[name]){
+    charts[name]={};
+    var defs=CHART_DEFS[name]||[];
+    defs.forEach(function(d){
+      var el=document.getElementById(d.id);
+      if(el){
+        var c=echarts.init(el);
+        c.setOption(d.option);
+        charts[name][d.id]=c;
+      }
+    });
+  }else{
+    Object.keys(charts[name]).forEach(function(k){if(charts[name][k])charts[name][k].resize();});
+  }
+}
+document.getElementById('sideNav').addEventListener('click',function(e){
+  var it=e.target.closest('.nav-item');if(!it)return;
+  if(it.hasAttribute('data-toggle')){
+    it.classList.toggle('open');return;
+  }
+  var target=it.getAttribute('data-target');
+  if(target){showView(target);}
+  else{toast('该模块为需求原型，暂未还原页面');}
+});
+document.getElementById('menuBtn').addEventListener('click',function(){document.getElementById('sidebar').classList.toggle('open');});
+function pickTree(el){
+  document.querySelectorAll('.tree-item').forEach(function(t){t.classList.remove('active');});
+  el.classList.add('active');
+  toast('已切换：'+el.textContent.replace(/[\s›]/g,''));
+}
+function pickTab(el){
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('primary');});
+  el.classList.add('primary');
+  toast('统计周期：'+el.getAttribute('data-tab'));
+}
+function toggleStats(btn){
+  var g=document.getElementById('guardCharts');
+  var c=g.classList.toggle('collapsed');
+  btn.classList.toggle('collapsed',c);
+  btn.title=c?'展开统计模块':'收起统计模块';
+}
+document.addEventListener('click',function(e){
+  var tt=e.target.closest('[data-toast]');
+  if(tt){toast('该功能为需求原型演示，暂未开放');return;}
+  var op=e.target.closest('[data-op]');
+  if(op&&!op.hasAttribute('onclick')){toast(op.getAttribute('data-op')||'演示操作');}
+});
+window.addEventListener('resize',function(){
+  var active=document.querySelector('.view.active');if(!active)return;
+  var vn=active.id.replace('view-','');
+  if(charts[vn])Object.keys(charts[vn]).forEach(function(k){charts[vn][k].resize();});
+});
+var hashMap={'home1':'home1','home2':'home2','population':'population','guard':'guard','address':'address','pop':'population'};
+window.addEventListener('hashchange',function(){
+  var h=(location.hash||'').replace('#','');
+  if(hashMap[h]&&!document.getElementById('view-'+h).classList.contains('active'))showView(h);
+});
+
+/* ============ 图表公共配置 ============ */
+var DARK={
+  text:'#bcd6f5',legendText:'#9fc2e8',axisLabel:'#6f92c0',
+  splitLine:'rgba(64,128,220,.14)',tooltipBg:'rgba(9,31,66,.96)',tooltipBorder:'#1d4d8f'
+};
+function darkTooltip(){return {backgroundColor:DARK.tooltipBg,borderColor:DARK.tooltipBorder,textStyle:{color:'#dcebff',fontSize:12},axisPointer:{type:'shadow'}};}
+function darkAxis(){
+  return {axisLine:{lineStyle:{color:'rgba(64,128,220,.35)'}},axisTick:{show:false},axisLabel:{color:DARK.axisLabel,fontSize:11}};
+}
+
+var CHART_DEFS={};
+
+/* -------- 首页 v1 图表（保留环形图，列表/卡片改为HTML） -------- */
+CHART_DEFS.home1=[
+{id:'h1_dispute',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}%'}),
+  series:[{
+    type:'pie',radius:['62%','82%'],center:['50%','48%'],
+    data:[{value:95.33,name:'化解率',itemStyle:{color:'#2ee6a8'}},{value:4.67,name:'待处理',itemStyle:{color:'rgba(64,128,220,.22)'}}],
+    label:{show:false},labelLine:{show:false},silent:true
+  }],
+  graphic:[
+    {type:'text',left:'center',top:'36%',style:{text:'95.33%',fill:'#7fe4ff',fontSize:22,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'56%',style:{text:'化解率',fill:'#8fb0dd',fontSize:12,textAlign:'center'}}
+  ]
+}},
+{id:'h1_drone',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}架（{d}%）'}),
+  legend:{show:false},
+  series:[{
+    type:'pie',radius:['55%','76%'],center:['50%','48%'],
+    data:[
+      {value:364,name:'个人备案',itemStyle:{color:'#36d0ff'}},
+      {value:334,name:'单位备案',itemStyle:{color:'#2f6fed'}},
+      {value:8,name:'警用备案',itemStyle:{color:'#ffb03a'}}
+    ],
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
+  }]
+}}
+];
+
+/* -------- 首页 v2 图表（保留环形图，列表/卡片改为HTML） -------- */
+CHART_DEFS.home2=[
+{id:'h2_dispute',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}%'}),
+  series:[{
+    type:'pie',radius:['62%','82%'],center:['50%','48%'],
+    data:[{value:95.33,name:'化解率',itemStyle:{color:'#2ee6a8'}},{value:4.67,name:'待处理',itemStyle:{color:'rgba(64,128,220,.22)'}}],
+    label:{show:false},labelLine:{show:false},silent:true
+  }],
+  graphic:[
+    {type:'text',left:'center',top:'36%',style:{text:'95.33%',fill:'#7fe4ff',fontSize:22,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'56%',style:{text:'化解率',fill:'#8fb0dd',fontSize:12,textAlign:'center'}}
+  ]
+}},
+{id:'h2_drone',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}架（{d}%）'}),
+  legend:{show:false},
+  series:[{
+    type:'pie',radius:['55%','76%'],center:['50%','48%'],
+    data:[
+      {value:364,name:'个人备案',itemStyle:{color:'#36d0ff'}},
+      {value:334,name:'单位备案',itemStyle:{color:'#2f6fed'}},
+      {value:8,name:'警用备案',itemStyle:{color:'#ffb03a'}}
+    ],
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
+  }]
+}},
+{id:'h2_house',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}（{d}%）'}),
+  legend:{show:false},
+  series:[{
+    type:'pie',radius:['55%','76%'],center:['50%','48%'],
+    data:[
+      {value:42627,name:'自用',itemStyle:{color:'#36d0ff'}},
+      {value:5172,name:'出借',itemStyle:{color:'#2f6fed'}},
+      {value:2342,name:'出租',itemStyle:{color:'#ffb03a'}},
+      {value:85,name:'空置',itemStyle:{color:'#2ee6a8'}},
+      {value:25005,name:'其他',itemStyle:{color:'#7f8fb0'}}
+    ],
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
+  }]
+}}
+];
+
+/* -------- 实有人口图表 -------- */
+var LIGHT={
+  text:'#5f6f8a',legendText:'#7c8aa5',axisLabel:'#8a97ad',
+  splitLine:'rgba(90,120,170,.12)',tooltipBg:'rgba(255,255,255,.98)',tooltipBorder:'#d3def2'
+};
+function lightTooltip(){return {backgroundColor:LIGHT.tooltipBg,borderColor:LIGHT.tooltipBorder,textStyle:{color:'#1f2d3d',fontSize:12},axisPointer:{type:'shadow'}};}
+function lightAxis(){
+  return {axisLine:{lineStyle:{color:'#c9d6ee'}},axisTick:{show:false},axisLabel:{color:LIGHT.axisLabel,fontSize:11}};
+}
+CHART_DEFS.population=[
+{id:'pop_area',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return (v/1000).toFixed(1)+'k';}}),
+  legend:{data:['男性','女性'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
+  grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['巴宜分局','米林市','波密县','雅下公安分局','工布江达县','察隅县','朗县','墨脱县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
+  series:[
+    {name:'男性',type:'bar',data:[67400,34500,28400,32400,15860,16490,13200,1700],barWidth:7,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]}},
+    {name:'女性',type:'bar',data:[66100,32500,26600,30100,14700,15200,12000,1600],barWidth:7,itemStyle:{color:'#36b8ff',borderRadius:[3,3,0,0]}}
+  ]
+}},
+{id:'pop_age',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+'%';}}),
+  legend:{data:['男性','女性'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
+  grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['0-10','11-20','21-30','31-40','41-50','51-60','61-70','71-80','80+'],axisLabel:{color:LIGHT.text,fontSize:11}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:'{value}%'}}),
+  series:[
+    {name:'男性',type:'bar',data:[2.4,4.4,10.3,16.2,13.6,11.4,2.6,0.8,0.2],barWidth:7,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]}},
+    {name:'女性',type:'bar',data:[2.2,3.9,7.2,9.1,6.9,5.2,2.3,1.0,0.4],barWidth:7,itemStyle:{color:'#36b8ff',borderRadius:[3,3,0,0]}}
+  ]
+}},
+{id:'pop_flowtop',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString();}}),
+  grid:{left:4,right:40,top:6,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
+    data:['四川','云南','重庆','河南','昌都','甘肃','陕西','湖北','贵州','泉州','湖南','青海','拉萨','日喀则','山东','西藏','河北','山南','安徽','山西'],
+    axisLabel:{color:LIGHT.text,fontSize:11}}),
+  series:[{name:'流动人口',type:'bar',data:[55300,14553,9933,6889,6801,7053,6058,5735,5905,4681,3710,3340,3140,2770,2170,2130,2010,1990,1920,1410],
+    barWidth:9,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
+    label:{show:true,position:'right',color:'#2f6fed',fontSize:10,formatter:function(p){return p.value.toLocaleString();}}}
+  ]
+}},
+{id:'pop_flowarea',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString();}}),
+  legend:{data:['跨县','跨市','跨省'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
+  grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['巴宜分局','雅下公安分局','米林市','波密县','墨脱县','察隅县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
+  series:[
+    {name:'跨县',type:'bar',stack:'t',data:[5620,4320,318,45,12,30],barWidth:10,itemStyle:{color:'#2f6fed'}},
+    {name:'跨市',type:'bar',stack:'t',data:[11280,8740,462,58,16,42],barWidth:10,itemStyle:{color:'#36b8ff'}},
+    {name:'跨省',type:'bar',stack:'t',data:[31143,27645,1628,169,46,120],barWidth:10,itemStyle:{color:'#7fb4ff'}}
+  ]
+}},
+{id:'pop_type',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c}%'}),
+  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:11},itemWidth:10,itemHeight:8},
+  series:[{
+    type:'pie',radius:['42%','66%'],center:['50%','44%'],
+    data:[
+      {value:40.7,name:'跨省流入',itemStyle:{color:'#2f6fed'}},
+      {value:32.6,name:'人户一致',itemStyle:{color:'#36b8ff'}},
+      {value:12.2,name:'人户分离',itemStyle:{color:'#7fb4ff'}},
+      {value:7.5,name:'跨市流入',itemStyle:{color:'#ffb03a'}},
+      {value:3.5,name:'跨县流入',itemStyle:{color:'#2ee6a8'}}
+    ],
+    label:{show:true,formatter:'{b}\\n{c}%',color:LIGHT.text,fontSize:11},
+    labelLine:{length:12,length2:8,lineStyle:{color:'#c9d6ee'}},
+    itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
+  }]
+}}
+];
+
+/* -------- 护学岗图表 -------- */
+CHART_DEFS.guard=[{id:'gd_schoolstat',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+' 所';}}),
+  grid:{left:4,right:40,top:6,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
+    data:['学校总数','应打卡学校','实际打卡学校','今日应打卡','今日实际打卡'],axisLabel:{color:LIGHT.text,fontSize:11}}),
+  series:[{name:'数量',type:'bar',data:[178,145,132,112,98],barWidth:12,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
+    label:{show:true,position:'right',color:'#2f6fed',fontSize:11}}
+  ]
+}},
+
+{id:'gd_school',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'}}),
+  legend:{data:['实际打卡','未使用打卡'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
+  grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['朗县公安局','巴宜分局','墨脱县公安局','波密县公安局','米林市公安局','工布江达县公安局','察隅县公安局'],axisLabel:{color:LIGHT.text,fontSize:10,interval:0,rotate:45}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10}}),
+  series:[
+    {name:'实际打卡',type:'bar',data:[6,13,5,11,8,4,16],barWidth:8,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]},
+     label:{show:true,position:'top',color:'#2f6fed',fontSize:10}},
+    {name:'未使用打卡',type:'bar',data:[10,19,22,14,22,5,23],barWidth:8,itemStyle:{color:'#c6d8f5',borderRadius:[3,3,0,0]},
+     label:{show:true,position:'top',color:'#8a97ad',fontSize:10}}
+  ]
+}},
+{id:'gd_status',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c}%'}),
+  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:11},itemWidth:10,itemHeight:8},
+  series:[{
+    type:'pie',radius:['46%','68%'],center:['50%','44%'],
+    data:[
+      {value:76,name:'有效打卡',itemStyle:{color:'#2ee6a8'}},
+      {value:17,name:'无效打卡',itemStyle:{color:'#2f6fed'}},
+      {value:7,name:'迟到打卡',itemStyle:{color:'#ffb03a'}}
+    ],
+    label:{show:true,formatter:'{b}\n{d}%',color:LIGHT.text,fontSize:11},
+    labelLine:{length:12,length2:8,lineStyle:{color:'#c9d6ee'}},
+    itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
+  }]
+}},
+{id:'gd_identity',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c}人（{d}%）'}),
+  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10.5},itemWidth:10,itemHeight:8},
+  series:[{
+    type:'pie',radius:['42%','66%'],center:['50%','42%'],
+    data:[
+      {value:41,name:'治安民辅警',itemStyle:{color:'#2f6fed'}},
+      {value:21,name:'老师',itemStyle:{color:'#36b8ff'}},
+      {value:5,name:'学校保安',itemStyle:{color:'#7fb4ff'}},
+      {value:5,name:'志愿者(党员)',itemStyle:{color:'#ffb03a'}},
+      {value:3,name:'交通民辅警',itemStyle:{color:'#2ee6a8'}}
+    ],
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
+  }]
+}},
+];
+
+/* -------- 标准地址（无图表） -------- */
+CHART_DEFS.address=[];
+
+/* 默认视图 */
+(function(){
+  var h=(location.hash||'').replace('#','');
+  if(hashMap[h])showView(h);else showView('home1');
+})();
+</script>
+</body>
+</html>
