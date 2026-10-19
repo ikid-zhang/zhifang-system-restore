@@ -289,6 +289,22 @@ table.grid tr:hover td{background:#f7faff}
   .sc-chart{height:250px}
   .sc-chart.tall{height:440px}
 }
+
+/* ============ 响应式：统计板块自适应（中间断点与窄屏降级） ============ */
+.sc-kpi{min-width:0}
+@media (max-width:1199px){
+  .sc-kpis{grid-template-columns:repeat(5,1fr)}
+  .grid-home1-r2,.grid-home1-r3{grid-template-columns:1fr 1.5fr}
+  .grid-home1-r2 .sc-card:nth-child(3),.grid-home1-r3 .sc-card:nth-child(3){grid-column:1/-1}
+  .grid-home1-r4,.grid-home1-r5,.grid-home1-r6,.grid-home2-r2,.grid-home2-r3{grid-template-columns:repeat(2,1fr)}
+  .grid-home1-r6 .sc-card:nth-child(11){grid-column:1/-1}
+  .grid-home2-r2 .sc-card:nth-child(3),.grid-home2-r3 .sc-card:nth-child(3){grid-column:1/-1}
+}
+@media (max-width:767px){
+  .sc-kpis{grid-template-columns:repeat(2,1fr);gap:8px}
+  .grid-home1-r2,.grid-home1-r3,.grid-home1-r4,.grid-home1-r5,.grid-home1-r6,
+  .grid-home2-r2,.grid-home2-r3{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
