@@ -197,6 +197,8 @@ table.grid tr:hover td{background:#f7faff}
 .gd-sub .l{font-size:11px;color:var(--txt2);margin-top:2px}
 /* 护学岗：统计模块折叠 */
 .guard-stats{position:relative;margin-bottom:14px}
+.addr-stats{position:relative;margin-bottom:14px}
+.addr-stats-hd{display:flex;justify-content:flex-end;margin-bottom:14px}
 .tip-wrap{position:relative;cursor:help}
 .tip-wrap .tip{position:absolute;top:calc(100% + 8px);left:0;z-index:30;background:#123c7e;color:#fff;font-size:12px;padding:6px 10px;border-radius:6px;white-space:nowrap;box-shadow:0 2px 8px rgba(15,50,120,.25);opacity:0;visibility:hidden;transition:opacity .15s;pointer-events:none;font-weight:400}
 .tip-wrap:hover .tip{opacity:1;visibility:visible}
@@ -204,10 +206,10 @@ table.grid tr:hover td{background:#f7faff}
 .stats-toggle:hover{border-color:var(--blue);color:var(--blue)}
 .stats-toggle svg{width:14px;height:14px;transition:transform .2s}
 .stats-toggle.collapsed svg{transform:rotate(180deg)}
-#guardCharts.collapsed{display:none}
+#guardCharts.collapsed,#addrCharts.collapsed{display:none}
 
 /* ============ 响应式：桌面 ============ */
-.grid-pop-charts,.grid-guard-charts,.data-row{display:grid;grid-template-columns:1fr;gap:14px}
+.grid-pop-charts,.grid-guard-charts,.grid-addr-charts,.data-row{display:grid;grid-template-columns:1fr;gap:14px}
 @media (min-width:768px){
   .sidebar{transform:none}
   .menu-btn{display:none}
@@ -221,7 +223,7 @@ table.grid tr:hover td{background:#f7faff}
   .row-2col{grid-template-columns:1fr 1fr}
   .row-3col{grid-template-columns:repeat(3,1fr)}
   .row-4col{grid-template-columns:repeat(4,1fr)}
-  .grid-pop-charts .chart-light,.grid-guard-charts .chart-light{height:175px!important}
+  .grid-pop-charts .chart-light,.grid-guard-charts .chart-light,.grid-addr-charts .chart-light{height:175px!important}
 }
 @media (min-width:1200px){
   .grid-home1-r2{grid-template-columns:27% 48% 25%}
@@ -230,6 +232,7 @@ table.grid tr:hover td{background:#f7faff}
   .grid-home2-r3{grid-template-columns:25% 51% 24%}
   .grid-pop-charts{grid-template-columns:repeat(5,1fr)}
   .grid-guard-charts{grid-template-columns:repeat(5,1fr)}
+  .grid-addr-charts{grid-template-columns:repeat(3,1fr)}
   .sp-grid3{grid-template-columns:1fr 1fr 1fr}
   .dispute-grid{grid-template-columns:1fr 1fr}
   .sc-chart{height:250px}
@@ -744,6 +747,14 @@ table.grid tr:hover td{background:#f7faff}
       <div class="breadcrumb">
         <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span><span style="color:var(--txt)">标准地址管理</span>
       </div>
+      <div class="addr-stats">
+        <div class="addr-stats-hd"><button class="stats-toggle" data-target="addrCharts" onclick="toggleStats(this)" title="收起统计模块" aria-label="收起统计模块"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button></div>
+        <div class="grid-addr-charts" id="addrCharts">
+          <div class="panel"><div class="panel-hd">各区县地址分布情况</div><div class="panel-bd"><div class="chart-light" id="ad_dist" style="height:280px"></div></div></div>
+          <div class="panel"><div class="panel-hd">二维码绑定情况</div><div class="panel-bd"><div class="chart-light" id="ad_qr" style="height:280px"></div></div></div>
+          <div class="panel"><div class="panel-hd">地址层级分类统计</div><div class="panel-bd"><div class="chart-light" id="ad_level" style="height:280px"></div></div></div>
+        </div>
+      </div>
       <div class="panel">
         <div class="filter-bar">
           <input type="text" placeholder="输入关键字进行过滤" style="flex:1;min-width:150px">
@@ -751,6 +762,7 @@ table.grid tr:hover td{background:#f7faff}
           <button class="btn" data-op="演示：重置">重置</button>
           <button class="btn" data-op="演示：刷新">刷新</button>
           <input type="text" placeholder="请输入街路巷名称" style="flex:1;min-width:170px">
+          <input type="text" placeholder="请输入地址俗称" style="flex:1;min-width:150px">
           <button class="btn" data-op="演示：高级搜索">高级搜索</button>
           <button class="btn" data-op="演示：导出">导出</button>
         </div>
@@ -871,7 +883,8 @@ function pickTab(el){
   toast('统计周期：'+el.getAttribute('data-tab'));
 }
 function toggleStats(btn){
-  var g=document.getElementById('guardCharts');
+  var target=btn.getAttribute('data-target')||'guardCharts';
+  var g=document.getElementById(target);
   var c=g.classList.toggle('collapsed');
   btn.classList.toggle('collapsed',c);
   btn.title=c?'展开统计模块':'收起统计模块';
@@ -1114,8 +1127,51 @@ CHART_DEFS.guard=[{id:'gd_school',option:{
 }},
 ];
 
-/* -------- 标准地址（无图表） -------- */
-CHART_DEFS.address=[];
+/* -------- 标准地址图表 -------- */
+CHART_DEFS.address=[
+{id:'ad_dist',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 条';}}),
+  grid:{left:4,right:12,top:6,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲区','乙县','丙县','丁县','戊县','己县','庚市'],axisLabel:{color:LIGHT.text,fontSize:10,interval:0,rotate:30}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10}}),
+  series:[{name:'地址数',type:'bar',data:[2860,1540,3120,2975,2430,1185,1590],barWidth:12,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
+    label:{show:true,position:'top',color:'#2f6fed',fontSize:10,formatter:function(p){return p.value.toLocaleString();}}}
+  ]
+}},
+{id:'ad_qr',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 条'}),
+  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:11},itemWidth:10,itemHeight:8},
+  graphic:[
+    {type:'text',left:'center',top:'30%',style:{text:'15,700',fill:'#1f2d3d',fontSize:20,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'41%',style:{text:'地址总数',fill:'#8a97ad',fontSize:11,textAlign:'center'}}
+  ],
+  series:[{
+    type:'pie',radius:['52%','76%'],center:['50%','42%'],
+    data:[
+      {value:12486,name:'已绑定二维码',itemStyle:{color:'#2f6fed'}},
+      {value:3214,name:'未绑定二维码',itemStyle:{color:'#d3def2'}}
+    ],
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
+  }]
+}},
+{id:'ad_level',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 条（{d}%）'}),
+  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:11},itemWidth:10,itemHeight:8},
+  series:[{
+    type:'pie',radius:['42%','66%'],center:['50%','42%'],
+    data:[
+      {value:2358,name:'街路巷',itemStyle:{color:'#2f6fed'}},
+      {value:8742,name:'门楼',itemStyle:{color:'#36b8ff'}},
+      {value:4600,name:'层户',itemStyle:{color:'#ffb03a'}}
+    ],
+    label:{show:true,formatter:'{b}\n{d}%',color:LIGHT.text,fontSize:11},
+    labelLine:{length:12,length2:8,lineStyle:{color:'#c9d6ee'}},
+    itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
+  }]
+}}
+];
 
 /* 默认视图 */
 (function(){
