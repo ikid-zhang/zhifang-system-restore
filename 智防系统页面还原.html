@@ -272,6 +272,8 @@ table.grid tr:hover td{background:#f7faff}
 @media (min-width:1200px){
   .grid-home1-r2{grid-template-columns:27% 48% 25%}
   .grid-home1-r3{grid-template-columns:26% 50% 24%}
+  .grid-home1-r4{grid-template-columns:repeat(4,1fr)}
+  .grid-home1-r5{grid-template-columns:repeat(2,1fr)}
   .grid-home2-r2{grid-template-columns:25% 51% 24%}
   .grid-home2-r3{grid-template-columns:25% 51% 24%}
   .grid-pop-charts{grid-template-columns:repeat(5,1fr)}
@@ -473,6 +475,89 @@ table.grid tr:hover td{background:#f7faff}
               <div class="sc-num"><div class="v">65</div><div class="l">今日新增</div></div>
               <div class="sc-num"><div class="v">126</div><div class="l">本周新增</div></div>
               <div class="sc-num"><div class="v">4,355</div><div class="l">本月新增</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc-grid grid-home1-r4">
+        <div class="sc-card">
+          <div class="sc-card-hd">标准地址概况</div>
+          <div class="sc-card-bd">
+            <div class="sc-chart" style="height:180px" id="h1_addr"></div>
+            <div class="drone-legend">
+              <div class="dl-row"><i style="background:#36d0ff"></i><span>街路巷</span><b>14,320</b></div>
+              <div class="dl-row"><i style="background:#2f6fed"></i><span>门楼牌</span><b>213,610</b></div>
+              <div class="dl-row"><i style="background:#ffb03a"></i><span>层户</span><b>96,000</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">实有人口概况</div>
+          <div class="sc-card-bd">
+            <div class="sc-chart" style="height:180px" id="h1_pop"></div>
+            <div class="drone-legend">
+              <div class="dl-row"><i style="background:#2ee6a8"></i><span>男性</span><b>210,444</b></div>
+              <div class="dl-row"><i style="background:#7fe4ff"></i><span>女性</span><b>135,113</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">实有房屋概况</div>
+          <div class="sc-card-bd">
+            <div class="sc-chart" style="height:180px" id="h1_house"></div>
+            <div class="drone-legend">
+              <div class="dl-row"><i style="background:#2f6fed"></i><span>自住</span><b>52,160</b></div>
+              <div class="dl-row"><i style="background:#36d0ff"></i><span>出租</span><b>15,480</b></div>
+              <div class="dl-row"><i style="background:#ffb03a"></i><span>闲置</span><b>5,980</b></div>
+              <div class="dl-row"><i style="background:#b9a4ff"></i><span>其他</span><b>1,628</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">实有单位概况</div>
+          <div class="sc-card-bd">
+            <div class="sc-chart" style="height:180px" id="h1_unit"></div>
+            <div class="drone-legend">
+              <div class="dl-row"><i style="background:#36d0ff"></i><span>企业</span><b>9,860</b></div>
+              <div class="dl-row"><i style="background:#2f6fed"></i><span>机关事业单位</span><b>4,120</b></div>
+              <div class="dl-row"><i style="background:#ffb03a"></i><span>个体工商户</span><b>3,750</b></div>
+              <div class="dl-row"><i style="background:#2ee6a8"></i><span>其他</span><b>1,463</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc-grid grid-home1-r5">
+        <div class="sc-card">
+          <div class="sc-card-hd">人员预警情况</div>
+          <div class="sc-card-bd">
+            <div class="sc-numlist">
+              <div class="sc-num" style="flex:1 1 100%"><div class="v" style="font-size:30px">2,940</div><div class="l">本月预警总数</div></div>
+              <div class="sc-num"><div class="v">146</div><div class="l">今日预警</div></div>
+              <div class="sc-num"><div class="v">1,023</div><div class="l">本周预警</div></div>
+              <div class="sc-num"><div class="v">328</div><div class="l">待处理</div></div>
+            </div>
+            <div class="top5" style="margin-top:10px">
+              <div class="t5-row"><span class="rk">TOP1</span><span>重点人员预警</span><span class="vl">328</span></div>
+              <div class="t5-row"><span class="rk">TOP2</span><span>矛盾纠纷类</span><span class="vl">212</span></div>
+              <div class="t5-row"><span class="rk">TOP3</span><span>涉稳风险类</span><span class="vl">146</span></div>
+              <div class="t5-row"><span class="rk">TOP4</span><span>涉毒涉赌类</span><span class="vl">98</span></div>
+              <div class="t5-row"><span class="rk">TOP5</span><span>其他</span><span class="vl">54</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-card">
+          <div class="sc-card-hd">护学岗辖区打卡排名</div>
+          <div class="sc-card-bd">
+            <div class="sc-bars" style="margin-top:10px">
+              <div class="sc-bar-row"><span class="nm">甲区</span><div class="track"><div class="fill" style="width:100%"></div></div><b>100%</b></div>
+              <div class="sc-bar-row"><span class="nm">乙县</span><div class="track"><div class="fill" style="width:96%"></div></div><b>96%</b></div>
+              <div class="sc-bar-row"><span class="nm">丙县</span><div class="track"><div class="fill" style="width:92%"></div></div><b>92%</b></div>
+              <div class="sc-bar-row"><span class="nm">丁县</span><div class="track"><div class="fill" style="width:88%"></div></div><b>88%</b></div>
+              <div class="sc-bar-row"><span class="nm">戊县</span><div class="track"><div class="fill" style="width:85%"></div></div><b>85%</b></div>
+              <div class="sc-bar-row"><span class="nm">己县</span><div class="track"><div class="fill" style="width:78%"></div></div><b>78%</b></div>
+              <div class="sc-bar-row"><span class="nm">庚市</span><div class="track"><div class="fill" style="width:70%"></div></div><b>70%</b></div>
             </div>
           </div>
         </div>
@@ -1005,6 +1090,79 @@ CHART_DEFS.home1=[
     label:{show:false},labelLine:{show:false},
     itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
   }]
+}},
+{id:'h1_addr',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}条（{d}%）'}),
+  legend:{show:false},
+  series:[{
+    type:'pie',radius:['55%','76%'],center:['50%','48%'],
+    data:[
+      {value:14320,name:'街路巷',itemStyle:{color:'#36d0ff'}},
+      {value:213610,name:'门楼牌',itemStyle:{color:'#2f6fed'}},
+      {value:96000,name:'层户',itemStyle:{color:'#ffb03a'}}
+    ],
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
+  }],
+  graphic:[
+    {type:'text',left:'center',top:'36%',style:{text:'323,930',fill:'#7fe4ff',fontSize:20,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'56%',style:{text:'标准地址总数',fill:'#8fb0dd',fontSize:11,textAlign:'center'}}
+  ]
+}},
+{id:'h1_pop',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}人（{d}%）'}),
+  legend:{show:false},
+  series:[{
+    type:'pie',radius:['55%','76%'],center:['50%','48%'],
+    data:[
+      {value:210444,name:'男性',itemStyle:{color:'#2ee6a8'}},
+      {value:135113,name:'女性',itemStyle:{color:'#7fe4ff'}}
+    ],
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
+  }],
+  graphic:[
+    {type:'text',left:'center',top:'36%',style:{text:'345,557',fill:'#7fe4ff',fontSize:20,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'56%',style:{text:'实有人口总数',fill:'#8fb0dd',fontSize:11,textAlign:'center'}}
+  ]
+}},
+{id:'h1_house',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}间（{d}%）'}),
+  legend:{show:false},
+  series:[{
+    type:'pie',radius:['55%','76%'],center:['50%','48%'],
+    data:[
+      {value:52160,name:'自住',itemStyle:{color:'#2f6fed'}},
+      {value:15480,name:'出租',itemStyle:{color:'#36d0ff'}},
+      {value:5980,name:'闲置',itemStyle:{color:'#ffb03a'}},
+      {value:1628,name:'其他',itemStyle:{color:'#b9a4ff'}}
+    ],
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
+  }],
+  graphic:[
+    {type:'text',left:'center',top:'36%',style:{text:'75,248',fill:'#7fe4ff',fontSize:20,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'56%',style:{text:'实有房屋总数',fill:'#8fb0dd',fontSize:11,textAlign:'center'}}
+  ]
+}},
+{id:'h1_unit',option:{
+  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}家（{d}%）'}),
+  legend:{show:false},
+  series:[{
+    type:'pie',radius:['55%','76%'],center:['50%','48%'],
+    data:[
+      {value:9860,name:'企业',itemStyle:{color:'#36d0ff'}},
+      {value:4120,name:'机关事业单位',itemStyle:{color:'#2f6fed'}},
+      {value:3750,name:'个体工商户',itemStyle:{color:'#ffb03a'}},
+      {value:1463,name:'其他',itemStyle:{color:'#2ee6a8'}}
+    ],
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
+  }],
+  graphic:[
+    {type:'text',left:'center',top:'36%',style:{text:'19,193',fill:'#7fe4ff',fontSize:20,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'56%',style:{text:'实有单位总数',fill:'#8fb0dd',fontSize:11,textAlign:'center'}}
+  ]
 }}
 ];
 
