@@ -228,7 +228,7 @@ table.grid tr:hover td{background:#f7faff}
   .grid-home2-r2{grid-template-columns:25% 51% 24%}
   .grid-home2-r3{grid-template-columns:25% 51% 24%}
   .grid-pop-charts{grid-template-columns:repeat(5,1fr)}
-  .grid-guard-charts{grid-template-columns:repeat(4,1fr)}
+  .grid-guard-charts{grid-template-columns:repeat(5,1fr)}
   .sp-grid3{grid-template-columns:1fr 1fr 1fr}
   .dispute-grid{grid-template-columns:1fr 1fr}
   .sc-chart{height:250px}
@@ -701,6 +701,7 @@ table.grid tr:hover td{background:#f7faff}
           </div>
         </div></div>
         <div class="panel"><div class="panel-hd tip-wrap">辖区打卡学校（37/56）<span class="tip">实际打卡学校：37；总学校数：56；</span></div><div class="panel-bd"><div class="chart-light" id="gd_school" style="height:320px"></div></div></div>
+        <div class="panel"><div class="panel-hd">按辖区统计护学岗有效打卡排名情况</div><div class="panel-bd"><div class="chart-light" id="gd_rank" style="height:280px"></div></div></div>
         <div class="panel"><div class="panel-hd">打卡状态分布情况</div><div class="panel-bd"><div class="chart-light" id="gd_status" style="height:280px"></div></div></div>
         <div class="panel"><div class="panel-hd">护学岗有效打卡身份类型分布情况</div><div class="panel-bd"><div class="chart-light" id="gd_identity" style="height:280px"></div></div></div>
         </div>
@@ -1066,6 +1067,17 @@ CHART_DEFS.guard=[{id:'gd_school',option:{
      label:{show:true,position:'top',color:'#2f6fed',fontSize:10}},
     {name:'未使用打卡',type:'bar',data:[10,19,22,14,22,5,23],barWidth:8,itemStyle:{color:'#c6d8f5',borderRadius:[3,3,0,0]},
      label:{show:true,position:'top',color:'#8a97ad',fontSize:10}}
+  ]
+}},
+{id:'gd_rank',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+'%';}}),
+  grid:{left:4,right:44,top:6,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'value',max:100,splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:'{value}%'}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
+    data:['乙县公安局','丁县公安局','戊县公安局','甲分局','己县公安局','庚市公安局','丙县公安局'],axisLabel:{color:LIGHT.text,fontSize:10}}),
+  series:[{name:'有效打卡率',type:'bar',data:[44.4,44.0,41.0,40.6,37.5,26.7,18.5],barWidth:12,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
+    label:{show:true,position:'right',color:'#2f6fed',fontSize:10,formatter:function(p){return p.value+'%';}}}
   ]
 }},
 {id:'gd_status',option:{
