@@ -118,11 +118,10 @@ table.grid tr:hover td{background:#f7faff}
 .tree-children{display:none}
 .tree-item.open + .tree-children{display:block}
 .tree-children .tree-item{padding-left:34px}
-.tree-search{padding:12px 12px 8px;border-bottom:1px solid #f0f4fa;background:#fff}
-.tree-search input{width:100%;height:30px;border:1px solid #d3def2;border-radius:6px;padding:0 8px;font-size:12px;color:var(--txt);background:#fff;outline:none;box-sizing:border-box}
+.tree-search{display:flex;gap:6px;align-items:center;padding:10px 12px;border-bottom:1px solid #f0f4fa;background:#fff}
+.tree-search input{flex:1;min-width:0;height:30px;border:1px solid #d3def2;border-radius:6px;padding:0 8px;font-size:12px;color:var(--txt);background:#fff;outline:none;box-sizing:border-box}
 .tree-search input:focus{border-color:var(--blue)}
-.tree-search-btns{display:flex;gap:6px;margin-top:8px}
-.tree-search-btns .btn{flex:1;height:28px;font-size:12px;padding:0 6px}
+.tree-search .btn{flex:0 0 auto;height:28px;font-size:12px;padding:0 10px}
 /* 水印 */
 .watermark{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
 .watermark .wm-line{position:absolute;color:rgba(47,80,130,.13);font-size:15px;font-weight:700;letter-spacing:2px;white-space:nowrap;transform:rotate(-18deg);text-align:center;width:420px}
@@ -224,7 +223,7 @@ table.grid tr:hover td{background:#f7faff}
   .kpi-grid{grid-template-columns:repeat(5,1fr)}
   .sc-kpis{grid-template-columns:repeat(5,1fr);gap:12px}
   .sc-kpi .n{font-size:26px}
-  .data-row{grid-template-columns:240px 1fr}
+  .data-row{grid-template-columns:3fr 7fr}
   .row-2col{grid-template-columns:1fr 1fr}
   .row-3col{grid-template-columns:repeat(3,1fr)}
   .row-4col{grid-template-columns:repeat(4,1fr)}
@@ -760,26 +759,13 @@ table.grid tr:hover td{background:#f7faff}
           <div class="panel"><div class="panel-hd">地址层级分类统计</div><div class="panel-bd"><div class="chart-light" id="ad_level" style="height:280px"></div></div></div>
         </div>
       </div>
-      <div class="panel">
-        <div class="filter-bar">
-          <input type="text" placeholder="输入关键字进行过滤" style="flex:1;min-width:150px">
-          <button class="btn primary" data-op="演示：搜索">搜索</button>
-          <button class="btn" data-op="演示：重置">重置</button>
-          <button class="btn" data-op="演示：刷新">刷新</button>
-          <input type="text" placeholder="请输入街路巷名称" style="flex:1;min-width:170px">
-          <input type="text" placeholder="请输入地址俗称" style="flex:1;min-width:150px">
-          <span style="margin-left:auto;display:flex;gap:10px;flex:0 0 auto">
-            <button class="btn" data-op="演示：高级搜索">高级搜索</button>
-            <button class="btn" data-op="演示：导出">导出</button>
-          </span>
-        </div>
-      </div>
       <div class="data-row">
         <div class="tree">
           <div class="tree-hd">行政区划</div>
           <div class="tree-search">
             <input type="text" placeholder="输入行政区划名称">
-            <div class="tree-search-btns"><button class="btn primary" data-op="演示：查询">查询</button><button class="btn" data-op="演示：重置">重置</button></div>
+            <button class="btn primary" data-op="演示：查询">查询</button>
+            <button class="btn" data-op="演示：重置">重置</button>
           </div>
           <div class="tree-item active" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>全部</div>
           <div class="tree-item" data-tree onclick="pickTree(this)">><span class="t-arr">›</span>甲区</div>
