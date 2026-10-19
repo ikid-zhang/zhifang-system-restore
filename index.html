@@ -1201,28 +1201,35 @@ CHART_DEFS.home1=[
   ]
 }},
 {id:'h1_comm',option:{
-  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}个（{d}%）'}),
-  legend:{bottom:0,textStyle:{color:DARK.legendText,fontSize:10.5},itemWidth:10,itemHeight:8},
+  title:{text:'建成率 76.2%',left:'center',top:2,textStyle:{color:'#7fe4ff',fontSize:11,fontWeight:600}},
+  tooltip:{backgroundColor:'rgba(7,26,51,.96)',borderColor:'rgba(64,128,220,.45)',textStyle:{color:'#dcecff',fontSize:12},formatter:function(p){return p.name+'：已建成智慧安防小区 '+p.value+' 个';}},
   series:[{
-    type:'pie',radius:['52%','74%'],center:['50%','42%'],
+    type:'treemap',top:24,bottom:0,left:4,right:4,
+    roam:false,nodeClick:false,
+    breadcrumb:{show:false},
+    label:{show:true,formatter:function(p){return p.name+'\n'+p.value+' 个';},color:'#fff',fontSize:10,fontWeight:600},
+    itemStyle:{borderColor:'#0a2144',borderWidth:2,gapWidth:2,borderRadius:4},
+    emphasis:{itemStyle:{borderColor:'#7fe4ff',borderWidth:2}},
     data:[
-      {value:128,name:'已建成',itemStyle:{color:'#2ee6a8'}},
-      {value:26,name:'在建',itemStyle:{color:'#36d0ff'}},
-      {value:14,name:'未建',itemStyle:{color:'#ffb03a'}}
-    ],
-    label:{show:false},labelLine:{show:false},
-    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
-  }],
-  graphic:[
-    {type:'text',left:'center',top:'28%',style:{text:'168',fill:'#7fe4ff',fontSize:22,fontWeight:700,textAlign:'center'}},
-    {type:'text',left:'center',top:'50%',style:{text:'小区总数',fill:'#8fb0dd',fontSize:11,textAlign:'center'}}
-  ]
+      {name:'甲区',value:32,itemStyle:{color:'#2ee6a8'}},
+      {name:'乙区',value:28,itemStyle:{color:'#36d0ff'}},
+      {name:'丙区',value:24,itemStyle:{color:'#2f6fed'}},
+      {name:'丁区',value:18,itemStyle:{color:'#5b8ff9'}},
+      {name:'戊区',value:14,itemStyle:{color:'#7fb1ff'}},
+      {name:'己区',value:9,itemStyle:{color:'#9cc3ff'}},
+      {name:'庚区',value:3,itemStyle:{color:'#b9a4ff'}}
+    ]
+  }]
 }},
 {id:'h1_conflict',option:{
   tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}起'}),
   series:[{
     type:'funnel',sort:'none',gap:2,left:10,right:30,top:6,bottom:0,width:'82%',
-    label:{show:true,position:'inside',formatter:'{b}\n{c}起',color:'#fff',fontSize:10.5},
+    label:{show:true,position:'inside',color:'#fff',fontSize:10.5,formatter:function(p){
+      var prev=[3268,3014][p.dataIndex-1];
+      if(!prev) return p.name+'\n'+p.value.toLocaleString()+'起';
+      return p.name+'\n'+p.value.toLocaleString()+'起\n'+(p.value/prev*100).toFixed(1)+'%';
+    }},
     labelLine:{show:false},
     itemStyle:{borderRadius:3,borderColor:'#0a2144',borderWidth:1},
     data:[
@@ -1234,90 +1241,104 @@ CHART_DEFS.home1=[
 }},
 {id:'h1_dog',option:{
   tooltip:Object.assign(darkTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 只';}}),
-  grid:{left:4,right:10,top:8,bottom:0,containLabel:true},
-  xAxis:Object.assign(darkAxis(),{type:'category',data:['甲区','乙县','丙县','丁县','戊县','己县','庚市'],axisLabel:{color:DARK.text,fontSize:10}}),
-  yAxis:Object.assign(darkAxis(),{type:'value',splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:10}}),
-  series:[{name:'登记犬只',type:'bar',data:[4320,2860,3150,2410,1980,1560,3720],barWidth:16,
-    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#ffb03a'},{offset:1,color:'#ff7e5c'}]),borderRadius:4},
-    label:{show:true,position:'top',color:'#ffd18a',fontSize:10}}
+  legend:{top:0,right:0,textStyle:{color:DARK.legendText,fontSize:10},itemWidth:10,itemHeight:8},
+  grid:{left:4,right:10,top:26,bottom:0,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'category',data:['甲区','乙区','丙区','丁区','戊区','己区','庚市'],axisLabel:{color:DARK.text,fontSize:10}}),
+  yAxis:[
+    Object.assign(darkAxis(),{type:'value',name:'登记(只)',nameTextStyle:{color:DARK.axisLabel,fontSize:9},splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:9.5}}),
+    Object.assign(darkAxis(),{type:'value',min:80,max:100,name:'免疫率(%)',nameTextStyle:{color:DARK.axisLabel,fontSize:9},splitLine:{show:false},axisLabel:{color:DARK.axisLabel,fontSize:9.5,formatter:'{value}%'}})
+  ],
+  series:[
+    {name:'登记犬只',type:'bar',data:[4320,2860,3150,2410,1980,1560,3720],barWidth:12,
+      itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#ffb03a'},{offset:1,color:'#ff7e5c'}]),borderRadius:3}},
+    {name:'免疫率',type:'line',yAxisIndex:1,smooth:true,symbol:'circle',symbolSize:4,data:[96.2,95.8,94.1,93.5,92.8,91.6,95.3],lineStyle:{width:2,color:'#2ee6a8'},itemStyle:{color:'#2ee6a8'}}
   ]
 }},
 {id:'h1_survey',option:{
   tooltip:Object.assign(darkTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+'%';}}),
-  grid:{left:4,right:44,top:8,bottom:0,containLabel:true},
-  xAxis:Object.assign(darkAxis(),{type:'value',max:100,splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:10,formatter:'{value}%'}}),
-  yAxis:Object.assign(darkAxis(),{type:'category',inverse:true,data:['社区治理','执法规范','安全感','服务态度','治安满意度'],axisLabel:{color:DARK.text,fontSize:10}}),
-  series:[{name:'完成率',type:'bar',data:[85.8,87.6,89.3,91.2,92.5],barWidth:10,
-    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36d0ff'}]),borderRadius:3},
-    label:{show:true,position:'right',color:'#7fe4ff',fontSize:10,formatter:function(p){return p.value+'%';}}}
+  legend:{top:0,right:0,textStyle:{color:DARK.legendText,fontSize:10},itemWidth:10,itemHeight:8},
+  grid:{left:4,right:10,top:26,bottom:0,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'value',max:100,stack:'s',splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:10,formatter:'{value}%'}}),
+  yAxis:Object.assign(darkAxis(),{type:'category',inverse:true,data:['社区治理','执法规范','服务态度','治安环境','安全感'],axisLabel:{color:DARK.text,fontSize:10}}),
+  series:[
+    {name:'满意',type:'bar',stack:'s',data:[85.8,87.6,91.2,92.5,89.3],barWidth:10,itemStyle:{color:'#2ee6a8'},
+      label:{show:true,position:'inside',color:'#06203c',fontSize:9.5,fontWeight:700,formatter:function(p){return p.value+'%';}}},
+    {name:'基本满意',type:'bar',stack:'s',data:[10.2,9.4,6.5,5.8,8.1],barWidth:10,itemStyle:{color:'#36d0ff'}},
+    {name:'不满意',type:'bar',stack:'s',data:[4.0,3.0,2.3,1.7,2.6],barWidth:10,itemStyle:{color:'#ff5c5c'}}
   ]
 }},
 {id:'h1_mail',option:{
-  tooltip:Object.assign(darkTooltip(),{trigger:'axis',valueFormatter:function(v){return v.toLocaleString()+' 件';}}),
+  tooltip:Object.assign(darkTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+' 件';}}),
   legend:{top:0,right:0,textStyle:{color:DARK.legendText,fontSize:10},itemWidth:10,itemHeight:8},
   grid:{left:4,right:10,top:26,bottom:0,containLabel:true},
-  xAxis:Object.assign(darkAxis(),{type:'category',boundaryGap:false,data:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月'],axisLabel:{color:DARK.text,fontSize:10}}),
+  xAxis:Object.assign(darkAxis(),{type:'category',data:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月'],axisLabel:{color:DARK.text,fontSize:10}}),
   yAxis:Object.assign(darkAxis(),{type:'value',splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:10}}),
   series:[
-    {name:'来信',type:'line',smooth:true,symbol:'circle',symbolSize:4,data:[120,135,142,128,156,168,172,180,195,210],lineStyle:{width:2,color:'#36d0ff'},itemStyle:{color:'#36d0ff'},areaStyle:{color:'rgba(54,208,255,.10)'}},
-    {name:'办结',type:'line',smooth:true,symbol:'circle',symbolSize:4,data:[112,128,136,124,150,160,166,174,188,203],lineStyle:{width:2,color:'#2ee6a8'},itemStyle:{color:'#2ee6a8'},areaStyle:{color:'rgba(46,230,168,.08)'}}
+    {name:'办结',type:'bar',stack:'m',data:[118,143,164,186,172,193,180,201,206,222],barWidth:9,itemStyle:{color:'#2ee6a8'},
+      label:{show:true,position:'top',color:'#8fe8c9',fontSize:9.5,formatter:function(p){return p.value;}}},
+    {name:'待办',type:'bar',stack:'m',data:[2,2,4,4,3,5,2,4,4,4],barWidth:9,itemStyle:{color:'#ffb03a'}}
   ]
 }},
 {id:'h1_oil',option:{
-  tooltip:Object.assign(darkTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 次';}}),
+  tooltip:Object.assign(darkTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 人次';}}),
   legend:{top:0,right:0,textStyle:{color:DARK.legendText,fontSize:10},itemWidth:10,itemHeight:8},
   grid:{left:4,right:10,top:26,bottom:0,containLabel:true},
-  xAxis:Object.assign(darkAxis(),{type:'category',data:['甲区','乙县','丙县','丁县','戊县','己县','庚市'],axisLabel:{color:DARK.text,fontSize:10}}),
+  xAxis:Object.assign(darkAxis(),{type:'category',data:['甲区','乙区','丙区','丁区','戊区','己区','庚市'],axisLabel:{color:DARK.text,fontSize:10}}),
   yAxis:Object.assign(darkAxis(),{type:'value',splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:10}}),
   series:[
-    {name:'登记购买',type:'bar',stack:'t',data:[1280,860,1050,720,540,380,1120],barWidth:10,itemStyle:{color:'#2f6fed'}},
-    {name:'核验通过',type:'bar',stack:'t',data:[1240,835,1012,698,521,366,1085],barWidth:10,itemStyle:{color:'#2ee6a8'}}
+    {name:'登记购买',type:'bar',data:[864,712,658,590,486,402,336],barWidth:8,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]}},
+    {name:'核验通过',type:'bar',data:[851,700,641,572,469,383,319],barWidth:8,itemStyle:{color:'#36d0ff',borderRadius:[3,3,0,0]}}
   ]
 }},
 {id:'h1_drone2',option:{
-  tooltip:{formatter:'备案率 {c}%'},
+  tooltip:{formatter:'实名登记率 {c}%'},
   series:[{
-    type:'gauge',radius:'98%',center:['50%','52%'],startAngle:210,endAngle:-30,min:0,max:100,
+    type:'gauge',radius:'92%',center:['50%','46%'],startAngle:210,endAngle:-30,min:0,max:100,
     progress:{show:true,width:12,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36d0ff'}])}},
     axisLine:{lineStyle:{width:12,color:[[1,'rgba(64,128,220,.18)']]}},
     axisTick:{show:false},splitLine:{show:false},axisLabel:{show:false},pointer:{show:false},
-    detail:{valueAnimation:true,offsetCenter:[0,-6],formatter:'{value}%',color:'#7fe4ff',fontSize:26,fontWeight:700},
+    detail:{valueAnimation:true,offsetCenter:[0,-8],formatter:'{value}%',color:'#7fe4ff',fontSize:24,fontWeight:700},
     data:[{value:91.6}]
   }],
   graphic:[
-    {type:'text',left:'center',top:'72%',style:{text:'已备案 1,704 / 应备案 1,860',fill:'#8fb0dd',fontSize:10,textAlign:'center'}}
+    {type:'text',left:'center',top:'66%',style:{text:'已实名 1,704 / 应登记 1,860',fill:'#8fb0dd',fontSize:10,textAlign:'center'}},
+    {type:'text',left:'center',top:'78%',style:{text:'个人 1,120 · 单位 584 · 持照飞手 628',fill:'#5f83b5',fontSize:9,textAlign:'center'}}
   ]
 }},
 {id:'h1_fire',option:{
   tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}个（{d}%）'}),
   legend:{bottom:0,textStyle:{color:DARK.legendText,fontSize:10.5},itemWidth:10,itemHeight:8},
   series:[{
-    type:'pie',roseType:'radius',radius:['20%','72%'],center:['50%','42%'],
+    type:'pie',radius:['50%','72%'],center:['50%','40%'],
     data:[
-      {value:86,name:'销售许可',itemStyle:{color:'#ff5c5c'}},
-      {value:42,name:'存储许可',itemStyle:{color:'#ffb03a'}},
-      {value:150,name:'燃放许可',itemStyle:{color:'#36d0ff'}},
-      {value:28,name:'运输许可',itemStyle:{color:'#b9a4ff'}}
+      {value:96,name:'固定零售点',itemStyle:{color:'#36d0ff'}},
+      {value:150,name:'临时零售点',itemStyle:{color:'#ffb03a'}},
+      {value:12,name:'批发企业',itemStyle:{color:'#2ee6a8'}},
+      {value:28,name:'运输企业',itemStyle:{color:'#ff5c5c'}}
     ],
-    label:{show:true,formatter:'{b}\n{d}%',color:DARK.text,fontSize:10},
-    labelLine:{length:8,length2:4,lineStyle:{color:'rgba(64,128,220,.4)'}},
-    itemStyle:{borderRadius:3,borderColor:'#0a2144',borderWidth:1.5}
-  }]
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
+  }],
+  graphic:[
+    {type:'text',left:'center',top:'24%',style:{text:'286',fill:'#7fe4ff',fontSize:22,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'46%',style:{text:'许可网点(个)',fill:'#8fb0dd',fontSize:10.5,textAlign:'center'}},
+    {type:'text',left:'center',top:'62%',style:{text:'查处违规 32 起 · 收缴 186 箱',fill:'#ffb03a',fontSize:10,textAlign:'center'}}
+  ]
 }},
 {id:'h1_flight',option:{
-  tooltip:Object.assign(darkTooltip(),{trigger:'axis',valueFormatter:function(v){return v.toLocaleString()+' 次';}}),
+  tooltip:Object.assign(darkTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 次';}}),
   grid:{left:4,right:10,top:8,bottom:0,containLabel:true},
-  xAxis:Object.assign(darkAxis(),{type:'category',boundaryGap:false,data:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月'],axisLabel:{color:DARK.text,fontSize:10}}),
+  xAxis:Object.assign(darkAxis(),{type:'category',data:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月'],axisLabel:{color:DARK.text,fontSize:10}}),
   yAxis:Object.assign(darkAxis(),{type:'value',splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:10}}),
-  series:[{name:'飞行活动',type:'line',smooth:true,symbol:'circle',symbolSize:5,data:[45,62,78,95,112,138,156,182,210,245],
-    lineStyle:{width:2.5,color:'#2ee6a8'},itemStyle:{color:'#2ee6a8'},
-    areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(46,230,168,.35)'},{offset:1,color:'rgba(46,230,168,.02)'}])}}
+  series:[{name:'活动申请',type:'bar',data:[45,62,78,96,88,110,132,158,196,245],barWidth:11,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#2ee6a8'},{offset:1,color:'#2f6fed'}]),borderRadius:4},
+    label:{show:true,position:'top',color:'#8fe8c9',fontSize:9.5}}
   ]
 }},
 {id:'h1_party',option:{
   tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c} 分'}),
   radar:{
-    indicator:[{name:'组织生活',max:100},{name:'党员学习',max:100},{name:'志愿服务',max:100},{name:'社区活动',max:100},{name:'党群服务',max:100},{name:'结对帮扶',max:100}],
+    indicator:[{name:'组织联建',max:100},{name:'党员下沉',max:100},{name:'主题党日',max:100},{name:'志愿服务',max:100},{name:'网格治理',max:100},{name:'警民共建',max:100}],
     radius:'62%',center:['50%','52%'],
     splitArea:{areaStyle:{color:['rgba(64,128,220,.06)','rgba(64,128,220,.10)']}},
     splitLine:{lineStyle:{color:DARK.splitLine}},
@@ -1326,14 +1347,14 @@ CHART_DEFS.home1=[
     name:{textStyle:{color:DARK.text,fontSize:10}}
   },
   series:[{type:'radar',
-    data:[{value:[92,88,85,76,90,81],name:'社区党建',
+    data:[{value:[92,88,85,90,76,81],name:'社区党建',
       itemStyle:{color:'#ffb03a'},
       lineStyle:{color:'#ffb03a',width:2},
       areaStyle:{color:'rgba(255,176,58,.22)'}}]
   }]
 }},
 {id:'h1_bus',option:{
-  tooltip:Object.assign(darkTooltip(),{formatter:function(p){return '线路'+p.data[2]+'：日均客流 '+p.data[0]+' 万人次，日发班次 '+p.data[1]+' 班';}}),
+  tooltip:Object.assign(darkTooltip(),{formatter:function(p){return '线路'+p.data[2]+'：日均客流 '+p.data[0]+' 万人次，日发班次 '+p.data[1]+' 班<br/>视频监控 100% · 一键报警已接入';}}),
   grid:{left:4,right:10,top:8,bottom:0,containLabel:true},
   xAxis:Object.assign(darkAxis(),{type:'value',name:'日均客流(万人次)',nameTextStyle:{color:DARK.axisLabel,fontSize:9},splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:9.5}}),
   yAxis:Object.assign(darkAxis(),{type:'value',name:'日发班次(班)',nameTextStyle:{color:DARK.axisLabel,fontSize:9},splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:9.5}}),
