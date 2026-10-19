@@ -246,6 +246,7 @@ table.grid tr:hover td{background:#f7faff}
   .pop-grid{grid-template-columns:1.1fr 1fr 1fr 1fr}
   .pop-grid .pop-overview{grid-row:1/4}
   .pop-grid .pop-flowtop{grid-row:1/4}
+  .pop-grid .pop-type-all{grid-column:2/4}
   .data-row.pop-data{grid-template-columns:3fr 7fr}
   .sc-kpis{grid-template-columns:repeat(10,1fr);gap:8px}
   .sc-kpi{padding:8px 6px}
@@ -690,8 +691,7 @@ table.grid tr:hover td{background:#f7faff}
         <div class="panel pop-flowtop"><div class="panel-hd">流动人口来源地排名 TOP20（本省外市及外省）</div><div class="panel-bd"><div class="chart-light" id="pop_flowtop" style="height:660px"></div></div></div>
         <div class="panel"><div class="panel-hd">按辖区统计流动人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_flowarea" style="height:240px"></div></div></div>
         <div class="panel"><div class="panel-hd">按年龄段统计流动人口分布</div><div class="panel-bd"><div class="chart-light" id="pop_age_flow" style="height:240px"></div></div></div>
-        <div class="panel"><div class="panel-hd">户籍人口类型分布</div><div class="panel-bd"><div class="chart-light" id="pop_type_hukou" style="height:200px"></div></div></div>
-        <div class="panel"><div class="panel-hd">流动人口类型分布</div><div class="panel-bd"><div class="chart-light" id="pop_type_flow" style="height:200px"></div></div></div>
+        <div class="panel pop-type-all"><div class="panel-hd">户籍与流动人口类型分布</div><div class="panel-bd"><div class="chart-light" id="pop_type_all" style="height:230px"></div></div></div>
       </div>
       </div>
 
@@ -1128,34 +1128,30 @@ CHART_DEFS.population=[
     {name:'跨省',type:'bar',stack:'t',data:[53065,31143,27645,16287,169,46],barWidth:10,itemStyle:{color:'#7fb4ff'}}
   ]
 }},
-{id:'pop_type_hukou',option:{
+{id:'pop_type_all',option:{
   tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c}%'}),
-  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:11},itemWidth:10,itemHeight:8},
-  series:[{
-    type:'pie',radius:['42%','66%'],center:['50%','44%'],
-    data:[
-      {value:32.6,name:'人户一致',itemStyle:{color:'#2f6fed'}},
-      {value:12.2,name:'人户分离',itemStyle:{color:'#36b8ff'}}
-    ],
-    label:{show:true,formatter:'{b}\\n{c}%',color:LIGHT.text,fontSize:11},
-    labelLine:{length:12,length2:8,lineStyle:{color:'#c9d6ee'}},
-    itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
-  }]
-}},
-{id:'pop_type_flow',option:{
-  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c}%'}),
-  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:11},itemWidth:10,itemHeight:8},
-  series:[{
-    type:'pie',radius:['42%','66%'],center:['50%','44%'],
-    data:[
-      {value:40.7,name:'跨省流动',itemStyle:{color:'#2f6fed'}},
-      {value:7.5,name:'跨市流动',itemStyle:{color:'#ffb03a'}},
-      {value:3.5,name:'跨县流动',itemStyle:{color:'#2ee6a8'}}
-    ],
-    label:{show:true,formatter:'{b}\\n{c}%',color:LIGHT.text,fontSize:11},
-    labelLine:{length:12,length2:8,lineStyle:{color:'#c9d6ee'}},
-    itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
-  }]
+  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10.5},itemWidth:10,itemHeight:8},
+  series:[
+    {type:'pie',radius:['26%','46%'],center:['50%','44%'],
+     data:[
+       {value:44.8,name:'户籍人口',itemStyle:{color:'#2f6fed'}},
+       {value:51.7,name:'流动人口',itemStyle:{color:'#2ee6a8'}}
+     ],
+     label:{show:true,formatter:'{b}\\n{d}%',color:LIGHT.text,fontSize:11},
+     labelLine:{length:8,length2:4,lineStyle:{color:'#c9d6ee'}},
+     itemStyle:{borderColor:'#fff',borderWidth:1}},
+    {type:'pie',radius:['52%','72%'],center:['50%','44%'],
+     data:[
+       {value:32.6,name:'人户一致',itemStyle:{color:'#3d7bf7'}},
+       {value:12.2,name:'人户分离',itemStyle:{color:'#8fb4ff'}},
+       {value:40.7,name:'跨省流动',itemStyle:{color:'#2ee6a8'}},
+       {value:7.5,name:'跨市流动',itemStyle:{color:'#ffb03a'}},
+       {value:3.5,name:'跨县流动',itemStyle:{color:'#9be8c8'}}
+     ],
+     label:{show:true,formatter:'{b} {c}%',color:LIGHT.text,fontSize:10.5},
+     labelLine:{length:10,length2:6,lineStyle:{color:'#c9d6ee'}},
+     itemStyle:{borderRadius:3,borderColor:'#fff',borderWidth:2}}
+  ]
 }},
 {id:'po_worker',option:{
   tooltip:{formatter:'{b}：{c}%'},
