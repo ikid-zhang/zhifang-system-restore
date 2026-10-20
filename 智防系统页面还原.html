@@ -1581,14 +1581,14 @@ CHART_DEFS.population=[
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return Math.abs(v)+'%';}}),
   legend:{data:['户籍男','流动男','户籍女','流动女'],textStyle:{color:LIGHT.legendText,fontSize:10.5},top:0,right:0,itemWidth:12,itemHeight:8},
   grid:{left:4,right:4,top:30,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'value',max:12,splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return Math.abs(v)+'%';}}}),
-  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['0-10','11-20','21-30','31-40','41-50','51-60','61-70','71-80','80+'],axisLabel:{color:LIGHT.text,fontSize:11}}),
+  xAxis:Object.assign(lightAxis(),{type:'value',max:18,splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return Math.abs(v)+'%';}}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['0-17','18-34','35-59','60-79','80+'],axisLabel:{color:LIGHT.text,fontSize:11}}),
   series:[
-    {name:'户籍男',type:'bar',data:[-1.1,-2.0,-4.6,-7.2,-6.0,-5.0,-1.1,-0.3,-0.1],barWidth:6,itemStyle:{color:'#2f6fed',borderRadius:[3,0,0,3]}},
-    {name:'流动男',type:'bar',data:[-1.3,-2.4,-5.7,-9.0,-7.6,-6.4,-1.5,-0.5,-0.1],barWidth:6,itemStyle:{color:'#17c39a',borderRadius:[3,0,0,3]},
+    {name:'户籍男',type:'bar',data:[-2.2,-7.5,-12.6,-5.4,-1.1],barWidth:6,itemStyle:{color:'#2f6fed',borderRadius:[3,0,0,3]}},
+    {name:'流动男',type:'bar',data:[-2.4,-9.6,-15.8,-4.3,-0.6],barWidth:6,itemStyle:{color:'#17c39a',borderRadius:[3,0,0,3]},
       label:{show:true,position:'left',color:'#17c39a',fontSize:9,formatter:function(p){return Math.abs(p.value)+'%';}}},
-    {name:'户籍女',type:'bar',data:[1.0,1.8,3.2,4.1,3.0,2.3,1.0,0.4,0.2],barWidth:6,itemStyle:{color:'#8fb4ff',borderRadius:[0,3,3,0]}},
-    {name:'流动女',type:'bar',data:[1.2,2.1,4.0,5.0,3.9,2.9,1.3,0.6,0.2],barWidth:6,itemStyle:{color:'#9be8c8',borderRadius:[0,3,3,0]},
+    {name:'户籍女',type:'bar',data:[2.0,5.0,7.0,4.0,1.0],barWidth:6,itemStyle:{color:'#8fb4ff',borderRadius:[0,3,3,0]}},
+    {name:'流动女',type:'bar',data:[2.0,6.0,8.5,3.0,0.5],barWidth:6,itemStyle:{color:'#9be8c8',borderRadius:[0,3,3,0]},
       label:{show:true,position:'right',color:'#9be8c8',fontSize:9,formatter:'{c}%'}}
   ]
 }},
