@@ -1004,6 +1004,20 @@ function initViewCharts(name){
       if(el){
         var c=echarts.init(el);
         c.setOption(d.option);
+        if(d.id==='pop_type_all'){
+          c.on('legendselectchanged',function(p){
+            var sel=p.selected||{};
+            var map={'户籍人口':['人户一致','人户分离'],'流动人口':['跨省流动','跨市流动','跨县流动'],'未落户人员':[]};
+            if(map[p.name]){
+              var on=!!sel[p.name];
+              map[p.name].forEach(function(n){
+                if(!!sel[n]!==on){
+                  c.dispatchAction({type:on?'legendSelect':'legendUnSelect',name:n});
+                }
+              });
+            }
+          });
+        }
         charts[name][d.id]=c;
       }
     });
@@ -1637,26 +1651,28 @@ CHART_DEFS.population=[
   ]
 }},
 {id:'pop_type_all',option:{
-  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c}%'}),
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 人（{d}%）'}),
   legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10.5},itemWidth:10,itemHeight:8},
   series:[
     {type:'pie',radius:['26%','46%'],center:['50%','44%'],
      data:[
-       {value:44.8,name:'户籍人口',itemStyle:{color:'#2f6fed'}},
-       {value:51.7,name:'流动人口',itemStyle:{color:'#2ee6a8'}}
+       {value:155098,name:'户籍人口',itemStyle:{color:'#2f6fed'}},
+       {value:178868,name:'流动人口',itemStyle:{color:'#2ee6a8'}},
+       {value:11591,name:'未落户人员',itemStyle:{color:'#ffb03a'}}
      ],
      label:{show:true,formatter:'{b}\n{d}%',color:LIGHT.text,fontSize:11},
      labelLine:{length:8,length2:4,lineStyle:{color:'#c9d6ee'}},
      itemStyle:{borderColor:'#fff',borderWidth:1}},
     {type:'pie',radius:['52%','72%'],center:['50%','44%'],
      data:[
-       {value:32.6,name:'人户一致',itemStyle:{color:'#3d7bf7'}},
-       {value:12.2,name:'人户分离',itemStyle:{color:'#8fb4ff'}},
-       {value:40.7,name:'跨省流动',itemStyle:{color:'#2ee6a8'}},
-       {value:7.5,name:'跨市流动',itemStyle:{color:'#ffb03a'}},
-       {value:3.5,name:'跨县流动',itemStyle:{color:'#9be8c8'}}
+       {value:112783,name:'人户一致',itemStyle:{color:'#3d7bf7'}},
+       {value:42315,name:'人户分离',itemStyle:{color:'#8fb4ff'}},
+       {value:122000,name:'跨省流动',itemStyle:{color:'#2ee6a8'}},
+       {value:46868,name:'跨市流动',itemStyle:{color:'#ffb03a'}},
+       {value:10000,name:'跨县流动',itemStyle:{color:'#9be8c8'}},
+       {value:11591,name:'未落户人员',itemStyle:{color:'#ffd27a'}}
      ],
-     label:{show:true,formatter:'{b} {c}%',color:LIGHT.text,fontSize:10.5},
+     label:{show:true,formatter:'{b} {d}%',color:LIGHT.text,fontSize:10.5},
      labelLine:{length:10,length2:6,lineStyle:{color:'#c9d6ee'}},
      itemStyle:{borderRadius:3,borderColor:'#fff',borderWidth:2}}
   ]
