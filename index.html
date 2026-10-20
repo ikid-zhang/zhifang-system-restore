@@ -1325,7 +1325,8 @@ CHART_DEFS.home1=[
     {type:'text',left:'center',top:'48%',style:{text:'实名率 91.5%',fill:'#8fb0dd',fontSize:8.5,textAlign:'center'}}
   ]
 }},
-{id:'h1_oil',option:{
+/* 旧柱状图配置留作参考；页面没有 h1_oil_legacy 容器，实际图表使用下方矩形树图。 */
+{id:'h1_oil_legacy',option:{
   baseOption:{
     tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
       if(p.seriesIndex===0){var n=['机动车+汽油+加油站','机动车+柴油+加油站','农业机械+柴油+加油站','工程施工+柴油+加油站','机动车+汽油+流动加油点','农业机械+柴油+流动加油点','工程施工+柴油+流动加油点','其他+汽油+加油站','工程施工+汽油+加油站','机动车+柴油+流动加油点','农业机械+汽油+加油站','其他+柴油+社会油库','其他组合'][p.dataIndex];
@@ -1379,6 +1380,36 @@ CHART_DEFS.home1=[
     }},
     {query:{minWidth:621},option:{}}
   ]
+}},
+{id:'h1_oil',option:{
+  tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
+    var path=(p.treePathInfo||[]).slice(1).map(function(n){return n.name;}).join(' · ');
+    var value=p.value||0;
+    return path+'<br/>购油量：'+(value>=10000?(value/10000).toFixed(1)+' 万升':value.toLocaleString()+' 升');}},
+  series:[{type:'treemap',data:[
+    {name:'机动车',itemStyle:{color:'#2f6fed'},children:[
+      {name:'汽油·加油站',value:96500},{name:'柴油·加油站',value:42300},{name:'汽油·流动加油点',value:18900},{name:'柴油·流动加油点',value:5400}
+    ]},
+    {name:'农业机械',itemStyle:{color:'#16a6cf'},children:[
+      {name:'柴油·加油站',value:31800},{name:'柴油·流动加油点',value:12400},{name:'汽油·加油站',value:4200}
+    ]},
+    {name:'工程施工',itemStyle:{color:'#14b88a'},children:[
+      {name:'柴油·加油站',value:28600},{name:'柴油·流动加油点',value:9800},{name:'汽油·加油站',value:6900}
+    ]},
+    {name:'其他',itemStyle:{color:'#a477ed'},children:[
+      {name:'汽油·加油站',value:7600},{name:'柴油·社会油库',value:3100},{name:'其他组合',value:2800}
+    ]}
+  ],
+    roam:false,nodeClick:false,leafDepth:2,visibleMin:200,breadcrumb:{show:false},squareRatio:1.25,
+    label:{show:true,color:'#fff',fontSize:9,overflow:'truncate',formatter:function(p){var v=p.value||0;return p.name+(p.data&&p.data.children?'':'\n'+(v>=10000?(v/10000).toFixed(1)+'万升':v.toLocaleString()+'升'));}},
+    upperLabel:{show:true,height:22,color:'#e8f2ff',fontSize:10,fontWeight:600,backgroundColor:'rgba(7,26,51,.32)'},
+    itemStyle:{borderColor:'rgba(7,26,51,.7)',borderWidth:2,gapWidth:3},
+    levels:[
+      {itemStyle:{borderWidth:0,gapWidth:4,borderColor:'transparent'},upperLabel:{show:false}},
+      {colorSaturation:[0.45,0.72],itemStyle:{borderWidth:2,gapWidth:4},upperLabel:{show:true,height:22}},
+      {colorSaturation:[0.35,0.65],itemStyle:{borderWidth:2,gapWidth:2},label:{show:true}}
+    ]
+  }]
 }},
 {id:'h1_drone2',option:{
   tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
@@ -1505,15 +1536,6 @@ CHART_DEFS.home1=[
   }]
 }}
 ];
-
-CHART_DEFS.home1.filter(function(d){return d.id==='h1_oil';})[0].option={
-  tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
-    return p.name+'<br/>购油量：'+(p.value>=10000?(p.value/10000).toFixed(1)+' 万升':p.value.toLocaleString()+' 升');}},
-  grid:{left:150,right:48,top:8,bottom:8,containLabel:false},
-  xAxis:Object.assign(darkAxis(),{type:'value',min:0,max:100000,splitNumber:4,splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:9,formatter:function(v){return v>=10000?(v/10000)+'万':v;}}}),
-  yAxis:Object.assign(darkAxis(),{type:'category',inverse:true,data:['机动车·汽油·加油站','机动车·柴油·加油站','农业机械·柴油·加油站','工程施工·柴油·加油站','机动车·汽油·流动点','农业机械·柴油·流动点','工程施工·柴油·流动点','其他·汽油·加油站','工程施工·汽油·加油站','机动车·柴油·流动点','农业机械·汽油·加油站','其他·柴油·社会油库','其他组合'],axisTick:{show:false},axisLabel:{color:DARK.text,fontSize:9,margin:8}}),
-  series:[{name:'购油量',type:'bar',barWidth:'54%',showBackground:true,backgroundStyle:{color:'rgba(64,128,220,.12)',borderRadius:5},data:[96500,42300,31800,28600,18900,12400,9800,7600,6900,5400,4200,3100,2800],itemStyle:{borderRadius:[0,5,5,0],color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36d0ff'}])},label:{show:true,position:'right',color:'#dcebff',fontSize:9,formatter:function(p){return p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value.toLocaleString();}}}]
-};
 
 /* -------- 首页 v2 图表（保留环形图，列表/卡片改为HTML） -------- */
 CHART_DEFS.home2=[
