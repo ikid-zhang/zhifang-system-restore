@@ -73,6 +73,49 @@ body:has(.content.screen-mode){background:#071a33}
 .panel-hd{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:15px;font-weight:700;color:var(--txt)}
 .panel-hd::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--blue)}
 .panel-bd{padding:14px 16px}
+.ops-page{color:var(--txt)}
+.ops-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:2px 0 16px}
+.ops-page-title{font-size:24px;font-weight:700;color:#173b70;line-height:1.3}
+.ops-page-subtitle{font-size:12px;color:var(--txt3);margin-top:4px}
+.ops-tabs{display:flex;gap:4px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:5px;margin-bottom:14px;box-shadow:0 2px 8px rgba(15,50,120,.04)}
+.ops-tab{border:0;background:transparent;color:var(--txt2);padding:9px 20px;border-radius:7px;font-size:14px;font-weight:600;cursor:pointer;transition:all .16s}
+.ops-tab:hover{color:var(--blue);background:#f4f8ff}.ops-tab.active{background:linear-gradient(135deg,#2f6fed,#36a7f5);color:#fff;box-shadow:0 4px 10px rgba(47,111,237,.2)}
+.ops-pane{display:none}.ops-pane.active{display:block}
+.ops-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:14px}
+.ops-toolbar-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ops-toolbar-label{font-size:12px;color:var(--txt3)}
+.ops-select{height:32px;border:1px solid #d3def2;border-radius:6px;padding:0 10px;background:#fff;color:var(--txt);font:inherit;font-size:13px;min-width:128px}
+.ops-range,.ops-region-list{display:inline-flex;gap:3px;background:#f2f6fd;border-radius:7px;padding:3px;flex-wrap:wrap}
+.ops-overview-filters{align-items:flex-start}.ops-filter-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ops-filter-group-region{flex:1;justify-content:flex-end;min-width:280px}.ops-filter-group-region .ops-region-list{justify-content:flex-end;max-width:100%}
+.ops-range-btn,.ops-region-btn{border:0;background:transparent;color:var(--txt2);padding:6px 12px;border-radius:5px;font-size:12px;white-space:nowrap;cursor:pointer}
+.ops-range-btn:hover,.ops-region-btn:hover{color:var(--blue)}.ops-range-btn.active,.ops-region-btn.active{background:#fff;color:var(--blue);font-weight:600;box-shadow:0 1px 4px rgba(15,50,120,.12)}
+.ops-section{margin-bottom:16px}.ops-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 2px 10px}
+.ops-section-title{font-size:16px;font-weight:700;color:#233c61}.ops-section-note{font-size:12px;color:var(--txt3)}
+.ops-card-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.ops-kpi{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 14px;box-shadow:0 2px 8px rgba(15,50,120,.035)}
+.ops-kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#36b8ff,#2f6fed)}
+.ops-kpi-label{font-size:12px;color:var(--txt2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ops-kpi-value{font-size:26px;font-weight:700;color:#183d70;font-variant-numeric:tabular-nums;line-height:1.25;margin:5px 0 3px}
+.ops-kpi-unit{font-size:12px;color:var(--txt3);font-weight:400;margin-left:3px}.ops-kpi-foot{font-size:11px;color:var(--txt3);min-height:17px}
+.ops-delta{font-weight:600}.ops-delta.down{color:#20a66b}.ops-delta.up{color:#e05a5a}.ops-delta.flat{color:var(--txt3)}
+.ops-assets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ops-asset{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid var(--line);border-radius:9px;padding:12px 15px}
+.ops-asset-label{font-size:12px;color:var(--txt2)}.ops-asset-value{font-size:20px;font-weight:700;color:#183d70;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ops-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.ops-summary-card{background:linear-gradient(135deg,#fff,#f7faff);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+.ops-summary-card .label{font-size:12px;color:var(--txt2)}.ops-summary-card .value{font-size:24px;font-weight:700;color:#183d70;font-variant-numeric:tabular-nums;margin-top:4px}
+.ops-grid-two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.85fr);gap:14px}.ops-grid-two.equal{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ops-chart{width:100%;height:330px}.ops-chart.short{height:290px}
+.ops-table-card{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(15,50,120,.035)}
+.ops-table-title{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid var(--line);font-size:14px;font-weight:700}
+.ops-table-title small{font-size:11px;font-weight:400;color:var(--txt3)}.ops-table-card .table-wrap{padding:0 12px}
+.ops-mini-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 15px;box-shadow:0 2px 8px rgba(15,50,120,.035)}
+.ops-mini-title{font-size:14px;font-weight:700;color:#233c61;margin-bottom:10px}.ops-mini-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ops-mini-stat{background:#f5f8fd;border-radius:7px;padding:9px 10px}.ops-mini-stat span{display:block;font-size:11px;color:var(--txt3)}
+.ops-mini-stat b{display:block;font-size:18px;color:#183d70;margin-top:2px;font-variant-numeric:tabular-nums}.ops-refresh{font-size:12px;color:var(--txt3)}
+.ops-codes-pane .ops-toolbar{padding:7px 12px;margin-bottom:9px}.ops-codes-pane .ops-grid-two{gap:10px}.ops-codes-pane .ops-chart{height:225px;position:relative}.ops-codes-pane .ops-chart.empty:after{content:'截图未提供该周期数据';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.82);color:#8293ad;font-size:13px;pointer-events:none}.ops-codes-pane .panel-hd{padding:9px 12px}.ops-codes-pane .panel-bd{padding:7px 10px}.ops-codes-pane .ops-section{margin:8px 0}.ops-codes-pane .ops-section-head{margin-bottom:7px}.ops-codes-pane .ops-summary-card{padding:9px 12px}.ops-codes-pane .ops-summary-card .value{font-size:20px;margin-top:2px}.ops-codes-pane .ops-mini-card{padding:10px 12px}.ops-codes-pane .ops-mini-title{margin-bottom:7px}.ops-codes-pane .ops-mini-stat{padding:7px 8px}
+@media (max-height:850px) and (min-width:768px){.ops-codes-pane .ops-chart{height:190px}.ops-codes-pane .ops-summary-card{padding:7px 10px}.ops-codes-pane .ops-mini-card{padding:8px 10px}.ops-codes-pane .ops-mini-stat{padding:5px 7px}}
+@media (max-width:1199px){.ops-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ops-grid-two{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:767px){.ops-page-head{align-items:flex-start;flex-direction:column}.ops-page-title{font-size:20px}.ops-tabs{width:100%;overflow-x:auto}.ops-tab{flex:1;padding:9px 10px;white-space:nowrap}.ops-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ops-assets,.ops-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ops-grid-two,.ops-grid-two.equal{grid-template-columns:1fr}.ops-toolbar{align-items:flex-start}.ops-kpi{padding:11px 12px}.ops-kpi-value{font-size:23px}.ops-table-card table{min-width:720px}}
 .pop-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:14px}
 .pop-overview{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:hidden;box-shadow:0 1px 2px rgba(15,50,120,.04),0 6px 16px -4px rgba(15,50,120,.08),0 18px 40px -16px rgba(15,50,120,.10)}
 .po-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:15px;font-weight:700;color:var(--txt);padding-bottom:10px;border-bottom:1px solid var(--line)}
@@ -323,6 +366,7 @@ table.grid tr:hover td{background:#f7faff}
   </div>
   <nav class="side-nav" id="sideNav">
     <div class="nav-item" data-target="home1"><span class="dot"></span>首页大屏<span class="arr">›</span></div>
+    <div class="nav-item" data-target="operations"><span class="dot"></span>运营概况<span class="arr">›</span></div>
     <div class="nav-item" data-toggle><span class="dot"></span>一标三实管理<span class="arr">›</span></div>
     <div class="subnav">
       <div class="nav-item" data-target="address"><span class="dot"></span>标准地址管理</div>
@@ -720,6 +764,113 @@ table.grid tr:hover td{background:#f7faff}
       </div>
     </section>
 
+    <!-- ===== 视图：运营概况 ===== -->
+    <section class="view" id="view-operations">
+      <div class="breadcrumb"><span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span><span style="color:var(--txt)">运营概况</span></div>
+      <div class="ops-page">
+        <div class="ops-page-head">
+          <div><div class="ops-page-title">运营概况</div><div class="ops-page-subtitle">运营数据总览 · 林安码申报分析 · 活动运营分析</div></div>
+          <div class="ops-refresh"><span style="color:#20a66b">●</span> 数据更新时间：2026-10-15 18:10:00</div>
+        </div>
+        <div class="ops-tabs" role="tablist" aria-label="运营分析分类">
+          <button class="ops-tab active" role="tab" aria-selected="true" data-ops-tab="overview" onclick="switchOpsTab('overview',this)">运营概况</button>
+          <button class="ops-tab" role="tab" aria-selected="false" data-ops-tab="codes" onclick="switchOpsTab('codes',this)">林安码分析</button>
+          <button class="ops-tab" role="tab" aria-selected="false" data-ops-tab="activities" onclick="switchOpsTab('activities',this)">活动分析</button>
+        </div>
+
+        <div class="ops-pane active" id="ops-pane-overview" role="tabpanel">
+          <section class="ops-section">
+            <div class="ops-section-head"><div class="ops-section-title" id="ops-overview-title">今日实时</div><div class="ops-section-note" id="ops-overview-update">更新于 2026-10-15 18:10:00</div></div>
+            <div class="ops-card-grid">
+              <div class="ops-kpi" data-overview-metric="register"><div class="ops-kpi-label">注册人数</div><div class="ops-kpi-value">430<span class="ops-kpi-unit">人</span></div><div class="ops-kpi-foot">较昨日 <span class="ops-delta down">↓ 116</span></div></div>
+              <div class="ops-kpi" data-overview-metric="active"><div class="ops-kpi-label">活跃人数</div><div class="ops-kpi-value">479<span class="ops-kpi-unit">人</span></div><div class="ops-kpi-foot">较昨日 <span class="ops-delta down">↓ 137</span></div></div>
+              <div class="ops-kpi" data-overview-metric="visits"><div class="ops-kpi-label">访问次数</div><div class="ops-kpi-value">531<span class="ops-kpi-unit">人次</span></div><div class="ops-kpi-foot">较昨日 <span class="ops-delta down">↓ 141</span></div></div>
+              <div class="ops-kpi" data-overview-metric="personal"><div class="ops-kpi-label">个人码调取</div><div class="ops-kpi-value">0<span class="ops-kpi-unit">人次</span></div><div class="ops-kpi-foot">较昨日 <span class="ops-delta flat">—</span></div></div>
+              <div class="ops-kpi" data-overview-metric="total"><div class="ops-kpi-label">累计人数</div><div class="ops-kpi-value">166,110<span class="ops-kpi-unit">人</span></div><div class="ops-kpi-foot">累计数据</div></div>
+              <div class="ops-kpi" data-overview-metric="monthly"><div class="ops-kpi-label">本月新增人数</div><div class="ops-kpi-value">6,321<span class="ops-kpi-unit">人</span></div><div class="ops-kpi-foot">本月累计新增</div></div>
+            </div>
+          </section>
+          <section class="ops-section">
+            <div class="ops-section-head"><div class="ops-section-title">林安码累计规模</div><div class="ops-section-note">截至 2026-10-15</div></div>
+            <div class="ops-assets">
+              <div class="ops-asset"><span class="ops-asset-label">地址注册量</span><b class="ops-asset-value">324,153<span class="ops-kpi-unit">个</span></b></div>
+              <div class="ops-asset"><span class="ops-asset-label">个人码注册量</span><b class="ops-asset-value">154,189<span class="ops-kpi-unit">个</span></b></div>
+              <div class="ops-asset"><span class="ops-asset-label">房屋码注册量</span><b class="ops-asset-value">46,315<span class="ops-kpi-unit">个</span></b></div>
+              <div class="ops-asset"><span class="ops-asset-label">场所码注册量</span><b class="ops-asset-value">13,611<span class="ops-kpi-unit">家</span></b></div>
+              <div class="ops-asset"><span class="ops-asset-label">实有人口</span><b class="ops-asset-value">345,607<span class="ops-kpi-unit">人</span></b></div>
+              <div class="ops-asset"><span class="ops-asset-label">从业人员</span><b class="ops-asset-value">77,250<span class="ops-kpi-unit">人</span></b></div>
+            </div>
+          </section>
+          <section class="ops-section">
+            <div class="ops-section-head"><div class="ops-section-title" id="ops-detail-title">昨日数据</div><div class="ops-section-note">时间与辖区筛选统一联动</div></div>
+            <div class="ops-toolbar ops-overview-filters">
+              <div class="ops-filter-group"><span class="ops-toolbar-label">统计时间</span><div class="ops-range ops-detail-period"><button class="ops-range-btn active" data-period="yesterday" onclick="selectOpsDetailPeriod('yesterday',this)">昨日</button><button class="ops-range-btn" data-period="week" onclick="selectOpsDetailPeriod('week',this)">上周</button><button class="ops-range-btn" data-period="month" onclick="selectOpsDetailPeriod('month',this)">上月</button><button class="ops-range-btn" data-period="all" onclick="selectOpsDetailPeriod('all',this)">全部</button></div></div>
+              <div class="ops-filter-group ops-filter-group-region"><span class="ops-toolbar-label">所属辖区</span><div class="ops-region-list" aria-label="辖区筛选"><button class="ops-region-btn active" onclick="selectOpsDetailRegion('全市',this)">全市</button><button class="ops-region-btn" onclick="selectOpsDetailRegion('巴宜',this)">巴宜</button><button class="ops-region-btn" onclick="selectOpsDetailRegion('工布江达',this)">工布江达</button><button class="ops-region-btn" onclick="selectOpsDetailRegion('米林',this)">米林</button><button class="ops-region-btn" onclick="selectOpsDetailRegion('墨脱',this)">墨脱</button><button class="ops-region-btn" onclick="selectOpsDetailRegion('波密',this)">波密</button><button class="ops-region-btn" onclick="selectOpsDetailRegion('察隅',this)">察隅</button><button class="ops-region-btn" onclick="selectOpsDetailRegion('朗县',this)">朗县</button></div></div>
+            </div>
+            <div class="ops-summary-grid" style="margin-bottom:12px">
+              <div class="ops-summary-card"><div class="label">烟花爆竹企业</div><div class="value" data-detail-value="0">23<span class="ops-kpi-unit">家</span></div></div>
+              <div class="ops-summary-card"><div class="label">无人机备案</div><div class="value" data-detail-value="1">707<span class="ops-kpi-unit">家</span></div></div>
+              <div class="ops-summary-card"><div class="label">飞行活动</div><div class="value" data-detail-value="2">146<span class="ops-kpi-unit">次</span></div></div>
+              <div class="ops-summary-card"><div class="label">烟花爆竹登记</div><div class="value" data-detail-value="3">2,549<span class="ops-kpi-unit">次</span></div></div>
+            </div>
+            <div class="ops-table-card">
+              <div class="ops-table-title"><span id="ops-detail-table-title">昨日业务指标</span><small id="ops-detail-region-label">全市</small></div>
+              <div class="table-wrap"><table class="grid"><thead><tr><th>指标</th><th id="ops-detail-quantity-heading">昨日数量</th><th>环比变化</th><th>转化率</th><th>采集率 / 登记率</th></tr></thead><tbody id="ops-detail-tbody">
+                <tr><td>活跃人数</td><td>617 人</td><td><span class="ops-delta down">↓ 29.7%（261）</span></td><td>—</td><td>—</td></tr>
+                <tr><td>注册人数</td><td>546 人</td><td><span class="ops-delta down">↓ 32.5%（263）</span></td><td>—</td><td>—</td></tr>
+                <tr><td>预约人数</td><td>1 人</td><td><span class="ops-delta up">↑ 1</span></td><td>—</td><td>—</td></tr>
+                <tr><td>烟花爆竹</td><td>1 次</td><td>—</td><td>—</td><td>活跃率 0%</td></tr>
+                <tr><td>个人码</td><td>464 人</td><td><span class="ops-delta down">↓ 34.9%</span></td><td>85.0%</td><td>64.4%</td></tr>
+                <tr><td>房屋码</td><td>156 个</td><td><span class="ops-delta down">↓ 9.8%</span></td><td>28.6%</td><td>46.7%</td></tr>
+                <tr><td>场所码</td><td>56 家</td><td><span class="ops-delta down">↓ 9.7%</span></td><td>10.3%</td><td>54.0%</td></tr>
+                <tr><td>智慧门牌</td><td>192 个</td><td><span class="ops-delta up">↑ 13.6%</span></td><td>35.2%</td><td>187.6%</td></tr>
+              </tbody></table></div>
+            </div>
+          </section>
+        </div>
+
+        <div class="ops-pane ops-codes-pane" id="ops-pane-codes" role="tabpanel">
+          <div class="ops-toolbar"><div class="ops-toolbar-left"><span class="ops-toolbar-label">统计周期</span><div class="ops-range"><button class="ops-range-btn active" onclick="selectOpsCodePeriod('today',this)">当日</button><button class="ops-range-btn" onclick="selectOpsCodePeriod('yesterday',this)">昨日</button><button class="ops-range-btn" onclick="selectOpsCodePeriod('week',this)">近一周</button><button class="ops-range-btn" onclick="selectOpsCodePeriod('month',this)">近一月</button><button class="ops-range-btn" onclick="selectOpsCodePeriod('lastMonth',this)">上月</button></div><select class="ops-select" aria-label="选择辖区"><option>全市</option><option>巴宜</option><option>工布江达</option><option>米林</option><option>墨脱</option><option>波密</option><option>察隅</option><option>朗县</option></select></div><span class="ops-section-note" id="ops-code-update">更新于 2026-10-15 18:00:16</span></div>
+          <div class="ops-grid-two">
+            <div class="panel"><div class="panel-hd">码申报分布（按辖区）</div><div class="panel-bd"><div class="ops-chart" id="ops_code_district" role="img" aria-label="各辖区码申报总量柱状图"></div></div></div>
+            <div class="panel"><div class="panel-hd">码类型申报量</div><div class="panel-bd"><div class="ops-chart" id="ops_code_type" role="img" aria-label="不同码类型申报量环形图"></div></div></div>
+          </div>
+          <section class="ops-section">
+            <div class="ops-section-head"><div class="ops-section-title">码申报量</div><div class="ops-section-note" id="ops-code-period-note">当日统计</div></div>
+            <div class="ops-summary-grid">
+              <div class="ops-summary-card"><div class="label">智慧门牌</div><div class="value" data-code-value="0">265<span class="ops-kpi-unit">个</span></div><div class="ops-kpi-foot" data-code-delta="0"><span class="ops-delta up">↑ 15.2%</span></div></div>
+              <div class="ops-summary-card"><div class="label">个人码</div><div class="value" data-code-value="1">464<span class="ops-kpi-unit">个</span></div><div class="ops-kpi-foot" data-code-delta="1"><span class="ops-delta down">↓ 34.9%</span></div></div>
+              <div class="ops-summary-card"><div class="label">房屋码</div><div class="value" data-code-value="2">156<span class="ops-kpi-unit">个</span></div><div class="ops-kpi-foot" data-code-delta="2"><span class="ops-delta down">↓ 9.8%</span></div></div>
+              <div class="ops-summary-card"><div class="label">场所码</div><div class="value" data-code-value="3">56<span class="ops-kpi-unit">个</span></div><div class="ops-kpi-foot" data-code-delta="3"><span class="ops-delta down">↓ 9.7%</span></div></div>
+            </div>
+          </section>
+          <div class="ops-grid-two equal">
+            <div class="ops-mini-card"><div class="ops-mini-title">房屋码</div><div class="ops-mini-stats"><div class="ops-mini-stat"><span>同住人</span><b data-code-mini="0">465</b></div><div class="ops-mini-stat"><span>出租房屋</span><b data-code-mini="1">0</b></div><div class="ops-mini-stat"><span>自住房屋</span><b data-code-mini="2">108</b></div></div><div class="ops-kpi-foot" style="margin-top:9px">转化率 <b style="color:#183d70" data-code-housing-rate>298.1%</b>　环比 —</div></div>
+            <div class="ops-mini-card"><div class="ops-mini-title">场所码</div><div class="ops-mini-stats"><div class="ops-mini-stat"><span>从业人员</span><b data-code-mini="3">349</b></div><div class="ops-mini-stat"><span>拜访登记</span><b data-code-mini="4">0</b></div><div class="ops-mini-stat"><span>场所码</span><b data-code-mini="5">56</b></div></div><div class="ops-kpi-foot" style="margin-top:9px">按截图展示申报量、人员及拜访登记情况</div></div>
+          </div>
+        </div>
+
+        <div class="ops-pane" id="ops-pane-activities" role="tabpanel">
+          <div class="ops-toolbar"><div class="ops-toolbar-left"><span class="ops-toolbar-label">数据范围</span><select class="ops-select" aria-label="活动统计范围"><option>全市</option><option>巴宜</option><option>工布江达</option><option>米林</option><option>墨脱</option><option>波密</option><option>察隅</option><option>朗县</option></select><div class="ops-range"><button class="ops-range-btn active" onclick="selectOpsActivityPeriod('today',this)">今日</button><button class="ops-range-btn" onclick="selectOpsActivityPeriod('month',this)">本月</button><button class="ops-range-btn" onclick="selectOpsActivityPeriod('year',this)">本年</button></div></div><span class="ops-section-note" id="ops-activity-update">数据更新时间：2026-10-15 18:10:00</span></div>
+          <section class="ops-section">
+            <div class="ops-section-head"><div class="ops-section-title" id="ops-activity-data-title">年度数据</div><div class="ops-section-note" id="ops-activity-data-note">2026 年累计</div></div>
+            <div class="ops-card-grid">
+              <div class="ops-kpi" data-activity-kpi="0"><div class="ops-kpi-label">当年活动次数</div><div class="ops-kpi-value">18<span class="ops-kpi-unit">次</span></div></div>
+              <div class="ops-kpi" data-activity-kpi="1"><div class="ops-kpi-label">当年活动场次</div><div class="ops-kpi-value">43<span class="ops-kpi-unit">次</span></div></div>
+              <div class="ops-kpi" data-activity-kpi="2"><div class="ops-kpi-label">当年预约人次</div><div class="ops-kpi-value">18,584<span class="ops-kpi-unit">人次</span></div></div>
+              <div class="ops-kpi" data-activity-kpi="3"><div class="ops-kpi-label">当年核销人次</div><div class="ops-kpi-value">12,091<span class="ops-kpi-unit">人次</span></div></div>
+              <div class="ops-kpi" data-activity-kpi="4"><div class="ops-kpi-label">当年预约人数</div><div class="ops-kpi-value">8,125<span class="ops-kpi-unit">人</span></div></div>
+              <div class="ops-kpi" data-activity-kpi="5"><div class="ops-kpi-label">当年取消人次</div><div class="ops-kpi-value">6,303<span class="ops-kpi-unit">人次</span></div></div>
+            </div>
+          </section>
+          <div class="ops-grid-two equal">
+            <section class="ops-table-card"><div class="ops-table-title"><span>活动概况</span><small id="ops-activity-summary-period">今日</small></div><div class="ops-assets" style="grid-template-columns:repeat(2,minmax(0,1fr));padding:12px"><div class="ops-asset"><span class="ops-asset-label">活动次数</span><b class="ops-asset-value" data-activity-summary="0">1<span class="ops-kpi-unit">次</span></b></div><div class="ops-asset"><span class="ops-asset-label">活动场次</span><b class="ops-asset-value" data-activity-summary="1">0<span class="ops-kpi-unit">次</span></b></div><div class="ops-asset"><span class="ops-asset-label">预约人次</span><b class="ops-asset-value" data-activity-summary="2">0<span class="ops-kpi-unit">人次</span></b></div><div class="ops-asset"><span class="ops-asset-label">核销人次</span><b class="ops-asset-value" data-activity-summary="3">0<span class="ops-kpi-unit">人次</span></b></div></div></section>
+            <section class="ops-table-card"><div class="ops-table-title"><span>场次概况</span><small id="ops-session-summary-period">今日及明日</small></div><div class="ops-assets" style="grid-template-columns:repeat(2,minmax(0,1fr));padding:12px"><div class="ops-asset"><span class="ops-asset-label">当日活动场次</span><b class="ops-asset-value" data-activity-session="0">0<span class="ops-kpi-unit">场</span></b></div><div class="ops-asset"><span class="ops-asset-label">当日预约人次</span><b class="ops-asset-value" data-activity-session="1">0<span class="ops-kpi-unit">人次</span></b></div><div class="ops-asset"><span class="ops-asset-label">明日活动场次</span><b class="ops-asset-value" data-activity-session="2">0<span class="ops-kpi-unit">场</span></b></div><div class="ops-asset"><span class="ops-asset-label">明日预约人次</span><b class="ops-asset-value" data-activity-session="3">0<span class="ops-kpi-unit">人次</span></b></div></div></section>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== 视图：实有人口管理 ===== -->
     <section class="view" id="view-population">
       <div class="breadcrumb">
@@ -961,7 +1112,7 @@ table.grid tr:hover td{background:#f7faff}
 
 <script>
 /* ============ 路由与导航 ============ */
-var VIEWS=['home1','home2','population','guard','address'];
+var VIEWS=['home1','home2','operations','population','guard','address'];
 var charts={};
 var chartResizeObservers=[];
 function toast(msg){
@@ -981,6 +1132,92 @@ function showView(name){
   initViewCharts(name);
   if(name==='address')buildWatermark();
   if(window.innerWidth<768)document.getElementById('sidebar').classList.remove('open');
+}
+function switchOpsTab(name,btn){
+  var page=btn.closest('.ops-page');
+  page.querySelectorAll('.ops-tab').forEach(function(tab){var active=tab===btn;tab.classList.toggle('active',active);tab.setAttribute('aria-selected',active?'true':'false');});
+  page.querySelectorAll('.ops-pane').forEach(function(pane){pane.classList.toggle('active',pane.id==='ops-pane-'+name);});
+  requestAnimationFrame(function(){if(charts.operations)Object.keys(charts.operations).forEach(function(id){charts.operations[id].resize();});});
+}
+function setOpsChoice(btn){
+  btn.parentElement.querySelectorAll('.ops-range-btn,.ops-region-btn').forEach(function(item){item.classList.toggle('active',item===btn);});
+}
+var OPS_DETAIL_ROWS=[
+  ['活跃人数','617 人','↓ 29.7%（261）','—','—'],['注册人数','546 人','↓ 32.5%（263）','—','—'],['预约人数','1 人','↑ 1','—','—'],
+  ['烟花爆竹','1 次','—','—','活跃率 0%'],['个人码','464 人','↓ 34.9%','85.0%','64.4%'],['房屋码','156 个','↓ 9.8%','28.6%','46.7%'],
+  ['场所码','56 家','↓ 9.7%','10.3%','54.0%'],['智慧门牌','192 个','↑ 13.6%','35.2%','187.6%']
+];
+var opsDetailPeriod='yesterday';
+var opsDetailRegion='全市';
+function selectOpsDetailPeriod(period,btn){
+  setOpsChoice(btn);
+  opsDetailPeriod=period;
+  renderOpsDetailData();
+}
+function selectOpsDetailRegion(region,btn){
+  setOpsChoice(btn);
+  opsDetailRegion=region;
+  renderOpsDetailData();
+}
+function renderOpsDetailData(){
+  var period=opsDetailPeriod;
+  var label=({yesterday:'昨日',week:'上周',month:'上月',all:'全部'})[period]||'昨日';
+  document.getElementById('ops-detail-title').textContent=label+'数据';
+  document.getElementById('ops-detail-table-title').textContent=label+'业务指标';
+  document.getElementById('ops-detail-region-label').textContent=opsDetailRegion;
+  document.getElementById('ops-detail-quantity-heading').textContent=label+'数量';
+  var exact=period==='yesterday'&&opsDetailRegion==='全市';
+  var summary=exact?['23','707','146','2,549']:['—','—','—','—'];
+  document.querySelectorAll('[data-detail-value]').forEach(function(el){
+    var index=Number(el.getAttribute('data-detail-value'));
+    var unit=el.querySelector('.ops-kpi-unit');
+    el.textContent=summary[index];
+    if(unit)el.appendChild(unit);
+  });
+  var tbody=document.getElementById('ops-detail-tbody');
+  tbody.innerHTML=OPS_DETAIL_ROWS.map(function(row){
+    var cells=exact?row:[row[0],'—','—','—','—'];
+    return '<tr>'+cells.map(function(cell){return '<td>'+cell+'</td>';}).join('')+'</tr>';
+  }).join('');
+}
+function selectOpsCodePeriod(period,btn){
+  setOpsChoice(btn);
+  var isToday=period==='today';
+  var label=({today:'当日',yesterday:'昨日',week:'近一周',month:'近一月',lastMonth:'上月'})[period]||'当日';
+  document.getElementById('ops-code-update').textContent=isToday?'更新于 2026-10-15 18:00:16':'该区间暂无截图数据';
+  document.getElementById('ops-code-period-note').textContent=label+'统计';
+  var values=isToday?['265','464','156','56']:['—','—','—','—'];
+  var deltas=isToday?['<span class="ops-delta up">↑ 15.2%</span>','<span class="ops-delta down">↓ 34.9%</span>','<span class="ops-delta down">↓ 9.8%</span>','<span class="ops-delta down">↓ 9.7%</span>']:['截图未提供该区间','截图未提供该区间','截图未提供该区间','截图未提供该区间'];
+  document.querySelectorAll('[data-code-value]').forEach(function(el){var unit=el.querySelector('.ops-kpi-unit');el.textContent=values[Number(el.getAttribute('data-code-value'))];if(unit)el.appendChild(unit);});
+  document.querySelectorAll('[data-code-delta]').forEach(function(el){el.innerHTML=deltas[Number(el.getAttribute('data-code-delta'))];});
+  var minis=isToday?['465','0','108','349','0','56']:['—','—','—','—','—','—'];
+  document.querySelectorAll('[data-code-mini]').forEach(function(el){el.textContent=minis[Number(el.getAttribute('data-code-mini'))];});
+  document.querySelector('[data-code-housing-rate]').textContent=isToday?'298.1%':'—';
+  document.querySelectorAll('.ops-codes-pane .ops-chart').forEach(function(el){el.classList.toggle('empty',!isToday);});
+  if(charts.operations&&charts.operations.ops_code_district){
+    charts.operations.ops_code_district.setOption({series:[{data:isToday?[266,98,1001,122,53,10,13]:[]}]});
+    charts.operations.ops_code_type.setOption({series:[{data:isToday?[
+      {value:265,name:'智慧门牌',itemStyle:{color:'#ffb03a'}},{value:464,name:'个人码',itemStyle:{color:'#2f6fed'}},
+      {value:156,name:'房屋码',itemStyle:{color:'#36b8ff'}},{value:56,name:'场所码',itemStyle:{color:'#2ee6a8'}}
+    ]:[]}]});
+  }
+}
+function selectOpsActivityPeriod(period,btn){
+  setOpsChoice(btn);
+  var title=period==='year'?'年度数据':(period==='month'?'本月数据':'今日数据');
+  var note=period==='year'?'2026 年累计':(period==='today'?'2026-10-15 实时数据':'截图未提供本月活动明细');
+  document.getElementById('ops-activity-data-title').textContent=title;
+  document.getElementById('ops-activity-data-note').textContent=note;
+  document.getElementById('ops-activity-update').textContent=period==='today'?'数据更新时间：2026-10-15 18:10:00':(period==='year'?'统计周期：2026 年':'该区间暂无截图数据');
+  var kpis=period==='year'?['18','43','18,584','12,091','8,125','6,303']:(period==='today'?['1','0','0','0','—','—']:['—','—','—','—','—','—']);
+  var labels=period==='year'?['当年活动次数','当年活动场次','当年预约人次','当年核销人次','当年预约人数','当年取消人次']:(period==='today'?['今日活动次数','今日活动场次','今日预约人次','今日核销人次','今日预约人数','今日取消人次']:['本月活动次数','本月活动场次','本月预约人次','本月核销人次','本月预约人数','本月取消人次']);
+  document.querySelectorAll('[data-activity-kpi]').forEach(function(card){var index=Number(card.getAttribute('data-activity-kpi'));var value=card.querySelector('.ops-kpi-value');var unit=value.querySelector('.ops-kpi-unit');card.querySelector('.ops-kpi-label').textContent=labels[index];value.textContent=kpis[index];if(unit)value.appendChild(unit);});
+  var summary=period==='year'?['18','43','18,584','12,091']:(period==='today'?['1','0','0','0']:['—','—','—','—']);
+  document.querySelectorAll('[data-activity-summary]').forEach(function(el){var unit=el.querySelector('.ops-kpi-unit');el.textContent=summary[Number(el.getAttribute('data-activity-summary'))];if(unit)el.appendChild(unit);});
+  var sessions=period==='today'?['0','0','0','0']:['—','—','—','—'];
+  document.querySelectorAll('[data-activity-session]').forEach(function(el){var unit=el.querySelector('.ops-kpi-unit');el.textContent=sessions[Number(el.getAttribute('data-activity-session'))];if(unit)el.appendChild(unit);});
+  document.getElementById('ops-activity-summary-period').textContent=period==='year'?'本年':(period==='month'?'本月':'今日');
+  document.getElementById('ops-session-summary-period').textContent=period==='today'?'今日及明日':'该周期暂无场次明细';
 }
 function buildWatermark(){
   var wm=document.getElementById('wm');
@@ -1072,7 +1309,7 @@ window.addEventListener('resize',function(){
   var vn=active.id.replace('view-','');
   if(charts[vn])Object.keys(charts[vn]).forEach(function(k){charts[vn][k].resize();});
 });
-var hashMap={'home1':'home1','home2':'home2','population':'population','guard':'guard','address':'address','pop':'population'};
+var hashMap={'home1':'home1','home2':'home2','operations':'operations','population':'population','guard':'guard','address':'address','pop':'population'};
 window.addEventListener('hashchange',function(){
   var h=(location.hash||'').replace('#','');
   if(hashMap[h]&&!document.getElementById('view-'+h).classList.contains('active'))showView(h);
@@ -1841,6 +2078,24 @@ CHART_DEFS.address=[
       };
     }
   }]
+}}
+];
+
+CHART_DEFS.operations=[
+{id:'ops_code_district',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(ps){var p=ps[0];return p.name+'<br/>码申报总量：'+p.value+' 个';}}),
+  grid:{left:12,right:20,top:16,bottom:8,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['巴宜','工布江达','米林','墨脱','波密','察隅','朗县'],axisLabel:{color:LIGHT.text,fontSize:11},axisTick:{show:false}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',min:0,splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10}}),
+  series:[{name:'码申报量',type:'bar',barWidth:26,data:[266,98,1001,122,53,10,13],itemStyle:{borderRadius:[4,4,0,0],color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#36b8ff'},{offset:1,color:'#2f6fed'}])},label:{show:true,position:'top',color:'#2f6fed',fontSize:10}}]
+}},
+{id:'ops_code_type',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 个（{d}%）'}),
+  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10},itemWidth:10,itemHeight:8},
+  series:[{type:'pie',radius:['48%','70%'],center:['50%','44%'],data:[
+    {value:265,name:'智慧门牌',itemStyle:{color:'#ffb03a'}},{value:464,name:'个人码',itemStyle:{color:'#2f6fed'}},
+    {value:156,name:'房屋码',itemStyle:{color:'#36b8ff'}},{value:56,name:'场所码',itemStyle:{color:'#2ee6a8'}}
+  ],label:{show:true,formatter:'{b}\n{c}',color:LIGHT.text,fontSize:10},labelLine:{length:8,length2:6,lineStyle:{color:LIGHT.splitLine}},itemStyle:{borderColor:'#fff',borderWidth:2}}]
 }}
 ];
 
