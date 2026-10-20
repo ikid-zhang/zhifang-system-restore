@@ -1066,6 +1066,7 @@ function darkAxis(){
 }
 
 var CHART_DEFS={};
+var AD_LEVELS=[{name:'层户',value:96000,color:'#ffb03a'},{name:'门楼',value:213610,color:'#36b8ff'},{name:'街路巷',value:14320,color:'#2f6fed'}];
 
 /* -------- 首页 v1 图表（保留环形图，列表/卡片改为HTML） -------- */
 CHART_DEFS.home1=[
@@ -1770,22 +1771,32 @@ CHART_DEFS.address=[
   }]
 }},
 {id:'ad_level',option:{
-  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 条（{d}%）'}),
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 条'}),
   legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:11},itemWidth:10,itemHeight:8},
+  grid:{left:6,right:6,top:12,bottom:26,containLabel:true},
+  xAxis:{type:'value',show:false,min:0,max:213610},
+  yAxis:{type:'category',data:AD_LEVELS.map(function(d){return d.name;}),show:false},
   series:[{
-    type:'funnel',
-    sort:'ascending',
-    gap:2,
-    top:4,left:'12%',width:'76%',bottom:6,
-    label:{show:true,position:'right',color:'#2f6fed',fontSize:11,formatter:'{b} {c} 条'},
-    labelLine:{length:6,length2:4,lineStyle:{color:'#c9d6ee'}},
-    itemStyle:{borderRadius:2,borderColor:'#fff',borderWidth:1},
-    emphasis:{focus:'adjacency'},
-    data:[
-      {value:14320,name:'街路巷',itemStyle:{color:'#2f6fed'}},
-      {value:213610,name:'门楼',itemStyle:{color:'#36b8ff'}},
-      {value:96000,name:'层户',itemStyle:{color:'#ffb03a'}}
-    ]
+    type:'custom',
+    data:AD_LEVELS.map(function(d){return {value:d.value,name:d.name,itemStyle:{color:d.color}};}),
+    renderItem:function(params,api){
+      var idx=params.dataIndex;
+      var unitY=api.size([0,1])[1];
+      var cy=api.coord([0,idx])[1];
+      var h=unitY*0.74;
+      var y0=cy-h/2,y1=cy+h/2;
+      var w=api.getWidth(),cx=w/2;
+      var pairs=[[0.68,0.90],[0.50,0.68],[0.34,0.50]];
+      var tw=w*pairs[idx][0]/2,bw=w*pairs[idx][1]/2;
+      var d=AD_LEVELS[idx];
+      return {
+        type:'group',
+        children:[
+          {type:'polygon',shape:{points:[[cx-tw,y0],[cx+tw,y0],[cx+bw,y1],[cx-bw,y1]]},style:{fill:d.color,stroke:'#fff',lineWidth:1}},
+          {type:'text',style:{text:d.name+'\n'+d.value+' 条',x:cx,y:cy,textAlign:'center',textVerticalAlign:'middle',fill:'#fff',fontSize:11,lineHeight:15}}
+        ]
+      };
+    }
   }]
 }}
 ];
