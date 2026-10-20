@@ -1317,34 +1317,58 @@ CHART_DEFS.home1=[
   ]
 }},
 {id:'h1_oil',option:{
-  tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
-    if(p.seriesIndex===0){var n=['机动车+汽油+加油站','机动车+柴油+加油站','农业机械+柴油+加油站','工程施工+柴油+加油站','机动车+汽油+流动加油点','农业机械+柴油+流动加油点','工程施工+柴油+流动加油点','其他+汽油+加油站','工程施工+汽油+加油站','机动车+柴油+流动加油点','农业机械+汽油+加油站','其他+柴油+社会油库','其他组合'][p.dataIndex];
-      return n+'<br/>购油 '+(p.value>=10000?(p.value/10000).toFixed(1)+' 万升':p.value+' 升');}
-    return '';}},
-  grid:[
-    {left:58,right:8,top:0,height:'46%',containLabel:true},
-    {left:58,right:8,top:'52%',bottom:0,containLabel:true}
-  ],
-  xAxis:[
-    Object.assign(darkAxis(),{type:'category',data:['机+汽\n+站','机+柴\n+站','农+柴\n+站','工+柴\n+站','机+汽\n+流','农+柴\n+流','工+柴\n+流','其+汽\n+站','工+汽\n+站','机+柴\n+流','农+汽\n+站','其+柴\n+库','其他'],axisLabel:{color:DARK.axisLabel,fontSize:7,interval:0,rotate:0,lineHeight:8}}),
-    Object.assign(darkAxis(),{type:'category',data:['机+汽+站','机+柴+站','农+柴+站','工+柴+站','机+汽+流','农+柴+流','工+柴+流','其+汽+站','工+汽+站','机+柴+流','农+汽+站','其+柴+库','其他'],axisLabel:{show:false}})
-  ],
-  yAxis:[
-    Object.assign(darkAxis(),{type:'value',max:100000,splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:8,formatter:function(v){return v>=10000?(v/10000)+'万':v;}}}),
-    Object.assign(darkAxis(),{type:'category',data:['机动车加油','农业机械','工程施工','其他','汽油','柴油','加油站','流动加油点','社会油库'],axisLabel:{color:DARK.text,fontSize:8}})
-  ],
-  series:[
-    {name:'购油量',type:'bar',xAxisIndex:0,yAxisIndex:0,barWidth:'46%',
-      data:[
-        {value:96500,itemStyle:{color:'#ffb03a'}},{value:42300,itemStyle:{color:'#36d0ff'}},{value:31800,itemStyle:{color:'#36d0ff'}},{value:28600,itemStyle:{color:'#36d0ff'}},
-        {value:18900,itemStyle:{color:'#ffb03a'}},{value:12400,itemStyle:{color:'#36d0ff'}},{value:9800,itemStyle:{color:'#36d0ff'}},{value:7600,itemStyle:{color:'#ffb03a'}},
-        {value:6900,itemStyle:{color:'#ffb03a'}},{value:5400,itemStyle:{color:'#36d0ff'}},{value:4200,itemStyle:{color:'#ffb03a'}},{value:3100,itemStyle:{color:'#36d0ff'}},
-        {value:2800,itemStyle:{color:'#8a94a6'}}
+  baseOption:{
+    tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
+      if(p.seriesIndex===0){var n=['机动车+汽油+加油站','机动车+柴油+加油站','农业机械+柴油+加油站','工程施工+柴油+加油站','机动车+汽油+流动加油点','农业机械+柴油+流动加油点','工程施工+柴油+流动加油点','其他+汽油+加油站','工程施工+汽油+加油站','机动车+柴油+流动加油点','农业机械+汽油+加油站','其他+柴油+社会油库','其他组合'][p.dataIndex];
+        return n+'<br/>购油 '+(p.value>=10000?(p.value/10000).toFixed(1)+' 万升':p.value+' 升');}
+      return '';}},
+    grid:[
+      {left:58,right:8,top:0,height:'46%',containLabel:true},
+      {left:58,right:8,top:'52%',bottom:0,containLabel:true}
+    ],
+    xAxis:[
+      Object.assign(darkAxis(),{type:'category',data:['机+汽\n+站','机+柴\n+站','农+柴\n+站','工+柴\n+站','机+汽\n+流','农+柴\n+流','工+柴\n+流','其+汽\n+站','工+汽\n+站','机+柴\n+流','农+汽\n+站','其+柴\n+库','其他'],axisLabel:{color:DARK.axisLabel,fontSize:7,interval:0,rotate:0,lineHeight:8}}),
+      Object.assign(darkAxis(),{type:'category',data:['机+汽+站','机+柴+站','农+柴+站','工+柴+站','机+汽+流','农+柴+流','工+柴+流','其+汽+站','工+汽+站','机+柴+流','农+汽+站','其+柴+库','其他'],axisLabel:{show:false}})
+    ],
+    yAxis:[
+      Object.assign(darkAxis(),{type:'value',max:100000,splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:8,formatter:function(v){return v>=10000?(v/10000)+'万':v;}}}),
+      Object.assign(darkAxis(),{type:'category',data:['机动车加油','农业机械','工程施工','其他','汽油','柴油','加油站','流动加油点','社会油库'],axisLabel:{color:DARK.text,fontSize:8}})
+    ],
+    series:[
+      {name:'购油量',type:'bar',xAxisIndex:0,yAxisIndex:0,barWidth:'46%',
+        data:[
+          {value:96500,itemStyle:{color:'#ffb03a'}},{value:42300,itemStyle:{color:'#36d0ff'}},{value:31800,itemStyle:{color:'#36d0ff'}},{value:28600,itemStyle:{color:'#36d0ff'}},
+          {value:18900,itemStyle:{color:'#ffb03a'}},{value:12400,itemStyle:{color:'#36d0ff'}},{value:9800,itemStyle:{color:'#36d0ff'}},{value:7600,itemStyle:{color:'#ffb03a'}},
+          {value:6900,itemStyle:{color:'#ffb03a'}},{value:5400,itemStyle:{color:'#36d0ff'}},{value:4200,itemStyle:{color:'#ffb03a'}},{value:3100,itemStyle:{color:'#36d0ff'}},
+          {value:2800,itemStyle:{color:'#8a94a6'}}
+        ],
+        itemStyle:{borderRadius:2},
+        label:{show:true,position:'insideTop',color:'#fff',fontSize:7,formatter:function(p){return p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value;}}},
+      {name:'矩阵',type:'scatter',xAxisIndex:1,yAxisIndex:1,symbol:'circle',symbolSize:6,data:[[0,0],[0,4],[0,6],[1,0],[1,5],[1,6],[2,1],[2,5],[2,6],[3,2],[3,5],[3,6],[4,0],[4,4],[4,7],[5,1],[5,5],[5,7],[6,2],[6,5],[6,7],[7,3],[7,4],[7,6],[8,2],[8,4],[8,6],[9,0],[9,5],[9,7],[10,1],[10,4],[10,6],[11,3],[11,5],[11,8],[12,3],[12,5],[12,6]],itemStyle:{color:'#2ee6a8',opacity:.95}},
+      {name:'矩阵空',type:'scatter',xAxisIndex:1,yAxisIndex:1,symbol:'circle',symbolSize:6,data:(function(){var a=[];for(var c=0;c<13;c++){for(var r=0;r<9;r++){a.push([c,r]);}}return a;})(),itemStyle:{color:'rgba(138,148,166,.28)'}}
+    ]
+  },
+  media:[
+    {query:{maxWidth:620},option:{
+      grid:[
+        {left:40,right:4,top:0,height:'46%',containLabel:true},
+        {left:40,right:4,top:'52%',bottom:0,containLabel:true}
       ],
-      itemStyle:{borderRadius:2},
-      label:{show:true,position:'insideTop',color:'#fff',fontSize:7,formatter:function(p){return p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value;}}},
-    {name:'矩阵',type:'scatter',xAxisIndex:1,yAxisIndex:1,symbol:'circle',symbolSize:6,data:[[0,0],[0,4],[0,6],[1,0],[1,5],[1,6],[2,1],[2,5],[2,6],[3,2],[3,5],[3,6],[4,0],[4,4],[4,7],[5,1],[5,5],[5,7],[6,2],[6,5],[6,7],[7,3],[7,4],[7,6],[8,2],[8,4],[8,6],[9,0],[9,5],[9,7],[10,1],[10,4],[10,6],[11,3],[11,5],[11,8],[12,3],[12,5],[12,6]],itemStyle:{color:'#2ee6a8',opacity:.95}},
-    {name:'矩阵空',type:'scatter',xAxisIndex:1,yAxisIndex:1,symbol:'circle',symbolSize:6,data:(function(){var a=[];for(var c=0;c<13;c++){for(var r=0;r<9;r++){a.push([c,r]);}}return a;})(),itemStyle:{color:'rgba(138,148,166,.28)'}}
+      xAxis:[
+        Object.assign(darkAxis(),{type:'category',data:['机+汽\n+站','机+柴\n+站','农+柴\n+站','工+柴\n+站','机+汽\n+流','农+柴\n+流','工+柴\n+流','其+汽\n+站','工+汽\n+站','机+柴\n+流','农+汽\n+站','其+柴\n+库','其他'],axisLabel:{color:DARK.axisLabel,fontSize:6,interval:1,rotate:0,lineHeight:7}}),
+        Object.assign(darkAxis(),{type:'category',data:['机+汽+站','机+柴+站','农+柴+站','工+柴+站','机+汽+流','农+柴+流','工+柴+流','其+汽+站','工+汽+站','机+柴+流','农+汽+站','其+柴+库','其他'],axisLabel:{show:false}})
+      ],
+      yAxis:[
+        Object.assign(darkAxis(),{type:'value',max:100000,splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:7,formatter:function(v){return v>=10000?(v/10000)+'万':v;}}}),
+        Object.assign(darkAxis(),{type:'category',data:['机动车加油','农业机械','工程施工','其他','汽油','柴油','加油站','流动加油点','社会油库'],axisLabel:{color:DARK.text,fontSize:7}})
+      ],
+      series:[
+        {name:'购油量',type:'bar',xAxisIndex:0,yAxisIndex:0,barWidth:'64%',label:{show:true,position:'insideTop',color:'#fff',fontSize:6.5,formatter:function(p){return p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value;}}},
+        {symbolSize:5},
+        {symbolSize:5}
+      ]
+    }},
+    {query:{minWidth:621},option:{}}
   ]
 }},
 {id:'h1_drone2',option:{
