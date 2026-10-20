@@ -1773,15 +1773,19 @@ CHART_DEFS.address=[
   tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 条（{d}%）'}),
   legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:11},itemWidth:10,itemHeight:8},
   series:[{
-    type:'pie',radius:['42%','66%'],center:['50%','42%'],
+    type:'funnel',
+    sort:'ascending',
+    gap:2,
+    top:4,left:'12%',width:'76%',bottom:6,
+    label:{show:true,position:'right',color:'#2f6fed',fontSize:11,formatter:'{b} {c} 条'},
+    labelLine:{length:6,length2:4,lineStyle:{color:'#c9d6ee'}},
+    itemStyle:{borderRadius:2,borderColor:'#fff',borderWidth:1},
+    emphasis:{focus:'adjacency'},
     data:[
       {value:14320,name:'街路巷',itemStyle:{color:'#2f6fed'}},
       {value:213610,name:'门楼',itemStyle:{color:'#36b8ff'}},
       {value:96000,name:'层户',itemStyle:{color:'#ffb03a'}}
-    ],
-    label:{show:true,formatter:'{b}\n{d}%',color:LIGHT.text,fontSize:11},
-    labelLine:{length:12,length2:8,lineStyle:{color:'#c9d6ee'}},
-    itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
+    ]
   }]
 }}
 ];
