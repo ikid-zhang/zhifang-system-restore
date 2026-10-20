@@ -1332,7 +1332,7 @@ CHART_DEFS.home1=[
     ],
     yAxis:[
       Object.assign(darkAxis(),{type:'value',max:100000,splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:8,formatter:function(v){return v>=10000?(v/10000)+'万':v;}}}),
-      Object.assign(darkAxis(),{type:'category',data:['机动车加油','农业机械','工程施工','其他','汽油','柴油','加油站','流动加油点','社会油库'],axisLabel:{color:DARK.text,fontSize:8}})
+      Object.assign(darkAxis(),{type:'category',position:'left',data:['机动车加油','农业机械','工程施工','其他','汽油','柴油','加油站','流动加油点','社会油库'],axisLabel:{color:DARK.text,fontSize:8}})
     ],
     series:[
       {name:'购油量',type:'bar',xAxisIndex:0,yAxisIndex:0,barWidth:'46%',
@@ -1360,7 +1360,7 @@ CHART_DEFS.home1=[
       ],
       yAxis:[
         Object.assign(darkAxis(),{type:'value',max:100000,splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:7,formatter:function(v){return v>=10000?(v/10000)+'万':v;}}}),
-        Object.assign(darkAxis(),{type:'category',data:['机动车加油','农业机械','工程施工','其他','汽油','柴油','加油站','流动加油点','社会油库'],axisLabel:{color:DARK.text,fontSize:7}})
+        Object.assign(darkAxis(),{type:'category',position:'left',data:['机动车加油','农业机械','工程施工','其他','汽油','柴油','加油站','流动加油点','社会油库'],axisLabel:{color:DARK.text,fontSize:7}})
       ],
       series:[
         {name:'购油量',type:'bar',xAxisIndex:0,yAxisIndex:0,barWidth:'64%',label:{show:true,position:'insideTop',color:'#fff',fontSize:6.5,formatter:function(p){return p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value;}}},
