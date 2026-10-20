@@ -171,6 +171,9 @@ table.grid tr:hover td{background:#f7faff}
 .sc-grid{display:grid;gap:12px;margin-bottom:12px}
 .sc-grid>*,.sc-card-bd>*,.sc-card-bd>div>*{min-width:0}
 .sc-card{background:linear-gradient(180deg,rgba(16,48,96,.92),rgba(9,31,66,.92));border:1px solid #1d4d8f;border-radius:10px;position:relative;overflow:hidden}
+.sc-card.oil-stat-card{display:flex;flex-direction:column}
+.sc-card.oil-stat-card .sc-card-bd{display:flex;flex:1;min-height:0}
+.sc-card.oil-stat-card .sc-chart{flex:1;height:auto!important;min-height:230px}
 .sc-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#36d0ff 30%,#2f6fed 70%,transparent)}
 .sc-card-hd{display:flex;align-items:center;gap:8px;padding:12px 14px 4px;font-size:14px;font-weight:700;color:#dcebff}
 .sc-card-hd::before{content:"";width:4px;height:14px;border-radius:2px;background:linear-gradient(180deg,#ff5c5c,#ff7a6e)}
@@ -558,7 +561,7 @@ table.grid tr:hover td{background:#f7faff}
         <div class="sc-card"><div class="sc-card-hd">犬只管理</div><div class="sc-meta"><span>登记总数<b>7,168</b></span><span>电子养犬证<b>6,842</b></span><span>禁养检出<b>1,388</b></span><span>疫苗接种率<b>95.3%</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_dog" role="img" aria-label="犬只管理统计图"></div></div></div>
         <div class="sc-card"><div class="sc-card-hd">问卷调查管理</div><div class="sc-meta"><span>回收问卷<b>12,480</b></span><span>参与率<b>86.4%</b></span><span>满意度均值<b>8.5</b></span><span>目标<b>≥8.5</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_survey" role="img" aria-label="问卷调查管理统计图"></div></div></div>
         <div class="sc-card"><div class="sc-card-hd">平安信箱</div><div class="sc-meta"><span>信件总量<b>1,240</b></span><span>实名率<b>91.5%</b></span><span>平均办理<b>2.3天</b></span><span>按时结案率<b>96.8%</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_mail" role="img" aria-label="平安信箱统计图"></div></div></div>
-        <div class="sc-card"><div class="sc-card-hd">购买散装油管理</div><div class="sc-meta"><span>购油总量<b>27万升</b></span><span>核验通过率<b>98.6%</b></span><span>异常预警<b>12</b></span><span>定点站<b>12家</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_oil" role="img" aria-label="购买散装油管理统计图"></div></div></div>
+        <div class="sc-card oil-stat-card"><div class="sc-card-hd">购买散装油管理</div><div class="sc-meta"><span>购油总量<b>27万升</b></span><span>核验通过率<b>98.6%</b></span><span>异常预警<b>12</b></span><span>定点站<b>12家</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_oil" role="img" aria-label="购买散装油管理统计图"></div></div></div>
         <div class="sc-card"><div class="sc-card-hd">无人机备案</div><div class="sc-meta"><span>整体通过率<b>71.6%</b></span><span>平均审核<b>1.8天</b></span><span>驳回TOP·资料不全<b>41%</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_drone2" role="img" aria-label="无人机备案统计图"></div></div></div>
         <div class="sc-card"><div class="sc-card-hd">烟花爆竹管理</div><div class="sc-meta"><span>零售<b>128,626</b></span><span>批发<b>46,124</b></span><span>备案销售点<b>38家</b></span><span>查处违规<b>32起</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_fire" role="img" aria-label="烟花爆竹管理统计图"></div></div></div>
         <div class="sc-card"><div class="sc-card-hd">无人机飞行活动管理</div><div class="sc-meta"><span>活动<b>86</b></span><span>架次<b>214</b></span><span>审批通过率<b>98.4%</b></span><span>时空冲突<b>6次</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_flight" role="img" aria-label="无人机飞行活动管理统计图"></div></div></div>
@@ -960,6 +963,7 @@ table.grid tr:hover td{background:#f7faff}
 /* ============ 路由与导航 ============ */
 var VIEWS=['home1','home2','population','guard','address'];
 var charts={};
+var chartResizeObservers=[];
 function toast(msg){
   var t=document.getElementById('toast');
   t.textContent=msg;t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';
@@ -1004,6 +1008,11 @@ function initViewCharts(name){
       if(el){
         var c=echarts.init(el);
         c.setOption(d.option);
+        if(d.id==='h1_oil'&&window.ResizeObserver){
+          var oilResizeObserver=new ResizeObserver(function(){c.resize();});
+          oilResizeObserver.observe(el);
+          chartResizeObservers.push(oilResizeObserver);
+        }
         if(d.id==='pop_type_all'){
           c.on('legendselectchanged',function(p){
             var sel=p.selected||{};
@@ -1496,6 +1505,15 @@ CHART_DEFS.home1=[
   }]
 }}
 ];
+
+CHART_DEFS.home1.filter(function(d){return d.id==='h1_oil';})[0].option={
+  tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
+    return p.name+'<br/>购油量：'+(p.value>=10000?(p.value/10000).toFixed(1)+' 万升':p.value.toLocaleString()+' 升');}},
+  grid:{left:150,right:48,top:8,bottom:8,containLabel:false},
+  xAxis:Object.assign(darkAxis(),{type:'value',min:0,max:100000,splitNumber:4,splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:9,formatter:function(v){return v>=10000?(v/10000)+'万':v;}}}),
+  yAxis:Object.assign(darkAxis(),{type:'category',inverse:true,data:['机动车·汽油·加油站','机动车·柴油·加油站','农业机械·柴油·加油站','工程施工·柴油·加油站','机动车·汽油·流动点','农业机械·柴油·流动点','工程施工·柴油·流动点','其他·汽油·加油站','工程施工·汽油·加油站','机动车·柴油·流动点','农业机械·汽油·加油站','其他·柴油·社会油库','其他组合'],axisTick:{show:false},axisLabel:{color:DARK.text,fontSize:9,margin:8}}),
+  series:[{name:'购油量',type:'bar',barWidth:'54%',showBackground:true,backgroundStyle:{color:'rgba(64,128,220,.12)',borderRadius:5},data:[96500,42300,31800,28600,18900,12400,9800,7600,6900,5400,4200,3100,2800],itemStyle:{borderRadius:[0,5,5,0],color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36d0ff'}])},label:{show:true,position:'right',color:'#dcebff',fontSize:9,formatter:function(p){return p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value.toLocaleString();}}}]
+};
 
 /* -------- 首页 v2 图表（保留环形图，列表/卡片改为HTML） -------- */
 CHART_DEFS.home2=[
