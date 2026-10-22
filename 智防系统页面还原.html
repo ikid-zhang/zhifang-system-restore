@@ -1768,13 +1768,16 @@ function lightAxis(){
 CHART_DEFS.population=[
 {id:'pop_area',option:{
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString();}}),
-  legend:{data:['实有人口','流动人口'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
+  legend:{data:['人户一致','人户分离','跨省','跨市','跨县'],textStyle:{color:LIGHT.legendText,fontSize:10.5},top:0,right:0,itemWidth:10,itemHeight:8},
   grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','庚市','丁县','辛公安分局','乙县','戊县','己县','丙县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','庚市','丁县','辛公安分局','乙县','戊县','己县','丙县'],axisLabel:{color:LIGHT.text,fontSize:10.5}}),
   yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
   series:[
-    {name:'实有人口',type:'bar',data:[133500,65600,61100,58500,47100,31060,28400,3300],barWidth:7,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]}},
-    {name:'流动人口',type:'bar',data:[79200,28425,16390,44203,6400,118,3200,197],barWidth:7,itemStyle:{color:'#2ee6a8',borderRadius:[3,3,0,0]}}
+    {name:'人户一致',type:'bar',stack:'h',data:[97077,47702,44430,42539,34250,22586,20652,2400],barWidth:14,itemStyle:{color:'#2f6fed'}},
+    {name:'人户分离',type:'bar',stack:'h',data:[36423,17898,16670,15961,12850,8474,7748,900],barWidth:14,itemStyle:{color:'#8fb4ff'}},
+    {name:'跨省',type:'bar',stack:'f',data:[53065,27645,16287,31143,5120,46,2560,169],barWidth:14,itemStyle:{color:'#17c39a'}},
+    {name:'跨市',type:'bar',stack:'f',data:[17512,462,58,8740,960,42,480,16],barWidth:14,itemStyle:{color:'#2ee6a8'}},
+    {name:'跨县',type:'bar',stack:'f',data:[8623,318,45,4320,320,30,160,12],barWidth:14,itemStyle:{color:'#9be8c8'}}
   ]
 }},
 {id:'pop_age_all',option:{
