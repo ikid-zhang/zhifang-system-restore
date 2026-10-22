@@ -136,9 +136,10 @@ body:has(.content.screen-mode){background:#071a33}
 .po-trend i{display:block;font-style:normal;font-size:10px;color:var(--txt3);margin-top:1px}
 .po-pies{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0 10px}
 .po-pie{background:#f6f9ff;border:1px solid #e4edfb;border-radius:8px;padding:10px 12px 8px}
-.pp-hd{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:13px;color:var(--txt);font-weight:600}
-.pp-hd b{font-size:17px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums}
-.pp-foot{font-size:10.5px;color:var(--txt3);margin-top:4px;line-height:1.5;text-align:center}
+.pp-hd{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:12px;color:var(--txt);font-weight:600;line-height:1.1}
+.pp-hd b{font-size:14px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums}
+.pp-foot{font-size:9.5px;color:var(--txt3);margin-top:4px;line-height:1.5;text-align:center;white-space:nowrap}
+.pp-foot span{display:block}
 .po-nums{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
 .po-num{background:linear-gradient(135deg,#fff,#f6f9ff);border:1px solid #e4edfb;border-radius:8px;padding:10px 12px}
 .po-num .pn-t{font-size:12px;color:var(--txt);font-weight:600}
@@ -300,15 +301,13 @@ table.grid tr:hover td{background:#f7faff}
   .main{margin-left:var(--nav-w)}
   .topbar{padding:0 20px}
   .content{padding:16px 20px}
-  .pop-grid{grid-template-columns:repeat(5,1fr);grid-template-rows:auto auto}
+  .pop-grid{grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto}
   .pop-grid .pop-overview{grid-column:1;grid-row:1/3}
-  .pop-grid .pop-flowtop{grid-column:5;grid-row:1/3}
+  .pop-grid .pop-flowtop{grid-column:4;grid-row:1/3}
   .pop-grid .pop-area{grid-column:2;grid-row:1}
   .pop-grid .pop-age-all{grid-column:3;grid-row:1}
-  .pop-grid .pop-gender{grid-column:4;grid-row:1}
-  .pop-grid .pop-flowarea{grid-column:2;grid-row:2}
-  .pop-grid .pop-type-all{grid-column:3;grid-row:2}
-  .pop-grid .pop-warn{grid-column:4;grid-row:2}
+  .pop-grid .pop-gender{grid-column:2;grid-row:2}
+  .pop-grid .pop-warn{grid-column:3;grid-row:2}
   .data-row.pop-data{grid-template-columns:3fr 7fr}
   .sc-kpis{grid-template-columns:repeat(10,1fr);gap:8px}
   .sc-kpi{padding:8px 6px}
@@ -869,12 +868,12 @@ table.grid tr:hover td{background:#f7faff}
             <div class="po-pie">
               <div class="pp-hd"><span>户籍人口</span><b>155,098</b></div>
               <div class="chart-light" id="po_household" style="height:150px"></div>
-              <div class="pp-foot">人户一致 112,783 · 人户分离 42,315</div>
+              <div class="pp-foot"><span>人户一致 112,783</span><span>人户分离 42,315</span></div>
             </div>
             <div class="po-pie">
               <div class="pp-hd"><span>流动人口</span><b>178,868</b></div>
               <div class="chart-light" id="po_float" style="height:150px"></div>
-              <div class="pp-foot">跨省 122,000 · 跨市 46,868 · 跨县 10,000</div>
+              <div class="pp-foot"><span>跨省 122,000</span><span>跨市 46,868</span><span>跨县 10,000</span></div>
             </div>
           </div>
           <div class="po-nums">
@@ -889,8 +888,6 @@ table.grid tr:hover td{background:#f7faff}
           <div class="f3-sec"><div class="f3-sec-hd">省内流入</div><div class="chart-light" id="pop_in" style="height:130px"></div></div>
           <div class="f3-sec"><div class="f3-sec-hd">市域内流动</div><div class="chart-light" id="pop_city" style="height:130px"></div></div>
         </div></div>
-        <div class="panel pop-flowarea"><div class="panel-hd">按辖区统计流动人口分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_flowarea" style="height:290px"></div></div></div>
-        <div class="panel pop-type-all"><div class="panel-hd">户籍与流动人口类型分布</div><div class="panel-bd"><div class="chart-light" id="pop_type_all" style="height:290px"></div></div></div>
         <div class="panel pop-gender"><div class="panel-hd">按辖区统计男女分布情况</div><div class="panel-bd"><div class="chart-light" id="pop_gender" style="height:290px"></div></div></div>
         <div class="panel pop-warn"><div class="panel-hd">按辖区预警分布<span class="panel-hd-extra"><button class="btn btn-xs" onclick="openWarnModal('')">查看预警列表</button></span></div><div class="panel-bd"><div class="chart-light" id="pop_warn" style="height:290px"></div></div></div>
       </div>
@@ -1192,20 +1189,6 @@ function initViewCharts(name){
       if(el){
         var c=echarts.init(el);
         c.setOption(d.option);
-        if(d.id==='pop_type_all'){
-          c.on('legendselectchanged',function(p){
-            var sel=p.selected||{};
-            var map={'户籍人口':['人户一致','人户分离'],'流动人口':['跨省流动','跨市流动','跨县流动'],'未落户人员':[]};
-            if(map[p.name]){
-              var on=!!sel[p.name];
-              map[p.name].forEach(function(n){
-                if(!!sel[n]!==on){
-                  c.dispatchAction({type:on?'legendSelect':'legendUnSelect',name:n});
-                }
-              });
-            }
-          });
-        }
         if(d.id==='pop_warn'){
           c.on('click',function(p){openWarnModal(p.name);});
         }
@@ -1244,14 +1227,14 @@ function toggleStats(btn){
   btn.title=c?'展开统计模块':'收起统计模块';
 }
 var POP_WARN_DATA={
-  '甲分局':[['流动人口未登记','1,286','↑ 8.2%'],['出租房屋未备案','342','↓ 3.1%'],['未落户人员','1,150','↑ 12.6%'],['居住证到期','876','↑ 5.4%']],
-  '辛公安分局':[['流动人口未登记','864','↑ 6.8%'],['出租房屋未备案','210','↓ 1.9%'],['未落户人员','780','↑ 9.3%'],['居住证到期','543','↑ 4.2%']],
-  '庚市':[['流动人口未登记','452','↑ 3.5%'],['出租房屋未备案','98','↓ 0.6%'],['未落户人员','520','↑ 7.1%'],['居住证到期','310','↑ 2.8%']],
-  '丁县':[['流动人口未登记','318','↑ 2.9%'],['出租房屋未备案','76','↓ 0.4%'],['未落户人员','405','↑ 6.2%'],['居住证到期','210','↑ 1.9%']],
-  '乙县':[['流动人口未登记','128','↑ 1.8%'],['出租房屋未备案','34','↓ 0.2%'],['未落户人员','156','↑ 2.7%'],['居住证到期','96','↑ 1.1%']],
-  '己县':[['流动人口未登记','96','↑ 1.2%'],['出租房屋未备案','20','—'],['未落户人员','118','↑ 1.6%'],['居住证到期','54','↑ 0.8%']],
-  '丙县':[['流动人口未登记','45','↑ 0.6%'],['出租房屋未备案','12','—'],['未落户人员','88','↑ 1.3%'],['居住证到期','30','↑ 0.4%']],
-  '戊县':[['流动人口未登记','38','↑ 0.4%'],['出租房屋未备案','10','—'],['未落户人员','72','↑ 1.1%'],['居住证到期','22','↑ 0.3%']]
+  '甲分局':[['涉恐','8','↑ 2'],['涉毒','156','↑ 8.2%'],['刑释解教','428','↓ 3.1%'],['涉稳','96','↑ 5.4%'],['邪教','12','—'],['肇事肇祸精神病人','34','↑ 1.6%'],['其他重点人员','322','↑ 6.8%']],
+  '辛公安分局':[['涉恐','3','↑ 1'],['涉毒','88','↑ 6.8%'],['刑释解教','216','↓ 1.9%'],['涉稳','54','↑ 4.2%'],['邪教','6','—'],['肇事肇祸精神病人','18','↑ 1.1%'],['其他重点人员','198','↑ 5.3%']],
+  '庚市':[['涉恐','2','—'],['涉毒','45','↑ 3.5%'],['刑释解教','132','↓ 0.6%'],['涉稳','28','↑ 2.8%'],['邪教','4','—'],['肇事肇祸精神病人','11','↑ 0.8%'],['其他重点人员','102','↑ 3.9%']],
+  '丁县':[['涉恐','1','—'],['涉毒','32','↑ 2.9%'],['刑释解教','96','↓ 0.4%'],['涉稳','20','↑ 1.9%'],['邪教','3','—'],['肇事肇祸精神病人','8','↑ 0.6%'],['其他重点人员','74','↑ 2.6%']],
+  '乙县':[['涉恐','0','—'],['涉毒','18','↑ 1.8%'],['刑释解教','64','↓ 0.2%'],['涉稳','12','↑ 1.1%'],['邪教','2','—'],['肇事肇祸精神病人','5','↑ 0.4%'],['其他重点人员','48','↑ 1.9%']],
+  '己县':[['涉恐','0','—'],['涉毒','12','↑ 1.2%'],['刑释解教','42','↓ 0.1%'],['涉稳','9','↑ 0.8%'],['邪教','1','—'],['肇事肇祸精神病人','3','↑ 0.3%'],['其他重点人员','36','↑ 1.4%']],
+  '丙县':[['涉恐','0','—'],['涉毒','6','↑ 0.6%'],['刑释解教','20','↓ 0.1%'],['涉稳','4','↑ 0.4%'],['邪教','1','—'],['肇事肇祸精神病人','2','↑ 0.2%'],['其他重点人员','16','↑ 0.7%']],
+  '戊县':[['涉恐','0','—'],['涉毒','4','↑ 0.4%'],['刑释解教','15','↓ 0.1%'],['涉稳','3','↑ 0.3%'],['邪教','0','—'],['肇事肇祸精神病人','1','↑ 0.1%'],['其他重点人员','12','↑ 0.5%']]
 };
 function openWarnModal(region){
   var tbody=document.getElementById('popWarnTbody');
@@ -1768,157 +1751,137 @@ function lightAxis(){
 CHART_DEFS.population=[
 {id:'pop_area',option:{
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString();}}),
-  legend:{data:['人户一致','人户分离','跨省','跨市','跨县'],textStyle:{color:LIGHT.legendText,fontSize:10.5},top:0,right:0,itemWidth:10,itemHeight:8},
-  grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','庚市','丁县','辛公安分局','乙县','戊县','己县','丙县'],axisLabel:{color:LIGHT.text,fontSize:10.5}}),
-  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
+  legend:{data:['人户一致','人户分离','跨省','跨市','跨县'],textStyle:{color:LIGHT.legendText,fontSize:9.5},top:0,right:0,itemWidth:9,itemHeight:7},
+  grid:{left:4,right:8,top:28,bottom:30,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','庚市','丁县','辛公安分局','乙县','戊县','己县','丙县'],axisLabel:{color:LIGHT.text,fontSize:8.5,interval:0,rotate:22}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:9.5,formatter:function(v){return (v/1000)+'k';}}}),
   series:[
-    {name:'人户一致',type:'bar',stack:'h',data:[97077,47702,44430,42539,34250,22586,20652,2400],barWidth:14,itemStyle:{color:'#2f6fed'}},
-    {name:'人户分离',type:'bar',stack:'h',data:[36423,17898,16670,15961,12850,8474,7748,900],barWidth:14,itemStyle:{color:'#8fb4ff'}},
-    {name:'跨省',type:'bar',stack:'f',data:[53065,27645,16287,31143,5120,46,2560,169],barWidth:14,itemStyle:{color:'#17c39a'}},
-    {name:'跨市',type:'bar',stack:'f',data:[17512,462,58,8740,960,42,480,16],barWidth:14,itemStyle:{color:'#2ee6a8'}},
-    {name:'跨县',type:'bar',stack:'f',data:[8623,318,45,4320,320,30,160,12],barWidth:14,itemStyle:{color:'#9be8c8'}}
+    {name:'人户一致',type:'bar',stack:'h',data:[97077,47702,44430,42539,34250,22586,20652,2400],barWidth:7,itemStyle:{color:'#2f6fed'}},
+    {name:'人户分离',type:'bar',stack:'h',data:[36423,17898,16670,15961,12850,8474,7748,900],barWidth:7,itemStyle:{color:'#8fb4ff'},
+      label:{show:true,position:'top',color:'#1f2d3d',fontSize:7.5,fontWeight:600,formatter:function(p){var v=[133500,65600,61100,58500,47100,31060,28400,3300][p.dataIndex];return v>=1000?v.toLocaleString():'';}}},
+    {name:'跨省',type:'bar',stack:'f',data:[53065,27645,16287,31143,5120,46,2560,169],barWidth:7,itemStyle:{color:'#17c39a'}},
+    {name:'跨市',type:'bar',stack:'f',data:[17512,462,58,8740,960,42,480,16],barWidth:7,itemStyle:{color:'#2ee6a8'}},
+    {name:'跨县',type:'bar',stack:'f',data:[8623,318,45,4320,320,30,160,12],barWidth:7,itemStyle:{color:'#9be8c8'},
+      label:{show:true,position:'top',color:'#0d9c77',fontSize:7.5,fontWeight:600,formatter:function(p){var v=[79200,28425,16390,44203,6400,118,3200,197][p.dataIndex];return v>=1000?v.toLocaleString():'';}}}
   ]
 }},
 {id:'pop_age_all',option:{
-  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 人';}}),
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',valueFormatter:function(v){return v.toLocaleString()+' 人';}}),
   legend:{data:['户籍人口','流动人口'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
-  grid:{left:4,right:56,top:30,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
-  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['0-3','3-6','6-14','14-16','16-18','18-35','35-60','60-80','80+'],axisLabel:{color:LIGHT.text,fontSize:11}}),
+  grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',boundaryGap:false,data:['0-3','3-6','6-14','14-16','16-18','18-35','35-60','60-80','80+'],axisLabel:{color:LIGHT.text,fontSize:10.5,interval:0}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
   series:[
-    {name:'户籍人口',type:'bar',data:[3102,3877,9306,3102,3877,31020,58937,34122,7755],barWidth:11,itemStyle:{color:'#2f6fed',borderRadius:3},
-      label:{show:true,position:'right',color:'#2f6fed',fontSize:9,formatter:function(p){return p.value.toLocaleString();}}},
-    {name:'流动人口',type:'bar',data:[2683,2683,8943,3577,4472,75125,67970,11626,1789],barWidth:11,itemStyle:{color:'#2ee6a8',borderRadius:3},
-      label:{show:true,position:'right',color:'#17c39a',fontSize:9,formatter:function(p){return p.value.toLocaleString();}}}
+    {name:'户籍人口',type:'line',smooth:true,symbol:'circle',symbolSize:5,data:[3102,3877,9306,3102,3877,31020,58937,34122,7755],
+      lineStyle:{width:2,color:'#2f6fed'},itemStyle:{color:'#2f6fed'},
+      areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(47,111,237,.32)'},{offset:1,color:'rgba(47,111,237,.03)'}])}},
+    {name:'流动人口',type:'line',smooth:true,symbol:'circle',symbolSize:5,data:[2683,2683,8943,3577,4472,75125,67970,11626,1789],
+      lineStyle:{width:2,color:'#17c39a'},itemStyle:{color:'#17c39a'},
+      areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(23,195,154,.3)'},{offset:1,color:'rgba(23,195,154,.03)'}])}}
   ]
 }},
 {id:'pop_out',option:{
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString();}}),
-  grid:{left:4,right:40,top:4,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}}}),
+  grid:{left:4,right:46,top:4,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:9,formatter:function(v){return (v/1000)+'k';}}}),
   yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
-    data:['四川','云南','重庆','河南','甘肃','陕西','湖北','贵州','湖南','青海','山东','河北','安徽','山西'],
-    axisLabel:{color:LIGHT.text,fontSize:10.5}}),
-  series:[{name:'外省流入',type:'bar',data:[55300,14553,9933,8689,7053,6058,5735,5505,3370,3340,2170,2100,2010,2010],
-    barWidth:9,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
-    label:{show:true,position:'right',color:'#2f6fed',fontSize:9,formatter:function(p){return p.value.toLocaleString();}}}
-  ]
+    data:['四川','云南','重庆','河南','甘肃','陕西','湖北','贵州','其他省份'],
+    axisLabel:{color:LIGHT.text,fontSize:10}}),
+  series:[{name:'外省流入',type:'bar',data:[55300,14553,9933,8689,7053,6058,5735,5505,15000],barWidth:8,
+    itemStyle:{borderRadius:2},
+    label:{show:true,position:'right',color:'#82878B',fontSize:8.5,formatter:function(p){return p.value.toLocaleString();}}
+  }],
+  color:['#2f6fed','#3d7bf7','#4d8bfa','#5f99fb','#6fa7fc','#80b4fc','#90c0fd','#a0ccfd','#b9d4ff']
 }},
 {id:'pop_in',option:{
   tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 人（{d}%）'}),
   legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10},itemWidth:8,itemHeight:8},
   series:[{
-    type:'pie',radius:['46%','70%'],center:['50%','44%'],
+    type:'pie',roseType:'radius',radius:['22%','72%'],center:['50%','44%'],
     data:[
       {value:8081,name:'昌都',itemStyle:{color:'#2f6fed'}},
       {value:3160,name:'拉萨',itemStyle:{color:'#36b8ff'}},
-      {value:2770,name:'日喀则',itemStyle:{color:'#7fb4ff'}},
+      {value:2770,name:'日喀则',itemStyle:{color:'#8fb4ff'}},
       {value:2090,name:'山南',itemStyle:{color:'#b9d4ff'}}
     ],
-    label:{show:true,formatter:'{b}\n{d}%',color:LIGHT.text,fontSize:9.5},
+    label:{show:true,formatter:'{b} {d}%',color:LIGHT.text,fontSize:9},
     labelLine:{length:8,length2:4,lineStyle:{color:'#c9d6ee'}},
     itemStyle:{borderRadius:3,borderColor:'#fff',borderWidth:1.5}
   }]
 }},
 {id:'pop_city',option:{
-  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 人（{d}%）'}),
-  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10},itemWidth:8,itemHeight:8},
-  series:[{
-    type:'pie',radius:['46%','70%'],center:['50%','44%'],
+  tooltip:Object.assign(lightTooltip(),{formatter:function(p){return p.name+'：'+p.value.toLocaleString()+' 人（'+p.percent+'%）';}}),
+  graphic:{type:'text',left:'center',top:'42%',style:{text:'市域内流动',fill:'#5f6f8a',fontSize:10}},
+  series:[{type:'pie',radius:['38%','68%'],center:['50%','50%'],startAngle:90,
+    label:{show:true,color:'#1f2d3d',fontSize:9,formatter:function(p){return p.name+'\n'+p.value.toLocaleString();}},
+    labelLine:{show:true,length:8,length2:8,lineStyle:{color:'#c9d6ee'}},
+    itemStyle:{borderColor:'#fff',borderWidth:1},
     data:[
-      {value:8623,name:'巴宜',itemStyle:{color:'#17c39a'}},
-      {value:4320,name:'雅下',itemStyle:{color:'#2ee6a8'}},
-      {value:318,name:'米林',itemStyle:{color:'#9be8c8'}},
-      {value:45,name:'波密',itemStyle:{color:'#ffb03a'}},
-      {value:12,name:'墨脱',itemStyle:{color:'#ffd18a'}},
-      {value:30,name:'察隅',itemStyle:{color:'#c9d6ee'}}
-    ],
-    label:{show:true,formatter:'{b}\n{d}%',color:LIGHT.text,fontSize:9.5},
-    labelLine:{length:8,length2:4,lineStyle:{color:'#c9d6ee'}},
-    itemStyle:{borderRadius:3,borderColor:'#fff',borderWidth:1.5}
-  }]
-}},
-{id:'pop_flowarea',option:{
-  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString();}}),
-  legend:{data:['跨县','跨市','跨省'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
-  grid:{left:4,right:44,top:30,bottom:4,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
-  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['甲分局','辛公安分局','庚市','丁县','丙县','戊县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
-  series:[
-    {name:'跨县',type:'bar',stack:'t',data:[8623,4320,318,45,12,30],barWidth:14,itemStyle:{color:'#2f6fed'}},
-    {name:'跨市',type:'bar',stack:'t',data:[17512,8740,462,58,16,42],barWidth:14,itemStyle:{color:'#36b8ff'}},
-    {name:'跨省',type:'bar',stack:'t',data:[53065,31143,27645,16287,169,46],barWidth:14,itemStyle:{color:'#7fb4ff'}}
-  ]
-}},
-{id:'pop_type_all',option:{
-  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 人（{d}%）'}),
-  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10.5},itemWidth:10,itemHeight:8},
-  series:[
-    {type:'pie',radius:['26%','46%'],center:['50%','44%'],
-     data:[
-       {value:155098,name:'户籍人口',itemStyle:{color:'#2f6fed'}},
-       {value:178868,name:'流动人口',itemStyle:{color:'#2ee6a8'}},
-       {value:11591,name:'未落户人员',itemStyle:{color:'#ffb03a'}}
-     ],
-     label:{show:true,formatter:'{b}\n{d}%',color:LIGHT.text,fontSize:11},
-     labelLine:{length:8,length2:4,lineStyle:{color:'#c9d6ee'}},
-     itemStyle:{borderColor:'#fff',borderWidth:1}},
-    {type:'pie',radius:['52%','72%'],center:['50%','44%'],
-     data:[
-       {value:112783,name:'人户一致',itemStyle:{color:'#3d7bf7'}},
-       {value:42315,name:'人户分离',itemStyle:{color:'#8fb4ff'}},
-       {value:122000,name:'跨省流动',itemStyle:{color:'#2ee6a8'}},
-       {value:46868,name:'跨市流动',itemStyle:{color:'#ffb03a'}},
-       {value:10000,name:'跨县流动',itemStyle:{color:'#9be8c8'}},
-       {value:11591,name:'未落户人员',itemStyle:{color:'#ffd27a'}}
-     ],
-     label:{show:true,formatter:'{b} {d}%',color:LIGHT.text,fontSize:10.5},
-     labelLine:{length:10,length2:6,lineStyle:{color:'#c9d6ee'}},
-     itemStyle:{borderRadius:3,borderColor:'#fff',borderWidth:2}}
+      {name:'巴宜',value:8623,itemStyle:{color:'#2f6fed'}},
+      {name:'雅下',value:4320,itemStyle:{color:'#3d7bf7'}},
+      {name:'米林',value:318,itemStyle:{color:'#5f99fb'}},
+      {name:'波密',value:45,itemStyle:{color:'#80b4fc'}},
+      {name:'察隅',value:30,itemStyle:{color:'#90c0fd'}},
+      {name:'墨脱',value:12,itemStyle:{color:'#b9d4ff'}}
+    ]}
   ]
 }},
 {id:'pop_gender',option:{
-  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString();}}),
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 人';}}),
   legend:{data:['男性','女性'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
-  grid:{left:4,right:12,top:30,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','庚市','丁县','辛公安分局','乙县','戊县','己县','丙县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
-  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
+  grid:{left:4,right:10,top:26,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','辛公安分局','庚市','丁县','乙县','戊县','己县','丙县'],axisLabel:{color:LIGHT.text,fontSize:9.5,interval:0}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:9,formatter:function(v){return (v/1000)+'k';}}}),
   series:[
-    {name:'男性',type:'bar',data:[67400,33100,34500,28400,32400,15860,16400,1700],barWidth:7,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]}},
-    {name:'女性',type:'bar',data:[66100,32500,26600,30100,14700,15200,12000,1600],barWidth:7,itemStyle:{color:'#36b8ff',borderRadius:[3,3,0,0]}}
+    {name:'男性',type:'bar',data:[67400,28400,33100,34500,32400,15860,16400,1700],barWidth:9,itemStyle:{color:'#2f6fed',borderRadius:[2,2,0,0]}},
+    {name:'女性',type:'bar',data:[66100,30100,32500,26600,14700,15200,12000,1600],barWidth:9,itemStyle:{color:'#F26D82',borderRadius:[2,2,0,0]}}
   ]
 }},
 {id:'pop_warn',option:{
-  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p.name+'：预警 '+p.value.toLocaleString()+' 条<br/>点击查看辖区预警明细';}}),
-  grid:{left:4,right:44,top:8,bottom:0,containLabel:true},
-  xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10}}),
-  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['甲分局','辛公安分局','庚市','丁县','乙县','己县','丙县','戊县'],axisLabel:{color:LIGHT.text,fontSize:11}}),
-  series:[{name:'预警数',type:'bar',data:[3654,2397,1380,1009,414,288,175,142],barWidth:10,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#ffb03a'},{offset:1,color:'#ff7a5c'}]),borderRadius:3},
-    label:{show:true,position:'right',color:'#e0792d',fontSize:9,formatter:function(p){return p.value.toLocaleString();}}}]
+  tooltip:Object.assign(lightTooltip(),{formatter:function(p){
+    return p.name+'<br>'+p.seriesName+'：'+p.value.toLocaleString()+' 人<br>点击查看辖区重点人员明细';
+  }}),
+  grid:{left:4,right:64,top:8,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲分局','辛公安分局','庚市','丁县','乙县','己县','丙县','戊县'],axisLabel:{color:LIGHT.text,fontSize:9.5,rotate:30},splitArea:{show:true,areaStyle:{color:['rgba(255,255,255,0)','rgba(230,238,250,.4)']}}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['涉恐','涉毒','刑释解教','涉稳','邪教','肇事肇祸精神病人','其他重点人员'],axisLabel:{color:LIGHT.text,fontSize:9.5},splitArea:{show:true,areaStyle:{color:['rgba(255,255,255,0)','rgba(230,238,250,.4)']}}}),
+  visualMap:{min:0,max:450,calculable:false,orient:'vertical',right:2,top:'middle',textStyle:{color:'#8a97ad',fontSize:9},
+    inRange:{color:['#f3f7ff','#dbe9ff','#9fc0ff','#5a8ef0','#2f6fed','#e8556b']}},
+  series:[{
+    type:'heatmap',data:[
+      [0,0,8],[1,0,3],[2,0,2],[3,0,1],[4,0,0],[5,0,0],[6,0,0],[7,0,0],
+      [0,1,156],[1,1,88],[2,1,45],[3,1,32],[4,1,18],[5,1,12],[6,1,6],[7,1,4],
+      [0,2,428],[1,2,216],[2,2,132],[3,2,96],[4,2,64],[5,2,42],[6,2,20],[7,2,15],
+      [0,3,96],[1,3,54],[2,3,28],[3,3,20],[4,3,12],[5,3,9],[6,3,4],[7,3,3],
+      [0,4,12],[1,4,6],[2,4,4],[3,4,3],[4,4,2],[5,4,1],[6,4,1],[7,4,0],
+      [0,5,34],[1,5,18],[2,5,11],[3,5,8],[4,5,5],[5,5,3],[6,5,2],[7,5,1],
+      [0,6,322],[1,6,198],[2,6,102],[3,6,74],[4,6,48],[5,6,36],[6,6,16],[7,6,12]
+    ],
+    label:{show:true,color:'#3a4a66',fontSize:8},
+    itemStyle:{borderColor:'#fff',borderWidth:1}
+  }]
 }},
 {id:'po_household',option:{
   tooltip:{formatter:'{b}：{c} 人（{d}%）'},
-  series:[{type:'pie',radius:['30%','62%'],center:['50%','46%'],
+  series:[{type:'pie',radius:['30%','60%'],center:['50%','46%'],
     data:[
       {value:112783,name:'人户一致',itemStyle:{color:'#2f6fed'}},
       {value:42315,name:'人户分离',itemStyle:{color:'#8fb4ff'}}
     ],
-    label:{show:true,formatter:'{b} {d}%',color:'#1f2d3d',fontSize:9.5},
-    labelLine:{length:6,length2:4,lineStyle:{color:'#c9d6ee'}},
+    label:{show:false},
+    labelLine:{show:false},
     itemStyle:{borderColor:'#fff',borderWidth:1}}
   ]
 }},
 {id:'po_float',option:{
   tooltip:{formatter:'{b}：{c} 人（{d}%）'},
-  series:[{type:'pie',radius:['30%','62%'],center:['50%','46%'],
+  series:[{type:'pie',roseType:'radius',radius:['26%','60%'],center:['50%','46%'],
     data:[
       {value:122000,name:'跨省流动',itemStyle:{color:'#2ee6a8'}},
       {value:46868,name:'跨市流动',itemStyle:{color:'#9be8c8'}},
       {value:10000,name:'跨县流动',itemStyle:{color:'#ffb03a'}}
     ],
-    label:{show:true,formatter:'{b} {d}%',color:'#1f2d3d',fontSize:9.5},
-    labelLine:{length:6,length2:4,lineStyle:{color:'#c9d6ee'}},
+    label:{show:false},
+    labelLine:{show:false},
     itemStyle:{borderColor:'#fff',borderWidth:1}}
   ]
 }}
