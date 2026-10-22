@@ -1782,11 +1782,11 @@ CHART_DEFS.population=[
   legend:{data:['户籍人口','流动人口'],textStyle:{color:LIGHT.legendText,fontSize:11},top:0,right:0,itemWidth:12,itemHeight:8},
   grid:{left:4,right:56,top:30,bottom:0,containLabel:true},
   xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/1000)+'k';}}}),
-  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['0-10','11-20','21-30','31-40','41-50','51-60','61-70','71-80','80+'],axisLabel:{color:LIGHT.text,fontSize:11}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['0-3','3-6','6-14','14-16','16-18','18-35','35-60','60-80','80+'],axisLabel:{color:LIGHT.text,fontSize:11}}),
   series:[
-    {name:'户籍人口',type:'bar',data:[7135,12873,27142,39240,31795,25746,7600,2792,931],barWidth:11,itemStyle:{color:'#2f6fed',borderRadius:3},
+    {name:'户籍人口',type:'bar',data:[3102,3877,9306,3102,3877,31020,58937,34122,7755],barWidth:11,itemStyle:{color:'#2f6fed',borderRadius:3},
       label:{show:true,position:'right',color:'#2f6fed',fontSize:9,formatter:function(p){return p.value.toLocaleString();}}},
-    {name:'流动人口',type:'bar',data:[8228,14846,31302,45254,36668,29692,8765,3220,1073],barWidth:11,itemStyle:{color:'#2ee6a8',borderRadius:3},
+    {name:'流动人口',type:'bar',data:[2683,2683,8943,3577,4472,75125,67970,11626,1789],barWidth:11,itemStyle:{color:'#2ee6a8',borderRadius:3},
       label:{show:true,position:'right',color:'#17c39a',fontSize:9,formatter:function(p){return p.value.toLocaleString();}}}
   ]
 }},
