@@ -146,6 +146,18 @@ body:has(.content.screen-mode){background:#071a33}
 .po-num .pn-v{font-size:23px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums;margin:4px 0 2px}
 .po-num .pn-g{font-size:11px;color:var(--txt3)}
 .panel-hd-extra{margin-left:auto;display:inline-flex;align-items:center}
+.fs-btn{margin-left:auto;background:rgba(54,208,255,.1);border:1px solid rgba(54,208,255,.45);color:#7fe4ff;cursor:pointer}
+.fs-btn:hover{background:rgba(54,208,255,.2);color:#fff}
+.fs-mask{position:fixed;inset:0;background:rgba(5,16,38,.97);z-index:1200;display:none;flex-direction:column;padding:14px 20px;box-sizing:border-box}
+.fs-mask.show{display:flex}
+.fs-top{display:flex;align-items:center;justify-content:space-between;color:#dcebff;margin-bottom:12px}
+.fs-top .fs-title{font-size:16px;font-weight:700;color:#7fe4ff}
+.fs-body{flex:1;min-height:0}
+.fs-body .sc-card{width:100%;height:100%;display:flex;flex-direction:column;border-radius:12px;border-color:#2f6fed;overflow:hidden}
+.fs-body .sc-card .sc-meta{flex-shrink:0;padding-left:14px;padding-right:14px}
+.fs-body .sc-card-bd{flex:1;min-height:0;display:flex;padding:10px 14px 14px}
+.fs-body .sc-chart{width:100%;height:100%!important}
+.fs-body .fs-btn{display:none}
 .btn.btn-xs{height:26px;padding:0 10px;font-size:12px;border-radius:5px}
 .pop-modal-mask{position:fixed;inset:0;background:rgba(15,35,80,.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
 .pop-modal{background:#fff;border-radius:12px;box-shadow:0 20px 60px -12px rgba(15,35,80,.35);width:min(760px,94vw);max-height:86vh;display:flex;flex-direction:column;overflow:hidden}
@@ -265,6 +277,13 @@ table.grid tr:hover td{background:#f7faff}
 .drone-wrap{display:flex;align-items:center;gap:8px}
 .drone-wrap .sc-chart{flex:1;min-width:0;height:150px}
 .drone-legend{flex:1;min-width:118px;display:flex;flex-direction:column;gap:7px}
+.pop-legend{display:flex;gap:8px;margin-top:2px}
+.pl-col{flex:1;min-width:0;font-size:10.5px}
+.pl-title{color:#bcd6f5;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-title i{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:4px;vertical-align:1px}
+.pl-title b,.pl-sub b{float:right;color:#7fe4ff;font-variant-numeric:tabular-nums;font-weight:600;font-size:10px}
+.pl-sub{color:#5f7ea8;margin-left:12px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-sub b{color:#dcebff}
 .dl-row{display:grid;grid-template-columns:10px 1fr auto;gap:6px;align-items:center;font-size:12px;color:#bcd6f5;border-bottom:1px dashed rgba(64,128,220,.22);padding-bottom:6px}
 .dl-row i{width:9px;height:9px;border-radius:2px;display:inline-block}
 .dl-row b{color:#7fe4ff;font-variant-numeric:tabular-nums}
@@ -272,14 +291,19 @@ table.grid tr:hover td{background:#f7faff}
 .popdist-card{background:rgba(64,128,220,.10);border:1px solid rgba(64,128,220,.28);border-radius:8px;padding:10px 6px;text-align:center}
 .popdist-card .v{font-size:19px;font-weight:700;color:#7fe4ff;font-variant-numeric:tabular-nums}
 .popdist-card .l{font-size:12px;color:#8fb0dd;margin-top:2px}
-.gd-kpi{display:flex;flex-direction:column;justify-content:center;height:100%;min-height:175px}
-.gd-total{text-align:center;margin-bottom:8px}
-.gd-total .v{font-size:34px;font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1.1}
-.gd-total .l{font-size:13px;color:var(--txt2);margin-top:2px}
-.gd-sub{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;text-align:center}
-.gd-sub .v{font-size:17px;font-weight:700;color:var(--txt);font-variant-numeric:tabular-nums}
-.gd-sub .v .v-sub{font-size:13px;font-weight:400;color:#2f6fed}
-.gd-sub .l{font-size:11px;color:var(--txt2);margin-top:2px}
+.gd-kpi{display:flex;flex-direction:column;justify-content:center;height:100%;min-height:175px;container-type:inline-size}
+.gd-total{text-align:center;margin:0}
+.gd-total .v{font-size:clamp(16px,8cqw,26px);font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1.1;white-space:nowrap}
+.gd-total .l{font-size:11px;color:var(--txt2);margin-top:1px;white-space:nowrap}
+.gd-total .v .v-sub{font-size:15px;font-weight:400;color:#2f6fed}
+.gd-sub{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;margin-top:8px;min-width:0}
+.gd-sub .tip-wrap{background:#F5F9FF;border-radius:8px;padding:6px 2px 5px;border:1px solid #e8eef7;min-width:0}
+.gd-sub .v{font-size:clamp(10px,3.4cqw,15px);font-weight:800;color:var(--txt);font-variant-numeric:tabular-nums;white-space:nowrap}
+.gd-sub .v .v-sub{font-size:9px;font-weight:400;color:#2f6fed}
+.gd-sub .l{font-size:9px;color:var(--txt2);margin-top:2px;white-space:nowrap}
+@container (max-width:280px){
+  .gd-sub{grid-template-columns:repeat(2,1fr);gap:10px 12px;margin-top:6px}
+}
 /* 护学岗：统计模块折叠 */
 .guard-stats{position:relative;margin-bottom:14px}
 .addr-stats{position:relative;margin-bottom:14px}
@@ -330,7 +354,8 @@ table.grid tr:hover td{background:#f7faff}
   .grid-home2-r2{grid-template-columns:25% 51% 24%}
   .grid-home2-r3{grid-template-columns:25% 51% 24%}
   .grid-pop-charts{grid-template-columns:repeat(5,1fr)}
-  .grid-guard-charts{grid-template-columns:repeat(5,1fr)}
+  .grid-guard-charts{grid-template-columns:1.71fr 1fr 1fr 1fr 1fr}
+  .grid-guard-charts>*{min-width:0}
   .grid-addr-charts{grid-template-columns:repeat(3,1fr)}
   .sp-grid3{grid-template-columns:1fr 1fr 1fr}
   .dispute-grid{grid-template-columns:1fr 1fr}
@@ -565,10 +590,19 @@ table.grid tr:hover td{background:#f7faff}
         <div class="sc-card">
           <div class="sc-card-hd">实有人口概况</div>
           <div class="sc-card-bd">
-            <div class="sc-chart" style="height:180px" id="h1_pop"></div>
-            <div class="drone-legend">
-              <div class="dl-row"><i style="background:#2ee6a8"></i><span>男性</span><b>210,444</b></div>
-              <div class="dl-row"><i style="background:#7fe4ff"></i><span>女性</span><b>135,113</b></div>
+            <div class="sc-chart" style="height:150px" id="h1_pop"></div>
+            <div class="pop-legend">
+              <div class="pl-col">
+                <div class="pl-title"><i style="background:#2f6fed"></i>户籍人口<b>174,250</b></div>
+                <div class="pl-sub">人户一致<b>152,430</b></div>
+                <div class="pl-sub">人户分离<b>21,820</b></div>
+              </div>
+              <div class="pl-col">
+                <div class="pl-title"><i style="background:#2ee6a8"></i>流动人口<b>171,307</b></div>
+                <div class="pl-sub">跨省<b>82,150</b></div>
+                <div class="pl-sub">跨市<b>64,720</b></div>
+                <div class="pl-sub">跨县<b>24,437</b></div>
+              </div>
             </div>
           </div>
         </div>
@@ -970,16 +1004,16 @@ table.grid tr:hover td{background:#f7faff}
         <div class="grid-guard-charts" id="guardCharts">
         <div class="panel"><div class="panel-hd">护学岗打卡</div><div class="panel-bd">
           <div class="gd-kpi">
-            <div class="gd-total"><div class="v">8,497</div><div class="l">累计打卡数</div></div>
+            <div class="gd-total"><div class="v">8,497<span class="v-sub">/1,315</span></div><div class="l">累计打卡数（单位：次/人）</div></div>
             <div class="gd-sub">
-              <div><div class="v">199</div><div class="l">昨日打卡</div></div>
-              <div class="tip-wrap"><div class="v">167<span class="v-sub">/190</span></div><div class="l">今日打卡</div><span class="tip">今日实际打卡：167；今日应打卡 190；</span></div>
-              <div><div class="v">728</div><div class="l">本周打卡</div></div>
-              <div><div class="v">1,197</div><div class="l">本月打卡</div></div>
+              <div class="tip-wrap"><div class="v">199<span class="v-sub">/186</span></div><div class="l">昨日</div><span class="tip">昨日实际打卡：199 次；实际打卡 186 人；</span></div>
+              <div class="tip-wrap"><div class="v">167<span class="v-sub">/190</span></div><div class="l">今日</div><span class="tip">今日实际打卡：167 次；应打卡 190 人；</span></div>
+              <div class="tip-wrap"><div class="v">728<span class="v-sub">/602</span></div><div class="l">本周</div><span class="tip">本周累计打卡：728 次；实际打卡 602 人；</span></div>
+              <div class="tip-wrap"><div class="v">1,197<span class="v-sub">/918</span></div><div class="l">本月</div><span class="tip">本月累计打卡：1,197 次；实际打卡 918 人；</span></div>
             </div>
           </div>
         </div></div>
-        <div class="panel"><div class="panel-hd tip-wrap">辖区打卡学校（37/56）<span class="tip">实际打卡学校：37；总学校数：56；</span></div><div class="panel-bd"><div class="chart-light" id="gd_school" style="height:320px"></div></div></div>
+        <div class="panel"><div class="panel-hd tip-wrap">辖区打卡学校（0/4/4）<span class="tip">口径：实际打卡学校/应打卡学校/学校总数。实际打卡：0；应打卡：4；学校总数：4；</span></div><div class="panel-bd"><div class="chart-light" id="gd_school" style="height:320px"></div></div></div>
         <div class="panel"><div class="panel-hd">辖区护学岗有效打卡</div><div class="panel-bd"><div class="chart-light" id="gd_rank" style="height:280px"></div></div></div>
         <div class="panel"><div class="panel-hd">打卡状态分布情况</div><div class="panel-bd"><div class="chart-light" id="gd_status" style="height:280px"></div></div></div>
         <div class="panel"><div class="panel-hd">有效打卡身份分布</div><div class="panel-bd"><div class="chart-light" id="gd_identity" style="height:280px"></div></div></div>
@@ -1101,6 +1135,7 @@ function showView(name){
   if(location.hash!=='#'+name)location.hash=name;
   window.scrollTo(0,0);
   initViewCharts(name);
+  addFsButtons();
   if(name==='address')buildWatermark();
   if(window.innerWidth<768)document.getElementById('sidebar').classList.remove('open');
 }
@@ -1179,6 +1214,44 @@ function buildWatermark(){
     }
   }
 }
+function openFullscreen(btn){
+  var card=btn.closest('.sc-card');if(!card)return;
+  var chartEl=card.querySelector('.sc-chart');var id=chartEl?chartEl.id:'';
+  var mask=document.getElementById('fsMask');if(!mask)return;
+  var body=document.getElementById('fsBody');
+  var title=document.getElementById('fsTitle');
+  var hd=card.querySelector('.sc-card-hd');
+  title.textContent=hd?hd.textContent.replace(/全屏/g,'').replace(/\s+/g,' ').trim():'图表全屏';
+  window._fsPrev={parent:card.parentNode,next:card.nextElementSibling};
+  body.appendChild(card);
+  mask.classList.add('show');
+  Object.keys(charts).forEach(function(v){if(charts[v]&&charts[v][id])setTimeout(function(){charts[v][id].resize();},40);});
+}
+function closeFullscreen(){
+  var mask=document.getElementById('fsMask');if(!mask)return;
+  mask.classList.remove('show');
+  var body=document.getElementById('fsBody');
+  var card=body.querySelector('.sc-card');
+  if(card&&window._fsPrev){
+    var p=window._fsPrev;
+    if(p.next&&p.next.parentNode===p.parent)p.parent.insertBefore(card,p.next);
+    else p.parent.appendChild(card);
+    var id=card.querySelector('.sc-chart').id;
+    Object.keys(charts).forEach(function(v){if(charts[v]&&charts[v][id])setTimeout(function(){charts[v][id].resize();},40);});
+  }
+}
+function addFsButtons(){
+  document.querySelectorAll('.sc-card').forEach(function(card){
+    var chartEl=card.querySelector('.sc-chart');
+    if(!chartEl||!chartEl.id||card.querySelector('.fs-btn'))return;
+    var btn=document.createElement('button');
+    btn.type='button';btn.className='btn btn-xs fs-btn';btn.textContent='全屏';
+    btn.onclick=function(){openFullscreen(btn);};
+    var hd=card.querySelector('.sc-card-hd');
+    if(hd)hd.appendChild(btn);
+  });
+}
+addFsButtons();
 function initViewCharts(name){
   if(!window.echarts)return;
   if(!charts[name]){
@@ -1334,18 +1407,30 @@ CHART_DEFS.home1=[
 {id:'h1_pop',option:{
   tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}人（{d}%）'}),
   legend:{show:false},
-  series:[{
-    type:'pie',radius:['55%','76%'],center:['50%','48%'],
-    data:[
-      {value:210444,name:'男性',itemStyle:{color:'#2ee6a8'}},
-      {value:135113,name:'女性',itemStyle:{color:'#7fe4ff'}}
-    ],
-    label:{show:false},labelLine:{show:false},
-    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
-  }],
+  series:[
+    {type:'pie',radius:['0%','40%'],center:['50%','42%'],
+      data:[
+        {value:174250,name:'户籍人口',itemStyle:{color:'#2f6fed'}},
+        {value:171307,name:'流动人口',itemStyle:{color:'#2ee6a8'}}
+      ],
+      label:{show:true,fontSize:8,color:'#dcebff',formatter:function(p){return p.name=='户籍人口'?'户籍':'流动';}},
+      labelLine:{show:false},
+      itemStyle:{borderColor:'#0a2144',borderWidth:2}},
+    {type:'pie',radius:['56%','71%'],center:['50%','42%'],
+      data:[
+        {value:152430,name:'人户一致',itemStyle:{color:'#2f6fed'}},
+        {value:21820,name:'人户分离',itemStyle:{color:'#36d0ff'}},
+        {value:82150,name:'跨省',itemStyle:{color:'#2ee6a8'}},
+        {value:64720,name:'跨市',itemStyle:{color:'#ffb03a'}},
+        {value:24437,name:'跨县',itemStyle:{color:'#5a5eea'}}
+      ],
+      label:{show:true,fontSize:8,color:'#dcebff',formatter:'{b}',lineHeight:10},
+      labelLine:{show:true,length:5,length2:3,lineStyle:{color:'rgba(140,170,210,.45)'}},
+      itemStyle:{borderRadius:3,borderColor:'#0a2144',borderWidth:2}}
+  ],
   graphic:[
-    {type:'text',left:'center',top:'36%',style:{text:'345,557',fill:'#7fe4ff',fontSize:20,fontWeight:700,textAlign:'center'}},
-    {type:'text',left:'center',top:'56%',style:{text:'实有人口总数',fill:'#8fb0dd',fontSize:11,textAlign:'center'}}
+    {type:'text',z:100,left:'center',top:'36%',style:{text:'345,557',fill:'#dcebff',fontSize:12,fontWeight:700,textAlign:'center'}},
+    {type:'text',z:100,left:'center',top:'50%',style:{text:'实有人口总数',fill:'#8fb0dd',fontSize:8.5,textAlign:'center'}}
   ]
 }},
 {id:'h1_house',option:{
@@ -1410,33 +1495,23 @@ CHART_DEFS.home1=[
   ]
 }},
 {id:'h1_conflict',option:{
-  tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
-    return p.seriesIndex===0?'一级·'+p.name+'：'+p.value.toLocaleString()+' 件（'+(p.value/3268*100).toFixed(1)+'%）<br/>已化解率 92.2%':'二级·'+p.name+'：'+p.value.toLocaleString()+' 件（'+(p.value/3268*100).toFixed(1)+'%）';}},
-  series:[
-    {name:'一级分类',type:'pie',radius:['35%','55%'],center:['50%','47%'],startAngle:-90,minAngle:2,
-      data:[
-        {value:1168,name:'婚姻家庭',itemStyle:{color:'#ff5c5c'}},{value:972,name:'邻里关系',itemStyle:{color:'#36d0ff'}},{value:512,name:'劳动争议',itemStyle:{color:'#2ee6a8'}},
-        {value:386,name:'借贷纠纷',itemStyle:{color:'#ffb03a'}},{value:208,name:'物业纠纷',itemStyle:{color:'#b9a4ff'}},{value:22,name:'其他',itemStyle:{color:'#8a94a6'}}
-      ],
-      label:{show:true,formatter:'{b} {c}',color:'#fff',fontSize:8.5,fontWeight:600},
-      labelLine:{length:5,length2:4,lineStyle:{color:'rgba(64,128,220,.45)'}},
-      itemStyle:{borderColor:'#0a2144',borderWidth:2, borderRadius:3}},
-    {name:'二级分类',type:'pie',radius:['60%','88%'],center:['50%','47%'],startAngle:-90,minAngle:1.5,
-      data:[
-        {value:430,name:'离婚纠纷',itemStyle:{color:'#ff6f63'}},{value:320,name:'婚恋家庭',itemStyle:{color:'#ff8378'}},{value:268,name:'赡养老人',itemStyle:{color:'#ff9a8f'}},{value:150,name:'家庭暴力',itemStyle:{color:'#ffb3aa'}},
-        {value:410,name:'噪音扰民',itemStyle:{color:'#4ed6ff'}},{value:240,name:'房屋漏水',itemStyle:{color:'#7fdcff'}},{value:190,name:'高空抛物',itemStyle:{color:'#a5e5ff'}},{value:132,name:'邻里口角',itemStyle:{color:'#c7eeff'}},
-        {value:260,name:'欠薪',itemStyle:{color:'#4cebb6'}},{value:152,name:'工程款',itemStyle:{color:'#6ff0c4'}},{value:100,name:'劳务合同',itemStyle:{color:'#9cf5d6'}},
-        {value:210,name:'民间借贷',itemStyle:{color:'#ffbd58'}},{value:106,name:'网贷',itemStyle:{color:'#ffca76'}},{value:70,name:'担保纠纷',itemStyle:{color:'#ffd99b'}},
-        {value:98,name:'物业费',itemStyle:{color:'#c6b5ff'}},{value:62,name:'停车位',itemStyle:{color:'#d5c8ff'}},{value:48,name:'公共设施',itemStyle:{color:'#e3dbff'}},
-        {value:22,name:'其他纠纷',itemStyle:{color:'#a4adbb'}}
-      ],
-      label:{show:true,formatter:function(p){return p.name+' '+p.value;},color:'#dcebff',fontSize:7.5},
-      labelLine:{length:4,length2:3,lineStyle:{color:'rgba(64,128,220,.3)'}},
-      itemStyle:{borderColor:'#0a2144',borderWidth:1.5}}
-  ],
+  tooltip:Object.assign(darkTooltip(),{formatter:function(p){
+    return p.name+'：'+p.value.toLocaleString()+' 件（'+(p.value/3268*100).toFixed(1)+'%）<br/>化解率 92.2% · 回访满意率 95.9%';
+  }}),
+  series:[{name:'矛盾纠纷类型',type:'pie',roseType:'radius',radius:['30%','58%'],center:['50%','54%'],
+    data:[
+      {value:1168,name:'婚姻家庭',itemStyle:{color:'#ff5c5c'}},{value:972,name:'邻里关系',itemStyle:{color:'#36d0ff'}},{value:512,name:'劳动争议',itemStyle:{color:'#2ee6a8'}},
+      {value:386,name:'借贷纠纷',itemStyle:{color:'#ffb03a'}},{value:208,name:'物业纠纷',itemStyle:{color:'#b9a4ff'}},{value:22,name:'其他',itemStyle:{color:'#8a94a6'}}
+    ],
+    label:{show:true,fontSize:7.5,formatter:function(p){return p.name+' '+p.value;},color:'#dcebff'},
+    labelLine:{length:5,length2:3,lineStyle:{color:'rgba(64,128,220,.4)'}},
+    itemStyle:{borderColor:'#0a2144',borderWidth:2,borderRadius:3},
+    emphasis:{itemStyle:{shadowBlur:10,shadowColor:'rgba(0,0,0,.4)'}}
+  }],
   graphic:[
-    {type:'text',left:'center',top:'34%',style:{text:'3,268 件',fill:'#7fe4ff',fontSize:15,fontWeight:700,textAlign:'center'}},
-    {type:'text',left:'center',top:'52%',style:{text:'化解率 92.2%',fill:'#8fb0dd',fontSize:8.5,textAlign:'center'}}
+    {type:'text',left:'center',top:'40%',style:{text:'3,268 件',fill:'#7fe4ff',fontSize:13,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'46%',style:{text:'化解率 92.2%',fill:'#8fb0dd',fontSize:8.5,textAlign:'center'}},
+    {type:'text',left:'center',top:'52%',style:{text:'回访满意率 95.9%',fill:'#8fb0dd',fontSize:8,textAlign:'center'}}
   ]
 }},
 {id:'h1_dog',option:{
@@ -1502,29 +1577,31 @@ CHART_DEFS.home1=[
 }},
 {id:'h1_oil',option:{
   tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
-    var u=['机动车加油','农业机械','工程施工','渔业生产','其他'][p.value[0]];
-    var s=['加油站','流动加油点','社会油库','其他场所'][p.value[1]];
-    return s+' × '+u+'<br/>购油 '+p.value[2].toLocaleString()+' 升（'+(p.value[2]/270300*100).toFixed(1)+'%）';}},
-  grid:{left:4,right:10,top:8,bottom:8,containLabel:true},
-  xAxis:Object.assign(darkAxis(),{type:'category',data:['机动车加油','农业机械','工程施工','渔业生产','其他'],axisLabel:{color:DARK.text,fontSize:8.5,interval:0},axisTick:{show:false},splitArea:{show:true,areaStyle:{color:['rgba(64,128,220,.04)','rgba(64,128,220,.08)']}}}),
-  yAxis:Object.assign(darkAxis(),{type:'category',data:['加油站','流动加油点','社会油库','其他场所'],axisLabel:{color:DARK.text,fontSize:9},axisTick:{show:false},splitArea:{show:true,areaStyle:{color:['rgba(64,128,220,.04)','rgba(64,128,220,.08)']}}}),
-  visualMap:{min:0,max:110000,calculable:false,show:false,inRange:{color:['#f8e2b0','#ffd27a','#ffb03a','#ff7a5c','#ff5c5c']}},
-  series:[{
-    type:'heatmap',data:[
-      {value:[0,0,110000],itemStyle:{borderColor:'#ff5c5c',borderWidth:1.5}},{value:[1,0,42000]},{value:[2,0,36000]},{value:[3,0,5000]},{value:[4,0,3000]},
-      {value:[0,1,26000]},{value:[1,1,12000]},{value:[2,1,8000]},{value:[3,1,2000]},{value:[4,1,1000]},
-      {value:[0,2,9000]},{value:[1,2,6000]},{value:[2,2,5000]},{value:[3,2,2000]},{value:[4,2,3300]},
-      {value:[0,3,0],itemStyle:{color:'rgba(138,148,166,.18)'}},{value:[1,3,0],itemStyle:{color:'rgba(138,148,166,.18)'}},{value:[2,3,0],itemStyle:{color:'rgba(138,148,166,.18)'}},{value:[3,3,0],itemStyle:{color:'rgba(138,148,166,.18)'}},{value:[4,3,0],itemStyle:{color:'rgba(138,148,166,.18)'}}
-    ],
-    label:{show:true,color:'#fff',fontSize:8.5,formatter:function(p){var v=p.value[2];return v>=10000?(v/10000).toFixed(1)+'万':v>0?v.toLocaleString():'';}},
-    itemStyle:{borderColor:'rgba(10,33,68,.85)',borderWidth:1,borderRadius:2},
-    emphasis:{itemStyle:{shadowBlur:6,shadowColor:'rgba(255,92,92,.5)'}}
-  }],
+    var u=p.name;
+    var s=p.seriesName;
+    var arr={机动车加油:[110000,26000,9000],农业机械:[42000,12000,6000],工程施工:[36000,8000,5000],渔业生产:[5000,2000,2000],其他:[3000,1000,3300]};
+    var idx={加油站:0,流动加油点:1,社会油库:2}[s];
+    var v=arr[u][idx];
+    return u+' · '+s+'<br/>购油 '+v.toLocaleString()+' 升（'+(v/270300*100).toFixed(1)+'%）';}},
+  legend:{top:0,left:8,textStyle:{color:DARK.text,fontSize:8.5},itemWidth:8,itemHeight:8,itemGap:8},
+  grid:{left:4,right:12,top:22,bottom:6,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'value',axisLabel:{color:DARK.text,fontSize:8.5,formatter:function(v){return v/10000+'万';}},splitLine:{lineStyle:{color:'rgba(64,128,220,.12)'}},max:150000}),
+  yAxis:Object.assign(darkAxis(),{type:'category',data:['机动车加油','农业机械','工程施工','渔业生产','其他'],axisLabel:{color:DARK.text,fontSize:9},axisTick:{show:false},splitArea:{show:true,areaStyle:{color:['rgba(64,128,220,.04)','rgba(64,128,220,.08)']}}}),
+  series:[
+    {name:'加油站',type:'bar',stack:'oil',data:[110000,42000,36000,5000,3000],barWidth:'62%',
+      itemStyle:{color:'#2f6fed',borderRadius:[0,0,0,0]},
+      label:{show:true,position:'inside',color:'#fff',fontSize:8,formatter:function(p){var v=p.value;return v>=10000?(v/10000).toFixed(1)+'万':v>0?v.toLocaleString():'';}}},
+    {name:'流动加油点',type:'bar',stack:'oil',data:[26000,12000,8000,2000,1000],
+      itemStyle:{color:'#36d0ff',borderRadius:[0,0,0,0]},
+      label:{show:true,position:'inside',color:'#08315e',fontSize:8,formatter:function(p){var v=p.value;return v>=10000?(v/10000).toFixed(1)+'万':v>0?v.toLocaleString():'';}}},
+    {name:'社会油库',type:'bar',stack:'oil',data:[9000,6000,5000,2000,3300],
+      itemStyle:{color:'#2ee6a8',borderRadius:[0,0,0,0]},
+      label:{show:true,position:'inside',color:'#063a2e',fontSize:8,formatter:function(p){var v=p.value;return v>=10000?(v/10000).toFixed(1)+'万':v>0?v.toLocaleString():'';}}}
+  ],
   graphic:[
     {type:'text',right:2,bottom:0,style:{text:'购油总量 27万升',fill:'#ffb03a',fontSize:8.5,fontWeight:600,textAlign:'right'}}
   ]
-}},
-{id:'h1_drone2',option:{
+}},{id:'h1_drone2',option:{
   tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
     var t={草稿:'发起登记',已提交:'待审核分配',审核中:'审核中',审核通过:'备案生效',审核驳回:'资料/资质不符',待重提:'待补充后重提'};
     return p.name+'：'+p.value.toLocaleString()+' 件<br/>'+t[p.name];}},
@@ -1593,13 +1670,13 @@ CHART_DEFS.home1=[
   legend:{top:0,right:0,textStyle:{color:DARK.legendText,fontSize:8.5},itemWidth:9,itemHeight:8,data:['已通过审批','审核中','已驳回']},
   grid:{left:6,right:6,top:24,bottom:8,containLabel:true},
   xAxis:Object.assign(darkAxis(),{type:'category',data:['八一镇','巴宜区','工布江达','米林市','波密县','察隅县','朗县'],axisLabel:{color:DARK.text,fontSize:8.5},axisTick:{show:false}}),
-  yAxis:Object.assign(darkAxis(),{type:'value',max:15,splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:8.5}}),
+  yAxis:Object.assign(darkAxis(),{type:'value',max:16,splitLine:{lineStyle:{color:DARK.splitLine}},axisLabel:{color:DARK.axisLabel,fontSize:8.5}}),
   series:[
-    {name:'已通过审批',type:'bar',barWidth:22,barGap:'4%',data:[12,11,10,9,8,8,10],itemStyle:{color:'#2ee6a8',borderWidth:0.5,borderColor:'rgba(255,255,255,.25)',borderRadius:2},
-      label:{show:true,position:'top',color:'#dcebff',fontSize:8,formatter:function(p){return p.value;}}},
-    {name:'审核中',type:'bar',barWidth:22,data:[2,2,2,2,1,1,2],itemStyle:{color:'#ffb03a',borderWidth:0.5,borderColor:'rgba(255,255,255,.25)',borderRadius:2},
-      label:{show:true,position:'top',color:'#dcebff',fontSize:8,formatter:function(p){return p.value;}}},
-    {name:'已驳回',type:'bar',barWidth:22,data:[1,1,1,1,1,0,1],itemStyle:{color:'#ff5c5c',borderWidth:0.5,borderColor:'rgba(255,255,255,.25)',borderRadius:2},
+    {name:'已通过审批',type:'bar',stack:'fl',barWidth:26,data:[12,11,10,9,8,8,10],itemStyle:{color:'#2ee6a8',borderWidth:0.5,borderColor:'rgba(255,255,255,.18)'},
+      label:{show:true,position:'inside',color:'#073020',fontSize:8,fontWeight:600,formatter:function(p){return p.value;}}},
+    {name:'审核中',type:'bar',stack:'fl',barWidth:26,data:[2,2,2,2,1,1,2],itemStyle:{color:'#ffb03a',borderWidth:0.5,borderColor:'rgba(255,255,255,.18)'},
+      label:{show:true,position:'inside',color:'#402800',fontSize:8,formatter:function(p){return p.value;}}},
+    {name:'已驳回',type:'bar',stack:'fl',barWidth:26,data:[1,1,1,1,1,0,1],itemStyle:{color:'#ff5c5c',borderRadius:[3,3,0,0],borderWidth:0.5,borderColor:'rgba(255,255,255,.18)'},
       label:{show:true,position:'top',color:'#dcebff',fontSize:8,formatter:function(p){return p.value||'';}}}
   ],
   graphic:[
@@ -1607,55 +1684,27 @@ CHART_DEFS.home1=[
   ]
 }},
 {id:'h1_party',option:{
-  tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
-    return p.name+'：'+p.value.toLocaleString()+' 人（'+(p.value/1865*100).toFixed(1)+'%）';}},
-  series:[{
-    type:'sunburst',radius:['13%','88%'],center:['50%','47%'],
-    sort:null,emphasis:{focus:'ancestor'},
-    itemStyle:{borderColor:'rgba(10,33,68,.7)',borderWidth:1.5},
-    levels:[
-      {label:{show:false}},
-      {label:{show:true,fontSize:8.5,color:'#fff',fontWeight:600,formatter:function(p){return p.name+' '+p.value;}},itemStyle:{borderWidth:1}},
-      {label:{show:true,fontSize:8,color:'#fff',formatter:function(p){return p.name;}},itemStyle:{borderWidth:1}},
-      {label:{show:true,fontSize:7.5,color:'#e8f2ff',rotate:0,formatter:function(p){return p.name+' '+p.value;}},itemStyle:{borderWidth:1}}
+  tooltip:Object.assign(darkTooltip(),{formatter:function(p){return p.seriesName+'：'+p.value+' 分';}}),
+  legend:{top:0,right:0,textStyle:{color:DARK.legendText,fontSize:9.5},itemWidth:10,itemHeight:8,data:['党建工作']},
+  radar:{
+    center:['50%','54%'],radius:'56%',
+    indicator:[
+      {name:'组织覆盖',max:100},{name:'党员教育',max:100},{name:'党费收缴',max:100},{name:'三会一课',max:100},{name:'先锋示范',max:100}
     ],
+    axisName:{color:'#dcebff',fontSize:9},
+    splitArea:{areaStyle:{color:['rgba(64,128,220,.06)','rgba(64,128,220,.12)']}},
+    splitLine:{lineStyle:{color:'rgba(64,128,220,.3)'}},
+    axisLine:{lineStyle:{color:'rgba(64,128,220,.3)'}}
+  },
+  series:[{type:'radar',
     data:[
-      {name:'机关党总支',value:620,itemStyle:{color:'#ff5c5c'},children:[
-        {name:'机关第一党支部',value:330,itemStyle:{color:'#ff6f63'},children:[
-          {name:'优秀',value:99,itemStyle:{color:'#ff8378'}},{name:'良好',value:132,itemStyle:{color:'#ff9a8f'}},{name:'合格',value:82,itemStyle:{color:'#ffb3aa'}},{name:'待改进',value:17,itemStyle:{color:'#ffd0c8'}}]},
-        {name:'机关第二党支部',value:290,itemStyle:{color:'#ff8378'},children:[
-          {name:'优秀',value:87,itemStyle:{color:'#ff9a8f'}},{name:'良好',value:116,itemStyle:{color:'#ffb3aa'}},{name:'合格',value:73,itemStyle:{color:'#ffc9c2'}},{name:'待改进',value:14,itemStyle:{color:'#ffdcd6'}}]}]},
-      {name:'社区第一党总支',value:450,itemStyle:{color:'#36d0ff'},children:[
-        {name:'社区第一支部',value:230,itemStyle:{color:'#4ed6ff'},children:[
-          {name:'优秀',value:69,itemStyle:{color:'#7fdcff'}},{name:'良好',value:92,itemStyle:{color:'#a5e5ff'}},{name:'合格',value:58,itemStyle:{color:'#c7eeff'}},{name:'待改进',value:11,itemStyle:{color:'#e0f6ff'}}]},
-        {name:'社区第二支部',value:220,itemStyle:{color:'#7fdcff'},children:[
-          {name:'优秀',value:66,itemStyle:{color:'#a5e5ff'}},{name:'良好',value:88,itemStyle:{color:'#c7eeff'}},{name:'合格',value:55,itemStyle:{color:'#d9f2ff'}},{name:'待改进',value:11,itemStyle:{color:'#ebf9ff'}}]}]},
-      {name:'社区第二党总支',value:320,itemStyle:{color:'#2ee6a8'},children:[
-        {name:'社区第三支部',value:170,itemStyle:{color:'#4cebb6'},children:[
-          {name:'优秀',value:51,itemStyle:{color:'#6ff0c4'}},{name:'良好',value:68,itemStyle:{color:'#9cf5d6'}},{name:'合格',value:43,itemStyle:{color:'#bcf8e4'}},{name:'待改进',value:8,itemStyle:{color:'#d8fcf1'}}]},
-        {name:'社区第四支部',value:150,itemStyle:{color:'#6ff0c4'},children:[
-          {name:'优秀',value:45,itemStyle:{color:'#9cf5d6'}},{name:'良好',value:60,itemStyle:{color:'#bcf8e4'}},{name:'合格',value:38,itemStyle:{color:'#d2fbf0'}},{name:'待改进',value:7,itemStyle:{color:'#e6fdf7'}}]}]},
-      {name:'退休人员党总支',value:275,itemStyle:{color:'#ffb03a'},children:[
-        {name:'退休第一支部',value:140,itemStyle:{color:'#ffbd58'},children:[
-          {name:'优秀',value:42,itemStyle:{color:'#ffca76'}},{name:'良好',value:56,itemStyle:{color:'#ffd99b'}},{name:'合格',value:35,itemStyle:{color:'#ffe6bf'}},{name:'待改进',value:7,itemStyle:{color:'#fff0dc'}}]},
-        {name:'退休第二支部',value:135,itemStyle:{color:'#ffca76'},children:[
-          {name:'优秀',value:41,itemStyle:{color:'#ffd99b'}},{name:'良好',value:54,itemStyle:{color:'#ffe6bf'}},{name:'合格',value:34,itemStyle:{color:'#fff0dc'}},{name:'待改进',value:6,itemStyle:{color:'#fff7ec'}}]}]},
-      {name:'非公经济党总支',value:120,itemStyle:{color:'#b9a4ff'},children:[
-        {name:'非公第一支部',value:65,itemStyle:{color:'#c6b5ff'},children:[
-          {name:'优秀',value:20,itemStyle:{color:'#d5c8ff'}},{name:'良好',value:26,itemStyle:{color:'#e3dbff'}},{name:'合格',value:16,itemStyle:{color:'#efebff'}},{name:'待改进',value:3,itemStyle:{color:'#f8f6ff'}}]},
-        {name:'非公第二支部',value:55,itemStyle:{color:'#d5c8ff'},children:[
-          {name:'优秀',value:17,itemStyle:{color:'#e3dbff'}},{name:'良好',value:22,itemStyle:{color:'#efebff'}},{name:'合格',value:14,itemStyle:{color:'#f5f3ff'}},{name:'待改进',value:2,itemStyle:{color:'#fbfaff'}}]}]},
-      {name:'社会组织党总支',value:80,itemStyle:{color:'#8a94a6'},children:[
-        {name:'社会组织第一支部',value:45,itemStyle:{color:'#a4adbb'},children:[
-          {name:'优秀',value:14,itemStyle:{color:'#c2c9d3'}},{name:'良好',value:18,itemStyle:{color:'#dde1e8'}},{name:'合格',value:11,itemStyle:{color:'#edeff3'}},{name:'待改进',value:2,itemStyle:{color:'#f7f8fa'}}]},
-        {name:'社会组织第二支部',value:35,itemStyle:{color:'#c2c9d3'},children:[
-          {name:'优秀',value:11,itemStyle:{color:'#dde1e8'}},{name:'良好',value:14,itemStyle:{color:'#edeff3'}},{name:'合格',value:9,itemStyle:{color:'#f3f4f7'}},{name:'待改进',value:1,itemStyle:{color:'#fafbfc'}}]}]}
-    ]
-  }],
+      {name:'党建工作',value:[96.5,95.2,98.2,96.8,92.6],itemStyle:{color:'#ff5c5c'},areaStyle:{opacity:.3},lineStyle:{width:2,color:'#ff5c5c'},symbol:'circle',symbolSize:4,
+        label:{show:true,fontSize:8,color:'#dcebff',formatter:function(p){return p.value+'分';}}}
+    ]}],
   graphic:[
-    {type:'text',left:'center',top:'33%',style:{text:'1,865 人',fill:'#7fe4ff',fontSize:14,fontWeight:700,textAlign:'center'}},
-    {type:'text',left:'center',top:'50%',style:{text:'党组织 6 · 支部 12',fill:'#8fb0dd',fontSize:8.5,textAlign:'center'}},
-    {type:'text',left:'center',top:'57%',style:{text:'35岁以下占比 31.2%',fill:'#8fb0dd',fontSize:8,textAlign:'center'}}
+    {type:'text',left:'center',top:'32%',style:{text:'1,865 人',fill:'#7fe4ff',fontSize:14,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'44%',style:{text:'党组织 6 · 支部 12',fill:'#8fb0dd',fontSize:8.5,textAlign:'center'}},
+    {type:'text',left:'center',top:'51%',style:{text:'党费收缴率 98.2%',fill:'#8fb0dd',fontSize:8,textAlign:'center'}}
   ]
 }},
 {id:'h1_bus',option:{
@@ -2039,5 +2088,6 @@ CHART_DEFS.operations=[
   if(hashMap[h])showView(h);else showView('home1');
 })();
 </script>
+<div class="fs-mask" id="fsMask"><div class="fs-top"><span class="fs-title" id="fsTitle">图表全屏</span><button class="btn btn-xs" onclick="closeFullscreen()">关闭全屏</button></div><div class="fs-body" id="fsBody"></div></div>
 </body>
 </html>
