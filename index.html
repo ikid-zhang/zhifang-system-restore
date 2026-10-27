@@ -403,46 +403,6 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
 .hd-ev .sc-src{display:inline-block;margin-left:6px;padding:0 6px;border-radius:8px;font-size:10.5px;line-height:16px}
 .hd-ev .sc-src.auto{background:#e6f6ee;color:#0e9f5d}
 .hd-ev .sc-src.man{background:#fff3e0;color:#e8890c}
-/* ===== 矛盾纠纷办理详情页（由办理弹窗迁移而来） ===== */
-.hd-status{display:inline-flex;align-items:center;gap:5px;padding:3px 12px;border-radius:20px;font-size:12.5px;font-weight:600;background:#e8f2ff;color:var(--blue);white-space:nowrap}
-.hd-status.s-doing{background:#fff3e0;color:#e8890c}
-.hd-status.s-audit{background:#e8f2ff;color:#2f6fed}
-.hd-status.s-back{background:#fdeaea;color:#e5484d}
-.hd-status.s-done{background:#e6f6ee;color:#0e9f5d}
-.hd-hint{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:#f5f9ff;border:1px solid #e3ecfa;font-size:12.5px;color:var(--txt2);line-height:1.7;margin-bottom:12px}
-.hd-hint b{color:var(--txt)}
-.hd-flow{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--txt2)}
-.hd-flow .fl{display:flex;align-items:center;gap:6px}
-.hd-flow .dot{width:8px;height:8px;border-radius:50%;background:#d3def2;flex-shrink:0}
-.hd-flow .fl.on .dot{background:var(--blue)}
-.hd-flow .fl.done .dot{background:#17c39a}
-.hd-src-list{font-size:12px;color:var(--txt3);line-height:1.9}
-.hd-src-list b{color:var(--txt2);font-weight:600}
-.hd-sec-tip{font-size:12px;color:var(--txt3);font-weight:400}
-.hd-sec-tip.warn{color:#e5484d}
-.hd-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 16px;padding:12px 14px}
-.hd-form .ff{display:flex;flex-direction:column;gap:6px;min-width:0}
-.hd-form .ff.full{grid-column:1/-1}
-.hd-form label{font-size:12px;color:var(--txt2);display:flex;align-items:center;gap:4px}
-.hd-form label em{color:#e5484d;font-style:normal}
-.hd-form label .src{color:var(--txt3);font-size:11px;border:1px solid var(--line);border-radius:8px;padding:0 5px;cursor:help;line-height:14px}
-.hd-form input,.hd-form select,.hd-form textarea{border:1px solid var(--line);border-radius:6px;height:32px;padding:0 10px;font-size:13px;color:var(--txt);background:#fff;width:100%;box-sizing:border-box;font-family:inherit}
-.hd-form textarea{height:64px;padding:8px 10px;resize:vertical;line-height:1.6}
-.hd-form input:focus,.hd-form select:focus,.hd-form textarea:focus{outline:none;border-color:var(--blue)}
-.hd-form input[readonly],.hd-form select[disabled]{background:#f7f9fc;color:var(--txt2)}
-.hd-form .ff.bad input,.hd-form .ff.bad select,.hd-form .ff.bad textarea{border-color:#e5484d;background:#fff6f6}
-.hd-form .ff.bad label{color:#e5484d}
-.hd-ro{font-size:12px;color:var(--txt3);line-height:1.9;background:#f8faff;border:1px solid #e3ecfa;border-radius:6px;padding:6px 10px}
-.hd-acts{position:sticky;bottom:0;display:flex;align-items:center;gap:10px;margin-top:14px;padding:11px 14px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 -2px 10px rgba(15,50,120,.06)}
-.hd-acts .sp{margin-left:auto}
-.hd-acts .why{font-size:12px;color:var(--txt3)}
-.hd-acts .btn[disabled]{opacity:.45;cursor:not-allowed}
-.hd-acts .btn[disabled]:hover{border-color:#d3def2;color:var(--txt)}
-.hd-ret{margin-top:10px;padding:11px 14px;background:#fff8f7;border:1px solid #f6d5d2;border-radius:8px}
-.hd-ret .rt{font-size:13px;font-weight:600;color:#e5484d;margin-bottom:6px}
-.hd-ret textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:6px;padding:7px 9px;font-size:13px;min-height:60px;font-family:inherit}
-@media(max-width:1300px){.hd-form{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:820px){.hd-form{grid-template-columns:1fr}}
 /* ===== 赋分向导（分步操作） ===== */
 .sc-steps{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid #E3E6ED;background:#fff;flex-shrink:0}
 .sc-steps .wz-step{cursor:pointer}
@@ -1873,7 +1833,6 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
       <div class="cd-top">
         <div class="t">矛盾纠纷详情</div>
         <span style="font-size:12px;color:var(--txt3)" id="cdSubTitle">MD2026-5404-0137 · 在巴宜区某小区因装修噪音引发邻里纠纷</span>
-        <button class="btn primary" style="margin-left:8px" onclick="goHandle('MD2026-5404-0137')">办理登记</button>
         <button class="btn" style="margin-left:auto" onclick="showView('conflict-mgmt')">返回</button>
       </div>
       <div class="cd-layout">
@@ -1934,7 +1893,7 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
             </div>
           </div>
           <div class="cd-sec" id="cdSecMediate">
-            <div class="cd-sec-hd"><span class="bar"></span><span class="t">调解信息</span><button class="btn btn-xs primary" onclick="goHandle('MD2026-5404-0137','hdSecTj')">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">调解信息</span><button class="btn btn-xs primary" onclick="openHandle()">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
             <div class="cd-sec-bd">
               <div class="table-wrap"><table class="grid cd-grid">
                 <colgroup><col style="width:16%"><col style="width:16%"><col style="width:14%"><col style="width:9%"><col style="width:22%"><col style="width:9%"><col style="width:14%"></colgroup>
@@ -1984,7 +1943,7 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
             </div>
           </div>
           <div class="cd-sec" id="cdSecVisit">
-            <div class="cd-sec-hd"><span class="bar"></span><span class="t">回访信息</span><button class="btn btn-xs primary" onclick="goHandle('MD2026-5404-0137','hdSecJa')">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">回访信息</span><button class="btn btn-xs primary" onclick="openHandle()">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
             <div class="cd-sec-bd">
               <div class="table-wrap"><table class="grid cd-grid">
                 <colgroup><col style="width:10%"><col style="width:14%"><col style="width:52%"><col style="width:10%"><col style="width:14%"></colgroup>
@@ -1996,7 +1955,7 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
             </div>
           </div>
           <div class="cd-sec" id="cdSecFollow">
-            <div class="cd-sec-hd"><span class="bar"></span><span class="t">跟踪信息</span><button class="btn btn-xs primary" onclick="goHandle('MD2026-5404-0137','hdSecZr')">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">跟踪信息</span><button class="btn btn-xs primary" onclick="openHandle()">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
             <div class="cd-sec-bd">
               <div class="table-wrap"><table class="grid cd-grid">
                 <colgroup><col style="width:10%"><col style="width:14%"><col style="width:52%"><col style="width:10%"><col style="width:14%"></colgroup>
@@ -2011,48 +1970,6 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
       </div>
     </section>
 
-    <!-- ===== 视图：矛盾纠纷办理（独立详情页，由办理弹窗迁移而来） ===== -->
-    <section class="view" id="view-conflict-handle">
-      <div class="breadcrumb">
-        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
-        <span class="crumb-link" onclick="showView('conflict-mgmt')">矛盾纠纷管理</span><span>/</span>
-        <span class="crumb-link" onclick="showView('conflict-detail')">矛盾纠纷详情</span><span>/</span>
-        <span class="tab-tag">矛盾纠纷办理<span class="close-x" onclick="hdLeave()">×</span></span>
-      </div>
-      <div class="cd-top">
-        <div class="t">矛盾纠纷办理</div>
-        <span style="font-size:12px;color:var(--txt3)" id="hdSubTitle">—</span>
-        <span class="hd-status" id="hdStatusTag">办理中</span>
-        <span class="role-switch">当前视角<span class="seg" id="hdRoleSeg">
-          <span class="on" data-role="police" onclick="hdSetRole('police')">派出所民警</span>
-          <span data-role="branch" onclick="hdSetRole('branch')">分县局</span>
-          <span data-role="city" onclick="hdSetRole('city')">市局</span>
-        </span></span>
-        <button class="btn" style="margin-left:auto" onclick="hdLeave()">返回</button>
-      </div>
-      <div class="hd-hint" id="hdHint"></div>
-      <div class="cd-layout">
-        <aside class="cd-side">
-          <div class="cd-side-hd">纠纷概要（只读）</div>
-          <div class="cd-side-bd" id="hdSummary"></div>
-          <div class="cd-side-hd" style="border-top:1px solid var(--line)">办理流转</div>
-          <div class="cd-side-bd"><div class="hd-flow" id="hdFlow"></div></div>
-          <div class="cd-side-hd" style="border-top:1px solid var(--line)">数据来源</div>
-          <div class="cd-side-bd"><div class="hd-src-list" id="hdSrcList"></div></div>
-        </aside>
-        <div class="cd-main" id="hdMain"></div>
-      </div>
-      <div class="hd-ret" id="hdRetBox" style="display:none">
-        <div class="rt">退回办理（需填写退回原因）</div>
-        <textarea id="hdRetReason" placeholder="请填写退回原因与需补充的材料，如：调解笔录缺少当事人签字，请补正后重新提交"></textarea>
-        <div style="margin-top:8px;display:flex;gap:8px">
-          <button class="btn primary btn-xs" onclick="hdDoReturn()">确认退回</button>
-          <button class="btn btn-xs" onclick="hdCancelReturn()">取消</button>
-        </div>
-      </div>
-      <div class="hd-acts" id="hdActs"></div>
-    </section>
-
   </div>
 </div>
 
@@ -2060,7 +1977,7 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
 
 <script>
 /* ============ 路由与导航 ============ */
-var VIEWS=['home1','home2','operations','population','guard','address','conflict-mgmt','conflict-check','conflict-view','conflict-detail','conflict-handle'];
+var VIEWS=['home1','home2','operations','population','guard','address','conflict-mgmt','conflict-check','conflict-view','conflict-detail'];
 var charts={};
 function toast(msg){
   var t=document.getElementById('toast');
@@ -2079,7 +1996,6 @@ function showView(name){
   initViewCharts(name);
   addFsButtons();
   if(name==='address')buildWatermark();
-  if(name==='conflict-handle')enterHandle(HD_STATE.id);
   if(window.innerWidth<768)document.getElementById('sidebar').classList.remove('open');
 }
 function switchOpsTab(name,btn){
@@ -3087,343 +3003,15 @@ function wzSubmit(){
   toast('演示：已委托「'+ezTarget.n+'」，纠纷状态变更为 已委托 · 调解中');
 }
 
-/* ============ 矛盾纠纷办理 · 独立详情页（原「办理 / 调解登记」弹窗迁移而来） ============ */
-/* --- 1. 数据字典 / 枚举：与原弹窗取值完全一致 --- */
-var HD_DICT={
-  mdTjfs:{n:'调解方式',src:'字典 sys_dict_item.D_MD_TJFS',opt:['现场调解','视频调解','电话调解','背靠背调解']},
-  mdTjjg:{n:'调解结果',src:'字典 sys_dict_item.D_MD_TJJG',opt:['达成协议','未达成协议','部分达成协议','当事人撤回调解','终止调解']},
-  mdTjjgdm:{n:'调解结果代码',src:'代码集 GA/T 调解结果代码表',opt:['请选择','01 调解成功','02 部分达成','03 未达成','04 终止调解']},
-  mdDccq:{n:'当事人到场情况',src:'枚举 ENUM_DCQK',opt:['双方到场','单方到场','均未到场']},
-  ynNo:{n:'是否（默认否）',src:'枚举 ENUM_YESNO',opt:['否','是']},
-  ynYes:{n:'是否（默认为是）',src:'枚举 ENUM_YESNO',opt:['是','否']},
-  mdJafs:{n:'结案方式',src:'字典 sys_dict_item.D_MD_JAFS',opt:['调解结案','终止调解结案','转行政处罚','转刑事诉讼','引导诉讼','当事人和解撤案']},
-  mdLxqk:{n:'履行情况',src:'字典 sys_dict_item.D_MD_LXQK',opt:['已履行','部分履行','未履行','分期履行中','无需履行']},
-  mdHfly:{n:'回访来源',src:'枚举 ENUM_HFLY',opt:['治安回访','110回访']},
-  mdGzpc:{n:'跟踪频次',src:'枚举 ENUM_GZPC',opt:['请选择','每日','每 3 日','每周','每月']},
-  mdDczt:{n:'督察状态',src:'字典 sys_dict_item.D_MD_DCZT',opt:['未督察','督察中','已督察 · 通过','已督察 · 限期整改']},
-  mdSxjd:{n:'时限节点',src:'时限引擎生成（24 小时 / 3 日 / 7 日）',opt:['24 小时','3 日','7 日','已超期']},
-  mdZrlx:{n:'责任类型',src:'字典 sys_dict_item.D_MD_ZRLX',opt:['请选择','用工单位','物业单位','施工单位','属地管理单位','行业主管部门']}
-};
-/* --- 2. 表单模式：分区、数据表、接口、默认值、必填与格式规则 --- */
-var HD_SECTIONS=[
-  {id:'hdSecTj',title:'调解信息',tip:'一次调解一条记录，可多次调解',tb:'mdjf_tjxxb',api:'GET /api/mdjf/tjxxb/detail',fields:[
-    {k:'tjTime',l:'调解时间',col:'mdtjsj',req:1,ph:'请选择时间'},
-    {k:'tjWay',l:'调解方式',col:'mdtjfsdm',d:'mdTjfs',req:1},
-    {k:'tjPlace',l:'调解地点',col:'mdtjdd',ph:'请输入地点'},
-    {k:'tjUnitName',l:'调解单位名称',col:'mdtjdwmc',ph:'如：八一镇人民调解委员会'},
-    {k:'tjMaster',l:'主持调解人',col:'mdtjr',req:1,ph:'请输入'},
-    {k:'tjJoin',l:'参与调解人',col:'mdcytjr',ph:'请输入'},
-    {k:'tjAttend',l:'当事人到场情况',col:'mddsrdcqkdm',d:'mdDccq'},
-    {k:'tjTimes',l:'调解次数',col:'mdtjcs',def:'第 1 次'},
-    {k:'mdResult',l:'调解结果',col:'mdtjjgdm',d:'mdTjjg',req:1,on:'toggleCloseInfo()'},
-    {k:'tjResultCode',l:'调解结果代码',col:'mdtjjgdm_bz',d:'mdTjjgdm'},
-    {k:'tjAgreeName',l:'协议名称',col:'mdxymc',ph:'请输入调解协议名称'},
-    {k:'tjJudicial',l:'是否司法确认',col:'mdsfqr',d:'ynNo'},
-    {k:'tjRecord',l:'调解情况记录',col:'mdtjclxx',req:1,type:'ta',full:1,ph:'请记录争议焦点、调解过程、双方诉求与让步情况'},
-    {k:'tjPlan',l:'未调解工作计划',col:'mdwtjgzzjh',type:'ta',full:1,ph:'未达成时填写：下一步工作措施、再次调解时间安排、移交建议'},
-    {k:'tjAgreeText',l:'协议主要内容',col:'mdxyzyms',type:'ta',full:1,ph:'请填写协议条款、履行方式与期限'}
-  ]},
-  {id:'hdSecJa',title:'结案信息',tip:'调解达成或终止后填写，用于闭环归档',tb:'mdjf_jaxx / mdjf_hfxxb',api:'GET /api/mdjf/jaxx/detail',tipId:'clTip',fields:[
-    {k:'clFlag',l:'是否结案',col:'mdsfja',d:'ynYes',req:1,on:'toggleCloseInfo()'},
-    {k:'jaWay',l:'结案方式',col:'mdjafsdm',d:'mdJafs',req:'ja'},
-    {k:'jaTime',l:'结案时间',col:'mdjasj',req:'ja',ph:'请选择时间'},
-    {k:'jaDocNo',l:'结案文书编号',col:'mdjawsbh',ph:'如：林公（治）调字〔2026〕128 号'},
-    {k:'jaPerform',l:'履行情况',col:'mdlxqkdm',d:'mdLxqk',req:'ja'},
-    {k:'jaDue',l:'履行期限',col:'mdlxqx',ph:'请选择期限'},
-    {k:'hfTime',l:'回访时间',col:'mdhfsj',ph:'请选择回访时间'},
-    {k:'hfTarget',l:'被回访人',col:'mdbfhrxm',ph:'被回访人姓名'},
-    {k:'hfTargetId',l:'被回访人身份证号',col:'mdbfhrzjhm',fmt:'idcard',ph:'请输入身份证号'},
-    {k:'hfPerson',l:'回访人',col:'mdhfrxm',ph:'回访人姓名'},
-    {k:'hfUnit',l:'回访所属单位',col:'mdhfssdwmc',ph:'如：八一镇派出所'},
-    {k:'hfFlag',l:'是否回访',col:'mdsfhf',d:'ynYes'},
-    {k:'hfRate',l:'回访满意率',col:'mdhfmyv',fmt:'pct',ph:'如：95.9%'},
-    {k:'jaUpgrade',l:'是否需升级防控',col:'mdsfxsfk',d:'ynNo'},
-    {k:'jaArea',l:'归档责任区',col:'mdgdzrq',ph:'请输入'},
-    {k:'jaResult',l:'结案结论',col:'mdjajl',req:'ja',type:'ta',full:1,ph:'请填写纠纷是否化解、当事人状态、后续风险判断'},
-    {k:'hfSource',l:'回访来源',col:'mdhflydm',d:'mdHfly'},
-    {k:'hfContent',l:'回访内容',col:'mdhfnr',type:'ta',full:1,ph:'记录回访方式、当事人反馈、是否满意、有无反弹迹象'},
-    {k:'hfSituation',l:'回访情况',col:'mdhfqk',type:'ta',full:1,ph:'请填写回访时间、方式、当事人反馈'},
-    {k:'jaRemark',l:'备注',col:'mdbz',type:'ta',full:1,ph:'请输入'}
-  ]},
-  {id:'hdSecZr',title:'责任民警与跟踪进展',tip:'对应 mdjf_zrmj / mdjf_gzjzqkb，办理过程留痕',tb:'mdjf_zrmj / mdjf_gzjzqkb',api:'GET /api/mdjf/zrmj/detail',fields:[
-    {k:'zrName',l:'责任民警姓名',col:'mdzrmjxm',req:1,ph:'请输入姓名'},
-    {k:'zrPhone',l:'责任民警电话',col:'mdzrmjlxdh',req:1,fmt:'tel',ph:'请输入联系电话'},
-    {k:'zrIdNo',l:'责任民警身份证号',col:'mdzrmjzjhm',fmt:'idcard',ph:'请输入身份证号'},
-    {k:'gzPerson',l:'跟踪进展人',col:'mdgzjzr',ph:'请输入跟踪责任人'},
-    {k:'gzTime',l:'跟踪进展时间',col:'mdgzjzsj',ph:'请选择时间'},
-    {k:'gzFreq',l:'跟踪频次',col:'mdgzpcdm',d:'mdGzpc'},
-    {k:'gzContent',l:'进展情况',col:'mdjzqkms',type:'ta',full:1,ph:'记录本次跟踪时间节点、当事人状态、矛盾变化与下一步措施'},
-    {k:'gzHistory',l:'历史进展',type:'ro',full:1,def:'2026-10-21 民警甲：双方同意暂停装修，情绪平稳 · 2026-10-24 民警甲：施工方已调整作业时段，待回访确认 · 2026-10-27 民警甲：第 3 次调解未达成一致，转入升级防控'}
-  ]},
-  {id:'hdSecJd',title:'监督信息',tip:'对应 mdjf_jdxxb，由 24 小时 / 3 日 / 7 日时限引擎生成',tb:'mdjf_jdxxb',api:'GET /api/mdjf/jdxxb/detail',fields:[
-    {k:'jdDept',l:'监督部门',col:'mdjdbmmc',ph:'如：林芝市公安局治安支队'},
-    {k:'jdPerson',l:'监督人',col:'mdjdrxm',ph:'请输入监督人姓名'},
-    {k:'jdStatus',l:'督察状态',col:'mddcztdm',d:'mdDczt'},
-    {k:'jdNode',l:'时限节点',col:'mdsxjd',d:'mdSxjd'},
-    {k:'jdOpinion',l:'监督意见',col:'mdjdyj',type:'ta',full:1,ph:'记录督察发现的问题、整改要求与期限'}
-  ]},
-  {id:'hdSecDw',title:'涉事单位',tip:'对应 mdjf_ssdwb，四路分流环节指定，与「涉纠纷单位」区分',tb:'mdjf_ssdwb',api:'GET /api/mdjf/ssdwb/detail',fields:[
-    {k:'dwId',l:'单位 ID',col:'mddwid',ph:'如：DW5426210001'},
-    {k:'dwName',l:'单位名称',col:'mddwmc',req:1,ph:'请输入涉事单位名称'},
-    {k:'dwAddr',l:'单位地址',col:'mddwxx_dzid',ph:'请输入单位地址'},
-    {k:'dwType',l:'责任类型',col:'mdzrlxdm',d:'mdZrlx'},
-    {k:'dwRequire',l:'单位处置要求',col:'mddwczyq',type:'ta',full:1,ph:'记录对该单位的具体要求、配合事项与完成时限'},
-    {k:'dwLinked',l:'已关联涉事单位',type:'ro',full:1,def:'DW5426210001 · 某装饰工程有限公司（施工单位） · 巴宜区八一镇××路 12 号 · 要求：调整作业时段并书面反馈'}
-  ]},
-  {id:'hdSecScore',title:'赋分参照（按维度）',tip:'每个维度的赋分规则与依据；依据为各赋分对象在该维度的查询结果',tb:'mdjf_mdjfxxb（赋分项）',api:'GET /api/mdjf/score/detail',score:1}
-];
-/* --- 3. 回显数据：按路由 id 加载；无匹配记录时走默认值（新建） --- */
-var HD_RECORDS={
-  'MD2026-5404-0137':{
-    status:'办理中',lv:'复杂',name:'当事人报警称：在巴宜区某小区因装修噪音引发邻里纠纷',
-    type:'邻里关系',src:'110指令',time:'2026-10-24 02:27:23',addr:'西藏自治区林芝市巴宜区八一镇某小区',
-    unit:'巴宜区公安局八一镇派出所',people:'程生、杨伟（2 人）',
-    v:{
-      tjTime:'2026-10-26 15:20:00',tjWay:'现场调解',tjPlace:'八一镇某社区调解室',tjUnitName:'八一镇人民调解委员会',
-      tjMaster:'四朗拥姆',tjJoin:'阿旺罗拉',tjAttend:'双方到场',tjTimes:'第 3 次',mdResult:'未达成协议',
-      tjResultCode:'03 未达成',tjAgreeName:'装修施工作业时段约定',tjJudicial:'否',
-      tjRecord:'争议焦点为夜间施工时段与噪音影响；甲方要求维持工期，乙方要求 22:00 后全面停工并补偿 2.6 万元；经 2 小时调解仍未就补偿金额达成一致。',
-      tjPlan:'1. 三日内由社区民警会同物业再次组织调解；2. 引入司法所人民调解员参与；3. 若仍未达成，建议引导诉讼并同步关注乙方信访动向。',
-      tjAgreeText:'暂未达成协议，口头约定：施工时段调整为 12:00-14:30、22:00 后停工。',
-      clFlag:'否',jaWay:'调解结案',jaTime:'',jaDocNo:'',jaPerform:'部分履行',jaDue:'2026-11-10',
-      hfTime:'2026-10-24 09:12:00',hfTarget:'杨伟',hfTargetId:'511023199111011316',hfPerson:'四朗拥姆',
-      hfUnit:'八一镇派出所',hfFlag:'是',hfRate:'95.9%',jaUpgrade:'是',jaArea:'八一镇第一责任区',
-      jaResult:'',hfSource:'治安回访',
-      hfContent:'电话回访乙方：反映装修噪音已明显缓解，对调解结果满意；甲方承诺严格遵守作业时段约定，无反弹迹象。',
-      hfSituation:'回访顺利，双方情绪平稳，暂不需升级防控；持续跟踪至作业时段约定履行完毕。',
-      jaRemark:'第 3 次调解未达成一致，已按重大矛盾流程报分县局备案。',
-      zrName:'民警甲',zrPhone:'13808940001',zrIdNo:'540421198806120015',
-      gzPerson:'民警甲',gzTime:'2026-10-26 10:05:00',gzFreq:'每 3 日',
-      gzContent:'实地走访双方：甲方已调整作业时段并张贴告知单；乙方情绪平稳，表示暂不再投诉。持续关注至纠纷化解归档。',
-      jdDept:'林芝市公安局治安支队',jdPerson:'张伟',jdStatus:'督察中',jdNode:'3 日',
-      jdOpinion:'请补充第 3 次调解笔录及当事人签到材料，于 3 日内反馈整改情况。',
-      dwId:'DW5426210001',dwName:'某装饰工程有限公司',dwAddr:'巴宜区八一镇××路 12 号',dwType:'施工单位',
-      dwRequire:'调整作业时段并于 3 日内书面反馈整改情况；逾期将移交行业主管部门处理。'
-    }
-  }
-};
-/* --- 4. 状态流转与按钮权限 --- */
-var HD_FLOW={'待办理':{save:1,submit:1,back:0,transfer:1},'办理中':{save:1,submit:1,back:0,transfer:1},'已退回':{save:1,submit:1,back:0,transfer:1},'待审核':{save:0,submit:0,back:1,transfer:0},'已结案':{save:0,submit:0,back:0,transfer:0}};
-var HD_PERM={police:{save:1,submit:1,back:0,transfer:1},branch:{save:0,submit:0,back:1,transfer:1},city:{save:0,submit:0,back:0,transfer:0}};
-var HD_ROLE_NAME={police:'派出所民警',branch:'分县局',city:'市局'};
-var HD_STATE={id:'',status:'待办理',role:'police',dirty:false};
-var HD_STATUS_CLS={'待办理':'s-doing','办理中':'s-doing','已退回':'s-back','待审核':'s-audit','已结案':'s-done'};
-function hdCan(op){var f=HD_FLOW[HD_STATE.status]||{},p=HD_PERM[HD_STATE.role]||{};return !!(f[op]&&p[op]);}
-function hdWhy(op){
-  if(!(HD_FLOW[HD_STATE.status]||{})[op])return '当前状态「'+HD_STATE.status+'」不支持该操作';
-  if(!(HD_PERM[HD_STATE.role]||{})[op])return '当前视角「'+HD_ROLE_NAME[HD_STATE.role]+'」无该操作权限';
-  return '可操作';
-}
-/* --- 5. 渲染：分区表单（字典项与原弹窗一一对应） --- */
-function hdVal(k){var e=document.getElementById(k);return e?e.value:'';}
-function hdSetVal(k,v){var e=document.getElementById(k);if(e)e.value=(v===undefined||v===null)?'':v;}
-function hdOptsHtml(f,v){
-  var d=HD_DICT[f.d];if(!d)return '';
-  var h='',has=false;
-  for(var i=0;i<d.opt.length;i++){var on=d.opt[i]===v;if(on)has=true;h+='<option'+(on?' selected':'')+'>'+d.opt[i]+'</option>';}
-  if(v&&!has)h='<option selected>'+v+'</option>'+h;
-  return h;
-}
-function hdSrcTitle(s,f){return s.tb+'.'+f.col+' ｜ 来源：'+(f.d?HD_DICT[f.d].src:('接口 '+s.api));}
-function hdRenderForm(rec){
-  var v=(rec&&rec.v)||{},h='';
-  for(var i=0;i<HD_SECTIONS.length;i++){
-    var s=HD_SECTIONS[i];
-    h+='<div class="cd-sec" id="'+s.id+'"><div class="cd-sec-hd"><span class="bar"></span><span class="t">'+s.title+'</span>'
-      +'<span class="hd-sec-tip"'+(s.tipId?(' id="'+s.tipId+'"'):'')+'>'+s.tip+'</span>'
-      +'<span class="hd-sec-tip" style="margin-left:auto" title="'+s.api+'">'+s.tb+'</span>'
-      +'<button class="fold" onclick="cdFold(this)">⌃</button></div><div class="cd-sec-bd">';
-    if(s.score){h+='<div class="hd-score" id="hdScoreBody"></div>';}
-    else{
-      h+='<div class="hd-form">';
-      for(var j=0;j<s.fields.length;j++){
-        var f=s.fields[j],val=v[f.k]!==undefined?v[f.k]:(f.def!==undefined?f.def:'');
-        if(f.type==='ro'){
-          h+='<div class="ff full"><label>'+f.l+'</label><div class="hd-ro">'+f.def+'</div></div>';
-          continue;
-        }
-        var req=f.req===1,title=hdSrcTitle(s,f);
-        h+='<div class="ff'+(f.full?' full':'')+'"><label>'+f.l+(req?'<em>*</em>':'')+'<span class="src" title="'+title+'">ⓘ</span></label>';
-        if(f.d){
-          var ch='onchange="'+(f.on?f.on+';':'')+'hdTouch()"';
-          h+='<select id="'+f.k+'" '+ch+'>'+hdOptsHtml(f,val)+'</select>';
-        }else if(f.type==='ta'){
-          h+='<textarea id="'+f.k+'" placeholder="'+(f.ph||'')+'" oninput="hdTouch()">'+val+'</textarea>';
-        }else{
-          h+='<input id="'+f.k+'" type="text" value="'+String(val).replace(/"/g,'&quot;')+'" placeholder="'+(f.ph||'')+'" oninput="hdTouch()">';
-        }
-        h+='</div>';
-      }
-      h+='</div>';
-    }
-    h+='</div></div>';
-  }
-  document.getElementById('hdMain').innerHTML=h;
-}
-function hdTouch(){HD_STATE.dirty=true;hdClearErr();}
-function hdClearErr(){var els=document.querySelectorAll('.hd-form .ff.bad');for(var i=0;i<els.length;i++)els[i].classList.remove('bad');}
-/* --- 6. 校验：必填 + 格式（与原弹窗必填标记一致） --- */
-var HD_FMT={
-  tel:{re:/^(1[3-9]\d{9}|0\d{2,3}-?\d{7,8})$/,msg:'请输入正确的手机号码或固话（如 13808940001 / 0894-5821234）'},
-  idcard:{re:/^\d{17}[\dXx]$/,msg:'请输入正确的 18 位身份证号码'},
-  pct:{re:/^\d{1,3}(\.\d+)?%$/,msg:'满意率请输入百分比格式，如 95.9%'}
-};
-function hdCollect(){
-  var o={};
-  for(var i=0;i<HD_SECTIONS.length;i++){var fs=HD_SECTIONS[i].fields||[];
-    for(var j=0;j<fs.length;j++){if(fs[j].type==='ro')continue;o[fs[j].k]=hdVal(fs[j].k);}}
-  return o;
-}
-function hdValidate(mode){
-  var errs=[],ja=(hdVal('clFlag')==='是');
-  for(var i=0;i<HD_SECTIONS.length;i++){
-    var fs=HD_SECTIONS[i].fields||[];
-    for(var j=0;j<fs.length;j++){
-      var f=fs[j];
-      if(f.type==='ro')continue;
-      var v=String(hdVal(f.k)||'').trim();
-      var need=(mode==='submit')&&(f.req===1||(f.req==='ja'&&ja));
-      if(need&&!v){errs.push({k:f.k,sec:HD_SECTIONS[i].id,msg:'「'+f.l+'」为必填项，请补充后再提交'});continue;}
-      if(v&&f.fmt&&!HD_FMT[f.fmt].re.test(v))errs.push({k:f.k,sec:HD_SECTIONS[i].id,msg:'「'+f.l+'」格式不正确：'+HD_FMT[f.fmt].msg});
-      if(v&&f.fmt==='pct'&&parseFloat(v)>100)errs.push({k:f.k,sec:HD_SECTIONS[i].id,msg:'「'+f.l+'」不能大于 100%'});
-    }
-  }
-  return errs;
-}
-function hdShowErrs(errs){
-  hdClearErr();
-  for(var i=0;i<errs.length;i++){
-    var e=document.getElementById(errs[i].k);
-    if(e&&e.parentNode)e.parentNode.classList.add('bad');
-    var sec=document.getElementById(errs[i].sec);
-    if(sec)sec.classList.remove('off');
-  }
-  if(errs[0]){
-    var first=document.getElementById(errs[0].k);
-    if(first&&first.scrollIntoView)first.scrollIntoView({block:'center',behavior:'smooth'});
-    toast('演示：提交失败，'+errs.length+' 项校验未通过 —— '+errs[0].msg);
-  }
-}
-/* --- 7. 业务操作：保存 / 提交 / 退回 / 流转 --- */
-function hdSave(asDraft){
-  var errs=hdValidate('save');
-  if(errs.length){hdShowErrs(errs);return false;}
-  HD_STATE.status=(HD_STATE.status==='待办理'||HD_STATE.status==='已退回')?'办理中':HD_STATE.status;
-  HD_STATE.dirty=false;
-  hdbackToList(asDraft?'演示：已暂存调解记录，已返回矛盾纠纷管理列表':'演示：办理信息已保存，已返回矛盾纠纷管理列表');
-  return true;
-}
-function hdSubmit(){
-  if(!hdCan('submit')){toast('演示：'+hdWhy('submit'));return;}
-  var errs=hdValidate('submit');
-  if(errs.length){hdShowErrs(errs);return;}
-  var flag=hdVal('clFlag');
-  HD_STATE.status=(flag==='是')?'已结案':'待审核';
-  HD_STATE.dirty=false;
-  hdbackToList(flag==='是'?'演示：调解记录已提交，纠纷已结案归档':'演示：调解记录已提交，纠纷继续办理中');
-}
-function hdReturn(){if(!hdCan('back')){toast('演示：'+hdWhy('back'));return;}document.getElementById('hdRetBox').style.display='';}
-function hdCancelReturn(){document.getElementById('hdRetBox').style.display='none';document.getElementById('hdRetReason').value='';}
-function hdDoReturn(){
-  var r=String(document.getElementById('hdRetReason').value||'').trim();
-  if(!r){toast('演示：请填写退回原因');return;}
-  HD_STATE.status='已退回';HD_STATE.dirty=false;hdCancelReturn();
-  hdbackToList('演示：办理记录已退回至 '+(hdVal('zrName')||'责任民警')+'，请补充材料后重新提交');
-}
-function hdTransfer(){
-  if(!hdCan('transfer')){toast('演示：'+hdWhy('transfer'));return;}
-  openEntrust();
-  toast('演示：已发起流转/委托，办理信息同步带入委托描述');
-}
-function hdRenderActs(){
-  var box=document.getElementById('hdActs');if(!box)return;
-  function b(op,label,cls,fn){var ok=hdCan(op);return '<button class="btn '+(cls||'')+'"'+(ok?'':' disabled')+' title="'+hdWhy(op)+'" onclick="'+fn+'">'+label+'</button>';}
-  box.innerHTML=b('save','保存草稿','',"hdSave(true)")
-    +b('submit','提交办理','primary',"hdSubmit()")
-    +b('back','退回补充材料','',"hdReturn()")
-    +b('transfer','流转 / 委托调解','',"hdTransfer()")
-    +'<span class="sp"></span><span class="why" id="hdDirtyTip"></span>'
-    +'<button class="btn" onclick="hdLeave()">返回列表</button>';
-  var tip=document.getElementById('hdDirtyTip');
-  if(tip)tip.textContent=HD_STATE.dirty?'有未保存的修改':'所有修改已保存';
-  document.getElementById('hdStatusTag').textContent=HD_STATE.status;
-  document.getElementById('hdStatusTag').className='hd-status '+(HD_STATUS_CLS[HD_STATE.status]||'');
-}
-function hdRenderFlow(){
-  var seq=['待办理','办理中','待审核','已结案'],cur=HD_STATE.status,h='';
-  for(var i=0;i<seq.length;i++){
-    var cls=seq[i]===cur?' on':(seq.indexOf(cur)>i?' done':'');
-    if(cur==='已退回'&&i>=1)cls='';
-    h+='<div class="fl'+cls+'"><span class="dot"></span><span>'+seq[i]+'</span></div>';
-  }
-  if(cur==='已退回')h+='<div class="fl on"><span class="dot" style="background:#e5484d"></span><span>已退回（待补正后重新提交）</span></div>';
-  document.getElementById('hdFlow').innerHTML=h;
-}
-function hdRenderSide(rec){
-  var box=document.getElementById('hdSummary');if(!box)return;
-  var d=rec||{},rows=[
-    ['纠纷编号',HD_STATE.id||'—'],['纠纷名称',d.name||'新建办理登记'],
-    ['矛盾类型',d.type||'—'],['矛盾来源',d.src||'—'],
-    ['当前等级',d.lv||'未定级'],['发生时间',d.time||'—'],
-    ['发生地址',d.addr||'—'],['管辖单位',d.unit||'—'],['涉及人员',d.people||'—']
-  ],h='';
-  for(var i=0;i<rows.length;i++)h+='<div class="cd-f"><label>'+rows[i][0]+'</label><input value="'+rows[i][1]+'" readonly></div>';
-  box.innerHTML=h;
-  document.getElementById('hdSrcList').innerHTML=
-    '<b>mdjf_tjxxb</b> 调解信息：'+'GET /api/mdjf/tjxxb/detail<br>'
-    +'<b>mdjf_jaxx / hfxxb</b> 结案与回访：GET /api/mdjf/jaxx/detail<br>'
-    +'<b>mdjf_zrmj / gzjzqkb</b> 责任民警与跟踪：GET /api/mdjf/zrmj/detail<br>'
-    +'<b>mdjf_jdxxb</b> 监督信息：GET /api/mdjf/jdxxb/detail<br>'
-    +'<b>mdjf_ssdwb</b> 涉事单位：GET /api/mdjf/ssdwb/detail<br>'
-    +'<b>赋分</b> 各维度依据：GET /api/mdjf/score/detail<br>'
-    +'<b>字典</b> sys_dict_item / 枚举常量：GET /api/sys/dict/{code}';
-}
-function hdbackToList(msg){
-  HD_STATE.dirty=false;
-  toast(msg);
-  showView('conflict-mgmt');
-}
-/* --- 8. 交互适配：路由参数初始化 / 未保存拦截 --- */
-function goHandle(id,sec){
-  var target='conflict-handle'+(id?('?id='+encodeURIComponent(id)):'');
-  HD_STATE.id=id||'';
-  if(location.hash==='#'+target){enterHandle(id);}
-  else{location.hash=target;}
-  if(sec)setTimeout(function(){var el=document.getElementById(sec);if(el){if(el.classList.contains('off'))el.classList.remove('off');if(el.scrollIntoView)el.scrollIntoView({block:'start'});}},60);
-}
-function enterHandle(id){
-  HD_STATE.id=id||'';
-  var rec=HD_RECORDS[HD_STATE.id];
-  HD_STATE.status=(rec&&rec.status)?rec.status:(HD_STATE.id?'办理中':'待办理');
-  HD_STATE.dirty=false;
-  hdRenderForm(rec);
-  hdRenderSide(rec);
-  hdRenderFlow();
-  hdRenderActs();
+/* ============ 办理 / 调解登记（含结案信息） ============ */
+function openHandle(el){
+  var title='矛盾纠纷办理 · 调解登记';
+  if(el&&el.closest){var tr=el.closest('tr');if(tr&&tr.children[1]){var t=tr.children[1].textContent.trim();title='办理：'+(t.length>20?t.slice(0,20)+'…':t);}}
+  document.getElementById('hdTitle').textContent=title;
+  document.getElementById('cmHandleModal').style.display='flex';
   renderHandleScore();
-  var sub=document.getElementById('hdSubTitle');
-  if(sub)sub.textContent=(HD_STATE.id||'新建办理')+((rec&&rec.name)?(' · '+rec.name):'');
-  document.getElementById('hdHint').innerHTML='本页由原「矛盾纠纷办理」弹窗迁移而来，字段取值、字典项、默认值、回显与提交提示均与原弹窗一致。'
-    +'<b>路由：</b>#conflict-handle?id='+(HD_STATE.id||'—')+'　·　<b>当前状态：</b>'+HD_STATE.status+'　·　<b>视角：</b>'+HD_ROLE_NAME[HD_STATE.role]
-    +'　·　提示：'+((rec&&rec.status==='办理中')?'提交后进入「待审核」，可由分县局退回补正。':'提交前请确认必填项已填写完整。');
-  toggleCloseInfo();
 }
-function hdSetRole(role){
-  HD_STATE.role=role;
-  var segs=document.querySelectorAll('#hdRoleSeg span');
-  for(var i=0;i<segs.length;i++)segs[i].classList.toggle('on',segs[i].getAttribute('data-role')===role);
-  hdRenderActs();
-  toast('当前为'+HD_ROLE_NAME[role]+'视角：'+(role==='police'?'可保存、提交、流转':(role==='branch'?'可退回、流转，不可编辑':'仅查看')));
-}
-function hdLeave(){
-  if(HD_STATE.dirty&&!confirm('当前办理信息尚未保存，确定离开吗？未保存的修改将丢失。'))return;
-  HD_STATE.dirty=false;
-  showView('conflict-mgmt');
-}
-/* 原弹窗 openHandle / closeHandle 已废弃：办理业务改为路由详情页，保留重定向兼容 */
-function openHandle(){goHandle('MD2026-5404-0137');}
-function closeHandle(){hdLeave();}
-window.addEventListener('beforeunload',function(e){if(!HD_STATE.dirty)return;e.preventDefault();e.returnValue='当前办理信息尚未保存';});
+function closeHandle(){document.getElementById('cmHandleModal').style.display='none';}
 /* ---- 矛盾纠纷详情页 ---- */
 function openCmDetail(el){
   if(el&&el.closest){var tr=el.closest('tr');if(tr&&tr.children[1]){var t=tr.children[1].textContent.trim();var sub=document.getElementById('cdSubTitle');if(sub)sub.textContent='MD2026-5404-0137 · '+(t.length>28?t.slice(0,28)+'…':t);}}
@@ -3439,7 +3027,7 @@ function cdPartyDetail(i){
   if(!p){toast('演示：查看当事人详情');return;}
   toast('演示：查看当事人详情 '+p.name+'（'+p.desc+'）');
 }
-/* ---- 办理弹窗 · 赋分参照（按维度）：已复用于办理详情页 ---- */
+/* ---- 办理弹窗 · 赋分参照（按维度） ---- */
 function hdDimQueries(dim,p){
   var f=p.f||{},D=SCORE_DISPUTE,ls=[];
   if(dim==='当事人情况'){
@@ -3460,8 +3048,8 @@ function hdDimQueries(dim,p){
   }
   return ls;
 }
-function renderHandleScore(cid){
-  var box=document.getElementById(cid||'hdScoreBody');
+function renderHandleScore(){
+  var box=document.getElementById('hdScoreBody');
   if(!box)return;
   var dims=scoreDims(),h='';
   for(var d=0;d<dims.length;d++){
@@ -3493,14 +3081,18 @@ function renderHandleScore(cid){
   box.innerHTML=h;
 }
 function toggleCloseInfo(){
-  var fe=document.getElementById('clFlag'),re=document.getElementById('mdResult'),tip=document.getElementById('clTip');
-  if(!fe||!re||!tip)return;
-  var flag=fe.value,res=re.value;
-  if(flag==='否'){tip.textContent='未结案：本次仅登记调解记录，结案信息留待后续填写';tip.className='hd-sec-tip warn';}
-  else if(res==='未达成协议'||res==='终止调解'){tip.textContent='终止调解：请按「终止调解结案」方式填写并说明风险';tip.className='hd-sec-tip warn';}
-  else {tip.textContent='调解达成或终止后填写，用于闭环归档';tip.className='hd-sec-tip';}
+  var flag=document.getElementById('clFlag').value;
+  var res=document.getElementById('mdResult').value;
+  var tip=document.getElementById('clTip');
+  if(flag==='否'){tip.textContent='未结案：本次仅登记调解记录，结案信息留待后续填写';tip.style.color='#e5484d';}
+  else if(res==='未达成协议'||res==='终止调解'){tip.textContent='终止调解：请按「终止调解结案」方式填写并说明风险';tip.style.color='#e5484d';}
+  else {tip.textContent='调解达成或终止后填写，用于闭环归档';tip.style.color='';}
 }
-/* 说明：原弹窗的 hdSubmit（关弹窗 + toast）已被上方详情页版 hdSubmit 取代，此处不再重复定义 */
+function hdSubmit(){
+  var flag=document.getElementById('clFlag').value;
+  closeHandle();
+  toast(flag==='是'?'演示：调解记录已提交，纠纷已结案归档':'演示：调解记录已提交，纠纷继续办理中');
+}
 function setCheckRole(el,role){
   var sec=document.getElementById('view-conflict-check');
   if(!sec)return;
@@ -3526,21 +3118,10 @@ window.addEventListener('resize',function(){
   var vn=active.id.replace('view-','');
   if(charts[vn])Object.keys(charts[vn]).forEach(function(k){charts[vn][k].resize();});
 });
-var hashMap={'home1':'home1','home2':'home2','operations':'operations','population':'population','guard':'guard','address':'address','pop':'population','conflict-mgmt':'conflict-mgmt','conflict-check':'conflict-check','conflict-view':'conflict-view','conflict-detail':'conflict-detail','conflict-handle':'conflict-handle'};
-/* 解析哈希：支持 #conflict-handle?id=MD2026-5404-0137 形式的路由参数 */
-function parseHash(h){
-  var raw=(h||'').replace('#','');
-  var name=raw.split('?')[0];
-  var q=raw.indexOf('?')>=0?raw.slice(raw.indexOf('?')+1):'';
-  var m=q.match(/(?:^|&)id=([^&]*)/);
-  return {name:name,id:m?decodeURIComponent(m[1]):''};
-}
+var hashMap={'home1':'home1','home2':'home2','operations':'operations','population':'population','guard':'guard','address':'address','pop':'population','conflict-mgmt':'conflict-mgmt','conflict-check':'conflict-check','conflict-view':'conflict-view'};
 window.addEventListener('hashchange',function(){
-  var p=parseHash(location.hash);
-  if(!hashMap[p.name])return;
-  HD_STATE.id=p.id;
-  if(!document.getElementById('view-'+p.name).classList.contains('active'))showView(p.name);
-  else if(p.name==='conflict-handle')enterHandle(p.id);
+  var h=(location.hash||'').replace('#','');
+  if(hashMap[h]&&!document.getElementById('view-'+h).classList.contains('active'))showView(h);
 });
 
 /* ============ 图表公共配置 ============ */
@@ -4385,9 +3966,8 @@ CHART_DEFS.operations=[
 
 /* 默认视图 */
 (function(){
-  var p=parseHash(location.hash);
-  HD_STATE.id=p.id;
-  if(hashMap[p.name])showView(p.name);else showView('home1');
+  var h=(location.hash||'').replace('#','');
+  if(hashMap[h])showView(h);else showView('home1');
 })();
 </script>
 <div class="pop-modal-mask" id="cmAddModal" style="display:none;z-index:300" onclick="if(event.target===this)closeCmAdd()">
@@ -4596,10 +4176,110 @@ CHART_DEFS.operations=[
       </div>
     </div>
 
-    <!-- ===== 已迁移：原「办理 / 调解登记（含结案信息）」弹窗 cmHandleModal 已整体迁移至 独立详情页 #view-conflict-handle（路由 #conflict-handle?id=纠纷编号）。
-         迁移内容：调解信息 / 结案信息 / 责任民警与跟踪进展 / 监督信息 / 涉事单位 / 赋分参照（按维度）；
-         表单模型见 HD_DICT + HD_SECTIONS，回显数据见 HD_RECORDS，操作入口见 hdRenderActs。
-         原弹窗的 visible/open/关闭回调（openHandle / closeHandle / cmHandleModal）已废弃，不再使用。 ===== -->
+    <!-- ===== 弹窗：办理 / 调解登记（含结案信息） ===== -->
+    <div class="pop-modal-mask" id="cmHandleModal" style="display:none;z-index:300" onclick="if(event.target===this)closeHandle()">
+      <div class="pop-modal" style="width:min(900px,94vw)">
+        <div class="pop-modal-hd"><span id="hdTitle">矛盾纠纷办理 · 调解登记</span><button class="btn btn-xs" onclick="closeHandle()">关闭</button></div>
+        <div class="wz-body">
+          <div class="wz-sec">
+            <div class="wz-sec-hd">调解信息<span class="tip">一次调解一条记录，可多次调解</span></div>
+            <div class="wz-sec-bd">
+              <div class="cm-form" style="padding:0">
+                <div class="ff"><label>调解时间<em>*</em></label><input placeholder="请选择时间"></div>
+                <div class="ff"><label>调解方式<em>*</em></label><select><option>现场调解</option><option>视频调解</option><option>电话调解</option><option>背靠背调解</option></select></div>
+                <div class="ff"><label>调解地点</label><input placeholder="请输入地点"></div>
+                <div class="ff"><label>调解单位名称</label><input placeholder="如：八一镇人民调解委员会"></div>
+          <div class="ff"><label>主持调解人<em>*</em></label><input placeholder="请输入"></div>
+                <div class="ff"><label>参与调解人</label><input placeholder="请输入"></div>
+                <div class="ff"><label>当事人到场情况</label><select><option>双方到场</option><option>单方到场</option><option>均未到场</option></select></div>
+                <div class="ff"><label>调解次数</label><input value="第 1 次"></div>
+                <div class="ff"><label>调解结果<em>*</em></label><select id="mdResult" onchange="toggleCloseInfo()"><option>达成协议</option><option>未达成协议</option><option>部分达成协议</option><option>当事人撤回调解</option><option>终止调解</option></select></div>
+                <div class="ff"><label>调解结果代码</label><select><option>请选择</option><option>01 调解成功</option><option>02 部分达成</option><option>03 未达成</option><option>04 终止调解</option></select></div>
+          <div class="ff"><label>协议名称</label><input placeholder="请输入调解协议名称"></div>
+                <div class="ff"><label>是否司法确认</label><select><option>否</option><option>是</option></select></div>
+                <div class="ff full"><label>调解情况记录<em>*</em></label><textarea placeholder="请记录争议焦点、调解过程、双方诉求与让步情况"></textarea></div>
+                <div class="ff full"><label>未调解工作计划</label><textarea placeholder="未达成时填写：下一步工作措施、再次调解时间安排、移交建议"></textarea></div>
+          <div class="ff full"><label>协议主要内容</label><textarea placeholder="请填写协议条款、履行方式与期限"></textarea></div>
+              </div>
+            </div>
+          </div>
+          <div class="wz-sec">
+            <div class="wz-sec-hd">结案信息<span class="tip" id="clTip">调解达成或终止后填写，用于闭环归档</span></div>
+            <div class="wz-sec-bd">
+              <div class="cm-form" style="padding:0">
+                <div class="ff"><label>是否结案<em>*</em></label><select id="clFlag" onchange="toggleCloseInfo()"><option>是</option><option>否</option></select></div>
+                <div class="ff"><label>结案方式<em>*</em></label><select><option>调解结案</option><option>终止调解结案</option><option>转行政处罚</option><option>转刑事诉讼</option><option>引导诉讼</option><option>当事人和解撤案</option></select></div>
+                <div class="ff"><label>结案时间<em>*</em></label><input placeholder="请选择时间"></div>
+                <div class="ff"><label>结案文书编号</label><input placeholder="如：林公（治）调字〔2026〕128 号"></div>
+                <div class="ff"><label>履行情况<em>*</em></label><select><option>已履行</option><option>部分履行</option><option>未履行</option><option>分期履行中</option><option>无需履行</option></select></div>
+                <div class="ff"><label>履行期限</label><input placeholder="请选择期限"></div>
+                <div class="ff"><label>回访时间</label><input placeholder="请选择回访时间"></div>
+          <div class="ff"><label>被回访人</label><input placeholder="被回访人姓名"></div>
+          <div class="ff"><label>被回访人身份证号</label><input placeholder="请输入身份证号"></div>
+          <div class="ff"><label>回访人</label><input placeholder="回访人姓名"></div>
+          <div class="ff"><label>回访所属单位</label><input placeholder="如：八一镇派出所"></div>
+          <div class="ff"><label>是否回访</label><select><option>是</option><option>否</option></select></div>
+                <div class="ff"><label>回访满意率</label><input placeholder="如：95.9%"></div>
+                <div class="ff"><label>是否需升级防控</label><select><option>否</option><option>是</option></select></div>
+                <div class="ff"><label>归档责任区</label><input placeholder="请输入"></div>
+                <div class="ff full"><label>结案结论<em>*</em></label><textarea placeholder="请填写纠纷是否化解、当事人状态、后续风险判断"></textarea></div>
+                <div class="ff full"><label>回访来源</label><select><option>治安回访</option><option>110回访</option></select></div>
+          <div class="ff full"><label>回访内容</label><textarea placeholder="记录回访方式、当事人反馈、是否满意、有无反弹迹象"></textarea></div>
+          <div class="ff full"><label>回访情况</label><textarea placeholder="请填写回访时间、方式、当事人反馈"></textarea></div>
+                <div class="ff full"><label>备注</label><textarea placeholder="请输入"></textarea></div>
+              </div>
+            </div>
+          </div>
+          <div class="wz-sec">
+            <div class="wz-sec-hd">责任民警与跟踪进展<span class="tip">对应 mdjf_zrmj / mdjf_gzjzqkb，办理过程留痕</span></div>
+            <div class="wz-sec-bd">
+              <div class="cm-form" style="padding:0">
+                <div class="ff"><label>责任民警姓名<em>*</em></label><input placeholder="请输入姓名"></div>
+                <div class="ff"><label>责任民警电话<em>*</em></label><input placeholder="请输入联系电话"></div>
+                <div class="ff"><label>责任民警身份证号</label><input placeholder="请输入身份证号"></div>
+                <div class="ff"><label>跟踪进展人</label><input placeholder="请输入跟踪责任人"></div>
+                <div class="ff"><label>跟踪进展时间</label><input placeholder="请选择时间"></div>
+                <div class="ff"><label>跟踪频次</label><select><option>请选择</option><option>每日</option><option>每 3 日</option><option>每周</option><option>每月</option></select></div>
+                <div class="ff full"><label>进展情况</label><textarea placeholder="记录本次跟踪时间节点、当事人状态、矛盾变化与下一步措施"></textarea></div>
+                <div class="ff full"><label>历史进展</label><div style="font-size:12px;color:#82878B;line-height:22px">2026-10-21 民警甲：双方同意暂停装修，情绪平稳 · 2026-10-24 民警甲：施工方已调整作业时段，待回访确认 · 2026-10-27 民警甲：第 3 次调解未达成一致，转入升级防控</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="wz-sec">
+            <div class="wz-sec-hd">监督信息<span class="tip">对应 mdjf_jdxxb，由 24 小时 / 3 日 / 7 日时限引擎生成</span></div>
+            <div class="wz-sec-bd">
+              <div class="cm-form" style="padding:0">
+                <div class="ff"><label>监督部门</label><input placeholder="如：林芝市公安局治安支队"></div>
+                <div class="ff"><label>监督人</label><input placeholder="请输入监督人姓名"></div>
+                <div class="ff"><label>督察状态</label><select><option>未督察</option><option>督察中</option><option>已督察 · 通过</option><option>已督察 · 限期整改</option></select></div>
+                <div class="ff"><label>时限节点</label><select><option>24 小时</option><option>3 日</option><option>7 日</option><option>已超期</option></select></div>
+                <div class="ff full"><label>监督意见</label><textarea placeholder="记录督察发现的问题、整改要求与期限"></textarea></div>
+              </div>
+            </div>
+          </div>
+          <div class="wz-sec">
+            <div class="wz-sec-hd">涉事单位<span class="tip">对应 mdjf_ssdwb，四路分流环节指定，与「涉纠纷单位」区分</span></div>
+            <div class="wz-sec-bd">
+              <div class="cm-form" style="padding:0">
+                <div class="ff"><label>单位 ID</label><input placeholder="如：DW5426210001"></div>
+                <div class="ff"><label>单位名称<em>*</em></label><input placeholder="请输入涉事单位名称"></div>
+                <div class="ff"><label>单位地址</label><input placeholder="请输入单位地址"></div>
+                <div class="ff"><label>责任类型</label><select><option>请选择</option><option>用工单位</option><option>物业单位</option><option>施工单位</option><option>属地管理单位</option><option>行业主管部门</option></select></div>
+                <div class="ff full"><label>单位处置要求</label><textarea placeholder="记录对该单位的具体要求、配合事项与完成时限"></textarea></div>
+                <div class="ff full"><label>已关联涉事单位</label><div style="font-size:12px;color:#82878B;line-height:22px">DW5426210001 · 某装饰工程有限公司（施工单位） · 巴宜区八一镇××路 12 号 · 要求：调整作业时段并书面反馈</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="wz-sec">
+            <div class="wz-sec-hd">赋分参照（按维度）<span class="tip">每个维度的赋分规则与依据；依据为各赋分对象在该维度的查询结果</span></div>
+            <div class="wz-sec-bd">
+              <div class="hd-score" id="hdScoreBody"></div>
+            </div>
+          </div>
+        </div>
+        <div class="pop-foot"><button class="btn" onclick="closeHandle()">取消</button><button class="btn" onclick="toast('演示：已暂存调解记录')">暂存</button><button class="btn primary" onclick="hdSubmit()">提交</button></div>
+      </div>
+    </div>
 <div class="pop-modal-mask" id="scoreModal" style="display:none;z-index:320" onclick="if(event.target===this)closeScore()">
   <div class="pop-modal" style="width:min(1180px,96vw);max-height:90vh">
     <div class="wz-sec-hd" style="border-radius:0">矛盾纠纷赋分管理<span class="tip">分步操作：赋分对象 → 历史处置初始化 → 逐维度赋分 → 综合定级 → 赋分登记表</span></div>
