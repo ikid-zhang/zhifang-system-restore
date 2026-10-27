@@ -1,3 +1,8 @@
 _shots/
 ._*
 .DS_Store
+# 本地过程产物，不随 Pages 发布
+.workbuddy/
+_verify/
+ui-design-runs/
+*.docx

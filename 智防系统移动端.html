@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>智防系统 · 移动端（矛盾纠纷 / 排查签收 / 三地管控 / 警民恳谈）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --blue:#2f6bf6;--blue-2:#4d8bff;--bg:#e9ecf8;--card:#fff;--line:#eceff9;
+  --txt:#1a2234;--txt2:#69718c;--txt3:#9aa3bb;
+  --up:#ef4d4d;--down:#16b586;--warn:#f5922b;
+  --sh:0 8px 24px rgba(93,112,191,.10);
+  --sh-sm:0 4px 14px rgba(93,112,191,.08);
+  --sh-lg:0 16px 40px rgba(93,112,191,.18);
+  --tab-h:60px;--nav-h:48px;
+}
+body{font-family:'PingFang SC','Microsoft YaHei',system-ui,-apple-system,sans-serif;background:#dfe4f4;color:var(--txt);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;padding:0}
+button{font-family:inherit;border:none;background:none;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:14px}
+
+/* ============ 手机外壳 ============ */
+.wrap{display:flex;justify-content:center;padding:24px 10px 44px}
+.phone{width:430px;height:880px;flex:none;background:var(--bg);border-radius:44px;box-shadow:var(--sh-lg),0 40px 80px -30px rgba(60,80,160,.35);display:flex;flex-direction:column;overflow:hidden;position:relative}
+@media(max-width:480px){.wrap{padding:0}.phone{width:100%;height:100vh;border-radius:0;box-shadow:none}}
+.st-bar{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 20px;color:var(--txt);font-size:12px;font-weight:700}
+.st-bar .ic{display:flex;gap:4px;align-items:center}
+.st-bar .ic i{width:3px;background:var(--txt);border-radius:1px;display:block}
+.st-bar .ic i:nth-child(1){height:4px}.st-bar .ic i:nth-child(2){height:6px}.st-bar .ic i:nth-child(3){height:8px}.st-bar .ic i:nth-child(4){height:10px}
+.st-bar .bat{width:22px;height:11px;border:1.5px solid rgba(26,34,52,.55);border-radius:3px;position:relative}
+.st-bar .bat::after{content:"";position:absolute;right:-4px;top:2.5px;width:2px;height:4px;background:rgba(26,34,52,.55);border-radius:0 1px 1px 0}
+.st-bar .bat b{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:70%;background:var(--txt);border-radius:1.5px}
+
+/* ============ 顶部导航 ============ */
+.nav{height:var(--nav-h);flex:none;display:flex;align-items:center;padding:0 12px;color:var(--txt);gap:6px}
+.nav .bk{width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--txt);flex:none;background:#fff;border-radius:50%;box-shadow:var(--sh-sm)}
+.nav .tt{flex:1;text-align:center;font-size:17px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav .ar{width:40px;flex:none;text-align:right;font-size:12px;font-weight:600;color:var(--blue);line-height:1.2}
+/* 首页/我的：蓝色渐变头部卡 */
+.nav-home{background:linear-gradient(135deg,var(--blue-2),var(--blue));height:auto;margin:6px 14px 0;border-radius:26px;padding:16px;box-shadow:0 12px 28px rgba(47,107,246,.32);color:#fff}
+.nav-home .tt{color:#fff}
+
+/* ============ 内容区 ============ */
+.body{flex:1;overflow-y:auto;overflow-x:hidden;padding:12px 14px 16px;-webkit-overflow-scrolling:touch}
+.body::-webkit-scrollbar{width:0}
+.page{flex:1;min-height:0;display:none;flex-direction:column}
+.page.on{display:flex}
+
+/* ============ 底部 Tab（悬浮胶囊） ============ */
+.tabbar{height:var(--tab-h);flex:none;margin:8px 14px 14px;background:#fff;border-radius:999px;box-shadow:var(--sh-lg);display:flex;align-items:center;padding:0 8px}
+.tab{flex:1;height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:var(--txt3);font-size:10px;border-radius:999px;position:relative;transition:background .2s,color .2s}
+.tab .ti{width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+.tab .ti svg{width:20px;height:20px}
+.tab.on{color:var(--blue);background:#eaf1ff;font-weight:600}
+.tab.on .ti svg{stroke:var(--blue)}
+.tab .dot{position:absolute;margin:-16px 0 0 18px;min-width:15px;height:15px;border-radius:8px;background:var(--up);color:#fff;font-size:9px;line-height:15px;text-align:center;padding:0 4px;font-weight:600;box-shadow:0 2px 6px rgba(239,77,77,.4)}
+
+/* ============ 通用组件 ============ */
+.card{background:var(--card);border-radius:18px;box-shadow:var(--sh-sm);margin-bottom:10px;overflow:hidden}
+.card-hd{display:flex;align-items:center;gap:7px;padding:13px 14px;font-size:14px;font-weight:700;border-bottom:1px solid #f2f4fb}
+.card-hd::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--blue)}
+.card-hd .more{margin-left:auto;font-size:11px;font-weight:400;color:var(--txt3)}
+.card-bd{padding:13px 14px}
+.sec-t{font-size:12px;color:var(--txt2);margin:14px 4px 8px;font-weight:600}
+
+/* 头部信息条（蓝色卡内） */
+.hero{color:#fff}
+.hero .u{display:flex;align-items:center;gap:12px}
+.hero .av{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex:none;color:#fff}
+.hero .un{font-size:16px;font-weight:700}
+.hero .ud{font-size:11px;color:rgba(255,255,255,.78);margin-top:2px}
+.hero .qb{margin-left:auto;font-size:11px;color:#fff;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:999px}
+
+/* 待办四宫格 */
+.todo{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.todo .td{background:#fff;border-radius:16px;box-shadow:var(--sh-sm);padding:12px 4px;text-align:center}
+.todo .td .n{font-size:22px;font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1.2}
+.todo .td .n.red{color:var(--up)}
+.todo .td .n.orange{color:var(--warn)}
+.todo .td .l{font-size:11px;color:var(--txt2);margin-top:3px}
+
+/* 快捷入口 */
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 4px;background:#fff;border-radius:20px;box-shadow:var(--sh-sm);padding:14px 6px}
+.qk{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--txt);position:relative}
+.qk .qi{width:44px;height:44px;border-radius:15px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 6px 14px rgba(93,112,191,.22)}
+.qk .qi svg{width:22px;height:22px;stroke:#fff}
+.qk .bd{min-width:16px;height:16px;border-radius:8px;background:var(--up);color:#fff;font-size:10px;line-height:16px;text-align:center;position:absolute;top:-4px;right:6px;padding:0 4px;font-weight:600}
+
+/* 搜索 */
+.search{display:flex;align-items:center;gap:8px;background:#fff;border-radius:14px;box-shadow:var(--sh-sm);padding:0 12px;height:44px;margin-bottom:10px}
+.search input{flex:1;border:none;outline:none;background:none;height:100%}
+.search input::placeholder{color:var(--txt3)}
+.search svg{width:16px;height:16px;stroke:var(--txt3);flex:none}
+
+/* 分段 tab */
+.seg{display:flex;gap:5px;background:#fff;border-radius:14px;box-shadow:var(--sh-sm);padding:5px;margin-bottom:10px;overflow-x:auto}
+.seg button{flex:1;min-width:60px;height:32px;border-radius:10px;font-size:12px;color:var(--txt2);white-space:nowrap;transition:all .2s}
+.seg button.on{background:var(--blue);color:#fff;font-weight:600;box-shadow:0 5px 12px rgba(47,107,246,.32)}
+
+/* 列表项 */
+.item{background:#fff;border-radius:18px;box-shadow:var(--sh-sm);padding:13px 14px;margin-bottom:10px}
+.item .i-hd{display:flex;align-items:center;gap:6px}
+.item .i-t{font-size:14px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .i-sub{font-size:12px;color:var(--txt2);margin-top:5px;line-height:1.6}
+.item .i-ft{display:flex;align-items:center;gap:8px;margin-top:9px;font-size:11px;color:var(--txt3)}
+.item .i-ft .ops{margin-left:auto;display:flex;gap:6px}
+.tag{display:inline-flex;align-items:center;font-size:10px;padding:3px 10px;border-radius:999px;background:#eaf1ff;color:var(--blue);flex:none;font-weight:500}
+.tag.g{background:#e4f7ef;color:#0e9c68}
+.tag.o{background:#fef1e0;color:#c07208}
+.tag.r{background:#fdeaea;color:var(--up)}
+.tag.gray{background:#f0f2f8;color:var(--txt2)}
+.btn-s{height:32px;padding:0 14px;border-radius:999px;color:var(--blue);font-size:12px;font-weight:600;background:#eaf1ff}
+.btn-s.p{background:var(--blue);color:#fff;box-shadow:0 5px 12px rgba(47,107,246,.32)}
+.btn-s.d{color:var(--up);background:#fdeaea}
+.btn-s.gray{color:var(--txt2);background:#f0f2f8}
+
+/* 表单 */
+.form{background:#fff;border-radius:18px;box-shadow:var(--sh-sm);padding:14px}
+.fi{margin-bottom:12px}
+.fi:last-child{margin-bottom:0}
+.fi label{display:block;font-size:12px;color:var(--txt2);margin-bottom:6px}
+.fi label em{color:var(--up);font-style:normal;margin-left:2px}
+.fi input,.fi select,.fi textarea{width:100%;border:1.5px solid transparent;border-radius:12px;padding:10px 12px;font-size:14px;background:#f2f4fb;color:var(--txt)}
+.fi textarea{height:76px;resize:vertical;line-height:1.6}
+.fi input:focus,.fi select:focus,.fi textarea:focus{outline:none;border-color:var(--blue);background:#fff}
+.fi .row{display:flex;gap:8px}
+.fi .row>* {flex:1;min-width:0}
+.fsec{font-size:14px;font-weight:700;color:var(--txt);padding:10px 0 8px;display:flex;align-items:center;gap:7px}
+.fsec::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--blue)}
+
+/* 底部操作栏 */
+.actbar{flex:none;display:flex;gap:9px;padding:12px 14px 14px;background:#fff;box-shadow:0 -8px 24px rgba(93,112,191,.08);border-radius:24px 24px 0 0}
+.actbar button{flex:1;height:44px;border-radius:999px;font-size:14px;font-weight:600;background:#f0f2f8;color:var(--txt)}
+.actbar button.p{background:var(--blue);color:#fff;box-shadow:0 6px 14px rgba(47,107,246,.32)}
+.actbar button.d{color:var(--up);background:#fdeaea}
+
+/* 详情键值 */
+.kv{display:grid;grid-template-columns:78px 1fr;gap:8px 10px;font-size:13px;line-height:1.6}
+.kv .k{color:var(--txt2)}
+.kv .v{color:var(--txt);word-break:break-all;font-weight:500}
+
+/* 时间线 */
+.tl{position:relative;padding-left:16px}
+.tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;border-radius:1px;background:#e4e9f7}
+.tl .n{position:relative;padding-bottom:12px}
+.tl .n::before{content:"";position:absolute;left:-15px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px #eaf1ff}
+.tl .n:last-child{padding-bottom:0}
+.tl .n .t{font-size:12px;font-weight:600}
+.tl .n .d{font-size:11px;color:var(--txt2);margin-top:2px;line-height:1.6}
+.tl .n .tm{font-size:10px;color:var(--txt3);margin-top:2px}
+
+/* 三地 */
+.tri-tabs{display:flex;gap:6px;margin-bottom:10px}
+.tri-tabs button{flex:1;height:38px;border-radius:12px;background:#fff;box-shadow:var(--sh-sm);font-size:12px;font-weight:500;color:var(--txt2)}
+.tri-tabs button.on{background:var(--blue);color:#fff;font-weight:600;box-shadow:0 5px 12px rgba(47,107,246,.32)}
+.tri-box{background:#fff;border-radius:16px;box-shadow:var(--sh-sm);padding:12px 14px}
+.tri-box .tp{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;margin-bottom:6px}
+.tri-box .td{font-size:12px;color:var(--txt2);line-height:1.7}
+
+/* 空态 */
+.empty{text-align:center;padding:36px 0;color:var(--txt3);font-size:13px}
+.hint{font-size:11px;color:#4a6fd8;line-height:1.6;padding:10px 12px;background:#eaf1ff;border-radius:14px;margin-bottom:10px}
+
+/* ============ 赋分管理 ============ */
+.ms-parties{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px}
+.ms-party{flex:none;padding:7px 13px;border-radius:999px;background:#fff;box-shadow:var(--sh-sm);font-size:12px;font-weight:600;color:var(--txt2)}
+.ms-party.on{background:var(--blue);color:#fff}
+.sc-item{border-bottom:1px solid #f2f4fb}
+.sc-item-hd{display:flex;align-items:center;gap:8px;padding:10px 12px 2px;font-size:12px;font-weight:600}
+.sc-item-hd .mx{margin-left:auto;font-size:11px;font-weight:400;color:var(--txt2)}
+.ms-opt{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:10px 12px}
+.ms-o{border-radius:12px;background:#f2f4fb;padding:7px 9px;font-size:11px;color:var(--txt2);line-height:1.4}
+.ms-o b{display:block;font-size:11px;color:var(--txt);margin-bottom:1px}
+.ms-o i{font-style:normal;color:var(--blue);font-weight:700}
+.ms-o.on{background:#eaf1ff;box-shadow:inset 0 0 0 1.5px var(--blue);color:var(--txt)}
+.ms-total{font-size:26px;font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1}
+.ms-total small{font-size:12px;color:var(--txt3);font-weight:400;margin-left:3px}
+.ms-red{display:inline-flex;font-size:11px;padding:3px 10px;border-radius:999px;background:#fdeaea;color:var(--up);font-weight:600}
+.ms-red.off{background:#e4f7ef;color:#0e9c68}
+.ms-lv{display:flex;gap:6px}
+.ms-lv button{flex:1;height:34px;border-radius:12px;background:#f0f2f8;font-size:12px;font-weight:600;color:var(--txt2)}
+.ms-lv button.on{background:var(--blue);color:#fff}
+.mreg{overflow:auto;-webkit-overflow-scrolling:touch;border-radius:14px;background:#fff;box-shadow:var(--sh-sm)}
+.mreg table{width:100%;border-collapse:collapse;font-size:11px;white-space:nowrap}
+.mreg th,.mreg td{border:1px solid #eef1f8;padding:5px 7px;text-align:center}
+.mreg th{background:#f5f7fc;font-weight:600}
+.mreg td.tx{text-align:left;white-space:normal;min-width:88px}
+/* ===== 赋分分步向导 ===== */
+.msteps{display:flex;align-items:center;gap:6px;padding:8px 14px 10px;background:#fff;flex:none;border-bottom:1px solid #eef1f8}
+.ms-dot{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;color:var(--txt3);cursor:pointer}
+.ms-dot i{width:22px;height:22px;border-radius:50%;background:#f0f2f8;color:var(--txt3);font-style:normal;font-size:11px;display:flex;align-items:center;justify-content:center}
+.ms-dot.on{color:var(--blue);font-weight:600}
+.ms-dot.on i{background:var(--blue);color:#fff}
+.ms-dot.done i{background:#0e9c68;color:#fff}
+.ms-pane{display:none}
+.ms-pane.on{display:block}
+.mobj{background:#fff;border-radius:16px;box-shadow:var(--sh-sm);padding:11px 13px;margin-bottom:9px}
+.mobj.on{box-shadow:inset 0 0 0 1.5px var(--blue)}
+.mobj .t{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
+.mobj .t .tp{font-size:10px;padding:1px 6px;border-radius:4px;background:#f0f2f8;color:var(--txt2);font-weight:400}
+.mobj .t .sd{margin-left:auto;font-size:11px;font-weight:700;color:var(--blue)}
+.mobj .d{font-size:11px;color:var(--txt2);margin-top:3px;line-height:1.5}
+.mobj .m{margin-top:6px;font-size:11px;color:var(--txt3);display:flex;gap:10px;flex-wrap:wrap}
+.mobj .m b{color:var(--blue)}
+.mobj.add{border:1.5px dashed #b9cbff;color:var(--blue);text-align:center;font-size:13px;font-weight:600;padding:14px}
+.mstat{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:10px}
+.mst{background:#fff;border-radius:14px;box-shadow:var(--sh-sm);padding:8px 4px;text-align:center}
+.mst .n{font-size:15px;font-weight:800;color:var(--blue);line-height:1.2}
+.mst .l{font-size:10px;color:var(--txt3);margin-top:2px}
+.mhd{display:flex;align-items:center;font-size:12px;font-weight:700;padding:10px 12px;border-bottom:1px solid #f0f2f8}
+.mhd span{margin-left:auto;font-size:10px;font-weight:400;color:var(--txt3)}
+.mhlog{padding:9px 12px;border-bottom:1px solid #f4f6fb;font-size:11px;line-height:1.6}
+.mhlog:last-child{border-bottom:none}
+.mhlog .dt{font-size:10px;color:var(--txt3)}
+.mhlog b{display:block;font-size:12px;color:var(--txt);margin:1px 0}
+.mhlog span.r{color:var(--txt2)}
+.minit{margin-top:10px;font-size:11px;color:var(--txt2);line-height:1.6}
+.minit .ir{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #f4f6fb}
+.minit .ir:last-child{border-bottom:none}
+.minit .ir .nm{flex:none;width:74px;font-weight:600;color:var(--txt)}
+.minit .ir .vv{flex:none;width:44px;text-align:center;font-weight:700;color:var(--blue)}
+.minit .ir .bs{flex:1;color:var(--txt2)}
+.msrc{display:inline-block;font-size:9px;padding:0 5px;border-radius:4px;background:#f0f2f8;color:var(--txt2);flex:none}
+.msrc.auto{background:#e4f7ef;color:#0e9c68}
+.msrc.man{background:#fff2e2;color:#e8890c}
+.mbbtn{font-size:10px;color:var(--blue);background:#eaf1ff;border-radius:999px;padding:2px 9px;font-weight:600;flex:none}
+.mdimnav{display:flex;gap:6px;overflow-x:auto;padding:2px 0 6px}
+.mdimnav button{flex:none;padding:6px 12px;border-radius:999px;background:#fff;box-shadow:var(--sh-sm);font-size:11px;font-weight:600;color:var(--txt2)}
+.mdimnav button.on{background:var(--blue);color:#fff}
+.mformula{background:#eaf1ff;border-radius:12px;padding:9px 11px;font-size:11px;color:var(--txt);line-height:1.8;margin-bottom:9px}
+.mformula code{background:#fff;color:var(--blue);padding:1px 5px;border-radius:4px}
+.msyntb{width:100%;border-collapse:collapse;font-size:11px}
+.msyntb th,.msyntb td{border:1px solid #eef1f8;padding:5px 6px;text-align:center}
+.msyntb th{background:#f5f7fc;font-weight:600}
+.msyntb td.tx{text-align:left}
+.msyntb td b{color:var(--blue)}
+.mnote{width:100%;border:1px solid #e6ebf5;border-radius:12px;padding:8px 10px;font-size:12px;min-height:60px;resize:vertical;box-sizing:border-box}
+.msheet-mask{position:absolute;inset:0;background:rgba(20,30,55,.45);z-index:60;display:flex;align-items:flex-end}
+.msheet{width:100%;max-height:76%;background:#fff;border-radius:20px 20px 0 0;display:flex;flex-direction:column;overflow:hidden}
+.msheet-hd{padding:13px 16px;font-size:14px;font-weight:700;border-bottom:1px solid #eef1f8;display:flex;align-items:center}
+.msheet-hd span{margin-left:auto;font-size:12px;font-weight:400;color:var(--blue)}
+.msheet-bd{padding:12px 16px 16px;overflow-y:auto;font-size:12px;color:var(--txt2);line-height:1.75}
+.msheet-bd h4{font-size:14px;color:var(--txt);margin:0 0 6px}
+.msheet-bd table{width:100%;border-collapse:collapse;font-size:11px;margin:6px 0 10px}
+.msheet-bd th,.msheet-bd td{border:1px solid #eef1f8;padding:6px 7px;text-align:left}
+.msheet-bd th{background:#f5f7fc;color:var(--txt)}
+.msheet-bd tr.on td{background:#eaf1ff}
+.msheet-bd td.v{text-align:center;font-weight:700;color:var(--blue);width:46px;white-space:nowrap}
+.msheet-bd .bsec{background:#f5f9ff;border:1px dashed #c9dcff;border-radius:10px;padding:8px 10px;margin-bottom:8px}
+/* 提示条 */
+.toast{position:absolute;left:50%;bottom:92px;transform:translateX(-50%);background:rgba(26,34,52,.92);color:#fff;font-size:13px;padding:10px 18px;border-radius:999px;z-index:99;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap;max-width:90%;box-shadow:0 10px 30px rgba(26,34,52,.3)}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="phone">
+  <div class="st-bar"><span>9:41</span><span class="ic"><i></i><i></i><i></i><i></i><span style="margin-left:3px">4G</span></span><span class="bat"><b></b></span></div>
+
+  <!-- ==================== 工作台 ==================== -->
+  <div class="page on" id="p-work">
+    <div class="nav nav-home">
+      <div class="hero" style="margin:0;background:none;padding:0">
+        <div class="u">
+          <div class="av">张</div>
+          <div>
+            <div class="un">张警官</div>
+            <div class="ud">巴宜分局八一派出所 · 第一警务区</div>
+          </div>
+          <div class="qb">今日在岗</div>
+        </div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="todo">
+        <div class="td"><div class="n red">6</div><div class="l">待签收</div></div>
+        <div class="td"><div class="n orange">4</div><div class="l">待处置</div></div>
+        <div class="td"><div class="n">3</div><div class="l">待回访</div></div>
+        <div class="td"><div class="n red">2</div><div class="l">临期预警</div></div>
+      </div>
+
+      <div class="sec-t">快捷入口</div>
+      <div class="quick">
+        <div class="qk" onclick="mGo('p-add')"><div class="qi" style="background:linear-gradient(135deg,#2f6fed,#36b8ff)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div><span>矛盾上报</span></div>
+        <div class="qk" onclick="mGo('p-sign')"><div class="qi" style="background:linear-gradient(135deg,#f08a24,#ffb03a)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span>排查签收</span><span class="bd">6</span></div>
+        <div class="qk" onclick="mGo('p-tri')"><div class="qi" style="background:linear-gradient(135deg,#17c39a,#2ee6a8)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><span>三地管控</span></div>
+        <div class="qk" onclick="mGo('p-talk')"><div class="qi" style="background:linear-gradient(135deg,#7F77DD,#AFA9EC)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.87"/></svg></div><span>警民恳谈</span></div>
+        <div class="qk" onclick="mGo('p-list')"><div class="qi" style="background:linear-gradient(135deg,#2f6bf6,#4d8bff)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div><span>纠纷列表</span></div>
+        <div class="qk" onclick="mGo('p-score')"><div class="qi" style="background:linear-gradient(135deg,#2f6bf6,#4d8bff)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><span>赋分管理</span></div>
+        <div class="qk" onclick="mGo('p-entrust')"><div class="qi" style="background:linear-gradient(135deg,#BA7517,#EF9F27)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 12h12"/><path d="M12 6l6 6-6 6"/></svg></div><span>委托调解</span></div>
+        <div class="qk" onclick="mGo('p-dadd')"><div class="qi" style="background:linear-gradient(135deg,#1d4d8f,#2f6bf6)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div><span>纠纷录入</span></div>
+      </div>
+
+      <div class="sec-t">我的待办</div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">巴宜区某小区装修噪音邻里纠纷</span><span class="tag r">临期</span></div>
+        <div class="i-sub">需在 2026-10-27 前完成首次调处，责任民警：张警官</div>
+        <div class="i-ft"><span>来源：110 指令</span><span>·</span><span>2026-10-22 16:33</span><span class="ops"><button class="btn-s p" onclick="mGo('p-handle')">去处置</button></span></div>
+      </div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">排查任务：米林市某村入户走访</span><span class="tag o">待签收</span></div>
+        <div class="i-sub">派发单位：米林市公安局治安管理大队 · 时限 12 小时</div>
+        <div class="i-ft"><span>任务编号 PC20261022031</span><span class="ops"><button class="btn-s p" onclick="mGo('p-sign')">去签收</button></span></div>
+      </div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">回访任务：波密县某工地劳资纠纷</span><span class="tag g">已化解</span></div>
+        <div class="i-sub">化解后第 7 日回访，需确认工资支付到位</div>
+        <div class="i-ft"><span>应回访日期 2026-10-28</span><span class="ops"><button class="btn-s" onclick="mToast('演示：进入回访登记')">去回访</button></span></div>
+      </div>
+
+      <div class="sec-t">通知公告</div>
+      <div class="card"><div class="card-bd" style="padding:11px 12px">
+        <div style="font-size:13px;font-weight:600">关于做好秋冬季节矛盾纠纷排查化解工作的通知</div>
+        <div style="font-size:12px;color:var(--txt2);margin-top:4px;line-height:1.6">重点围绕劳资、草场地界、家庭婚恋等季节性高发纠纷，落实「双排查、双通报」……</div>
+        <div style="font-size:11px;color:var(--txt3);margin-top:6px">市局治安管理支队 · 2026-10-20</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ==================== 矛盾纠纷列表 ==================== -->
+  <div class="page" id="p-list">
+    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">矛盾纠纷</span><span class="ar" onclick="mGo('p-add')">＋上报</span></div>
+    <div class="body">
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input placeholder="搜索事件名称 / 当事人 / 地点"></div>
+      <div class="seg">
+        <button class="on" onclick="segPick(this)">全部</button><button onclick="segPick(this)">待处置</button><button onclick="segPick(this)">调解中</button><button onclick="segPick(this)">已委托</button><button onclick="segPick(this)">已结案</button>
+      </div>
+      <div class="item" onclick="mGo('p-detail')">
+        <div class="i-hd"><span class="i-t">巴宜区某小区装修噪音引发邻里纠纷</span><span class="tag r">重点</span></div>
+        <div class="i-sub">巴宜区某小区 3 栋 · 涉及 3 人 · 邻里关系</div>
+        <div class="i-ft"><span class="tag o">待处置</span><span>2026-10-22 16:33</span></div>
+      </div>
+      <div class="item" onclick="mGo('p-detail')">
+        <div class="i-hd"><span class="i-t">波密县达兴村某工地劳资纠纷</span><span class="tag">关注</span></div>
+        <div class="i-sub">波密县达兴村某工地 · 涉及 2 人 · 劳动争议</div>
+        <div class="i-ft"><span class="tag">调解中</span><span>2026-10-22 12:45</span></div>
+      </div>
+      <div class="item" onclick="mGo('p-detail')">
+        <div class="i-hd"><span class="i-t">米林市某酒店欠薪纠纷</span><span class="tag">关注</span></div>
+        <div class="i-sub">米林市某酒店 · 涉及 2 人 · 劳动争议</div>
+        <div class="i-ft"><span class="tag g">已委托</span><span>2026-10-21 21:38</span></div>
+      </div>
+      <div class="item" onclick="mGo('p-detail')">
+        <div class="i-hd"><span class="i-t">经开区某家庭纠纷警情</span><span class="tag gray">一般</span></div>
+        <div class="i-sub">经开区某居民小区 · 涉及 2 人 · 婚姻家庭</div>
+        <div class="i-ft"><span class="tag gray">已结案</span><span>2026-10-21 17:40</span></div>
+      </div>
+      <div class="item" onclick="mGo('p-detail')">
+        <div class="i-hd"><span class="i-t">察隅县某小区停车位纠纷</span><span class="tag gray">一般</span></div>
+        <div class="i-sub">察隅县某小区 · 涉及 4 人 · 物业纠纷</div>
+        <div class="i-ft"><span class="tag gray">已结案</span><span>2026-10-20 20:50</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 纠纷详情 ==================== -->
+  <div class="page" id="p-detail">
+    <div class="nav"><button class="bk" onclick="mGo('p-list')">‹</button><span class="tt">纠纷详情</span><span class="ar"></span></div>
+    <div class="body">
+      <div class="card"><div class="card-bd">
+        <div style="font-size:15px;font-weight:600;line-height:1.5">巴宜区某小区装修噪音引发邻里纠纷</div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag r">重点级</span><span class="tag o">待处置</span><span class="tag">邻里关系</span></div>
+      </div></div>
+      <div class="card"><div class="card-hd">基本信息</div><div class="card-bd">
+        <div class="kv">
+          <div class="k">事件编号</div><div class="v">MZ20261022001</div>
+          <div class="k">矛盾来源</div><div class="v">110 指令</div>
+          <div class="k">发生时间</div><div class="v">2026-10-22 16:33:24</div>
+          <div class="k">发生地点</div><div class="v">巴宜区八一镇某小区 3 栋 2 单元</div>
+          <div class="k">管辖单位</div><div class="v">巴宜分局八一派出所</div>
+          <div class="k">责任民警</div><div class="v">张警官 139****1201</div>
+          <div class="k">当事人</div><div class="v">3 人（甲方 1 / 乙方 2）</div>
+          <div class="k">调处时限</div><div class="v">2026-10-27 前</div>
+        </div>
+      </div></div>
+      <div class="card"><div class="card-hd">简要情况</div><div class="card-bd" style="font-size:13px;color:var(--txt2);line-height:1.7">
+        楼上住户装修作业时间过晚，影响楼下老人休息，双方多次争执。前期社区网格员已上门劝导一次，未达成一致，现需派出所介入调处。
+      </div></div>
+      <div class="card"><div class="card-hd">调处记录<span class="more">共 2 条</span></div><div class="card-bd">
+        <div class="tl">
+          <div class="n"><div class="t">已下发调处任务</div><div class="d">指派至第一警务区张警官，要求 10 月 27 日前完成首次调处</div><div class="tm">2026-10-23 09:12 · 系统</div></div>
+          <div class="n"><div class="t">警情录入</div><div class="d">110 指令推送，初判为邻里关系纠纷，风险等级：关注</div><div class="tm">2026-10-22 16:40 · 指挥中心</div></div>
+        </div>
+      </div></div>
+      <div class="card"><div class="card-hd">结案信息<span class="more">未结案</span></div><div class="card-bd" style="font-size:12px;color:var(--txt3)">
+        尚未填写结案信息。调处完成后在「处置」中补录结案方式、履行情况与回访结论。
+      </div></div>
+    </div>
+    <div class="actbar">
+      <button onclick="mGo('p-handle')">处置</button>
+      <button onclick="mGo('p-entrust')">委托</button>
+      <button onclick="mGo('p-score')">赋分</button>
+      <button class="d" onclick="mToast('演示：注销需填写原因并上级审批')">注销</button>
+    </div>
+  </div>
+
+  <!-- ==================== 新增 / 排查上报 ==================== -->
+  <div class="page" id="p-add">
+    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">矛盾排查上报</span><span class="ar"></span></div>
+    <div class="body">
+      <div class="hint">现场排查发现矛盾纠纷时，先登记排查记录；确认存在纠纷后 12 小时内完成定级与指派。</div>
+      <div class="form">
+        <div class="fsec">排查信息</div>
+        <div class="fi"><label>排查地点<em>*</em></label><div class="row"><input placeholder="请输入地点"><button class="btn-s" style="height:38px" onclick="mToast('演示：调用定位获取当前位置')">定位</button></div></div>
+        <div class="fi"><label>排查时间<em>*</em></label><input value="2026-10-26 22:10"></div>
+        <div class="fi"><label>排查方式<em>*</em></label><select><option>入户走访</option><option>电话回访</option><option>集中座谈</option><option>巡逻发现</option></select></div>
+        <div class="fi"><label>是否存在矛盾纠纷<em>*</em></label><select id="adHas" onchange="toggleDispute()"><option>否</option><option>是</option></select></div>
+        <div class="fi"><label>第一责任民警<em>*</em></label><input value="扎西××"></div>
+        <div class="fi"><label>第一责任民警电话</label><input value="138****0001"></div>
+        <div class="fi"><label>第二责任民警</label><input placeholder="选填，双民警负责时填写"></div>
+        <div class="fi"><label>第二责任民警电话</label><input placeholder="选填"></div>
+        <div class="fi"><label>排查地址行政区划</label><select><option>巴宜区</option><option>波密县</option><option>米林市</option><option>工布江达县</option><option>朗县</option><option>察隅县</option><option>墨脱县</option></select></div>
+        <div class="fi"><label>排查情况<em>*</em></label><textarea placeholder="请描述排查过程、发现的问题及初步处理情况"></textarea></div>
+        <div class="fi"><label>现场照片</label><div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="width:64px;height:64px;border:1px dashed #cfd8e8;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--txt3);font-size:20px" onclick="mToast('演示：调用相机拍照')">＋</div>
+        </div></div>
+      </div>
+      <div id="adMore" style="display:none">
+        <div class="hint" style="margin-top:10px">本次排查涉及矛盾纠纷，请跳转至「矛盾纠纷录入」填写事件信息与当事人赋分。</div>
+        <div class="item" onclick="mGo('p-dadd')">
+          <div class="i-hd"><span class="i-t">填写矛盾纠纷信息</span><span class="tag o">待填写</span></div>
+          <div class="i-sub">事件名称、风险等级、涉及领域、矛盾来源、当事人、简要情况</div>
+          <div class="i-ft"><span>关联本次排查记录</span><span class="ops"><button class="btn-s p" onclick="mGo('p-dadd')">去录入</button></span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn-s gray" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：已暂存草稿')">暂存</button>
+        <button class="btn-s p" style="flex:2;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：提交成功，等待定级与指派')">提交</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 处置：调解 + 结案信息 ==================== -->
+  <div class="page" id="p-handle">
+    <div class="nav"><button class="bk" onclick="mGo('p-detail')">‹</button><span class="tt">办理 · 调解登记</span><span class="ar"></span></div>
+    <div class="body">
+      <div class="form">
+        <div class="fsec">调解信息</div>
+        <div class="fi"><label>调解时间<em>*</em></label><input value="2026-10-26 21:30"></div>
+        <div class="fi"><label>调解方式<em>*</em></label><select><option>现场调解</option><option>视频调解</option><option>电话调解</option><option>背靠背调解</option></select></div>
+        <div class="fi"><label>调解地点</label><input placeholder="请输入地点"></div>
+        <div class="fi"><label>调解单位名称</label><input placeholder="如：八一镇人民调解委员会"></div>
+        <div class="fi"><label>主持调解人<em>*</em></label><input value="张警官"></div>
+        <div class="fi"><label>参与调解人</label><input placeholder="请输入"></div>
+        <div class="fi"><label>调解次数</label><input value="第 1 次"></div>
+        <div class="fi"><label>调解结果<em>*</em></label><select id="mdRes" onchange="toggleClose()"><option>达成协议</option><option>部分达成协议</option><option>未达成协议</option><option>当事人撤回调解</option><option>终止调解</option></select></div>
+        <div class="fi"><label>调解情况记录<em>*</em></label><textarea placeholder="请记录争议焦点、调解过程、双方诉求与让步情况"></textarea></div>
+        <div class="fi"><label>调解结果代码</label><select><option>01 调解成功</option><option>02 部分达成</option><option>03 未达成</option><option>04 终止调解</option></select></div>
+        <div class="fi"><label>未调解工作计划</label><textarea placeholder="未达成时填写下一步措施与时间安排"></textarea></div>
+        <div class="fi"><label>协议主要内容</label><textarea placeholder="请填写协议条款、履行方式与期限"></textarea></div>
+      </div>
+
+      <div class="form" style="margin-top:10px">
+        <div class="fsec">结案信息</div>
+        <div class="hint" id="clHint" style="margin-bottom:10px">调解达成或终止后填写，用于闭环归档。</div>
+        <div class="fi"><label>是否结案<em>*</em></label><select id="clFlag" onchange="toggleClose()"><option>是</option><option>否</option></select></div>
+        <div class="fi"><label>结案方式<em>*</em></label><select><option>调解结案</option><option>终止调解结案</option><option>转行政处罚</option><option>转刑事诉讼</option><option>引导诉讼</option><option>当事人和解撤案</option></select></div>
+        <div class="fi"><label>结案时间<em>*</em></label><input value="2026-10-26 22:00"></div>
+        <div class="fi"><label>结案文书编号</label><input placeholder="如：林公（治）调字〔2026〕128 号"></div>
+        <div class="fi"><label>履行情况<em>*</em></label><select><option>已履行</option><option>部分履行</option><option>未履行</option><option>分期履行中</option><option>无需履行</option></select></div>
+        <div class="fi"><label>履行期限</label><input placeholder="请选择期限"></div>
+        <div class="fi"><label>回访时间</label><input placeholder="请选择回访时间"></div>
+        <div class="fi"><label>被回访人</label><input placeholder="被回访人姓名"></div>
+        <div class="fi"><label>回访人</label><input placeholder="回访人姓名"></div>
+        <div class="fi"><label>是否回访</label><select><option>是</option><option>否</option></select></div>
+        <div class="fi"><label>回访满意率</label><input placeholder="如：95.9%"></div>
+        <div class="fi"><label>是否需升级防控</label><select><option>否</option><option>是</option></select></div>
+        <div class="fi"><label>结案结论<em>*</em></label><textarea placeholder="请填写纠纷是否化解、当事人状态、后续风险判断"></textarea></div>
+        <div class="fi"><label>回访来源</label><select><option>治安回访</option><option>110回访</option></select></div>
+        <div class="fi"><label>回访内容</label><textarea placeholder="记录回访方式、当事人反馈、是否满意、有无反弹迹象"></textarea></div>
+        <div class="fi"><label>回访情况</label><textarea placeholder="请填写回访时间、方式、当事人反馈"></textarea></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn-s gray" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：已暂存调解记录')">暂存</button>
+        <button class="btn-s p" style="flex:2;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：提交成功，纠纷已结案归档')">提交</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 矛盾排查签收 ==================== -->
+  <div class="page" id="p-sign">
+    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">矛盾排查签收</span><span class="ar"></span></div>
+    <div class="body">
+      <div class="hint">上级派发或系统推送的排查任务需在时限内签收，签收后进入排查执行；超时未签收将自动升级提醒。</div>
+      <div class="seg">
+        <button class="on" onclick="segPick(this)">待签收 6</button><button onclick="segPick(this)">已签收 3</button><button onclick="segPick(this)">已完成 12</button>
+      </div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">米林市某村入户走访排查</span><span class="tag o">待签收</span></div>
+        <div class="i-sub">排查地点：米林市米林镇某村<br>派发单位：米林市公安局治安管理大队<br>要求完成：2026-10-27 12:00（剩余 14 小时）</div>
+        <div class="i-ft"><span>PC20261022031</span><span class="ops"><button class="btn-s p" onclick="mToast('演示：签收成功，请按时完成排查')">签收</button><button class="btn-s gray">退回</button></span></div>
+      </div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">巴宜区八一镇草场地界纠纷排查</span><span class="tag o">待签收</span></div>
+        <div class="i-sub">排查地点：巴宜区八一镇某村草场<br>派发单位：巴宜分局治安大队<br>要求完成：2026-10-28 18:00（剩余 2 天）</div>
+        <div class="i-ft"><span>PC20261025007</span><span class="ops"><button class="btn-s p" onclick="mToast('演示：签收成功')">签收</button><button class="btn-s gray">退回</button></span></div>
+      </div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">波密县某工地劳资隐患专项排查</span><span class="tag r">临期</span></div>
+        <div class="i-sub">排查地点：波密县扎木镇某施工工地<br>派发单位：市局治安管理支队<br>要求完成：2026-10-27 09:00（剩余 11 小时）</div>
+        <div class="i-ft"><span>PC20261021012</span><span class="ops"><button class="btn-s p" onclick="mToast('演示：签收成功')">签收</button><button class="btn-s gray">退回</button></span></div>
+      </div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">察隅县某小区物业纠纷排查</span><span class="tag g">已签收</span></div>
+        <div class="i-sub">排查地点：察隅县竹瓦根镇某小区<br>签收时间：2026-10-25 10:22</div>
+        <div class="i-ft"><span>PC20261024018</span><span class="ops"><button class="btn-s" onclick="mGo('p-add')">去排查</button></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 三地管控 ==================== -->
+  <div class="page" id="p-tri">
+    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">三地管控</span><span class="ar"></span></div>
+    <div class="body">
+      <div class="hint">三地＝矛盾纠纷<b>发生地</b>、相关当事人<b>户籍地</b>、<b>经常居住地</b>。三地之间需落实工作衔接与信息共享，执行「双排查、双通报」，严防重点人员脱管失控。</div>
+      <div class="tri-tabs">
+        <button class="on" onclick="triPick(this)">发生地</button><button onclick="triPick(this)">户籍地</button><button onclick="triPick(this)">经常居住地</button>
+      </div>
+      <div class="card"><div class="card-bd">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:40px;height:40px;border-radius:50%;background:#EEF4FF;color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:600;flex:none">次</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:15px;font-weight:600">次仁××</div>
+            <div style="font-size:12px;color:var(--txt2)">男 · 34 岁 · 涉及邻里 / 草场地界纠纷</div>
+          </div>
+          <span class="tag r">高风险</span>
+        </div>
+      </div></div>
+
+      <div class="tri-box" style="margin-bottom:10px">
+        <div class="tp"><span style="width:6px;height:6px;border-radius:50%;background:var(--up)"></span>发生地（当前责任）</div>
+        <div class="td">巴宜区八一镇某村 · 第一警务区<br>责任民警：张警官 139****1201<br>管控措施：每周走访一次，10 月 27 日前完成首次调处</div>
+      </div>
+      <div class="tri-box" style="margin-bottom:10px">
+        <div class="tp"><span style="width:6px;height:6px;border-radius:50%;background:var(--blue)"></span>户籍地（协管）</div>
+        <div class="td">米林市米林镇某村 · 米林市公安局<br>责任民警：李警官 138****4520<br>协查状态：<span style="color:var(--down)">已签收 · 已反馈</span></div>
+      </div>
+      <div class="tri-box" style="margin-bottom:10px">
+        <div class="tp"><span style="width:6px;height:6px;border-radius:50%;background:var(--warn)"></span>经常居住地（协管）</div>
+        <div class="td">巴宜区八一镇某出租屋 · 八一派出所<br>责任民警：王警官 137****8812<br>协查状态：<span style="color:#c8780a">已签收 · 待反馈（剩余 1 天）</span></div>
+      </div>
+
+      <div class="sec-t">协查通报记录</div>
+      <div class="card"><div class="card-bd">
+        <div class="tl">
+          <div class="n"><div class="t">经常居住地已签收协查</div><div class="d">八一派出所王警官签收，承诺 10 月 27 日前反馈现实表现</div><div class="tm">2026-10-25 15:40</div></div>
+          <div class="n"><div class="t">户籍地反馈协查结果</div><div class="d">米林市公安局反馈：无前科，家庭关系稳定，近半年无异常</div><div class="tm">2026-10-24 11:08</div></div>
+          <div class="n"><div class="t">发起三地协查通报</div><div class="d">向户籍地、经常居住地推送协查函，落实双排查双通报</div><div class="tm">2026-10-23 09:30 · 张警官</div></div>
+        </div>
+      </div></div>
+
+      <div style="display:flex;gap:8px">
+        <button class="btn-s" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：发起三地协查通报')">发起协查</button>
+        <button class="btn-s p" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：登记管控记录')">登记管控</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 警民恳谈 ==================== -->
+  <div class="page" id="p-talk">
+    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">警民恳谈</span><span class="ar" onclick="mToast('演示：新建恳谈记录')">＋新建</span></div>
+    <div class="body">
+      <div class="hint">通过警民恳谈会、板凳课堂、小院杂谈等形式了解社情民意，收集矛盾纠纷线索；收集到的问题可一键转为排查或纠纷登记。</div>
+      <div class="todo" style="margin-bottom:10px">
+        <div class="td"><div class="n">28</div><div class="l">本月场次</div></div>
+        <div class="td"><div class="n">416</div><div class="l">参与群众</div></div>
+        <div class="td"><div class="n orange">37</div><div class="l">收集问题</div></div>
+        <div class="td"><div class="n">31</div><div class="l">已办结</div></div>
+      </div>
+      <div class="seg">
+        <button class="on" onclick="segPick(this)">全部</button><button onclick="segPick(this)">待开展</button><button onclick="segPick(this)">已开展</button><button onclick="segPick(this)">待办结</button>
+      </div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">八一镇某社区警民恳谈会</span><span class="tag g">已办结</span></div>
+        <div class="i-sub">时间：2026-10-24 19:30　地点：某社区党群服务中心<br>参与：社区干部 3 人、网格员 5 人、群众代表 26 人<br>收集问题：5 条（已办结 5 条）</div>
+        <div class="i-ft"><span>主持人：张警官</span><span class="ops"><button class="btn-s gray">查看</button></span></div>
+      </div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">某村「板凳课堂」法治宣讲</span><span class="tag o">待办结</span></div>
+        <div class="i-sub">时间：2026-10-26 16:00　地点：某村村委会<br>参与：村两委 4 人、群众 38 人<br>收集问题：4 条（已办结 2 条）</div>
+        <div class="i-ft"><span>主持人：张警官</span><span class="ops"><button class="btn-s p" onclick="mToast('演示：问题转办结登记')">去办结</button></span></div>
+      </div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">某小区物业纠纷专场恳谈</span><span class="tag">待开展</span></div>
+        <div class="i-sub">计划时间：2026-10-28 19:00　地点：某小区物业会议室<br>议题：停车收费、公共区域使用、装修噪音</div>
+        <div class="i-ft"><span>主持人：张警官</span><span class="ops"><button class="btn-s">提醒</button></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 委托 ==================== -->
+  <div class="page" id="p-entrust">
+    <div class="nav"><button class="bk" onclick="mGo('p-detail')">‹</button><span class="tt">委托调解</span><span class="ar"></span></div>
+    <div class="body">
+      <div class="hint">选择委托场景后，系统按管辖范围与专业方向自动匹配可承接的单位或个人。</div>
+      <div class="form">
+        <div class="fi"><label>委托场景<em>*</em></label><select onchange="mToast('演示：已按场景刷新可选目标')"><option>人民调解组织</option><option>行业性专业性调解</option><option>司法所 / 法律援助</option><option>乡镇（街道）综治中心</option><option>派出所驻所调解室</option><option>属地单位 / 用工单位</option><option>个人调解员</option></select></div>
+        <div class="fi"><label>委托形式<em>*</em></label><select><option>委托调解</option><option>委托调查核实</option><option>委托稳控帮扶</option><option>委托回访</option></select></div>
+        <div class="fi"><label>办理时限<em>*</em></label><input placeholder="请选择截止日期"></div>
+        <div class="fi"><label>委托描述<em>*</em></label><textarea placeholder="请填写矛盾基本情况、前期调处经过、委托目的"></textarea></div>
+      </div>
+      <div class="sec-t">选择委托目标</div>
+      <div class="item" onclick="pickTg(this)">
+        <div class="i-hd"><span class="i-t">巴宜区人民调解委员会</span><span class="tag">单位</span></div>
+        <div class="i-sub">巴宜区 · 八一镇 · 擅长邻里关系 / 婚姻家庭 / 土地草场<br>在办 12 件 · 化解率 94.1%</div>
+      </div>
+      <div class="item" onclick="pickTg(this)">
+        <div class="i-hd"><span class="i-t">八一镇综治中心</span><span class="tag">单位</span></div>
+        <div class="i-sub">巴宜区 · 八一镇 · 综合调处 / 部门联动<br>在办 14 件 · 化解率 90.9%</div>
+      </div>
+      <div class="item" onclick="pickTg(this)">
+        <div class="i-hd"><span class="i-t">扎西（乡贤调解员）</span><span class="tag g">个人</span></div>
+        <div class="i-sub">巴宜区 · 八一镇 · 擅长邻里关系 / 草场地界<br>在办 3 件 · 化解率 97.1%</div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <button class="btn-s gray" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mGo('p-detail')">取消</button>
+        <button class="btn-s p" style="flex:2;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：委托已提交，状态变更为 已委托 · 调解中')">确认委托</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 矛盾纠纷录入（排查跳转） ==================== -->
+  <div class="page" id="p-dadd">
+    <div class="nav"><button class="bk" onclick="mGo('p-add')">‹</button><span class="tt">矛盾纠纷录入</span><span class="ar"></span></div>
+    <div class="body">
+      <div class="hint">由排查记录跳转而来，排查基础信息已自动带入；填写完成后返回排查记录一并提交。</div>
+      <div class="form">
+        <div class="fsec">基础信息（带入）</div>
+        <div class="fi"><label>排查地点</label><input value="巴宜区八一镇某小区 3 栋"></div>
+        <div class="fi"><label>发现时间</label><input value="2026-10-26 22:10"></div>
+      </div>
+      <div class="form" style="margin-top:10px">
+        <div class="fsec">矛盾纠纷信息</div>
+        <div class="fi"><label>事件名称<em>*</em></label><input placeholder="请输入矛盾事件名称"></div>
+        <div class="fi"><label>风险等级<em>*</em></label><select><option>请选择</option><option>未定级</option><option>一般</option><option>复杂</option><option>重大</option></select></div>
+        <div class="fi"><label>涉及领域<em>*</em></label><select><option>请选择</option><option>邻里关系</option><option>婚姻家庭</option><option>劳动争议</option><option>借贷纠纷</option><option>物业纠纷</option><option>草场地界</option><option>其他</option></select></div>
+        <div class="fi"><label>矛盾来源<em>*</em></label><select><option>工作排查发现</option><option>110指令</option><option>12345推送</option><option>综治网格化推送</option><option>部门移交</option></select></div>
+        <div class="fi"><label>矛盾纠纷类别</label><select><option>民事调解</option><option>治安调解</option><option>其他</option></select></div>
+        <div class="fi"><label>大类纠纷类型</label><select><option>请选择</option><option>婚姻家庭</option><option>邻里关系</option><option>劳动争议</option><option>借贷债务</option><option>物业管理</option><option>土地草场</option><option>医患纠纷</option><option>其他</option></select></div>
+        <div class="fi"><label>小类纠纷类型</label><select><option>请选择</option><option>离婚纠纷</option><option>赡养抚养</option><option>噪音扰民</option><option>房屋漏水</option><option>地界争议</option><option>草场边界</option><option>工资拖欠</option><option>其他</option></select></div>
+        <div class="fi"><label>是否公安管辖</label><select><option>是</option><option>否</option></select></div>
+        <div class="fi"><label>接处警警情编号</label><input placeholder="如：JJ202610270001"></div>
+        <div class="fi"><label>当事人数量</label><input placeholder="请输入"></div>
+        <div class="fi"><label>是否持械</label><select><option>否</option><option>是</option></select></div>
+        <div class="fi"><label>是否扬言</label><select id="ddYy" onchange="document.getElementById('ddYynr').style.display=(this.value==='是'?'':'none')"><option>否</option><option>是</option></select></div>
+        <div class="fi" id="ddYynr" style="display:none"><label>扬言内容</label><textarea placeholder="记录扬言内容、对象与时间"></textarea></div>
+        <div class="fi"><label>是否群体性事件</label><select><option>否</option><option>是</option></select></div>
+        <div class="fi"><label>是否重点人员参与</label><select><option>否</option><option>是</option></select></div>
+        <div class="fi"><label>是否找到其他当事人</label><select><option>是</option><option>否</option></select></div>
+        <div class="fi"><label>调处状态</label><select><option>待调处</option><option>调处中</option><option>已化解</option><option>已终止</option><option>已移交</option></select></div>
+        <div class="fi"><label>所属分县局</label><select><option>巴宜分局</option><option>波密县公安局</option><option>米林市公安局</option><option>工布江达县公安局</option></select></div>
+        <div class="fi"><label>派出所 / 责任区</label><select><option>八一镇派出所 · 第一责任区</option><option>八一镇派出所 · 第二责任区</option><option>百巴镇派出所 · 第一责任区</option></select></div>
+        <div class="fi"><label>简要情况<em>*</em></label><textarea placeholder="请输入"></textarea></div>
+      </div>
+
+      <div class="sec-t">当事人（逐人登记）</div>
+      <div class="form" id="mDsrBox"></div>
+      <div style="margin:8px 0 12px"><button class="btn-s gray" style="width:100%;height:40px;border-radius:12px" onclick="mAddDsr()">＋ 添加当事人</button></div>
+
+      <div class="sec-t">涉纠纷单位</div>
+      <div class="form" id="mDwBox"></div>
+      <div style="margin:8px 0 12px"><button class="btn-s gray" style="width:100%;height:40px;border-radius:12px" onclick="mAddDw()">＋ 添加涉纠纷单位</button></div>
+
+      <div class="sec-t">当事人 / 当事单位</div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">次仁××</span><span class="tag gray">个人</span></div>
+        <div class="i-sub">楼上住户 · 甲方</div>
+        <div class="i-ft"><span>未赋分</span><span class="ops"><button class="btn-s p" onclick="mGo('p-score')">赋分</button></span></div>
+      </div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">卓玛××</span><span class="tag gray">个人</span></div>
+        <div class="i-sub">楼下住户 · 乙方</div>
+        <div class="i-ft"><span>未赋分</span><span class="ops"><button class="btn-s p" onclick="mGo('p-score')">赋分</button></span></div>
+      </div>
+      <div class="item">
+        <div class="i-hd"><span class="i-t">某装饰工程有限公司</span><span class="tag">单位</span></div>
+        <div class="i-sub">施工单位</div>
+        <div class="i-ft"><span>未赋分</span><span class="ops"><button class="btn-s p" onclick="mGo('p-score')">赋分</button></span></div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn-s gray" style="flex:1;height:44px;border-radius:999px;font-size:14px" onclick="mToast('演示：已暂存草稿')">暂存</button>
+        <button class="btn-s p" style="flex:2;height:44px;border-radius:999px;font-size:14px" onclick="mToast('演示：纠纷已录入，返回排查记录提交');setTimeout(function(){mGo('p-add')},900)">提交并返回</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 赋分管理（分步） ==================== -->
+  <div class="page" id="p-score">
+    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">赋分管理<span style="font-size:11px;font-weight:400;color:var(--txt3);margin-left:6px" id="mStepNo">第 1/5 步</span></span><span class="ar" onclick="mToast('演示：查看赋分标准全文')">标准</span></div>
+    <div class="msteps" id="mSteps"></div>
+    <div class="body" id="mScoreBody">
+      <div class="ms-pane on" id="mPane1">
+        <div class="hint">第 1 步：确认赋分对象。每个当事人、涉事单位单独计分（满分 100 分），纠纷最终等级由各对象分数综合评估产生。</div>
+        <div id="mObj"></div>
+      </div>
+      <div class="ms-pane" id="mPane2">
+        <div class="hint">第 2 步：按<b>历史处置情况</b>初始化赋分。系统从接处警、人民调解、信访记录中提取派生指标生成初值，无历史数据支撑的项交由民警现场研判，可逐项修正。</div>
+        <div class="mstat" id="mStat"></div>
+        <div class="card">
+          <div class="card-bd" style="padding:0">
+            <div class="mhd">历史处置记录<span id="mHistTip"></span></div>
+            <div id="mLogs"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-bd">
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-s p" onclick="mInit(msParty)">按历史初始化（当前对象）</button>
+              <button class="btn-s" onclick="mInitAll()">一键初始化全部</button>
+              <button class="btn-s gray" onclick="mReset(msParty)">清空</button>
+            </div>
+            <div class="minit" id="mInit"></div>
+          </div>
+        </div>
+      </div>
+      <div class="ms-pane" id="mPane3">
+        <div class="hint">第 3 步：逐维度赋分。5 维度 13 项，点「依据」查看判定标准、数据来源与示例。</div>
+        <div class="sec-t">赋分对象</div>
+        <div class="ms-parties" id="mParties"></div>
+        <div class="card">
+          <div class="card-bd" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <div class="ms-total" id="mTotal">0<small>/100 分</small></div>
+            <span class="ms-red off" id="mRed">一票升红：否</span>
+            <span style="font-size:12px;color:var(--txt2)">建议：<b id="mSuggest" style="color:var(--txt)">未定级</b></span>
+          </div>
+        </div>
+        <div class="mdimnav" id="mDimNav"></div>
+        <div id="mDims"></div>
+      </div>
+      <div class="ms-pane" id="mPane4">
+        <div class="hint">第 4 步：综合定级。纠纷等级按各对象分数<b>综合评估</b>：最高分×70% + 平均分×30%；任一对象触发一票升红则纠纷直接列为重大。</div>
+        <div class="card">
+          <div class="card-bd" style="padding:0">
+            <div class="mhd">各对象赋分汇总</div>
+            <div style="padding:10px 12px" id="mSynTb"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-bd">
+            <div class="mhd" style="padding:0 0 8px;border:none">纠纷综合评估</div>
+            <div class="mformula" id="mFormula"></div>
+            <div id="mSynLv"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-bd">
+            <div class="mhd" style="padding:0 0 8px;border:none">纠纷最终等级（民警确认）</div>
+            <div class="ms-lv" id="mLv">
+              <button class="on" data-lv="未定级" onclick="mPickLv(this)">未定级</button>
+              <button data-lv="一般" onclick="mPickLv(this)">一般</button>
+              <button data-lv="复杂" onclick="mPickLv(this)">复杂</button>
+              <button data-lv="重大" onclick="mPickLv(this)">重大</button>
+            </div>
+            <textarea class="mnote" id="mNote" style="margin-top:10px" placeholder="请填写综合定级理由，如：甲方三次调解未果且有扬言情形，乙方已信访登记，综合评估为复杂纠纷……"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="ms-pane" id="mPane5">
+        <div class="hint">第 5 步：生成赋分登记表。按各当事人 / 涉事单位逐行生成，含 13 项赋分明细、总分、建议等级、一票升红与纠纷最终等级，可导出 CSV。</div>
+        <div class="mreg" id="mReg"></div>
+      </div>
+    </div>
+    <div class="actbar">
+      <button id="mPrev" onclick="msPrev()">上一步</button>
+      <button class="p" id="mNext" onclick="msNext()">下一步</button>
+      <button class="p" id="mFinish" style="display:none" onclick="mSaveScore()">生成登记表</button>
+    </div>
+  </div>
+  <!-- ==================== 我的 ==================== -->
+  <div class="page" id="p-mine">
+    <div class="nav nav-home">
+      <div class="hero" style="margin:0;background:none;padding:0">
+        <div class="u">
+          <div class="av">张</div>
+          <div>
+            <div class="un">张警官</div>
+            <div class="ud">巴宜分局八一派出所 · 社区民警</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="todo" style="grid-template-columns:repeat(3,1fr)">
+        <div class="td"><div class="n">128</div><div class="l">累计调处</div></div>
+        <div class="td"><div class="n">96.2%</div><div class="l">化解率</div></div>
+        <div class="td"><div class="n">42</div><div class="l">本月排查</div></div>
+      </div>
+      <div class="card" style="margin-top:10px">
+        <div class="card-bd" style="padding:0">
+          <div style="padding:13px 12px;border-bottom:1px solid #f0f4fb;display:flex;align-items:center;font-size:14px" onclick="mToast('演示')"><span>我的排查任务</span><span style="margin-left:auto;color:var(--txt3)">›</span></div>
+          <div style="padding:13px 12px;border-bottom:1px solid #f0f4fb;display:flex;align-items:center;font-size:14px" onclick="mToast('演示')"><span>我的纠纷台账</span><span style="margin-left:auto;color:var(--txt3)">›</span></div>
+          <div style="padding:13px 12px;border-bottom:1px solid #f0f4fb;display:flex;align-items:center;font-size:14px" onclick="mToast('演示')"><span>委托办理跟踪</span><span style="margin-left:auto;color:var(--txt3)">›</span></div>
+          <div style="padding:13px 12px;border-bottom:1px solid #f0f4fb;display:flex;align-items:center;font-size:14px" onclick="mToast('演示')"><span>消息通知设置</span><span style="margin-left:auto;color:var(--txt3)">›</span></div>
+          <div style="padding:13px 12px;display:flex;align-items:center;font-size:14px;color:var(--up)" onclick="mToast('演示：退出登录')"><span>退出登录</span></div>
+        </div>
+      </div>
+      <div style="text-align:center;font-size:11px;color:var(--txt3);padding:14px 0">智防系统移动端 v1.0 · 示例市公安局治安管理支队</div>
+    </div>
+  </div>
+
+  <div class="tabbar" id="tabbar">
+    <div class="tab on" data-page="p-work"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></div><span>工作台</span></div>
+    <div class="tab" data-page="p-list"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div><span>矛盾纠纷</span><span class="dot">4</span></div>
+    <div class="tab" data-page="p-tri"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><span>三地管控</span></div>
+    <div class="tab" data-page="p-talk"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.87"/></svg></div><span>警民恳谈</span></div>
+    <div class="tab" data-page="p-mine"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><span>我的</span></div>
+  </div>
+
+  <div class="toast" id="mToast"></div>
+  <div class="msheet-mask" id="mBasisMask" style="display:none" onclick="if(event.target===this)mCloseBasis()">
+    <div class="msheet">
+      <div class="msheet-hd">赋分依据<span onclick="mCloseBasis()">关闭</span></div>
+      <div class="msheet-bd" id="mBasisBody"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+var tabPages=['p-work','p-list','p-tri','p-talk','p-mine'];
+function mGo(id){
+  var all=document.querySelectorAll('.page');
+  for(var i=0;i<all.length;i++)all[i].classList.remove('on');
+  var t=document.getElementById(id);
+  if(t)t.classList.add('on');
+  var body=t?t.querySelector('.body'):null;
+  if(body)body.scrollTop=0;
+  var tabs=document.querySelectorAll('#tabbar .tab');
+  for(var j=0;j<tabs.length;j++)tabs[j].classList.toggle('on',tabs[j].getAttribute('data-page')===id);
+  var bar=document.getElementById('tabbar');
+  var isTab=tabPages.indexOf(id)>=0;
+  bar.style.display=isTab?'flex':'none';
+  // 详情页等使用独立底部操作栏，此处保持 tabbar 隐藏
+  if(!isTab)bar.style.display='none';
+  document.getElementById('mToast').classList.remove('on');
+  if(id==='p-score'){msStepsHtml();msGo(1);}
+}
+function mToast(msg){
+  var el=document.getElementById('mToast');
+  el.textContent=msg;el.classList.add('on');
+  clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('on');},1800);
+}
+function segPick(btn){
+  var box=btn.parentElement;
+  for(var i=0;i<box.children.length;i++)box.children[i].classList.remove('on');
+  btn.classList.add('on');
+  mToast('演示：切换「'+btn.textContent.trim()+'」筛选');
+}
+function triPick(btn){
+  var box=btn.parentElement;
+  for(var i=0;i<box.children.length;i++)box.children[i].classList.remove('on');
+  btn.classList.add('on');
+  mToast('演示：切换到「'+btn.textContent.trim()+'」视角');
+}
+function toggleDispute(){
+  var v=document.getElementById('adHas').value;
+  document.getElementById('adMore').style.display=v==='是'?'block':'none';
+}
+function toggleClose(){
+  var flag=document.getElementById('clFlag').value;
+  var res=document.getElementById('mdRes').value;
+  var h=document.getElementById('clHint');
+  if(flag==='否'){h.textContent='未结案：本次仅登记调解记录，结案信息留待后续填写。';h.style.color='#e5484d';}
+  else if(res==='未达成协议'||res==='终止调解'){h.textContent='终止调解：请按「终止调解结案」方式填写并说明后续风险。';h.style.color='#e5484d';}
+  else{h.textContent='调解达成或终止后填写，用于闭环归档。';h.style.color='';}
+}
+function pickTg(el){
+  var box=el.parentElement;
+  var its=box.querySelectorAll('.item');
+  for(var i=0;i<its.length;i++){its[i].style.borderColor='';its[i].style.background='';}
+  el.style.borderColor='#2f6bf6';el.style.background='#eaf1ff';
+  mToast('演示：已选择「'+el.querySelector('.i-t').textContent+'」');
+}
+document.getElementById('tabbar').addEventListener('click',function(e){
+  var t=e.target.closest('.tab');if(!t)return;
+  mGo(t.getAttribute('data-page'));
+});
+/* ============ 移动端赋分管理（分步向导） ============ */
+var MS_ITEMS=[
+ {dim:"当事人情况",name:"情绪态度",max:10,o0:"平稳理性",lo:["激动、言辞激烈",4],mid:["失控、有暴力倾向言行",7],hi:["极度对立、拒绝调解、扬言极端",10]},
+ {dim:"当事人情况",name:"极端言行",max:10,o0:"无",lo:["暗示性言语",3],mid:["明确扬言报复/伤人/自杀",7],hi:["扬言杀人/持械/已准备工具",10]},
+ {dim:"当事人情况",name:"既往情况",max:5,o0:"无",lo:["一般纠纷前科",2],mid:["治安处罚记录",4],hi:["刑事前科/精神病史/重点管控",5]},
+ {dim:"纠纷情况",name:"纠纷性质",max:10,o0:"简单（邻里口角/家庭琐事/小额债务）",lo:["一般：劳务、合同、土地、婚恋",4],mid:["复杂：征地拆迁、医患、涉众赔偿",7],hi:["特别复杂：涉黑涉恶、长期积案",10]},
+ {dim:"纠纷情况",name:"涉及人数",max:5,o0:"1-2人",lo:["3-5人",2],mid:["6-10人",4],hi:["10人以上/涉众",5]},
+ {dim:"纠纷情况",name:"调解次数",max:5,o0:"0-1次",lo:["2-3次",2],mid:["4次以上仍反复",4],hi:["多次调解失败、已僵局",5]},
+ {dim:"纠纷情况",name:"持续时间",max:5,o0:"1个月内",lo:["1-6个月",2],mid:["6个月-1年",4],hi:["1年以上积怨",5]},
+ {dim:"升级风险",name:"涉访涉诉",max:10,o0:"无",lo:["有上访倾向、咨询信访",3],mid:["已上访或进入诉讼",6],hi:["缠访、闹访、进京非访史",10]},
+ {dim:"升级风险",name:"冲突升级",max:10,o0:"无肢体冲突",lo:["言语冲突升级、辱骂",3],mid:["推搡、撕扯",6],hi:["已打斗、毁财、伤人",10]},
+ {dim:"人员属性与报警",name:"人员属性",max:10,o0:"普通群众，无特殊属性",lo:["一般关注：流动人口、独居老人、长期涉纠纷",3],mid:["重点人员：刑释解教/社区矫正/吸毒/重点上访/精神障碍患者",6],hi:["高危属性：肇事肇祸史精神障碍/涉黑涉恶前科/重点管控对象",10]},
+ {dim:"人员属性与报警",name:"报警记录",max:10,o0:"无报警记录",lo:["年内报警1次",3],mid:["年内2-3次或同一矛盾报警2次",6],hi:["年内4次以上或同一矛盾报警3次以上",10]},
+ {dim:"化解条件",name:"化解难度",max:5,o0:"容易，双方愿调",lo:["一般，需多次沟通",2],mid:["较难，涉利益分配、责任认定",4],hi:["很难，涉判决、补偿金额争议大",5]},
+ {dim:"化解条件",name:"资源保障",max:5,o0:"无需额外资源",lo:["少量协调",2],mid:["需大额资金/政策支持",4],hi:["诉求超政策范围、无法满足",5]}
+];
+var MS_RED=["极端言行","冲突升级","涉访涉诉","人员属性"];/* 一票升红：四项任一高档 */
+var MS_RED_TOTAL=81;/* 一票升红：总分达到重大区间 */
+/* 历史处置情况（初始化赋分数据源） */
+var MS_DISPUTE={
+  code:"MD2026-5404-0137",type:"邻里纠纷 · 装修噪音",
+  first:"2025-11-08",last:"2026-10-21",months:11,people:4,amount:"约 2.6 万元",conflict:2,mediate:3,petition:1,
+  logs:[
+    {d:"2025-11-08",t:"110接处警",b:"楼上装修电钻噪音引发口角",r:"现场劝导，口头告诫施工方限时作业"},
+    {d:"2026-03-15",t:"110接处警",b:"同一矛盾再次报警，双方发生推搡",r:"带回派出所调解，签署临时作业约定"},
+    {d:"2026-05-22",t:"人民调解",b:"社区调解室第 1 次正式调解",r:"未达成一致，乙方索赔 2.6 万元"},
+    {d:"2026-07-09",t:"110接处警",b:"施工方夜间赶工，甲方情绪失控",r:"处警制止，甲方现场辱骂"},
+    {d:"2026-08-14",t:"人民调解",b:"司法所第 2 次调解",r:"甲方扬言「再不管就自己解决」，调解中断"},
+    {d:"2026-09-30",t:"信访登记",b:"乙方向街道信访窗口反映装修扰民",r:"转送派出所办理，未进入诉讼"},
+    {d:"2026-10-21",t:"人民调解",b:"派出所第 3 次调解",r:"仍未化解，矛盾进入僵局"}
+  ]
+};
+var MDIM_BASIS={
+ "当事人情况":"衡量当事人自身状态带来的风险，以最近一次接触（处警、调解、回访）中的表现为准。",
+ "纠纷情况":"衡量纠纷本身的复杂程度，数据来源于纠纷台账、接处警与调解记录。",
+ "升级风险":"衡量矛盾向外扩散、激化的可能性，重点关注肢体冲突与信访诉讼渠道。",
+ "人员属性与报警":"衡量人员标签与重复报警频次，来源于重点人员库、接处警系统比对。",
+ "化解条件":"衡量后续化解所需投入的难度与资源，由调解进展、诉求标的与政策边界决定。"
+};
+var MS_BASIS={
+ "情绪态度":{src:"现场观察 / 处警音视频 / 调解笔录",pts:"以最近一次接触中的情绪表现为基准，多人同方取风险最高者。",eg:"调解现场拍桌辱骂 → 低档 4 分"},
+ "极端言行":{src:"处警记录 / 调解笔录 / 音视频",pts:"需有明确记载或音视频支撑，仅情绪激动不计入本项。",eg:"笔录记载「再不管就自己解决」→ 中档 7 分"},
+ "既往情况":{src:"公安内网前科库 / 重点人员库比对",pts:"取最严重一次记录计分，不作累加。",eg:"命中治安处罚记录 → 中档 4 分"},
+ "纠纷性质":{src:"纠纷类型字典 / 警情分类",pts:"按纠纷类型直接映射，一般不人工调整。",eg:"土地边界争议 → 中档 7 分"},
+ "涉及人数":{src:"纠纷台账涉事人数登记",pts:"按单方实际参与人数计算。",eg:"单方聚集 7 人 → 中档 4 分"},
+ "调解次数":{src:"人民调解台账 / 警情关联记录",pts:"累计正式调解次数，含司法所、派出所、社区。",eg:"已调解 3 次 → 低档 2 分"},
+ "持续时间":{src:"首次警情时间 / 台账登记时间",pts:"自首次发生之日起算至本次赋分日。",eg:"已持续 11 个月 → 中档 4 分"},
+ "涉访涉诉":{src:"信访系统 / 法院立案 / 12345 工单",pts:"存在任一渠道记录即计分，取最高档。",eg:"街道信访窗口已登记 → 中档 6 分"},
+ "冲突升级":{src:"接处警现场处置记录",pts:"取历史最高冲突等级。",eg:"现场推搡撕扯 → 中档 6 分"},
+ "人员属性":{src:"重点人员库 / 实有人口标签",pts:"按系统标签自动映射，上调需填写理由。",eg:"标签为独居老人 → 低档 3 分"},
+ "报警记录":{src:"接处警系统（一年内同矛盾警情）",pts:"统计同一矛盾、同一当事人一年内报警次数。",eg:"年内同一矛盾报警 2 次 → 中档 6 分"},
+ "化解难度":{src:"调解进展 / 争议焦点",pts:"结合调解成败与争议焦点判断。",eg:"三次调解未果 → 中档 4 分"},
+ "资源保障":{src:"诉求标的 / 政策边界",pts:"诉求金额与政策资源匹配度。",eg:"索赔 2.6 万元、可协商 → 低档 2 分"}
+};
+var MS_PARTIES=[
+ {id:1,name:"次仁××",type:"个人",desc:"楼上住户 · 甲方",scores:{},basis:{},inited:false,
+  f:{alarm:2,prior:"一般纠纷前科",attr:"普通群众",emotion:7,emotionTxt:"2026-07-09 处警记载「情绪失控、现场辱骂」",extreme:7,extremeTxt:"2026-08-14 调解笔录记载「再不管就自己解决」",petition:0}},
+ {id:2,name:"卓玛××",type:"个人",desc:"楼下住户 · 乙方",scores:{},basis:{},inited:false,
+  f:{alarm:1,prior:"无",attr:"一般关注：独居老人",emotion:4,emotionTxt:"2026-05-22 调解记载「情绪激动、言辞激烈」",extreme:0,extremeTxt:"",petition:1,petitionTxt:"2026-09-30 街道信访窗口登记"}},
+ {id:3,name:"某装饰工程有限公司",type:"单位",desc:"施工单位",scores:{},basis:{},inited:false,
+  f:{alarm:0,prior:"无",attr:"企业（无特殊属性）",emotion:0,emotionTxt:"",extreme:0,extremeTxt:"",petition:0}}
+];
+var MS_REGS=[],msParty=1,msLv="未定级",MS_STEP=1,MS_DIM=0,MS_PICKED=false;
+var MS_STEPS=["赋分对象","历史初始化","逐维度赋分","综合定级","赋分登记表"];
+function msObj(){for(var i=0;i<MS_PARTIES.length;i++){if(MS_PARTIES[i].id===msParty)return MS_PARTIES[i];}return MS_PARTIES[0];}
+function msIdx(n){for(var i=0;i<MS_ITEMS.length;i++){if(MS_ITEMS[i].name===n)return i;}return -1;}
+function msTotal(p){var t=0;for(var k in p.scores){if(p.scores.hasOwnProperty(k))t+=p.scores[k];}return t;}
+function msReasons(p){var rs=[];
+  for(var i=0;i<MS_RED.length;i++){var x=msIdx(MS_RED[i]);if(x>=0&&p.scores[x]===MS_ITEMS[x].hi[1])rs.push(MS_RED[i]+"（高档）");}
+  if(msTotal(p)>=MS_RED_TOTAL)rs.push("总分≥"+MS_RED_TOTAL+"分");
+  return rs;}
+function msRed(p){return msReasons(p).length>0;}
+function msSuggest(t,red){if(red)return "重大";if(t<=0)return "未定级";if(t<=30)return "一般";if(t<=80)return "复杂";return "重大";}
+function mRenderParties(){
+  var h="";
+  for(var i=0;i<MS_PARTIES.length;i++){var p=MS_PARTIES[i];
+    h+='<div class="ms-party'+(p.id===msParty?' on':'')+'" onclick="msPick('+p.id+')">'+p.name+' · '+msTotal(p)+'分</div>';}
+  document.getElementById("mParties").innerHTML=h;
+}
+function msPick(id){msParty=id;msGo(MS_STEP);}
+function msPartyById(id){for(var i=0;i<MS_PARTIES.length;i++){if(MS_PARTIES[i].id===id)return MS_PARTIES[i];}return null;}
+/* ---- 分步向导 ---- */
+function msStepsHtml(){
+  var h="";
+  for(var i=0;i<MS_STEPS.length;i++){
+    h+='<div class="ms-dot" onclick="msGo('+(i+1)+')"><i>'+(i+1)+'</i>'+MS_STEPS[i]+'</div>';
+  }
+  document.getElementById("mSteps").innerHTML=h;
+}
+function msGo(n){
+  if(n<1)n=1;if(n>MS_STEPS.length)n=MS_STEPS.length;
+  MS_STEP=n;
+  var ps=document.querySelectorAll('#mScoreBody .ms-pane');
+  for(var i=0;i<ps.length;i++)ps[i].className='ms-pane'+(i===n-1?' on':'');
+  var ds=document.querySelectorAll('#mSteps .ms-dot');
+  for(var j=0;j<ds.length;j++)ds[j].className='ms-dot'+(j===n-1?' on':(j<n-1?' done':''));
+  document.getElementById("mStepNo").textContent='第 '+n+'/'+MS_STEPS.length+' 步';
+  document.getElementById("mPrev").style.display=n===1?'none':'';
+  document.getElementById("mNext").style.display=n===MS_STEPS.length?'none':'';
+  document.getElementById("mFinish").style.display=n===MS_STEPS.length?'':'none';
+  if(n===3)mRenderParties();
+  if(n===1)mRenderObj();
+  if(n===2){mRenderHist();mRenderInit();}
+  if(n===3){mRenderDimNav();mRenderDims();}
+  if(n===4)mRenderSynth();
+  if(n===5)mRenderReg();
+  mCalc();
+}
+function msPrev(){msGo(MS_STEP-1);}
+function msNext(){msGo(MS_STEP+1);}
+function mRenderObj(){
+  var h="";
+  for(var i=0;i<MS_PARTIES.length;i++){
+    var p=MS_PARTIES[i],t=msTotal(p),f=p.f||{};
+    h+='<div class="mobj'+(p.id===msParty?' on':'')+'" onclick="msPick('+p.id+')">'
+      +'<div class="t"><span class="tp">'+p.type+'</span>'+p.name+'<span class="sd">'+t+' 分 · '+msSuggest(t,msRed(p))+'</span></div>'
+      +'<div class="d">'+p.desc+'</div>'
+      +'<div class="m"><span>年内报警 <b>'+(f.alarm||0)+'</b> 次</span><span>标签 <b>'+(f.attr||'—')+'</b></span><span>状态 <b>'+(p.inited?'已初始化':'待初始化')+'</b></span></div></div>';
+  }
+  h+='<div class="mobj add" onclick="mToast(\'演示：请在纠纷录入页补充当事人\')">＋ 新增赋分对象</div>';
+  document.getElementById("mObj").innerHTML=h;
+}
+function mDimsArr(){
+  var dims=[],map={};
+  for(var i=0;i<MS_ITEMS.length;i++){var it=MS_ITEMS[i];
+    if(!map[it.dim]){map[it.dim]={name:it.dim,items:[]};dims.push(map[it.dim]);}
+    map[it.dim].items.push(it);}
+  return dims;
+}
+function mDimGot(dim,p){
+  var s=0;for(var k=0;k<dim.items.length;k++)s+=p.scores[MS_ITEMS.indexOf(dim.items[k])]||0;return s;
+}
+function mRenderDimNav(){
+  var dims=mDimsArr(),p=msObj(),h='<button class="'+(MS_DIM===0?'on':'')+'" onclick="mSetDim(0)">全部</button>';
+  for(var d=0;d<dims.length;d++){
+    h+='<button class="'+(MS_DIM===d+1?'on':'')+'" onclick="mSetDim('+(d+1)+')">'+dims[d].name+' '+mDimGot(dims[d],p)+'</button>';
+  }
+  document.getElementById("mDimNav").innerHTML=h;
+}
+function mSetDim(d){MS_DIM=d;mRenderDimNav();mRenderDims();}
+function mRenderDims(){
+  var dims=mDimsArr(),p=msObj(),h="";
+  var from=MS_DIM===0?0:MS_DIM-1,to=MS_DIM===0?dims.length:MS_DIM;
+  for(var d=from;d<to;d++){
+    var dim=dims[d];
+    h+='<div class="sec-t">'+dim.name+' · 已得 '+mDimGot(dim,p)+' 分'
+      +'<span style="float:right"><span class="mbbtn" onclick="mDimBasis(\''+dim.name+'\')">依据</span></span></div><div class="card">';
+    for(var k=0;k<dim.items.length;k++){
+      var it=dim.items[k],idx=MS_ITEMS.indexOf(it),v=p.scores[idx],b=(p.basis||{})[idx];
+      var src=b?('<span class="msrc '+(b.auto?'auto':'man')+'">'+(b.auto?'历史':'人工')+'</span>'):'';
+      h+='<div class="sc-item" style="border:none;border-radius:0;box-shadow:none;border-bottom:1px solid #f2f4fb">'
+        +'<div class="sc-item-hd" style="background:none;box-shadow:none">'+it.name+src
+        +'<span class="mbbtn" onclick="mBasis(\''+it.name+'\')">依据</span>'
+        +'<span class="mx">满分 '+it.max+' · 当前 '+(v||0)+'</span></div>'
+        +'<div class="ms-opt">'
+        +msOpt(idx,0,"0 分",it.o0,v)+msOpt(idx,it.lo[1],"低档",it.lo[0],v)
+        +msOpt(idx,it.mid[1],"中档",it.mid[0],v)+msOpt(idx,it.hi[1],"高档",it.hi[0],v)
+        +'</div></div>';
+    }
+    h=h.replace(/border-bottom:1px solid #f2f4fb(?=[^]*$)/,"border-bottom:none")+'</div>';
+  }
+  document.getElementById("mDims").innerHTML=h;
+}
+function msOpt(idx,score,tag,text,v){
+  return '<div class="ms-o'+(v===score?' on':'')+'" onclick="msSet('+idx+','+score+',this)"><b>'+tag+' <i>'+score+'分</i></b>'+text+'</div>';
+}
+/* ---- 赋分依据弹层 ---- */
+function mBasis(name){
+  var idx=msIdx(name);if(idx<0)return;
+  var it=MS_ITEMS[idx],p=msObj(),v=p.scores[idx]||0,b=(p.basis||{})[idx],B=MS_BASIS[name]||{};
+  var h='<h4>'+it.name+' · 赋分依据</h4><div style="font-size:11px;color:var(--txt3);margin-bottom:8px">所属维度：'+it.dim+' | 满分 '+it.max+' 分 | 当前 '+v+' 分</div>';
+  h+='<table><tr><th>档位</th><th>判定标准</th><th>分</th></tr>'
+    +mBRow("0 分档",it.o0,0,v)+mBRow("低档",it.lo[0],it.lo[1],v)
+    +mBRow("中档",it.mid[0],it.mid[1],v)+mBRow("高档",it.hi[0],it.hi[1],v)+'</table>';
+  h+='<div class="bsec"><b>维度说明：</b>'+(MDIM_BASIS[it.dim]||"—")+'</div>';
+  h+='<div class="bsec"><b>判定要点：</b>'+(B.pts||"—")+'</div>';
+  h+='<div class="bsec"><b>数据来源：</b>'+(B.src||"—")+'</div>';
+  h+='<div class="bsec"><b>本条初始化依据（历史处置）：</b><br>'+(b?(b.txt+'<span class="msrc '+(b.auto?'auto':'man')+'">'+(b.auto?'系统自动':'人工研判')+'</span>'):'尚未初始化，需民警现场研判')+'</div>';
+  h+='<div class="bsec"><b>示例：</b>'+(B.eg||"—")+'</div>';
+  document.getElementById("mBasisBody").innerHTML=h;
+  document.getElementById("mBasisMask").style.display="flex";
+}
+function mBRow(tag,text,score,cur){return '<tr'+(cur===score?' class="on"':'')+'><td>'+tag+'</td><td>'+text+'</td><td class="v">'+score+'</td></tr>';}
+function mDimBasis(dim){
+  var dims=mDimsArr(),h='<h4>'+dim+' · 维度赋分依据</h4>';
+  h+='<div class="bsec"><b>维度说明：</b>'+(MDIM_BASIS[dim]||"—")+'</div>';
+  for(var d=0;d<dims.length;d++){
+    if(dims[d].name!==dim)continue;
+    for(var k=0;k<dims[d].items.length;k++){
+      var it=dims[d].items[k];
+      h+='<div class="bsec"><b>'+it.name+'（满分 '+it.max+' 分）</b><br>0 分：'+it.o0
+        +'<br>低档 '+it.lo[1]+' 分：'+it.lo[0]+'<br>中档 '+it.mid[1]+' 分：'+it.mid[0]+'<br>高档 '+it.hi[1]+' 分：'+it.hi[0]
+        +'<br><span style="color:var(--txt3)">数据来源：'+((MS_BASIS[it.name]||{}).src||"—")+'</span></div>';
+    }
+  }
+  document.getElementById("mBasisBody").innerHTML=h;
+  document.getElementById("mBasisMask").style.display="flex";
+}
+function mCloseBasis(){document.getElementById("mBasisMask").style.display="none";}
+function msSet(idx,score,el){
+  var p=msObj();
+  p.scores[idx]=score;
+  if(!p.basis)p.basis={};
+  p.basis[idx]={score:score,txt:"民警人工研判："+MS_ITEMS[idx].name+" 取 "+score+" 分",auto:false};
+  var box=el.parentElement;
+  for(var i=0;i<box.children.length;i++)box.children[i].classList.remove("on");
+  el.classList.add("on");mRenderDimNav();mRenderInit();mCalc();mRenderParties();
+}
+/* ---- 纠纷综合定级：各对象分数综合评估 ---- */
+function mSynth(){
+  var max=0,sum=0,n=0,redAny=false,names=[];
+  for(var i=0;i<MS_PARTIES.length;i++){
+    var p=MS_PARTIES[i],t=msTotal(p);
+    if(t>max)max=t;sum+=t;n++;
+    if(msRed(p)){redAny=true;names.push(p.name+"："+msReasons(p).join("、"));}
+  }
+  var avg=n?Math.round(sum/n*10)/10:0;
+  var comp=n?Math.round(max*0.7+avg*0.3):0;
+  return {max:max,avg:avg,comp:comp,lv:redAny?"重大":msSuggest(comp,false),redAny:redAny,names:names};
+}
+function mRenderSynth(){
+  var s=mSynth(),h='<table class="msyntb"><tr><th>对象</th><th>总分</th><th>对象等级</th><th>升红</th></tr>';
+  for(var i=0;i<MS_PARTIES.length;i++){
+    var p=MS_PARTIES[i],t=msTotal(p),rd=msRed(p);
+    h+='<tr><td class="tx"><b>'+p.name+'</b><br><span style="font-size:10px;color:var(--txt3)">'+p.type+' · '+p.desc+'</span></td>'
+      +'<td><b>'+t+'</b></td><td>'+msSuggest(t,rd)+'</td><td>'+(rd?'<b style="color:var(--up)">是</b>':'否')+'</td></tr>';
+  }
+  h+='<tr><td class="tx">最高分 / 平均分</td><td colspan="3"><b>'+s.max+' / '+s.avg+'</b></td></tr></table>';
+  document.getElementById("mSynTb").innerHTML=h;
+  document.getElementById("mFormula").innerHTML=
+     '综合得分 = <code>最高分 '+s.max+' × 70%</code> + <code>平均分 '+s.avg+' × 30%</code> = <code>'+s.comp+' 分</code><br>'
+    +'<span style="color:var(--txt2)">等级映射：0 分→未定级，1–30→一般，31–80→复杂，81–100→重大；一票升红任一项高档或对象总分≥'+MS_RED_TOTAL+' 分 → 直接列重大</span>';
+  var cl={'未定级':'','一般':'green','复杂':'orange','重大':'red'}[s.lv]||'';
+  document.getElementById("mSynLv").innerHTML=
+     '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">'
+    +'<div><div style="font-size:11px;color:var(--txt3)">纠纷综合得分</div><div style="font-size:22px;font-weight:800;color:var(--blue)">'+s.comp+'</div></div>'
+    +'<div><div style="font-size:11px;color:var(--txt3)">综合建议等级</div><span class="tag '+cl+'">'+s.lv+'</span></div>'
+    +'<div style="flex:1;min-width:150px;font-size:11px;color:'+(s.redAny?'var(--up)':'var(--txt2)')+'">'
+    +(s.redAny?("⚠ 触发一票升红："+s.names.join("；")):"未触发一票升红，按综合得分定级")+'</div></div>';
+}
+function mCalc(){
+  var p=msObj(),t=msTotal(p),red=msRed(p),sg=msSuggest(t,red),s=mSynth();
+  document.getElementById("mTotal").innerHTML=t+'<small>/100 分</small>';
+  var r=document.getElementById("mRed"),rs=msReasons(p);
+  r.className="ms-red"+(red?"":" off");
+  r.textContent=red?("一票升红：是 · "+rs.join("、")):"一票升红：否";
+  document.getElementById("mSuggest").textContent=sg;
+  if(!MS_PICKED)msLv=s.lv;
+  var bs=document.getElementById("mLv").children;
+  for(var i=0;i<bs.length;i++)bs[i].classList.toggle("on",bs[i].getAttribute("data-lv")===msLv);
+}
+function mPickLv(btn){msLv=btn.getAttribute("data-lv");MS_PICKED=true;
+  var bs=document.getElementById("mLv").children;
+  for(var i=0;i<bs.length;i++)bs[i].classList.toggle("on",bs[i].getAttribute("data-lv")===msLv);}
+/* ---- 历史处置情况 → 初始化赋分 ---- */
+function mConfName(c){return ["无肢体冲突","言语冲突、辱骂","推搡、撕扯","已打斗、毁财、伤人"][c]||"无肢体冲突";}
+function mConfScore(c){return [0,3,6,10][c]||0;}
+function mPrevScore(x){return {"无":0,"一般纠纷前科":2,"治安处罚记录":4,"刑事前科/精神病史/重点管控":5}[x]||0;}
+function mPeopleScore(n){return n<=2?0:(n<=5?2:(n<=10?4:5));}
+function mMedScore(n){return n<=1?0:(n<=3?2:(n<=6?4:5));}
+function mMonScore(m){return m<=1?0:(m<=6?2:(m<=12?4:5));}
+function mAlarmScore(n){return n<=0?0:(n<=1?3:(n<=3?6:10));}
+function mAttrScore(a){a=a||"";
+  if(a.indexOf("高危")>=0)return 10;
+  if(a.indexOf("重点")>=0)return 6;
+  if(a.indexOf("一般关注")>=0||a.indexOf("流动")>=0||a.indexOf("独居")>=0)return 3;
+  return 0;}
+function msPut(p,name,score,txt,auto){
+  var idx=msIdx(name);if(idx<0)return;
+  p.scores[idx]=score;
+  if(!p.basis)p.basis={};
+  p.basis[idx]={score:score,txt:txt,auto:!!auto};
+}
+function mInit(pid){
+  var p=msPartyById(pid);if(!p)return;
+  var f=p.f||{},D=MS_DISPUTE;
+  p.scores={};p.basis={};
+  msPut(p,"情绪态度",f.emotion||0,f.emotion?("历史记载："+f.emotionTxt+" → "+f.emotion+" 分"):"历史数据未覆盖情绪表现，需民警现场研判",!!f.emotion);
+  msPut(p,"极端言行",f.extreme||0,f.extreme?("历史记载："+f.extremeTxt+" → "+f.extreme+" 分"):"历史记录中无极端言行记载 → 0 分",!!f.extreme);
+  msPut(p,"既往情况",mPrevScore(f.prior),"人员库比对："+(f.prior||"无")+" → "+mPrevScore(f.prior)+" 分",true);
+  msPut(p,"纠纷性质",4,"纠纷类型映射："+D.type+" → 一般档 4 分",true);
+  msPut(p,"涉及人数",mPeopleScore(D.people),"台账登记涉及 "+D.people+" 人 → "+mPeopleScore(D.people)+" 分",true);
+  msPut(p,"调解次数",mMedScore(D.mediate),"历史正式调解 "+D.mediate+" 次 → "+mMedScore(D.mediate)+" 分",true);
+  msPut(p,"持续时间",mMonScore(D.months),"首次发生 "+D.first+"，已持续 "+D.months+" 个月 → "+mMonScore(D.months)+" 分",true);
+  msPut(p,"涉访涉诉",f.petition?6:0,f.petition?("历史记录："+f.petitionTxt+" → 6 分"):"无信访、诉讼记录 → 0 分",true);
+  msPut(p,"冲突升级",mConfScore(D.conflict),"历史最高冲突等级："+mConfName(D.conflict)+" → "+mConfScore(D.conflict)+" 分",true);
+  msPut(p,"人员属性",mAttrScore(f.attr),"人员标签："+(f.attr||"普通群众")+" → "+mAttrScore(f.attr)+" 分",true);
+  msPut(p,"报警记录",mAlarmScore(f.alarm),"年内同一矛盾报警 "+(f.alarm||0)+" 次 → "+mAlarmScore(f.alarm)+" 分",true);
+  msPut(p,"化解难度",D.mediate>=3?4:2,D.mediate>=3?("已调解 "+D.mediate+" 次仍未化解 → 4 分"):("调解进展正常 → 2 分"),true);
+  msPut(p,"资源保障",2,"诉求标的 "+D.amount+"，属可协商范围 → 2 分",true);
+  p.inited=true;
+  msGo(MS_STEP);
+  mToast("演示：已按历史处置初始化「"+p.name+"」，共 "+msTotal(p)+" 分");
+}
+function mInitAll(){
+  for(var i=0;i<MS_PARTIES.length;i++)mInit(MS_PARTIES[i].id);
+  msGo(MS_STEP);
+  mToast("演示：已初始化全部 "+MS_PARTIES.length+" 个赋分对象");
+}
+function mReset(pid){
+  var p=msPartyById(pid);if(!p)return;
+  p.scores={};p.basis={};p.inited=false;msGo(MS_STEP);
+  mToast("演示：已清空「"+p.name+"」的赋分");
+}
+function mRenderHist(){
+  var D=MS_DISPUTE,alarm=0,med=0,pet=0;
+  for(var i=0;i<D.logs.length;i++){
+    if(D.logs[i].t.indexOf("110")>=0)alarm++;
+    if(D.logs[i].t.indexOf("调解")>=0)med++;
+    if(D.logs[i].t.indexOf("信访")>=0)pet++;
+  }
+  var st=[["处置记录",D.logs.length+" 条"],["接处警",alarm+" 次"],["人民调解",med+" 次"],["信访/诉讼",pet+" 次"],
+          ["持续时长",D.months+" 月"],["涉及人数",D.people+" 人"],["冲突等级",mConfName(D.conflict)],["诉求标的",D.amount]];
+  var h="";
+  for(var s=0;s<st.length;s++)h+='<div class="mst"><div class="n">'+st[s][1]+'</div><div class="l">'+st[s][0]+'</div></div>';
+  document.getElementById("mStat").innerHTML=h;
+  document.getElementById("mHistTip").textContent="共 "+D.logs.length+" 条 · "+D.code;
+  var l="";
+  for(var k=D.logs.length-1;k>=0;k--){
+    var o=D.logs[k];
+    l+='<div class="mhlog"><div class="dt">'+o.d+' · '+o.t+'</div><b>'+o.b+'</b><span class="r">处置结果：'+o.r+'</span></div>';
+  }
+  document.getElementById("mLogs").innerHTML=l;
+}
+function mRenderInit(){
+  var box=document.getElementById("mInit");if(!box)return;
+  var p=msObj(),b=p.basis||{},h="";
+  if(!p.inited){h='<div style="padding:8px 0;color:var(--txt3)">尚未初始化，点击上方「按历史初始化」生成建议分值</div>';}
+  else{
+    for(var i=0;i<MS_ITEMS.length;i++){
+      var it=MS_ITEMS[i],o=b[i];
+      h+='<div class="ir"><div class="nm">'+it.name+'</div><div class="vv">'+(o?o.score:0)+'</div>'
+        +'<div class="bs">'+(o?o.txt:"—")+' <span class="msrc '+(o&&o.auto?'auto':'man')+'">'+(o?(o.auto?'自动':'人工'):'—')+'</span></div></div>';
+    }
+  }
+  box.innerHTML=h;
+}
+function mSaveScore(){
+  var s=mSynth(),note=(document.getElementById("mNote")||{}).value||"";
+  MS_REGS=[];
+  for(var i=0;i<MS_PARTIES.length;i++){
+    var p=MS_PARTIES[i],t=msTotal(p),red=msRed(p),rs=msReasons(p);
+    var row={date:"2026-10-27",party:p.name,type:p.type,total:t,lv:msSuggest(t,red),red:red?"是":"否",
+             comp:s.comp,final:msLv,note:(red?("一票升红："+rs.join("、")+"；"):"")+note,scores:[]};
+    for(var c=0;c<MS_ITEMS.length;c++)row.scores.push(p.scores[c]||0);
+    MS_REGS.push(row);
+  }
+  mRenderReg();
+  mToast("演示：已生成 "+MS_REGS.length+" 条赋分登记表，纠纷最终等级「"+msLv+"」");
+  msGo(5);
+}
+function mRenderReg(){
+  var h='<table><thead><tr><th>当事人</th>';
+  for(var i=0;i<MS_ITEMS.length;i++)h+='<th>'+MS_ITEMS[i].name+'</th>';
+  h+='<th>总分</th><th>建议</th><th>升红</th><th>综合</th><th>最终</th><th>备注</th></tr></thead><tbody>';
+  if(!MS_REGS.length)h+='<tr><td colspan="'+(MS_ITEMS.length+6)+'" style="padding:14px;color:#9aa3bb">尚未生成，完成综合定级后点击「生成登记表」</td></tr>';
+  for(var r=0;r<MS_REGS.length;r++){var o=MS_REGS[r];
+    h+='<tr><td class="tx">'+o.party+'</td>';
+    for(var c=0;c<o.scores.length;c++)h+='<td>'+o.scores[c]+'</td>';
+    h+='<td><b>'+o.total+'</b></td><td>'+o.lv+'</td><td>'+o.red+'</td><td>'+(o.comp==null?'—':o.comp)+'</td><td><b>'+o.final+'</b></td><td class="tx">'+(o.note||'')+'</td></tr>';}
+  h+='</tbody></table>';
+  document.getElementById("mReg").innerHTML=h;
+}
+function mExportScore(){
+  if(!MS_REGS.length){mToast("演示：请先完成综合定级并生成赋分登记表");return;}
+  var head=["登记日期","当事人","类型"];
+  for(var i=0;i<MS_ITEMS.length;i++)head.push(MS_ITEMS[i].name);
+  head=head.concat(["总分","对象等级","一票升红","综合得分","纠纷最终等级","备注"]);
+  var lines=[head.join(",")];
+  for(var r=0;r<MS_REGS.length;r++){var o=MS_REGS[r],row=[o.date,o.party,o.type];
+    for(var c=0;c<o.scores.length;c++)row.push(o.scores[c]);
+    lines.push(row.concat([o.total,o.lv,o.red,(o.comp==null?'':o.comp),o.final,'"'+String(o.note||'').replace(/"/g,'')+'"']).join(","));}
+  var blob=new Blob(["\ufeff"+lines.join("\r\n")],{type:"text/csv;charset=utf-8"});
+  var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="矛盾纠纷赋分登记表(移动端).csv";
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  mToast("演示：赋分登记表已导出");
+}
+/* ============ 移动端：当事人 / 涉纠纷单位 ============ */
+var M_DSR=[{ryxm:"次仁××",zjhm:"5404**********0018",lxfs:"138****0001"}];
+var M_DW=[];
+function mDsrHtml(i,r){
+  var o=M_DSR[i];
+  return '<div class="fsec" style="padding-top:0">当事人 '+(i+1)+'<span style="margin-left:auto;font-size:11px;color:var(--up);font-weight:400" onclick="mDelDsr('+i+')">删除</span></div>'
+    +'<div class="fi"><label>姓名<em>*</em></label><input value="'+(o.ryxm||'')+'" placeholder="请输入姓名"></div>'
+    +'<div class="fi"><label>证件号码</label><input value="'+(o.zjhm||'')+'" placeholder="身份证号"></div>'
+    +'<div class="fi"><label>联系方式</label><input value="'+(o.lxfs||'')+'" placeholder="联系电话"></div>'
+    +'<div class="fi"><label>人员类型</label><select><option>当事人</option><option>见证人</option><option>代理人</option></select></div>';
+}
+function mRenderDsr(){
+  var h='';
+  for(var i=0;i<M_DSR.length;i++)h+=mDsrHtml(i);
+  if(!M_DSR.length)h='<div style="font-size:12px;color:var(--txt3);padding:8px 0">尚未添加当事人</div>';
+  document.getElementById('mDsrBox').innerHTML=h;
+}
+function mAddDsr(){M_DSR.push({ryxm:"",zjhm:"",lxfs:""});mRenderDsr();}
+function mDelDsr(i){M_DSR.splice(i,1);mRenderDsr();}
+function mRenderDw(){
+  var h='';
+  for(var i=0;i<M_DW.length;i++){
+    var o=M_DW[i];
+    h+='<div class="fsec" style="padding-top:0">单位 '+(i+1)+'<span style="margin-left:auto;font-size:11px;color:var(--up);font-weight:400" onclick="mDelDw('+i+')">删除</span></div>'
+      +'<div class="fi"><label>单位名称<em>*</em></label><input value="'+(o.dwmc||'')+'" placeholder="请输入单位名称"></div>'
+      +'<div class="fi"><label>统一社会信用代码</label><input value="'+(o.shxydm||'')+'" placeholder="请输入"></div>'
+      +'<div class="fi"><label>单位地址</label><input value="'+(o.dwdz||'')+'" placeholder="请输入"></div>'
+      +'<div class="fi"><label>法定代表人姓名</label><input value="'+(o.fddbrxm||'')+'" placeholder="请输入"></div>'
+      +'<div class="fi"><label>单位联系电话</label><input value="'+(o.dwlxdh||'')+'" placeholder="请输入"></div>';
+  }
+  if(!M_DW.length)h='<div style="font-size:12px;color:var(--txt3);padding:8px 0">尚未添加涉纠纷单位</div>';
+  document.getElementById('mDwBox').innerHTML=h;
+}
+function mAddDw(){M_DW.push({dwmc:"",shxydm:"",dwdz:"",fddbrxm:"",dwlxdh:""});mRenderDw();}
+function mDelDw(i){M_DW.splice(i,1);mRenderDw();}
+mGo('p-work');
+mRenderDsr();mRenderDw();
+msStepsHtml();msGo(1);mRenderReg();
+</script>
+</body>
+</html>
