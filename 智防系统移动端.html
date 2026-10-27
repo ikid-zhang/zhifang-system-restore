@@ -24,6 +24,17 @@ input,select,textarea{font-family:inherit;font-size:14px}
 .phone{width:430px;height:880px;flex:none;background:var(--bg);border-radius:44px;box-shadow:var(--sh-lg),0 40px 80px -30px rgba(60,80,160,.35);display:flex;flex-direction:column;overflow:hidden;position:relative}
 @media(max-width:480px){.wrap{padding:0}.phone{width:100%;height:100vh;border-radius:0;box-shadow:none}}
 .st-bar{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 20px;color:var(--txt);font-size:12px;font-weight:700}
+/* ===== 简单版 / 复杂版 切换 ===== */
+.modesw{position:absolute;top:5px;left:50%;transform:translateX(-50%);z-index:70;display:flex;background:rgba(255,255,255,.94);border:1px solid #dfe6f2;border-radius:999px;padding:2px;gap:2px;box-shadow:0 2px 8px rgba(26,34,52,.14)}
+.modesw span{font-size:10px;line-height:1;padding:4px 9px;border-radius:999px;color:#7b869a;cursor:pointer;white-space:nowrap}
+.modesw span.on{background:#2f6bf6;color:#fff;font-weight:700}
+body.msimple [data-adv]{display:none !important}
+/* 简单版：办理·调解登记 仅保留「调解信息」模块（结案信息等全部隐藏） */
+.hd-blk{display:block}
+body.msimple .hd-blk{background:#fff;border-radius:18px;box-shadow:var(--sh-sm);padding:14px}
+body.msimple .hd-blk>.form{background:transparent;box-shadow:none;padding:0;border-radius:0;margin-top:0!important}
+body.msimple .hd-blk>.form .fsec{padding-top:16px}
+body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
 .st-bar .ic{display:flex;gap:4px;align-items:center}
 .st-bar .ic i{width:3px;background:var(--txt);border-radius:1px;display:block}
 .st-bar .ic i:nth-child(1){height:4px}.st-bar .ic i:nth-child(2){height:6px}.st-bar .ic i:nth-child(3){height:8px}.st-bar .ic i:nth-child(4){height:10px}
@@ -257,8 +268,9 @@ input,select,textarea{font-family:inherit;font-size:14px}
 <div class="phone">
   <div class="st-bar"><span>9:41</span><span class="ic"><i></i><i></i><i></i><i></i><span style="margin-left:3px">4G</span></span><span class="bat"><b></b></span></div>
 
+  <div class="modesw" id="mModeSw"><span data-mode="simple" onclick="mToggleMode('simple')">简单版</span><span data-mode="full" class="on" onclick="mToggleMode('full')">复杂版</span></div>
   <!-- ==================== 工作台 ==================== -->
-  <div class="page on" id="p-work">
+  <div class="page on" id="p-work" data-adv>
     <div class="nav nav-home">
       <div class="hero" style="margin:0;background:none;padding:0">
         <div class="u">
@@ -286,7 +298,7 @@ input,select,textarea{font-family:inherit;font-size:14px}
         <div class="qk" onclick="mGo('p-tri')"><div class="qi" style="background:linear-gradient(135deg,#17c39a,#2ee6a8)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><span>三地管控</span></div>
         <div class="qk" onclick="mGo('p-talk')"><div class="qi" style="background:linear-gradient(135deg,#7F77DD,#AFA9EC)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.87"/></svg></div><span>警民恳谈</span></div>
         <div class="qk" onclick="mGo('p-list')"><div class="qi" style="background:linear-gradient(135deg,#2f6bf6,#4d8bff)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div><span>纠纷列表</span></div>
-        <div class="qk" onclick="mGo('p-score')"><div class="qi" style="background:linear-gradient(135deg,#2f6bf6,#4d8bff)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><span>赋分管理</span></div>
+        <div class="qk" data-adv onclick="mGo('p-score')"><div class="qi" style="background:linear-gradient(135deg,#2f6bf6,#4d8bff)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><span>赋分管理</span></div>
         <div class="qk" onclick="mGo('p-entrust')"><div class="qi" style="background:linear-gradient(135deg,#BA7517,#EF9F27)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 12h12"/><path d="M12 6l6 6-6 6"/></svg></div><span>委托调解</span></div>
         <div class="qk" onclick="mGo('p-dadd')"><div class="qi" style="background:linear-gradient(135deg,#1d4d8f,#2f6bf6)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div><span>纠纷录入</span></div>
       </div>
@@ -389,7 +401,7 @@ input,select,textarea{font-family:inherit;font-size:14px}
     <div class="actbar">
       <button onclick="mGo('p-handle')">处置</button>
       <button onclick="mGo('p-entrust')">委托</button>
-      <button onclick="mGo('p-score')">赋分</button>
+      <button data-adv onclick="mGo('p-score')">赋分</button>
       <button class="d" onclick="mToast('演示：注销需填写原因并上级审批')">注销</button>
     </div>
   </div>
@@ -424,7 +436,7 @@ input,select,textarea{font-family:inherit;font-size:14px}
         </div></div>
       </div>
       <div id="adMore" style="display:none">
-        <div class="hint" style="margin-top:10px">本次排查涉及矛盾纠纷，请跳转至「矛盾纠纷录入」填写事件信息与当事人赋分。</div>
+        <div class="hint" style="margin-top:10px">本次排查涉及矛盾纠纷，请跳转至「矛盾纠纷录入」填写事件信息。</div>
         <div class="item" onclick="mGo('p-dadd')">
           <div class="i-hd"><span class="i-t">填写矛盾纠纷信息</span><span class="tag o">待填写</span></div>
           <div class="i-sub">事件名称、风险等级、涉及领域、矛盾来源、当事人、简要情况</div>
@@ -442,6 +454,7 @@ input,select,textarea{font-family:inherit;font-size:14px}
   <div class="page" id="p-handle">
     <div class="nav"><button class="bk" onclick="mGo('p-detail')">‹</button><span class="tt">办理 · 调解登记</span><span class="ar"></span></div>
     <div class="body">
+      <div class="hd-blk">
       <div class="form">
         <div class="fsec">调解信息</div>
         <div class="fi"><label>调解时间<em>*</em></label><input value="2026-10-26 21:30"></div>
@@ -458,7 +471,7 @@ input,select,textarea{font-family:inherit;font-size:14px}
         <div class="fi"><label>协议主要内容</label><textarea placeholder="请填写协议条款、履行方式与期限"></textarea></div>
       </div>
 
-      <div class="form" style="margin-top:10px">
+      <div class="form" data-adv style="margin-top:10px">
         <div class="fsec">结案信息</div>
         <div class="hint" id="clHint" style="margin-bottom:10px">调解达成或终止后填写，用于闭环归档。</div>
         <div class="fi"><label>是否结案<em>*</em></label><select id="clFlag" onchange="toggleClose()"><option>是</option><option>否</option></select></div>
@@ -480,8 +493,9 @@ input,select,textarea{font-family:inherit;font-size:14px}
         <div class="fi"><label>回访内容</label><textarea placeholder="记录回访方式、当事人反馈、是否满意、有无反弹迹象"></textarea></div>
         <div class="fi"><label>回访情况</label><textarea placeholder="请填写回访时间、方式、当事人反馈"></textarea></div>
       </div>
+      </div>
 
-      <div class="form" style="margin-top:10px">
+      <div class="form" data-adv style="margin-top:10px">
         <div class="fsec">责任民警与跟踪进展（mdjf_zrmj / gzjzqkb）</div>
         <div class="fi"><label>责任民警姓名<em>*</em></label><input value="民警甲"></div>
         <div class="fi"><label>责任民警电话<em>*</em></label><input value="139****1201"></div>
@@ -492,7 +506,7 @@ input,select,textarea{font-family:inherit;font-size:14px}
         <div class="fi"><label>历史进展</label><div style="font-size:11px;color:var(--txt3);line-height:20px;padding:6px 0">2026-10-21 双方同意暂停装修 · 2026-10-24 施工方调整作业时段 · 2026-10-27 第 3 次调解未达成一致，转入升级防控</div></div>
       </div>
 
-      <div class="form" style="margin-top:10px">
+      <div class="form" data-adv style="margin-top:10px">
         <div class="fsec">监督信息（mdjf_jdxxb）</div>
         <div class="fi"><label>监督部门</label><input placeholder="如：林芝市公安局治安支队"></div>
         <div class="fi"><label>监督人</label><input placeholder="请输入监督人姓名"></div>
@@ -501,7 +515,7 @@ input,select,textarea{font-family:inherit;font-size:14px}
         <div class="fi"><label>监督意见</label><textarea placeholder="记录督察发现的问题与整改要求"></textarea></div>
       </div>
 
-      <div class="form" style="margin-top:10px">
+      <div class="form" data-adv style="margin-top:10px">
         <div class="fsec">涉事单位（mdjf_ssdwb）</div>
         <div class="fi"><label>单位 ID</label><input placeholder="如：DW5426210001"></div>
         <div class="fi"><label>单位名称<em>*</em></label><input placeholder="请输入涉事单位名称"></div>
@@ -735,17 +749,17 @@ input,select,textarea{font-family:inherit;font-size:14px}
       <div class="item">
         <div class="i-hd"><span class="i-t">次仁××</span><span class="tag gray">个人</span></div>
         <div class="i-sub">楼上住户 · 甲方</div>
-        <div class="i-ft"><span>未赋分</span><span class="ops"><button class="btn-s p" onclick="mGo('p-score')">赋分</button></span></div>
+        <div class="i-ft" data-adv><span>未赋分</span><span class="ops"><button class="btn-s p" onclick="mGo('p-score')">赋分</button></span></div>
       </div>
       <div class="item">
         <div class="i-hd"><span class="i-t">卓玛××</span><span class="tag gray">个人</span></div>
         <div class="i-sub">楼下住户 · 乙方</div>
-        <div class="i-ft"><span>未赋分</span><span class="ops"><button class="btn-s p" onclick="mGo('p-score')">赋分</button></span></div>
+        <div class="i-ft" data-adv><span>未赋分</span><span class="ops"><button class="btn-s p" onclick="mGo('p-score')">赋分</button></span></div>
       </div>
       <div class="item">
         <div class="i-hd"><span class="i-t">某装饰工程有限公司</span><span class="tag">单位</span></div>
         <div class="i-sub">施工单位</div>
-        <div class="i-ft"><span>未赋分</span><span class="ops"><button class="btn-s p" onclick="mGo('p-score')">赋分</button></span></div>
+        <div class="i-ft" data-adv><span>未赋分</span><span class="ops"><button class="btn-s p" onclick="mGo('p-score')">赋分</button></span></div>
       </div>
 
       <div style="display:flex;gap:8px;margin-top:12px">
@@ -756,7 +770,7 @@ input,select,textarea{font-family:inherit;font-size:14px}
   </div>
 
   <!-- ==================== 赋分管理（分步） ==================== -->
-  <div class="page" id="p-score">
+  <div class="page" id="p-score" data-adv>
     <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">赋分管理<span style="font-size:11px;font-weight:400;color:var(--txt3);margin-left:6px" id="mStepNo">第 1/5 步</span></span><span class="ar" onclick="mToast('演示：查看赋分标准全文')">标准</span></div>
     <div class="msteps" id="mSteps"></div>
     <div class="body" id="mScoreBody">
@@ -870,7 +884,7 @@ input,select,textarea{font-family:inherit;font-size:14px}
   </div>
 
   <div class="tabbar" id="tabbar">
-    <div class="tab on" data-page="p-work"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></div><span>工作台</span></div>
+    <div class="tab on" data-page="p-work" data-adv><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></div><span>工作台</span></div>
     <div class="tab" data-page="p-list"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div><span>矛盾纠纷</span><span class="dot">4</span></div>
     <div class="tab" data-page="p-tri"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><span>三地管控</span></div>
     <div class="tab" data-page="p-talk"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.87"/></svg></div><span>警民恳谈</span></div>
@@ -888,8 +902,25 @@ input,select,textarea{font-family:inherit;font-size:14px}
 </div>
 
 <script>
+/* ===== 简单版 / 复杂版 一键切换（简单版隐藏：工作台、赋分） ===== */
+var MSIMPLE=false;
+try{MSIMPLE=localStorage.getItem('zf_msimple')==='1';}catch(e){}
+function mApplyMode(){
+  document.body.classList.toggle('msimple',MSIMPLE);
+  var sw=document.getElementById('mModeSw');
+  if(sw){var arr=sw.querySelectorAll('span');for(var i=0;i<arr.length;i++)arr[i].classList.toggle('on',(arr[i].getAttribute('data-mode')==='simple')===MSIMPLE);}
+  var cur=document.querySelector('.page.on');
+  if(MSIMPLE&&cur&&cur.hasAttribute('data-adv'))mGo('p-list');
+}
+function mToggleMode(m){
+  MSIMPLE=(m==='simple');
+  try{localStorage.setItem('zf_msimple',MSIMPLE?'1':'0');}catch(e){}
+  mApplyMode();
+  mToast(MSIMPLE?'演示：已切换为「简单版」（隐藏工作台 / 赋分，调解登记仅保留调解模块）':'演示：已切换为「复杂版」（完整功能）');
+}
 var tabPages=['p-work','p-list','p-tri','p-talk','p-mine'];
 function mGo(id){
+  if(MSIMPLE&&(id==='p-work'||id==='p-score'))id='p-list';
   var all=document.querySelectorAll('.page');
   for(var i=0;i<all.length;i++)all[i].classList.remove('on');
   var t=document.getElementById(id);
@@ -1378,6 +1409,7 @@ function mDelDw(i){M_DW.splice(i,1);mRenderDw();}
 mGo('p-work');
 mRenderDsr();mRenderDw();
 msStepsHtml();msGo(1);mRenderReg();
+mApplyMode();
 </script>
 </body>
 </html>
