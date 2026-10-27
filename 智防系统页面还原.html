@@ -175,10 +175,6 @@ body:has(.content.screen-mode){background:#071a33}
 .pop-modal.wm-modal{width:min(1680px,98vw);max-height:94vh}
 .pop-modal.wm-modal .pop-modal-bd{padding:0;display:flex;flex-direction:column;min-height:0}
 .wm-bar{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid var(--line);font-size:13px;color:var(--txt2);white-space:nowrap}
-.wm-bar .wm-remark{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:12.5px;color:var(--txt3)}
-.wm-bar .wm-remark b{color:var(--txt2);font-weight:600}
-.wm-bar .wm-sep{color:#d9e2f2}
-.wm-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 12px;border-radius:20px;background:#e8f2ff;color:var(--blue);font-size:12.5px;font-weight:600;white-space:nowrap}
 .wm-scroll{flex:1;min-height:0;overflow:auto}
 table.grid.wm-grid{min-width:1240px}
 table.grid.wm-grid th,table.grid.wm-grid td{padding:9px 10px}
@@ -1310,13 +1306,6 @@ table.grid tr:hover td{background:#f7faff}
             </span>
           </div>
           <div class="pop-modal-bd">
-            <div class="wm-bar">
-              <span class="wm-remark">本列表为<b>详细预警数据</b>（逐人逐条明细，不含汇总统计）。点击热力图任一格子可按「辖区 + 预警类型」联动筛查。</span>
-              <span class="wm-chip" id="wmChip">命中 0 条</span>
-              <span>合计命中 <b id="wmTotal" style="color:var(--txt)">0</b> 条人员明细</span>
-              <span class="wm-sep">|</span>
-              <span id="wmDist" style="color:var(--txt3)">按辖区分布：—</span>
-            </div>
             <div class="filter-bar fb-warn" style="border-bottom:1px solid var(--line)">
               <span class="f-item"><span>辖区</span><select id="wfRegion" onchange="warnPage(1)"></select></span>
               <span class="f-item"><span>预警类型</span><select id="wfType" onchange="warnPage(1)"></select></span>
@@ -2110,7 +2099,6 @@ function renderWarn(){
   for(var j=0;j<WM_ROWS.length;j++)dm[WM_ROWS[j].region]=(dm[WM_ROWS[j].region]||0)+1;
   var dl=[];
   for(var k=0;k<WARN_REGIONS.length;k++){if(dm[WARN_REGIONS[k]])dl.push(WARN_REGIONS[k]+' '+dm[WARN_REGIONS[k]]);}
-  document.getElementById('wmChip').textContent='命中 '+WM_ROWS.length+' 条';
   document.getElementById('wmTotal').textContent=WM_ROWS.length;
   document.getElementById('wmDist').textContent=dl.length?('按辖区分布：'+dl.join(' · ')):'按辖区分布：—';
   document.getElementById('wmPageInfo').textContent='共 '+WM_ROWS.length+' 条 · 第 '+WM_PAGE+'/'+pages+' 页';
