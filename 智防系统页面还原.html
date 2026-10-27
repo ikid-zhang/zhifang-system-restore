@@ -382,7 +382,7 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
 .cd-pager .pg{min-width:26px;height:26px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--txt2);font-size:12px;cursor:pointer}
 .cd-pager .pg.on{background:var(--blue);border-color:var(--blue);color:#fff}
 .cd-pager select{border:1px solid var(--line);border-radius:5px;padding:3px 6px;font-size:12px}
-/* 办理弹窗 · 赋分参照（按维度） */
+/* 赋分参照（按对象：当事人 / 涉纠纷单位） */
 .hd-score{display:flex;flex-direction:column;gap:12px}
 .hd-dim{border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .hd-dim-hd{padding:9px 12px;background:#f2f6fd;font-size:13px;font-weight:600;color:var(--txt);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
@@ -403,6 +403,18 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
 .hd-ev .sc-src{display:inline-block;margin-left:6px;padding:0 6px;border-radius:8px;font-size:10.5px;line-height:16px}
 .hd-ev .sc-src.auto{background:#e6f6ee;color:#0e9f5d}
 .hd-ev .sc-src.man{background:#fff3e0;color:#e8890c}
+/* 详情页 · 赋分参照（按对象：当事人 / 涉纠纷单位） */
+.cd-ref{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13px;font-weight:700;color:var(--txt)}
+.cd-ref .bar{width:4px;height:14px;border-radius:2px;background:var(--blue);flex-shrink:0}
+.cd-ref .tip{margin-left:6px;font-size:11px;font-weight:400;color:var(--txt3)}
+.hd-objscore{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.hd-obj{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.hd-obj-hd{padding:9px 12px;background:#f2f6fd;font-size:13px;font-weight:600;color:var(--txt);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.hd-obj-hd .tp{font-size:10px;padding:1px 6px;border-radius:4px;background:#EEF0F5;color:#5f6f8a;font-weight:400}
+.hd-obj-hd .sd{margin-left:auto;font-size:11px;font-weight:600;color:#1B70E0}
+.hd-obj-hd .rule{font-size:12px;font-weight:400;color:var(--txt2);flex:1;min-width:200px}
+.hd-obj-hd .hd-red{font-size:11px;font-weight:600;color:#e5484d}
+.hd-obj-bd{padding:10px 12px;display:flex;flex-direction:column;gap:12px}
 /* ===== 赋分向导（分步操作） ===== */
 .sc-steps{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid #E3E6ED;background:#fff;flex-shrink:0}
 .sc-steps .wz-step{cursor:pointer}
@@ -1865,6 +1877,8 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
                   <tr><td>511023199111011316</td><td>杨伟</td><td>男</td><td><span class="tag green" title="赋分 40 分 · 一般区间，无升红触发项">低风险</span></td><td>河阳市ED县重视实干宁村940号</td><td>18780840632</td><td><span class="op-link" data-op="编辑当事人">编辑</span><span class="op-link danger" data-op="注销当事人">注销</span><span class="op-link danger" data-op="查看当事人详情" onclick="cdPartyDetail(1)">详情</span></td></tr>
                 </tbody>
               </table></div>
+              <div class="cd-ref"><span class="bar"></span>赋分参照<span class="tip">按当事人逐人展示 5 维度赋分规则、数据来源与依据</span></div>
+              <div class="hd-objscore" id="partyScoreRef"></div>
             </div>
           </div>
           <div class="cd-sec" id="cdSecGrade">
@@ -1890,6 +1904,8 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
                   <tr><td>某装饰工程有限公司</td><td>91540400MA6TXXXX1A</td><td>巴宜区八一镇××路 12 号</td><td>罗布</td><td title="540421198502143533">540421198502******33</td><td>139****2211</td><td><span class="op-link" data-op="编辑涉纠纷单位">编辑</span><span class="op-link danger" data-op="注销涉纠纷单位">注销</span><span class="op-link danger" data-op="查看单位详情">详情</span></td></tr>
                 </tbody>
               </table></div>
+              <div class="cd-ref"><span class="bar"></span>赋分参照<span class="tip">按涉纠纷单位逐家展示 5 维度赋分规则、数据来源与依据</span></div>
+              <div class="hd-objscore" id="unitScoreRef"></div>
             </div>
           </div>
           <div class="cd-sec" id="cdSecMediate">
@@ -3009,13 +3025,14 @@ function openHandle(el){
   if(el&&el.closest){var tr=el.closest('tr');if(tr&&tr.children[1]){var t=tr.children[1].textContent.trim();title='办理：'+(t.length>20?t.slice(0,20)+'…':t);}}
   document.getElementById('hdTitle').textContent=title;
   document.getElementById('cmHandleModal').style.display='flex';
-  renderHandleScore();
 }
 function closeHandle(){document.getElementById('cmHandleModal').style.display='none';}
 /* ---- 矛盾纠纷详情页 ---- */
 function openCmDetail(el){
   if(el&&el.closest){var tr=el.closest('tr');if(tr&&tr.children[1]){var t=tr.children[1].textContent.trim();var sub=document.getElementById('cdSubTitle');if(sub)sub.textContent='MD2026-5404-0137 · '+(t.length>28?t.slice(0,28)+'…':t);}}
   showView('conflict-detail');
+  renderObjectScoreRef('partyScoreRef','个人');
+  renderObjectScoreRef('unitScoreRef','单位');
 }
 function cdFold(btn){
   var sec=btn.closest('.cd-sec');
@@ -3027,7 +3044,7 @@ function cdPartyDetail(i){
   if(!p){toast('演示：查看当事人详情');return;}
   toast('演示：查看当事人详情 '+p.name+'（'+p.desc+'）');
 }
-/* ---- 办理弹窗 · 赋分参照（按维度） ---- */
+/* ---- 赋分参照（按对象：当事人 / 涉纠纷单位） ---- */
 function hdDimQueries(dim,p){
   var f=p.f||{},D=SCORE_DISPUTE,ls=[];
   if(dim==='当事人情况'){
@@ -3048,36 +3065,36 @@ function hdDimQueries(dim,p){
   }
   return ls;
 }
-function renderHandleScore(){
-  var box=document.getElementById('hdScoreBody');
+function renderObjectScoreRef(boxId,type){
+  var box=document.getElementById(boxId);
   if(!box)return;
-  var dims=scoreDims(),h='';
-  for(var d=0;d<dims.length;d++){
-    var dim=dims[d];
-    h+='<div class="hd-dim"><div class="hd-dim-hd">'+dim.name+'<span class="mx" style="font-size:11.5px;color:var(--txt3);font-weight:400">满分 '+dim.max+' 分</span><span class="rule">'+(DIM_BASIS[dim.name]||'')+'</span></div><div class="hd-dim-bd">';
-    for(var k=0;k<dim.items.length;k++){
-      var it=dim.items[k],idx=SCORE_ITEMS.indexOf(it),B=SCORE_BASIS[it.name]||{};
-      h+='<div class="hd-it"><div class="hd-it-t">'+it.name+'<span class="mx">满分 '+it.max+' 分</span>';
-      for(var pi=0;pi<SCORE_PARTIES.length;pi++){
-        var pp=SCORE_PARTIES[pi];
-        h+='<span class="sc">'+pp.name+' '+(pp.scores[idx]||0)+' 分</span>';
-      }
-      h+='</div>';
-      h+='<div class="hd-rule"><b>赋分规则：</b>0 分：'+it.o0+'；低档 '+it.lo[1]+' 分：'+it.lo[0]+'；中档 '+it.mid[1]+' 分：'+it.mid[0]+'；高档 '+it.hi[1]+' 分：'+it.hi[0]+'</div>';
-      if(B.src)h+='<div class="hd-src">数据来源：'+B.src+(B.pts?('　·　判定要点：'+B.pts):'')+'</div>';
-      h+='<div class="hd-ev"><b>依据（各赋分对象查询结果）：</b><br>';
-      for(var pj=0;pj<SCORE_PARTIES.length;pj++){
-        var pw=SCORE_PARTIES[pj],b=(pw.basis||{})[idx],qs=hdDimQueries(dim.name,pw);
-        h+='<b>'+pw.name+'</b>（当前 '+(pw.scores[idx]||0)+' 分）：';
+  var dims=scoreDims(),objs=[],i,j,k,d,it,idx,B,b,qs;
+  for(i=0;i<SCORE_PARTIES.length;i++)if(SCORE_PARTIES[i].type===type)objs.push(SCORE_PARTIES[i]);
+  var h='';
+  for(j=0;j<objs.length;j++){
+    var o=objs[j],total=partyTotal(o),red=isRed(o),redTxt='';
+    if(red)redTxt='<span class="hd-red">一票升红：'+redReasons(o).join('、')+'</span>';
+    h+='<div class="hd-obj"><div class="hd-obj-hd"><span class="tp">'+o.type+'</span>'+o.name+'<span class="sd">'+total+' 分 · '+suggestLv(total,red)+'</span>'+redTxt+'<span class="rule">'+o.desc+'</span></div><div class="hd-obj-bd">';
+    for(d=0;d<dims.length;d++){
+      var dim=dims[d];
+      h+='<div class="hd-dim"><div class="hd-dim-hd">'+dim.name+'<span class="mx" style="font-size:11.5px;color:var(--txt3);font-weight:400">'+dimGot(dim,o)+'/'+dim.max+' 分</span><span class="rule">'+(DIM_BASIS[dim.name]||'')+'</span></div><div class="hd-dim-bd">';
+      for(k=0;k<dim.items.length;k++){
+        it=dim.items[k];idx=SCORE_ITEMS.indexOf(it);B=SCORE_BASIS[it.name]||{};b=(o.basis||{})[idx];qs=hdDimQueries(dim.name,o);
+        h+='<div class="hd-it"><div class="hd-it-t">'+it.name+'<span class="mx">'+(o.scores[idx]||0)+' / '+it.max+' 分</span>';
+        if(B.src)h+='<span class="mx" style="color:var(--txt3);font-weight:400">来源：'+B.src+'</span>';
+        h+='</div>';
+        h+='<div class="hd-rule"><b>赋分规则：</b>0 分：'+it.o0+'；低档 '+it.lo[1]+' 分：'+it.lo[0]+'；中档 '+it.mid[1]+' 分：'+it.mid[0]+'；高档 '+it.hi[1]+' 分：'+it.hi[0]+'</div>';
+        h+='<div class="hd-ev"><b>依据：</b>';
         if(b)h+=b.txt+'<span class="sc-src '+(b.auto?'auto':'man')+'">'+(b.auto?'系统自动':'人工研判')+'</span>';
         else if(qs.length)h+=qs.join('；');
         else h+='<span class="none">尚未初始化，需民警结合现场情况研判后赋分</span>';
-        h+='<br>';
+        h+='</div></div>';
       }
       h+='</div></div>';
     }
     h+='</div></div>';
   }
+  if(!objs.length)h='<div class="hd-ev" style="margin:0"><span class="none">暂无'+type+'赋分对象</span></div>';
   box.innerHTML=h;
 }
 function toggleCloseInfo(){
@@ -4176,37 +4193,31 @@ CHART_DEFS.operations=[
       </div>
     </div>
 
-    <!-- ===== 弹窗：办理 / 调解登记（含结案信息） ===== -->
+    <!-- ===== 弹窗：办理 / 调解登记（调解信息 + 结案信息） ===== -->
     <div class="pop-modal-mask" id="cmHandleModal" style="display:none;z-index:300" onclick="if(event.target===this)closeHandle()">
       <div class="pop-modal" style="width:min(900px,94vw)">
         <div class="pop-modal-hd"><span id="hdTitle">矛盾纠纷办理 · 调解登记</span><button class="btn btn-xs" onclick="closeHandle()">关闭</button></div>
         <div class="wz-body">
           <div class="wz-sec">
-            <div class="wz-sec-hd">调解信息<span class="tip">一次调解一条记录，可多次调解</span></div>
+            <div class="wz-sec-hd">调解信息<span class="tip">一次调解一条记录，可多次调解；结案信息随调解信息一并登记</span></div>
             <div class="wz-sec-bd">
               <div class="cm-form" style="padding:0">
                 <div class="ff"><label>调解时间<em>*</em></label><input placeholder="请选择时间"></div>
                 <div class="ff"><label>调解方式<em>*</em></label><select><option>现场调解</option><option>视频调解</option><option>电话调解</option><option>背靠背调解</option></select></div>
                 <div class="ff"><label>调解地点</label><input placeholder="请输入地点"></div>
                 <div class="ff"><label>调解单位名称</label><input placeholder="如：八一镇人民调解委员会"></div>
-          <div class="ff"><label>主持调解人<em>*</em></label><input placeholder="请输入"></div>
+                <div class="ff"><label>主持调解人<em>*</em></label><input placeholder="请输入"></div>
                 <div class="ff"><label>参与调解人</label><input placeholder="请输入"></div>
                 <div class="ff"><label>当事人到场情况</label><select><option>双方到场</option><option>单方到场</option><option>均未到场</option></select></div>
                 <div class="ff"><label>调解次数</label><input value="第 1 次"></div>
                 <div class="ff"><label>调解结果<em>*</em></label><select id="mdResult" onchange="toggleCloseInfo()"><option>达成协议</option><option>未达成协议</option><option>部分达成协议</option><option>当事人撤回调解</option><option>终止调解</option></select></div>
                 <div class="ff"><label>调解结果代码</label><select><option>请选择</option><option>01 调解成功</option><option>02 部分达成</option><option>03 未达成</option><option>04 终止调解</option></select></div>
-          <div class="ff"><label>协议名称</label><input placeholder="请输入调解协议名称"></div>
+                <div class="ff"><label>协议名称</label><input placeholder="请输入调解协议名称"></div>
                 <div class="ff"><label>是否司法确认</label><select><option>否</option><option>是</option></select></div>
                 <div class="ff full"><label>调解情况记录<em>*</em></label><textarea placeholder="请记录争议焦点、调解过程、双方诉求与让步情况"></textarea></div>
                 <div class="ff full"><label>未调解工作计划</label><textarea placeholder="未达成时填写：下一步工作措施、再次调解时间安排、移交建议"></textarea></div>
-          <div class="ff full"><label>协议主要内容</label><textarea placeholder="请填写协议条款、履行方式与期限"></textarea></div>
-              </div>
-            </div>
-          </div>
-          <div class="wz-sec">
-            <div class="wz-sec-hd">结案信息<span class="tip" id="clTip">调解达成或终止后填写，用于闭环归档</span></div>
-            <div class="wz-sec-bd">
-              <div class="cm-form" style="padding:0">
+                <div class="ff full"><label>协议主要内容</label><textarea placeholder="请填写协议条款、履行方式与期限"></textarea></div>
+                <div class="wz-sec-hd" style="grid-column:1/-1;border-radius:6px;margin:4px 0 0">结案信息<span class="tip" id="clTip">调解达成或终止后填写，用于闭环归档</span></div>
                 <div class="ff"><label>是否结案<em>*</em></label><select id="clFlag" onchange="toggleCloseInfo()"><option>是</option><option>否</option></select></div>
                 <div class="ff"><label>结案方式<em>*</em></label><select><option>调解结案</option><option>终止调解结案</option><option>转行政处罚</option><option>转刑事诉讼</option><option>引导诉讼</option><option>当事人和解撤案</option></select></div>
                 <div class="ff"><label>结案时间<em>*</em></label><input placeholder="请选择时间"></div>
@@ -4214,66 +4225,20 @@ CHART_DEFS.operations=[
                 <div class="ff"><label>履行情况<em>*</em></label><select><option>已履行</option><option>部分履行</option><option>未履行</option><option>分期履行中</option><option>无需履行</option></select></div>
                 <div class="ff"><label>履行期限</label><input placeholder="请选择期限"></div>
                 <div class="ff"><label>回访时间</label><input placeholder="请选择回访时间"></div>
-          <div class="ff"><label>被回访人</label><input placeholder="被回访人姓名"></div>
-          <div class="ff"><label>被回访人身份证号</label><input placeholder="请输入身份证号"></div>
-          <div class="ff"><label>回访人</label><input placeholder="回访人姓名"></div>
-          <div class="ff"><label>回访所属单位</label><input placeholder="如：八一镇派出所"></div>
-          <div class="ff"><label>是否回访</label><select><option>是</option><option>否</option></select></div>
+                <div class="ff"><label>被回访人</label><input placeholder="被回访人姓名"></div>
+                <div class="ff"><label>被回访人身份证号</label><input placeholder="请输入身份证号"></div>
+                <div class="ff"><label>回访人</label><input placeholder="回访人姓名"></div>
+                <div class="ff"><label>回访所属单位</label><input placeholder="如：八一镇派出所"></div>
+                <div class="ff"><label>是否回访</label><select><option>是</option><option>否</option></select></div>
                 <div class="ff"><label>回访满意率</label><input placeholder="如：95.9%"></div>
                 <div class="ff"><label>是否需升级防控</label><select><option>否</option><option>是</option></select></div>
                 <div class="ff"><label>归档责任区</label><input placeholder="请输入"></div>
                 <div class="ff full"><label>结案结论<em>*</em></label><textarea placeholder="请填写纠纷是否化解、当事人状态、后续风险判断"></textarea></div>
                 <div class="ff full"><label>回访来源</label><select><option>治安回访</option><option>110回访</option></select></div>
-          <div class="ff full"><label>回访内容</label><textarea placeholder="记录回访方式、当事人反馈、是否满意、有无反弹迹象"></textarea></div>
-          <div class="ff full"><label>回访情况</label><textarea placeholder="请填写回访时间、方式、当事人反馈"></textarea></div>
+                <div class="ff full"><label>回访内容</label><textarea placeholder="记录回访方式、当事人反馈、是否满意、有无反弹迹象"></textarea></div>
+                <div class="ff full"><label>回访情况</label><textarea placeholder="请填写回访时间、方式、当事人反馈"></textarea></div>
                 <div class="ff full"><label>备注</label><textarea placeholder="请输入"></textarea></div>
               </div>
-            </div>
-          </div>
-          <div class="wz-sec">
-            <div class="wz-sec-hd">责任民警与跟踪进展<span class="tip">对应 mdjf_zrmj / mdjf_gzjzqkb，办理过程留痕</span></div>
-            <div class="wz-sec-bd">
-              <div class="cm-form" style="padding:0">
-                <div class="ff"><label>责任民警姓名<em>*</em></label><input placeholder="请输入姓名"></div>
-                <div class="ff"><label>责任民警电话<em>*</em></label><input placeholder="请输入联系电话"></div>
-                <div class="ff"><label>责任民警身份证号</label><input placeholder="请输入身份证号"></div>
-                <div class="ff"><label>跟踪进展人</label><input placeholder="请输入跟踪责任人"></div>
-                <div class="ff"><label>跟踪进展时间</label><input placeholder="请选择时间"></div>
-                <div class="ff"><label>跟踪频次</label><select><option>请选择</option><option>每日</option><option>每 3 日</option><option>每周</option><option>每月</option></select></div>
-                <div class="ff full"><label>进展情况</label><textarea placeholder="记录本次跟踪时间节点、当事人状态、矛盾变化与下一步措施"></textarea></div>
-                <div class="ff full"><label>历史进展</label><div style="font-size:12px;color:#82878B;line-height:22px">2026-10-21 民警甲：双方同意暂停装修，情绪平稳 · 2026-10-24 民警甲：施工方已调整作业时段，待回访确认 · 2026-10-27 民警甲：第 3 次调解未达成一致，转入升级防控</div></div>
-              </div>
-            </div>
-          </div>
-          <div class="wz-sec">
-            <div class="wz-sec-hd">监督信息<span class="tip">对应 mdjf_jdxxb，由 24 小时 / 3 日 / 7 日时限引擎生成</span></div>
-            <div class="wz-sec-bd">
-              <div class="cm-form" style="padding:0">
-                <div class="ff"><label>监督部门</label><input placeholder="如：林芝市公安局治安支队"></div>
-                <div class="ff"><label>监督人</label><input placeholder="请输入监督人姓名"></div>
-                <div class="ff"><label>督察状态</label><select><option>未督察</option><option>督察中</option><option>已督察 · 通过</option><option>已督察 · 限期整改</option></select></div>
-                <div class="ff"><label>时限节点</label><select><option>24 小时</option><option>3 日</option><option>7 日</option><option>已超期</option></select></div>
-                <div class="ff full"><label>监督意见</label><textarea placeholder="记录督察发现的问题、整改要求与期限"></textarea></div>
-              </div>
-            </div>
-          </div>
-          <div class="wz-sec">
-            <div class="wz-sec-hd">涉事单位<span class="tip">对应 mdjf_ssdwb，四路分流环节指定，与「涉纠纷单位」区分</span></div>
-            <div class="wz-sec-bd">
-              <div class="cm-form" style="padding:0">
-                <div class="ff"><label>单位 ID</label><input placeholder="如：DW5426210001"></div>
-                <div class="ff"><label>单位名称<em>*</em></label><input placeholder="请输入涉事单位名称"></div>
-                <div class="ff"><label>单位地址</label><input placeholder="请输入单位地址"></div>
-                <div class="ff"><label>责任类型</label><select><option>请选择</option><option>用工单位</option><option>物业单位</option><option>施工单位</option><option>属地管理单位</option><option>行业主管部门</option></select></div>
-                <div class="ff full"><label>单位处置要求</label><textarea placeholder="记录对该单位的具体要求、配合事项与完成时限"></textarea></div>
-                <div class="ff full"><label>已关联涉事单位</label><div style="font-size:12px;color:#82878B;line-height:22px">DW5426210001 · 某装饰工程有限公司（施工单位） · 巴宜区八一镇××路 12 号 · 要求：调整作业时段并书面反馈</div></div>
-              </div>
-            </div>
-          </div>
-          <div class="wz-sec">
-            <div class="wz-sec-hd">赋分参照（按维度）<span class="tip">每个维度的赋分规则与依据；依据为各赋分对象在该维度的查询结果</span></div>
-            <div class="wz-sec-bd">
-              <div class="hd-score" id="hdScoreBody"></div>
             </div>
           </div>
         </div>
