@@ -410,6 +410,14 @@ input,select,textarea{font-family:inherit;font-size:14px}
         <div class="fi"><label>第二责任民警</label><input placeholder="选填，双民警负责时填写"></div>
         <div class="fi"><label>第二责任民警电话</label><input placeholder="选填"></div>
         <div class="fi"><label>排查地址行政区划</label><select><option>巴宜区</option><option>波密县</option><option>米林市</option><option>工布江达县</option><option>朗县</option><option>察隅县</option><option>墨脱县</option></select></div>
+        <div class="fi"><label>地址是否标注</label><select id="pcBz" onchange="document.getElementById('pcZb').style.display=(this.value==='是'?'':'none')"><option>否</option><option>是</option></select></div>
+        <div class="fi" id="pcZb" style="display:none"><label>排查地址坐标（经度,纬度）</label><input placeholder="地图打点后回填，如：94.3612,29.6528"></div>
+        <div class="fi"><label>是否移交</label><select id="pcYj" onchange="document.getElementById('pcYjBox').style.display=(this.value==='是'?'':'none')"><option>否</option><option>是</option></select></div>
+        <div id="pcYjBox" style="display:none">
+          <div class="fi"><label>接受单位</label><input placeholder="请输入接受单位名称"></div>
+          <div class="fi"><label>接收单位代码</label><input placeholder="请输入接收单位代码"></div>
+          <div class="fi"><label>接收人</label><input placeholder="请输入接收人姓名"></div>
+        </div>
         <div class="fi"><label>排查情况<em>*</em></label><textarea placeholder="请描述排查过程、发现的问题及初步处理情况"></textarea></div>
         <div class="fi"><label>现场照片</label><div style="display:flex;gap:8px;flex-wrap:wrap">
           <div style="width:64px;height:64px;border:1px dashed #cfd8e8;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--txt3);font-size:20px" onclick="mToast('演示：调用相机拍照')">＋</div>
@@ -467,8 +475,39 @@ input,select,textarea{font-family:inherit;font-size:14px}
         <div class="fi"><label>是否需升级防控</label><select><option>否</option><option>是</option></select></div>
         <div class="fi"><label>结案结论<em>*</em></label><textarea placeholder="请填写纠纷是否化解、当事人状态、后续风险判断"></textarea></div>
         <div class="fi"><label>回访来源</label><select><option>治安回访</option><option>110回访</option></select></div>
+        <div class="fi"><label>被回访人身份证号</label><input placeholder="请输入身份证号"></div>
+        <div class="fi"><label>回访所属单位</label><input placeholder="如：八一镇派出所"></div>
         <div class="fi"><label>回访内容</label><textarea placeholder="记录回访方式、当事人反馈、是否满意、有无反弹迹象"></textarea></div>
         <div class="fi"><label>回访情况</label><textarea placeholder="请填写回访时间、方式、当事人反馈"></textarea></div>
+      </div>
+
+      <div class="form" style="margin-top:10px">
+        <div class="fsec">责任民警与跟踪进展（mdjf_zrmj / gzjzqkb）</div>
+        <div class="fi"><label>责任民警姓名<em>*</em></label><input value="民警甲"></div>
+        <div class="fi"><label>责任民警电话<em>*</em></label><input value="139****1201"></div>
+        <div class="fi"><label>责任民警身份证号</label><input placeholder="请输入身份证号"></div>
+        <div class="fi"><label>跟踪进展人</label><input placeholder="请输入跟踪责任人"></div>
+        <div class="fi"><label>跟踪进展时间</label><input placeholder="请选择时间"></div>
+        <div class="fi"><label>进展情况</label><textarea placeholder="记录本次跟踪的节点、当事人状态与下一步措施"></textarea></div>
+        <div class="fi"><label>历史进展</label><div style="font-size:11px;color:var(--txt3);line-height:20px;padding:6px 0">2026-10-21 双方同意暂停装修 · 2026-10-24 施工方调整作业时段 · 2026-10-27 第 3 次调解未达成一致，转入升级防控</div></div>
+      </div>
+
+      <div class="form" style="margin-top:10px">
+        <div class="fsec">监督信息（mdjf_jdxxb）</div>
+        <div class="fi"><label>监督部门</label><input placeholder="如：林芝市公安局治安支队"></div>
+        <div class="fi"><label>监督人</label><input placeholder="请输入监督人姓名"></div>
+        <div class="fi"><label>督察状态</label><select><option>未督察</option><option>督察中</option><option>已督察 · 通过</option><option>已督察 · 限期整改</option></select></div>
+        <div class="fi"><label>时限节点</label><select><option>24 小时</option><option>3 日</option><option>7 日</option><option>已超期</option></select></div>
+        <div class="fi"><label>监督意见</label><textarea placeholder="记录督察发现的问题与整改要求"></textarea></div>
+      </div>
+
+      <div class="form" style="margin-top:10px">
+        <div class="fsec">涉事单位（mdjf_ssdwb）</div>
+        <div class="fi"><label>单位 ID</label><input placeholder="如：DW5426210001"></div>
+        <div class="fi"><label>单位名称<em>*</em></label><input placeholder="请输入涉事单位名称"></div>
+        <div class="fi"><label>单位地址</label><input placeholder="请输入单位地址"></div>
+        <div class="fi"><label>责任类型</label><select><option>请选择</option><option>用工单位</option><option>物业单位</option><option>施工单位</option><option>属地管理单位</option><option>行业主管部门</option></select></div>
+        <div class="fi"><label>单位处置要求</label><textarea placeholder="记录对该单位的具体要求与完成时限"></textarea></div>
       </div>
       <div style="display:flex;gap:8px;margin-top:12px">
         <button class="btn-s gray" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：已暂存调解记录')">暂存</button>
@@ -649,8 +688,39 @@ input,select,textarea{font-family:inherit;font-size:14px}
         <div class="fi"><label>是否找到其他当事人</label><select><option>是</option><option>否</option></select></div>
         <div class="fi"><label>调处状态</label><select><option>待调处</option><option>调处中</option><option>已化解</option><option>已终止</option><option>已移交</option></select></div>
         <div class="fi"><label>所属分县局</label><select><option>巴宜分局</option><option>波密县公安局</option><option>米林市公安局</option><option>工布江达县公安局</option></select></div>
+        <div class="fi"><label>所属市局</label><select><option>林芝市公安局</option></select></div>
         <div class="fi"><label>派出所 / 责任区</label><select><option>八一镇派出所 · 第一责任区</option><option>八一镇派出所 · 第二责任区</option><option>百巴镇派出所 · 第一责任区</option></select></div>
+        <div class="fi"><label>矛盾发生地址</label><input placeholder="请选择地点，可使用标准地址" value="巴宜区八一镇某小区 3 栋"></div>
+        <div class="fi"><label>矛盾发生地址行政区划</label><select><option>巴宜区</option><option>波密县</option><option>米林市</option><option>工布江达县</option><option>朗县</option><option>察隅县</option><option>墨脱县</option></select></div>
+        <div class="fi"><label>地址是否标注</label><select id="ddBz" onchange="document.getElementById('ddZb').style.display=(this.value==='是'?'':'none')"><option>否</option><option>是</option></select></div>
+        <div class="fi" id="ddZb" style="display:none"><label>地址坐标（经度,纬度）</label><input placeholder="地图打点后回填，如：94.3612,29.6528"></div>
         <div class="fi"><label>简要情况<em>*</em></label><textarea placeholder="请输入"></textarea></div>
+        <div class="fi"><label>矛盾纠纷经过</label><textarea placeholder="记录矛盾产生、发展过程"></textarea></div>
+        <div class="fi"><label>矛盾纠纷结果</label><textarea placeholder="记录当前结果 / 状态"></textarea></div>
+      </div>
+
+      <div class="form" style="margin-top:10px">
+        <div class="fsec">来源与关联（对齐 mdjf_mdjfxxb）</div>
+        <div class="fi"><label>信息来源</label><select><option>工作排查</option><option>110接处警</option><option>案事件系统</option><option>综治网格化</option><option>12345</option><option>部门移交</option></select></div>
+        <div class="fi"><label>信息关联编号</label><input placeholder="关联派警单 / 反馈单编号"></div>
+        <div class="fi"><label>案件编号</label><input placeholder="转行政 / 刑事案件后填入"></div>
+        <div class="fi"><label>是否转行政案件</label><select><option>否</option><option>是</option></select></div>
+        <div class="fi"><label>是否口头调解</label><select><option>否</option><option>是</option></select></div>
+      </div>
+
+      <div class="form" style="margin-top:10px">
+        <div class="fsec">定级与登记</div>
+        <div class="fi"><label>影响程度</label><select><option>请选择</option><option>轻微</option><option>一般</option><option>较大</option><option>重大</option></select></div>
+        <div class="fi"><label>是否关注</label><select><option>否</option><option>是</option></select></div>
+        <div class="fi"><label>是否重大不稳定问题</label><select><option>否</option><option>是</option></select></div>
+        <div class="fi"><label>调处时限（起）</label><input placeholder="开始日期"></div>
+        <div class="fi"><label>调处时限（止）</label><input placeholder="结束日期"></div>
+        <div class="fi"><label>是否区内跨市</label><select><option>否</option><option>是</option></select></div>
+        <div class="fi"><label>是否跨省</label><select><option>否</option><option>是</option></select></div>
+        <div class="fi"><label>是否历史遗留问题</label><select><option>否</option><option>是</option></select></div>
+        <div class="fi"><label>登记或修改单位</label><input placeholder="如：八一镇派出所"></div>
+        <div class="fi"><label>登记或修改人</label><input placeholder="请输入登记人姓名"></div>
+        <div class="fi"><label>备注</label><textarea placeholder="请输入"></textarea></div>
       </div>
 
       <div class="sec-t">当事人（逐人登记）</div>
@@ -1254,15 +1324,31 @@ function mExportScore(){
   mToast("演示：赋分登记表已导出");
 }
 /* ============ 移动端：当事人 / 涉纠纷单位 ============ */
-var M_DSR=[{ryxm:"次仁××",zjhm:"5404**********0018",lxfs:"138****0001"}];
+var M_DSR=[{ryxm:"次仁××",zjhm:"5404**********0018",lxfs:"138****0001",rylx:"当事人",zjzl:"居民身份证",xb:"男",hj:"西藏自治区林芝市巴宜区八一镇××路",jz:"巴宜区八一镇某小区 3 栋",mz:"藏族",csrq:"1985-06-12",gj:"中国",jg:"西藏自治区林芝市",bl:"2026-10-27 调解笔录 · 第 3 次"}];
 var M_DW=[];
+function mSel(o,key,opts){
+  var v=o[key]||'';
+  var h='<select>';
+  for(var i=0;i<opts.length;i++)h+='<option'+(v===opts[i]?' selected':'')+'>'+opts[i]+'</option>';
+  return h+'</select>';
+}
 function mDsrHtml(i,r){
   var o=M_DSR[i];
   return '<div class="fsec" style="padding-top:0">当事人 '+(i+1)+'<span style="margin-left:auto;font-size:11px;color:var(--up);font-weight:400" onclick="mDelDsr('+i+')">删除</span></div>'
     +'<div class="fi"><label>姓名<em>*</em></label><input value="'+(o.ryxm||'')+'" placeholder="请输入姓名"></div>'
+    +'<div class="fi"><label>人员类型</label>'+mSel(o,'rylx',['当事人','见证人','代理人'])+'</div>'
+    +'<div class="fi"><label>证件种类</label>'+mSel(o,'zjzl',['居民身份证','港澳居民来往内地通行证','台湾居民来往大陆通行证','护照','军官证','其他'])+'</div>'
     +'<div class="fi"><label>证件号码</label><input value="'+(o.zjhm||'')+'" placeholder="身份证号"></div>'
+    +'<div class="fi"><label>性别</label>'+mSel(o,'xb',['男','女','未知'])+'</div>'
     +'<div class="fi"><label>联系方式</label><input value="'+(o.lxfs||'')+'" placeholder="联系电话"></div>'
-    +'<div class="fi"><label>人员类型</label><select><option>当事人</option><option>见证人</option><option>代理人</option></select></div>';
+    +'<div class="fi"><label>民族</label><input value="'+(o.mz||'')+'" placeholder="如：藏族"></div>'
+    +'<div class="fi"><label>出生日期</label><input value="'+(o.csrq||'')+'" placeholder="如：1985-06-12"></div>'
+    +'<div class="fi"><label>国籍（地区）</label><input value="'+(o.gj||'')+'" placeholder="如：中国"></div>'
+    +'<div class="fi"><label>籍贯</label><input value="'+(o.jg||'')+'" placeholder="如：西藏自治区林芝市"></div>'
+    +'<div class="fi"><label>户籍地详址</label><input value="'+(o.hj||'')+'" placeholder="★三地管控 · 户籍地"></div>'
+    +'<div class="fi"><label>居住地详址</label><input value="'+(o.jz||'')+'" placeholder="★三地管控 · 居住地"></div>'
+    +'<div class="fi"><label>笔录</label><input value="'+(o.bl||'')+'" placeholder="笔录摘要 / 编号"></div>'
+    +'<div class="fi"><label>笔录原文</label><div style="display:flex;gap:8px;align-items:center"><button class="btn-s" style="height:38px" onclick="mToast(\'演示：查看 / 上传该当事人笔录原文\')">查看</button><span style="font-size:11px;color:var(--txt3)">支持现场录音转写与签字确认</span></div></div>';
 }
 function mRenderDsr(){
   var h='';
@@ -1270,7 +1356,7 @@ function mRenderDsr(){
   if(!M_DSR.length)h='<div style="font-size:12px;color:var(--txt3);padding:8px 0">尚未添加当事人</div>';
   document.getElementById('mDsrBox').innerHTML=h;
 }
-function mAddDsr(){M_DSR.push({ryxm:"",zjhm:"",lxfs:""});mRenderDsr();}
+function mAddDsr(){M_DSR.push({ryxm:"",rylx:"当事人",zjzl:"居民身份证",zjhm:"",xb:"",lxfs:"",hj:"",jz:"",mz:"",csrq:"",gj:"中国",jg:"",bl:""});mRenderDsr();}
 function mDelDsr(i){M_DSR.splice(i,1);mRenderDsr();}
 function mRenderDw(){
   var h='';
@@ -1281,12 +1367,13 @@ function mRenderDw(){
       +'<div class="fi"><label>统一社会信用代码</label><input value="'+(o.shxydm||'')+'" placeholder="请输入"></div>'
       +'<div class="fi"><label>单位地址</label><input value="'+(o.dwdz||'')+'" placeholder="请输入"></div>'
       +'<div class="fi"><label>法定代表人姓名</label><input value="'+(o.fddbrxm||'')+'" placeholder="请输入"></div>'
+      +'<div class="fi"><label>法定代表人身份证号</label><input value="'+(o.fddbrsfzh||'')+'" placeholder="请输入身份证号"></div>'
       +'<div class="fi"><label>单位联系电话</label><input value="'+(o.dwlxdh||'')+'" placeholder="请输入"></div>';
   }
   if(!M_DW.length)h='<div style="font-size:12px;color:var(--txt3);padding:8px 0">尚未添加涉纠纷单位</div>';
   document.getElementById('mDwBox').innerHTML=h;
 }
-function mAddDw(){M_DW.push({dwmc:"",shxydm:"",dwdz:"",fddbrxm:"",dwlxdh:""});mRenderDw();}
+function mAddDw(){M_DW.push({dwmc:"",shxydm:"",dwdz:"",fddbrxm:"",fddbrsfzh:"",dwlxdh:""});mRenderDw();}
 function mDelDw(i){M_DW.splice(i,1);mRenderDw();}
 mGo('p-work');
 mRenderDsr();mRenderDw();

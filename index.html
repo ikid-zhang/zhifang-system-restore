@@ -1668,7 +1668,7 @@ table.grid tr:hover td{background:#f7faff}
           </span></span>
         </div>
         <div class="filter-bar">
-          <button class="btn primary" data-op="演示：新增排查">＋ 新增</button>
+          <button class="btn primary" onclick="openCheck()">＋ 新增</button>
           <span class="f-item">排查地址<select><option>请选择</option><option>巴宜区</option><option>波密县</option><option>米林市</option><option>察隅县</option><option>经开区</option><option>高新区</option></select></span>
           <span class="f-item">是否存在矛盾纠纷<select><option>请选择</option><option>是</option><option>否</option></select></span>
           <input type="text" placeholder="请输入排查地点关键词" style="flex:1;min-width:180px">
@@ -2636,7 +2636,7 @@ function exportScore(){
 }
 /* ============ 新增纠纷：当事人 / 涉纠纷单位动态行 ============ */
 var DSR_ROWS=[
- {rylx:"当事人",ryxm:"次仁××",zjzl:"居民身份证",zjhm:"5404**********0018",xb:"男",lxfs:"138****0001",hj:"西藏自治区林芝市巴宜区八一镇××路",jz:"林芝市巴宜区八一镇某小区 3 栋"}
+ {rylx:"当事人",ryxm:"次仁××",zjzl:"居民身份证",zjhm:"5404**********0018",xb:"男",lxfs:"138****0001",hj:"西藏自治区林芝市巴宜区八一镇××路",jz:"林芝市巴宜区八一镇某小区 3 栋",mz:"藏族",csrq:"1985-06-12",gj:"中国",jg:"西藏自治区林芝市",bl:"2026-10-27 调解笔录 · 第 3 次"}
 ];
 var DW_ROWS=[];
 function dsrCell(v,ph,w){return '<td style="padding:4px 6px;border:1px solid #E3E6ED"><input value="'+(v||'')+'" placeholder="'+(ph||'')+'" style="width:'+(w||110)+'px;border:1px solid #E3E6ED;border-radius:5px;padding:4px 6px;font-size:12px"></td>';}
@@ -2647,12 +2647,14 @@ function renderDsr(){
     h+='<tr>'+dsrCell(r.rylx,'人员类型',92)+dsrCell(r.ryxm,'姓名',84)+dsrCell(r.zjzl,'证件种类',110)
       +dsrCell(r.zjhm,'证件号码',150)+dsrCell(r.xb,'性别',56)+dsrCell(r.lxfs,'联系方式',110)
       +dsrCell(r.hj,'户籍地详址',190)+dsrCell(r.jz,'居住地详址',190)
+      +dsrCell(r.mz,'民族',72)+dsrCell(r.csrq,'出生日期',110)+dsrCell(r.gj,'国籍（地区）',92)+dsrCell(r.jg,'籍贯',130)
+      +'<td style="padding:4px 6px;border:1px solid #E3E6ED"><input value="'+(r.bl||'')+'" placeholder="笔录摘要 / 编号" style="width:110px;border:1px solid #E3E6ED;border-radius:5px;padding:4px 6px;font-size:12px"><button class="btn btn-xs" style="margin-left:4px" onclick="toast(\'演示：上传 / 查看该当事人笔录原文\')">原文</button></td>'
       +'<td style="padding:4px 6px;border:1px solid #E3E6ED;text-align:center"><span class="op-link danger" onclick="delRow('+i+',\'dsr\')">删除</span></td></tr>';
   }
-  if(!DSR_ROWS.length)h='<tr><td colspan="9" style="padding:12px;color:#82878B;text-align:center">尚未登记当事人</td></tr>';
+  if(!DSR_ROWS.length)h='<tr><td colspan="14" style="padding:12px;color:#82878B;text-align:center">尚未登记当事人</td></tr>';
   document.getElementById('dsrRows').innerHTML=h;
 }
-function addDsrRow(){DSR_ROWS.push({rylx:"当事人",ryxm:"",zjzl:"居民身份证",zjhm:"",xb:"",lxfs:"",hj:"",jz:""});renderDsr();}
+function addDsrRow(){DSR_ROWS.push({rylx:"当事人",ryxm:"",zjzl:"居民身份证",zjhm:"",xb:"",lxfs:"",hj:"",jz:"",mz:"",csrq:"",gj:"中国",jg:"",bl:""});renderDsr();}
 function dwCell(v,ph,w){return '<td style="padding:4px 6px;border:1px solid #E3E6ED"><input value="'+(v||'')+'" placeholder="'+(ph||'')+'" style="width:'+(w||130)+'px;border:1px solid #E3E6ED;border-radius:5px;padding:4px 6px;font-size:12px"></td>';}
 function renderDw(){
   if(!DW_ROWS.length){document.getElementById('dwBox').innerHTML='';return;}
@@ -2672,6 +2674,9 @@ function renderDw(){
 function addDwRow(){DW_ROWS.push({dwmc:"",shxydm:"",dwdz:"",fddbrxm:"",fddbrsfzh:"",dwlxdh:""});renderDw();}
 function delRow(i,kind){if(kind==='dsr')DSR_ROWS.splice(i,1);else DW_ROWS.splice(i,1);renderDsr();renderDw();}
 function cmAddSubmit(){closeCmAdd();toast('演示：矛盾纠纷新增成功，等待定级与指派');}
+function openCheck(){document.getElementById('cmCheckModal').style.display='flex';}
+function closeCheck(){document.getElementById('cmCheckModal').style.display='none';}
+function checkSubmit(){closeCheck();toast('演示：排查记录已登记，12 小时内完成定级与指派');}
 function markCompare(root){
   var scope=root||document;
   scope.querySelectorAll('.cm5-cmp i,.cmp').forEach(function(el){
@@ -3709,6 +3714,9 @@ CHART_DEFS.operations=[
           <div class="ff"><label>发生时间</label><input placeholder="选择时间"></div>
           <div class="ff"><label>是否公安管辖</label><select><option>请选择</option><option>是</option><option>否</option></select></div>
           <div class="ff full"><label>发生地点</label><input placeholder="请选择地点，可使用标准地址"></div>
+          <div class="ff"><label>矛盾发生地址行政区划</label><select><option>请选择</option><option>林芝市 · 巴宜区</option><option>林芝市 · 波密县</option><option>林芝市 · 米林市</option><option>林芝市 · 工布江达县</option><option>林芝市 · 朗县</option><option>林芝市 · 察隅县</option><option>林芝市 · 墨脱县</option></select></div>
+          <div class="ff"><label>地址是否标注</label><select onchange="var b=this.parentNode.parentNode.nextElementSibling;b.style.display=(this.value==='是'?'':'none')"><option>否</option><option>是</option></select></div>
+          <div class="ff" style="display:none"><label>地址坐标（经度,纬度）</label><input placeholder="地图打点后回填，如：94.3612,29.6528"></div>
           <div class="ff full"><label>简要情况</label><textarea placeholder="请输入"></textarea></div>
           <div class="ff full"><label>矛盾纠纷经过</label><textarea placeholder="请输入"></textarea></div>
           <div class="ff full"><label>矛盾纠纷结果</label><textarea placeholder="请输入"></textarea></div>
@@ -3752,6 +3760,14 @@ CHART_DEFS.operations=[
           <div class="ff"><label>登记单位</label><input placeholder="登记或修改单位名称"></div>
           <div class="ff"><label>登记人</label><input placeholder="登记或修改人姓名"></div>
 
+          <div class="ff full" style="padding:0"><div class="sc-dim-t">管辖与登记<span class="s">对应 mdjf_mdjfxxb 管辖机构与登记信息，随标准地址/机构字典自动带出</span></div></div>
+          <div class="ff"><label>所属市局</label><select><option>林芝市公安局</option></select></div>
+          <div class="ff"><label>所属分县局</label><select><option>请选择</option><option>巴宜分局</option><option>波密县公安局</option><option>米林市公安局</option><option>工布江达县公安局</option><option>朗县公安局</option><option>察隅县公安局</option><option>墨脱县公安局</option></select></div>
+          <div class="ff"><label>所属派出所</label><select><option>请选择</option><option>八一镇派出所</option><option>百巴镇派出所</option><option>扎木镇派出所</option><option>米林镇派出所</option></select></div>
+          <div class="ff"><label>责任区</label><select><option>请选择</option><option>第一责任区</option><option>第二责任区</option><option>第三责任区</option></select></div>
+          <div class="ff"><label>登记或修改单位</label><input placeholder="如：八一镇派出所"></div>
+          <div class="ff"><label>登记或修改人</label><input placeholder="请输入登记人姓名"></div>
+
           <div class="ff full" style="padding:0"><div class="sc-dim-t">移交信息<span class="s">移交后由接收单位继续办理</span></div></div>
           <div class="ff"><label>是否移交</label><select><option>否</option><option>是</option></select></div>
           <div class="ff"><label>接受单位</label><input placeholder="请输入接受单位名称"></div>
@@ -3771,6 +3787,11 @@ CHART_DEFS.operations=[
                   <th style="padding:6px 8px;border:1px solid #E3E6ED">联系方式</th>
                   <th style="padding:6px 8px;border:1px solid #E3E6ED">户籍地详址</th>
                   <th style="padding:6px 8px;border:1px solid #E3E6ED">居住地详址</th>
+                  <th style="padding:6px 8px;border:1px solid #E3E6ED">民族</th>
+                  <th style="padding:6px 8px;border:1px solid #E3E6ED">出生日期</th>
+                  <th style="padding:6px 8px;border:1px solid #E3E6ED">国籍（地区）</th>
+                  <th style="padding:6px 8px;border:1px solid #E3E6ED">籍贯</th>
+                  <th style="padding:6px 8px;border:1px solid #E3E6ED">笔录</th>
                   <th style="padding:6px 8px;border:1px solid #E3E6ED">操作</th>
                 </tr></thead>
                 <tbody id="dsrRows"></tbody>
@@ -3784,6 +3805,41 @@ CHART_DEFS.operations=[
           <div class="ff full"><label>备注</label><textarea placeholder="请输入"></textarea></div>
         </div>
         <div class="pop-foot"><button class="btn" onclick="closeCmAdd()">取消</button><button class="btn primary" onclick="cmAddSubmit()">确认</button></div>
+      </div>
+    </div>
+
+    <!-- ===== 弹窗：矛盾纠纷排查登记（对齐 mdjf_mdjfpcb） ===== -->
+    <div class="pop-modal-mask" id="cmCheckModal" style="display:none;z-index:300" onclick="if(event.target===this)closeCheck()">
+      <div class="pop-modal" style="position:relative;width:min(900px,94vw)">
+        <div class="pop-modal-hd"><span>矛盾纠纷排查登记</span><button class="btn btn-xs" onclick="closeCheck()">关闭</button></div>
+        <div class="cm-wm">严禁泄露公民个人信息和警务工作秘密</div>
+        <div class="cm-form">
+          <div class="ff full" style="padding:0"><div class="sc-dim-t">排查信息<span class="s">对应 mdjf_mdjfpcb，排查后 12 小时内完成定级与指派</span></div></div>
+          <div class="ff"><label>排查时间<em>*</em></label><input value="2026-10-27 09:30"></div>
+          <div class="ff"><label>排查方式<em>*</em></label><select><option>入户走访</option><option>电话回访</option><option>集中座谈</option><option>巡逻发现</option><option>群众举报核查</option></select></div>
+          <div class="ff full"><label>排查地址<em>*</em></label><input placeholder="请输入排查地点，可使用标准地址"></div>
+          <div class="ff"><label>排查地址行政区划</label><select><option>请选择</option><option>林芝市 · 巴宜区</option><option>林芝市 · 波密县</option><option>林芝市 · 米林市</option><option>林芝市 · 工布江达县</option><option>林芝市 · 朗县</option><option>林芝市 · 察隅县</option><option>林芝市 · 墨脱县</option></select></div>
+          <div class="ff"><label>地址是否标注</label><select onchange="var b=this.parentNode.parentNode.nextElementSibling;b.style.display=(this.value==='是'?'':'none')"><option>否</option><option>是</option></select></div>
+          <div class="ff" style="display:none"><label>排查地址坐标（经度,纬度）</label><input placeholder="地图打点后回填，如：94.3612,29.6528"></div>
+          <div class="ff"><label>是否存在矛盾纠纷<em>*</em></label><select onchange="var b=document.getElementById('ckHasTip');if(b)b.style.display=(this.value==='是'?'':'none')"><option>否</option><option>是</option></select></div>
+          <div class="ff full" id="ckHasTip" style="display:none"><label style="color:#c07208">发现矛盾纠纷</label><div style="font-size:12px;color:#82878B;line-height:22px">提交后请在「矛盾纠纷管理」中完成纠纷录入、定级与赋分，排查记录与纠纷以接处警警情编号关联。</div></div>
+
+          <div class="ff full" style="padding:0"><div class="sc-dim-t">责任民警<span class="s">双民警负责时须填写第二责任民警</span></div></div>
+          <div class="ff"><label>第一责任民警<em>*</em></label><input placeholder="请输入姓名"></div>
+          <div class="ff"><label>第一责任民警电话<em>*</em></label><input placeholder="请输入联系电话"></div>
+          <div class="ff"><label>第二责任民警</label><input placeholder="选填，双民警负责时填写"></div>
+          <div class="ff"><label>第二责任民警电话</label><input placeholder="选填"></div>
+
+          <div class="ff full" style="padding:0"><div class="sc-dim-t">管辖信息<span class="s">所属市局 / 分县局 / 派出所 / 责任区随机构字典带出</span></div></div>
+          <div class="ff"><label>所属市局</label><select><option>林芝市公安局</option></select></div>
+          <div class="ff"><label>所属分县局</label><select><option>请选择</option><option>巴宜分局</option><option>波密县公安局</option><option>米林市公安局</option><option>工布江达县公安局</option><option>朗县公安局</option><option>察隅县公安局</option><option>墨脱县公安局</option></select></div>
+          <div class="ff"><label>所属派出所</label><select><option>请选择</option><option>八一镇派出所</option><option>百巴镇派出所</option><option>扎木镇派出所</option><option>米林镇派出所</option></select></div>
+          <div class="ff"><label>责任区</label><select><option>请选择</option><option>第一责任区</option><option>第二责任区</option><option>第三责任区</option></select></div>
+
+          <div class="ff full"><label>排查情况<em>*</em></label><textarea placeholder="请描述排查过程、发现的问题及初步处理情况"></textarea></div>
+          <div class="ff full"><label>现场照片 / 附件</label><div style="display:flex;gap:8px;align-items:center"><button class="btn" data-op="演示：上传">＋ 上传材料</button><span style="font-size:12px;color:#82878B">支持现场照片、走访记录等（演示未接后端）</span></div></div>
+        </div>
+        <div class="pop-foot"><button class="btn" onclick="closeCheck()">取消</button><button class="btn primary" onclick="checkSubmit()">确认</button></div>
       </div>
     </div>
 
@@ -3890,7 +3946,9 @@ CHART_DEFS.operations=[
                 <div class="ff"><label>履行期限</label><input placeholder="请选择期限"></div>
                 <div class="ff"><label>回访时间</label><input placeholder="请选择回访时间"></div>
           <div class="ff"><label>被回访人</label><input placeholder="被回访人姓名"></div>
+          <div class="ff"><label>被回访人身份证号</label><input placeholder="请输入身份证号"></div>
           <div class="ff"><label>回访人</label><input placeholder="回访人姓名"></div>
+          <div class="ff"><label>回访所属单位</label><input placeholder="如：八一镇派出所"></div>
           <div class="ff"><label>是否回访</label><select><option>是</option><option>否</option></select></div>
                 <div class="ff"><label>回访满意率</label><input placeholder="如：95.9%"></div>
                 <div class="ff"><label>是否需升级防控</label><select><option>否</option><option>是</option></select></div>
@@ -3900,6 +3958,46 @@ CHART_DEFS.operations=[
           <div class="ff full"><label>回访内容</label><textarea placeholder="记录回访方式、当事人反馈、是否满意、有无反弹迹象"></textarea></div>
           <div class="ff full"><label>回访情况</label><textarea placeholder="请填写回访时间、方式、当事人反馈"></textarea></div>
                 <div class="ff full"><label>备注</label><textarea placeholder="请输入"></textarea></div>
+              </div>
+            </div>
+          </div>
+          <div class="wz-sec">
+            <div class="wz-sec-hd">责任民警与跟踪进展<span class="tip">对应 mdjf_zrmj / mdjf_gzjzqkb，办理过程留痕</span></div>
+            <div class="wz-sec-bd">
+              <div class="cm-form" style="padding:0">
+                <div class="ff"><label>责任民警姓名<em>*</em></label><input placeholder="请输入姓名"></div>
+                <div class="ff"><label>责任民警电话<em>*</em></label><input placeholder="请输入联系电话"></div>
+                <div class="ff"><label>责任民警身份证号</label><input placeholder="请输入身份证号"></div>
+                <div class="ff"><label>跟踪进展人</label><input placeholder="请输入跟踪责任人"></div>
+                <div class="ff"><label>跟踪进展时间</label><input placeholder="请选择时间"></div>
+                <div class="ff"><label>跟踪频次</label><select><option>请选择</option><option>每日</option><option>每 3 日</option><option>每周</option><option>每月</option></select></div>
+                <div class="ff full"><label>进展情况</label><textarea placeholder="记录本次跟踪时间节点、当事人状态、矛盾变化与下一步措施"></textarea></div>
+                <div class="ff full"><label>历史进展</label><div style="font-size:12px;color:#82878B;line-height:22px">2026-10-21 民警甲：双方同意暂停装修，情绪平稳 · 2026-10-24 民警甲：施工方已调整作业时段，待回访确认 · 2026-10-27 民警甲：第 3 次调解未达成一致，转入升级防控</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="wz-sec">
+            <div class="wz-sec-hd">监督信息<span class="tip">对应 mdjf_jdxxb，由 24 小时 / 3 日 / 7 日时限引擎生成</span></div>
+            <div class="wz-sec-bd">
+              <div class="cm-form" style="padding:0">
+                <div class="ff"><label>监督部门</label><input placeholder="如：林芝市公安局治安支队"></div>
+                <div class="ff"><label>监督人</label><input placeholder="请输入监督人姓名"></div>
+                <div class="ff"><label>督察状态</label><select><option>未督察</option><option>督察中</option><option>已督察 · 通过</option><option>已督察 · 限期整改</option></select></div>
+                <div class="ff"><label>时限节点</label><select><option>24 小时</option><option>3 日</option><option>7 日</option><option>已超期</option></select></div>
+                <div class="ff full"><label>监督意见</label><textarea placeholder="记录督察发现的问题、整改要求与期限"></textarea></div>
+              </div>
+            </div>
+          </div>
+          <div class="wz-sec">
+            <div class="wz-sec-hd">涉事单位<span class="tip">对应 mdjf_ssdwb，四路分流环节指定，与「涉纠纷单位」区分</span></div>
+            <div class="wz-sec-bd">
+              <div class="cm-form" style="padding:0">
+                <div class="ff"><label>单位 ID</label><input placeholder="如：DW5426210001"></div>
+                <div class="ff"><label>单位名称<em>*</em></label><input placeholder="请输入涉事单位名称"></div>
+                <div class="ff"><label>单位地址</label><input placeholder="请输入单位地址"></div>
+                <div class="ff"><label>责任类型</label><select><option>请选择</option><option>用工单位</option><option>物业单位</option><option>施工单位</option><option>属地管理单位</option><option>行业主管部门</option></select></div>
+                <div class="ff full"><label>单位处置要求</label><textarea placeholder="记录对该单位的具体要求、配合事项与完成时限"></textarea></div>
+                <div class="ff full"><label>已关联涉事单位</label><div style="font-size:12px;color:#82878B;line-height:22px">DW5426210001 · 某装饰工程有限公司（施工单位） · 巴宜区八一镇××路 12 号 · 要求：调整作业时段并书面反馈</div></div>
               </div>
             </div>
           </div>
