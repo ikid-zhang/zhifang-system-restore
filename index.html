@@ -350,6 +350,59 @@ table.grid tr:hover td{background:#f7faff}
 .sc-reg th,.sc-reg td{border:1px solid #E3E6ED;padding:6px 8px;text-align:center}
 .sc-reg th{background:#F0F3F9;font-weight:600;color:#1f2d3d}
 .sc-reg td.tx{text-align:left;white-space:normal;min-width:110px}
+/* ===== 矛盾纠纷详情页（查看） ===== */
+.cd-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.cd-top .t{font-size:16px;font-weight:700;color:var(--txt)}
+.cd-layout{display:flex;gap:14px;align-items:flex-start}
+.cd-side{width:320px;flex-shrink:0;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.cd-side-hd{padding:11px 14px;border-bottom:1px solid var(--line);font-size:14px;font-weight:700;color:var(--txt);background:#f2f6fd}
+.cd-side-bd{padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.cd-f label{display:block;font-size:12px;color:var(--txt2);margin-bottom:4px}
+.cd-f label em{color:#e5484d;font-style:normal;margin-left:2px}
+.cd-f input,.cd-f select,.cd-f textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:6px;padding:7px 9px;font-size:13px;color:var(--txt);background:#fff;font-family:inherit}
+.cd-f textarea{resize:vertical;min-height:60px;line-height:1.6}
+.cd-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px}
+.cd-sec{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.cd-sec-hd{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line)}
+.cd-sec-hd .bar{width:4px;height:15px;border-radius:2px;background:var(--blue);flex-shrink:0}
+.cd-sec-hd .t{font-size:14px;font-weight:700;color:var(--txt)}
+.cd-sec-hd .fold{margin-left:auto;width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--txt2);cursor:pointer;font-size:12px;line-height:20px;text-align:center;padding:0;flex-shrink:0}
+.cd-sec-hd .fold:hover{color:var(--blue);border-color:var(--blue)}
+.cd-sec.off .cd-sec-bd{display:none}
+.cd-sec-bd{padding:12px 14px}
+.cd-sec-bd .table-wrap{border:1px solid var(--line);border-radius:8px;overflow:auto}
+table.cd-grid th,table.cd-grid td{padding:9px 10px;white-space:nowrap}
+table.cd-grid td.tx{white-space:normal;min-width:150px}
+.cd-empty{padding:22px;text-align:center;color:var(--txt3);font-size:13px}
+.cd-search{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.cd-search label{font-size:12.5px;color:var(--txt2)}
+.cd-search select,.cd-search input{border:1px solid var(--line);border-radius:6px;padding:7px 9px;font-size:13px;color:var(--txt)}
+.cd-search input{width:180px}
+.cd-pager{display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px;font-size:12.5px;color:var(--txt2)}
+.cd-pager .pg{min-width:26px;height:26px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--txt2);font-size:12px;cursor:pointer}
+.cd-pager .pg.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.cd-pager select{border:1px solid var(--line);border-radius:5px;padding:3px 6px;font-size:12px}
+/* 办理弹窗 · 赋分参照（按维度） */
+.hd-score{display:flex;flex-direction:column;gap:12px}
+.hd-dim{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.hd-dim-hd{padding:9px 12px;background:#f2f6fd;font-size:13px;font-weight:600;color:var(--txt);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.hd-dim-hd .rule{font-size:12px;font-weight:400;color:var(--txt2);flex:1;min-width:200px}
+.hd-dim-bd{padding:10px 12px}
+.hd-it{border-top:1px dashed var(--line);padding:8px 0}
+.hd-it:first-child{border-top:none;padding-top:0}
+.hd-it:last-child{padding-bottom:0}
+.hd-it-t{font-size:13px;font-weight:600;color:var(--txt);display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.hd-it-t .mx{font-size:11.5px;color:var(--txt3);font-weight:400}
+.hd-it-t .sc{color:var(--blue);font-weight:700;font-size:12px}
+.hd-rule{font-size:12px;color:var(--txt2);line-height:1.8;margin-top:3px}
+.hd-rule b{color:var(--txt2);font-weight:600}
+.hd-src{font-size:12px;color:var(--txt3);margin-top:2px}
+.hd-ev{font-size:12px;color:var(--txt2);line-height:1.8;margin-top:5px;background:#f8faff;border:1px solid #e3ecfa;border-radius:6px;padding:6px 10px}
+.hd-ev b{color:var(--txt)}
+.hd-ev .none{color:var(--txt3)}
+.hd-ev .sc-src{display:inline-block;margin-left:6px;padding:0 6px;border-radius:8px;font-size:10.5px;line-height:16px}
+.hd-ev .sc-src.auto{background:#e6f6ee;color:#0e9f5d}
+.hd-ev .sc-src.man{background:#fff3e0;color:#e8890c}
 /* ===== 赋分向导（分步操作） ===== */
 .sc-steps{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid #E3E6ED;background:#fff;flex-shrink:0}
 .sc-steps .wz-step{cursor:pointer}
@@ -1635,14 +1688,14 @@ table.grid tr:hover td{background:#f7faff}
               <colgroup><col style="width:4%"><col style="width:17%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:9%"><col style="width:10%"><col style="width:10%"><col style="width:18%"></colgroup>
               <thead><tr><th>序号</th><th>事件名称</th><th>矛盾来源</th><th>矛盾纠纷类别</th><th>处理结果</th><th>涉及领域</th><th>管辖分局</th><th>发生时间</th><th>发生地点</th><th style="white-space:nowrap">操作</th></tr></thead>
               <tbody>
-                <tr><td>1</td><td>当事人报警称：在巴宜区某小区因装修噪音引发邻里纠纷</td><td>110指令</td><td>邻里关系</td><td><span class="tag green">已化解</span></td><td>家庭邻里</td><td>巴宜分局</td><td>2026-10-22 16:33:24</td><td>巴宜区某小区</td><td><span class="op-link" data-op="查看详情">查看</span><span class="op-link" data-op="办理纠纷" onclick="openHandle(this)">办理</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link" data-op="赋分定级" onclick="openScore(this)">赋分</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>2</td><td>当事人报警称：波密县达兴村某工地劳资纠纷</td><td>110指令</td><td>劳动争议</td><td><span class="tag green">已化解</span></td><td>劳动用工</td><td>波密县公安局</td><td>2026-10-22 12:45:20</td><td>波密县达兴村某工地</td><td><span class="op-link" data-op="查看详情">查看</span><span class="op-link" data-op="办理纠纷" onclick="openHandle(this)">办理</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link" data-op="赋分定级" onclick="openScore(this)">赋分</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>3</td><td>当事人报警称：米林市某酒店欠薪纠纷</td><td>工作排查发现</td><td>劳动争议</td><td><span class="tag orange">正在化解</span></td><td>劳动用工</td><td>米林市公安局</td><td>2026-10-21 21:38:34</td><td>米林市某酒店</td><td><span class="op-link" data-op="查看详情">查看</span><span class="op-link" data-op="办理纠纷" onclick="openHandle(this)">办理</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link" data-op="赋分定级" onclick="openScore(this)">赋分</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>4</td><td>当事人报警称：经开区某家庭纠纷警情</td><td>110指令</td><td>婚姻家庭</td><td><span class="tag">已掌握</span></td><td>婚姻情感</td><td>经开区公安分局</td><td>2026-10-21 17:40:35</td><td>经开区某居民小区</td><td><span class="op-link" data-op="查看详情">查看</span><span class="op-link" data-op="办理纠纷" onclick="openHandle(this)">办理</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link" data-op="赋分定级" onclick="openScore(this)">赋分</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>5</td><td>当事人报警称：波密县某汽修厂噪音扰民</td><td>12345推送</td><td>邻里关系</td><td><span class="tag green">已化解</span></td><td>家庭邻里</td><td>波密县公安局</td><td>2026-10-21 16:29:38</td><td>波密县某汽修厂</td><td><span class="op-link" data-op="查看详情">查看</span><span class="op-link" data-op="办理纠纷" onclick="openHandle(this)">办理</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link" data-op="赋分定级" onclick="openScore(this)">赋分</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>6</td><td>当事人报警称：高新区某餐馆借款纠纷</td><td>案事件系统推送</td><td>借贷纠纷</td><td><span class="tag orange">正在化解</span></td><td>经济借贷</td><td>高新区公安分局</td><td>2026-10-20 22:54:11</td><td>高新区某餐馆</td><td><span class="op-link" data-op="查看详情">查看</span><span class="op-link" data-op="办理纠纷" onclick="openHandle(this)">办理</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link" data-op="赋分定级" onclick="openScore(this)">赋分</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>7</td><td>当事人报警称：察隅县某小区停车位纠纷</td><td>综治网格化推送</td><td>物业纠纷</td><td><span class="tag green">已化解</span></td><td>物业服务</td><td>察隅县公安局</td><td>2026-10-20 20:50:25</td><td>察隅县某小区</td><td><span class="op-link" data-op="查看详情">查看</span><span class="op-link" data-op="办理纠纷" onclick="openHandle(this)">办理</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link" data-op="赋分定级" onclick="openScore(this)">赋分</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>8</td><td>当事人报警称：波密县玉普乡某工程队欠薪</td><td>部门移交</td><td>劳动争议</td><td><span class="tag">已掌握</span></td><td>劳动用工</td><td>波密县公安局</td><td>2026-10-20 15:20:35</td><td>波密县玉普乡某工程队</td><td><span class="op-link" data-op="查看详情">查看</span><span class="op-link" data-op="办理纠纷" onclick="openHandle(this)">办理</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link" data-op="赋分定级" onclick="openScore(this)">赋分</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr><td>1</td><td>当事人报警称：在巴宜区某小区因装修噪音引发邻里纠纷</td><td>110指令</td><td>邻里关系</td><td><span class="tag green">已化解</span></td><td>家庭邻里</td><td>巴宜分局</td><td>2026-10-22 16:33:24</td><td>巴宜区某小区</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr><td>2</td><td>当事人报警称：波密县达兴村某工地劳资纠纷</td><td>110指令</td><td>劳动争议</td><td><span class="tag green">已化解</span></td><td>劳动用工</td><td>波密县公安局</td><td>2026-10-22 12:45:20</td><td>波密县达兴村某工地</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr><td>3</td><td>当事人报警称：米林市某酒店欠薪纠纷</td><td>工作排查发现</td><td>劳动争议</td><td><span class="tag orange">正在化解</span></td><td>劳动用工</td><td>米林市公安局</td><td>2026-10-21 21:38:34</td><td>米林市某酒店</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr><td>4</td><td>当事人报警称：经开区某家庭纠纷警情</td><td>110指令</td><td>婚姻家庭</td><td><span class="tag">已掌握</span></td><td>婚姻情感</td><td>经开区公安分局</td><td>2026-10-21 17:40:35</td><td>经开区某居民小区</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr><td>5</td><td>当事人报警称：波密县某汽修厂噪音扰民</td><td>12345推送</td><td>邻里关系</td><td><span class="tag green">已化解</span></td><td>家庭邻里</td><td>波密县公安局</td><td>2026-10-21 16:29:38</td><td>波密县某汽修厂</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr><td>6</td><td>当事人报警称：高新区某餐馆借款纠纷</td><td>案事件系统推送</td><td>借贷纠纷</td><td><span class="tag orange">正在化解</span></td><td>经济借贷</td><td>高新区公安分局</td><td>2026-10-20 22:54:11</td><td>高新区某餐馆</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr><td>7</td><td>当事人报警称：察隅县某小区停车位纠纷</td><td>综治网格化推送</td><td>物业纠纷</td><td><span class="tag green">已化解</span></td><td>物业服务</td><td>察隅县公安局</td><td>2026-10-20 20:50:25</td><td>察隅县某小区</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr><td>8</td><td>当事人报警称：波密县玉普乡某工程队欠薪</td><td>部门移交</td><td>劳动争议</td><td><span class="tag">已掌握</span></td><td>劳动用工</td><td>波密县公安局</td><td>2026-10-20 15:20:35</td><td>波密县玉普乡某工程队</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -1755,18 +1808,165 @@ table.grid tr:hover td{background:#f7faff}
             <colgroup><col style="width:5%"><col style="width:19%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:7%"><col style="width:6%"><col style="width:8%"><col style="width:8%"><col style="width:11%"><col style="width:12%"><col style="width:6%"><col style="width:5%"></colgroup>
             <thead><tr><th>序号</th><th>事件名称</th><th>矛盾来源</th><th>矛盾纠纷类别</th><th>处理结果</th><th>涉及领域</th><th>当事人数</th><th>管辖分局</th><th>管辖市局</th><th>发生时间</th><th>发生地点</th><th>是否移交</th><th style="white-space:nowrap">操作</th></tr></thead>
             <tbody>
-              <tr><td>1</td><td>当事人报警称：在巴宜区某小区因装修噪音引发邻里纠纷</td><td>110指令</td><td>治安调解（含简易治安调解）</td><td><span class="tag green">已化解</span></td><td>邻里关系</td><td>3</td><td>540402000000</td><td>540400000000</td><td>2026-10-22 16:33:24</td><td>巴宜区某小区</td><td>否</td><td><span class="op-link" data-op="查看详情">查看</span></td></tr>
-              <tr><td>2</td><td>当事人报警称：波密县达兴村某工地劳资纠纷</td><td>110指令</td><td>民事调解</td><td><span class="tag green">已化解</span></td><td>劳动争议</td><td>2</td><td>540424000000</td><td>540400000000</td><td>2026-10-22 12:45:20</td><td>波密县达兴村某工地</td><td>否</td><td><span class="op-link" data-op="查看详情">查看</span></td></tr>
-              <tr><td>3</td><td>当事人报警称：米林市某酒店欠薪纠纷</td><td>工作排查发现</td><td>民事调解</td><td><span class="tag orange">正在化解</span></td><td>劳动争议</td><td>2</td><td>540481000000</td><td>540400000000</td><td>2026-10-21 21:38:34</td><td>米林市某酒店</td><td>否</td><td><span class="op-link" data-op="查看详情">查看</span></td></tr>
-              <tr><td>4</td><td>当事人报警称：经开区某家庭纠纷警情</td><td>110指令</td><td>治安调解（含简易治安调解）</td><td><span class="tag">已掌握</span></td><td>婚姻家庭</td><td>1</td><td>540402000000</td><td>540400000000</td><td>2026-10-21 17:40:35</td><td>经开区某小区</td><td>否</td><td><span class="op-link" data-op="查看详情">查看</span></td></tr>
-              <tr><td>5</td><td>当事人报警称：波密县某汽修厂噪音扰民</td><td>12345推送</td><td>民事调解</td><td><span class="tag green">已化解</span></td><td>邻里关系</td><td>3</td><td>540424000000</td><td>540400000000</td><td>2026-10-21 16:29:38</td><td>波密县某汽修厂</td><td>否</td><td><span class="op-link" data-op="查看详情">查看</span></td></tr>
-              <tr><td>6</td><td>当事人报警称：高新区某餐馆借款纠纷</td><td>案事件系统推送</td><td>民事调解</td><td><span class="tag orange">正在化解</span></td><td>借贷纠纷</td><td>2</td><td>540402000000</td><td>540400000000</td><td>2026-10-20 22:54:11</td><td>高新区某餐馆</td><td>否</td><td><span class="op-link" data-op="查看详情">查看</span></td></tr>
-              <tr><td>7</td><td>当事人报警称：察隅县某小区停车位纠纷</td><td>综治网格化推送</td><td>民事调解</td><td><span class="tag green">已化解</span></td><td>物业纠纷</td><td>2</td><td>540425000000</td><td>540400000000</td><td>2026-10-20 20:50:25</td><td>察隅县某小区</td><td>否</td><td><span class="op-link" data-op="查看详情">查看</span></td></tr>
-              <tr><td>8</td><td>当事人报警称：波密县玉普乡某工程队欠薪</td><td>部门移交</td><td>民事调解</td><td><span class="tag">已掌握</span></td><td>劳动争议</td><td>4</td><td>540424000000</td><td>540400000000</td><td>2026-10-20 15:20:35</td><td>波密县玉普乡某工地</td><td>是</td><td><span class="op-link" data-op="查看详情">查看</span></td></tr>
+              <tr><td>1</td><td>当事人报警称：在巴宜区某小区因装修噪音引发邻里纠纷</td><td>110指令</td><td>治安调解（含简易治安调解）</td><td><span class="tag green">已化解</span></td><td>邻里关系</td><td>3</td><td>540402000000</td><td>540400000000</td><td>2026-10-22 16:33:24</td><td>巴宜区某小区</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>2</td><td>当事人报警称：波密县达兴村某工地劳资纠纷</td><td>110指令</td><td>民事调解</td><td><span class="tag green">已化解</span></td><td>劳动争议</td><td>2</td><td>540424000000</td><td>540400000000</td><td>2026-10-22 12:45:20</td><td>波密县达兴村某工地</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>3</td><td>当事人报警称：米林市某酒店欠薪纠纷</td><td>工作排查发现</td><td>民事调解</td><td><span class="tag orange">正在化解</span></td><td>劳动争议</td><td>2</td><td>540481000000</td><td>540400000000</td><td>2026-10-21 21:38:34</td><td>米林市某酒店</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>4</td><td>当事人报警称：经开区某家庭纠纷警情</td><td>110指令</td><td>治安调解（含简易治安调解）</td><td><span class="tag">已掌握</span></td><td>婚姻家庭</td><td>1</td><td>540402000000</td><td>540400000000</td><td>2026-10-21 17:40:35</td><td>经开区某小区</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>5</td><td>当事人报警称：波密县某汽修厂噪音扰民</td><td>12345推送</td><td>民事调解</td><td><span class="tag green">已化解</span></td><td>邻里关系</td><td>3</td><td>540424000000</td><td>540400000000</td><td>2026-10-21 16:29:38</td><td>波密县某汽修厂</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>6</td><td>当事人报警称：高新区某餐馆借款纠纷</td><td>案事件系统推送</td><td>民事调解</td><td><span class="tag orange">正在化解</span></td><td>借贷纠纷</td><td>2</td><td>540402000000</td><td>540400000000</td><td>2026-10-20 22:54:11</td><td>高新区某餐馆</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>7</td><td>当事人报警称：察隅县某小区停车位纠纷</td><td>综治网格化推送</td><td>民事调解</td><td><span class="tag green">已化解</span></td><td>物业纠纷</td><td>2</td><td>540425000000</td><td>540400000000</td><td>2026-10-20 20:50:25</td><td>察隅县某小区</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>8</td><td>当事人报警称：波密县玉普乡某工程队欠薪</td><td>部门移交</td><td>民事调解</td><td><span class="tag">已掌握</span></td><td>劳动争议</td><td>4</td><td>540424000000</td><td>540400000000</td><td>2026-10-20 15:20:35</td><td>波密县玉普乡某工地</td><td>是</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
             </tbody>
           </table>
         </div>
         <div class="pager"><span>共 3,268 条</span><span>10条/页</span><span>&lt;</span><span>1</span><span>2</span><span>3</span><span>…</span><span>327</span><span>&gt;</span><span>前往</span><input value="1"><span>页</span></div>
+      </div>
+    </section>
+
+    <!-- ===== 视图：矛盾纠纷详情（查看） ===== -->
+    <section class="view" id="view-conflict-detail">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
+        <span class="crumb-link" onclick="showView('conflict-mgmt')">矛盾纠纷管理</span><span>/</span>
+        <span class="tab-tag">矛盾纠纷详情<span class="close-x" onclick="showView('conflict-mgmt')">×</span></span>
+      </div>
+      <div class="cd-top">
+        <div class="t">矛盾纠纷详情</div>
+        <span style="font-size:12px;color:var(--txt3)" id="cdSubTitle">MD2026-5404-0137 · 在巴宜区某小区因装修噪音引发邻里纠纷</span>
+        <button class="btn" style="margin-left:auto" onclick="showView('conflict-mgmt')">返回</button>
+      </div>
+      <div class="cd-layout">
+        <aside class="cd-side">
+          <div class="cd-side-hd">基本信息卡</div>
+          <div class="cd-side-bd">
+            <div class="cd-f"><label>纠纷线索编号</label><input value="5404022026102402272360060070000" readonly style="background:#f7f9fc;color:var(--txt2)"></div>
+            <div class="cd-f"><label>矛盾纠纷名称<em>*</em></label><input value="当事人程伟称：在巴宜区某小区因装修噪音引发邻里纠纷"></div>
+            <div class="cd-f"><label>矛盾纠纷类型</label><select><option>邻里关系</option><option>劳动争议</option><option>婚姻家庭</option><option>经济借贷</option><option>物业服务</option></select></div>
+            <div class="cd-f"><label>矛盾纠纷来源<em>*</em></label><select><option>110指令</option><option>12345推送</option><option>综治网格化推送</option><option>工作排查发现</option><option>部门移交</option></select></div>
+            <div class="cd-f"><label>报道警编号</label><input value="54040220261024022723600700000"></div>
+            <div class="cd-f"><label>登记时间<em>*</em></label><input value="2026-10-26 17:41:21"></div>
+            <div class="cd-f"><label>发生时间<em>*</em></label><input value="2026-10-24 02:27:23"></div>
+            <div class="cd-f"><label>矛盾发生地址<em>*</em></label><input value="西藏自治区林芝市巴宜区八一镇某小区"></div>
+            <div class="cd-f"><label>是否公安管辖</label><select><option>否</option><option>是</option></select></div>
+            <div class="cd-f"><label>简要情况<em>*</em></label><textarea>当事人程伟称：在巴宜区某小区，楼上装修噪音扰民引发口角，民警到场处置。</textarea></div>
+            <div class="cd-f"><label>矛盾纠纷经过</label><textarea>2026-10-24 02:27:23，指挥中心派警至：茶逸是鑫名府2期装修纠纷。民警到场发现：施工方为赶工期连续夜间作业，楼下住户长期受噪音困扰多次沟通无果，双方发生激烈口角；经现场调处，施工方承诺调整作业时段，双方情绪平稳，登记后续调解。登记人：四朗拥姆。</textarea></div>
+            <button class="btn primary" style="width:100%" onclick="toast('演示：基本信息卡已保存')">保存</button>
+          </div>
+        </aside>
+        <div class="cd-main">
+          <div class="cd-sec" id="cdSecParty">
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">当事人信息</span><button class="btn btn-xs primary" onclick="toast('演示：新增当事人信息')">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-bd">
+              <div class="table-wrap"><table class="grid cd-grid">
+                <colgroup><col style="width:16%"><col style="width:8%"><col style="width:6%"><col style="width:11%"><col style="width:24%"><col style="width:12%"><col style="width:10%"></colgroup>
+                <thead><tr><th>证件号码</th><th>姓名</th><th>性别</th><th>人员风险等级</th><th>居住地址</th><th>联系电话</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr><td>51130419800827301X</td><td>程生</td><td>男</td><td><span class="tag orange" title="赋分 46 分 · 复杂区间，触发项：极端言行（中档）">中风险</span></td><td>江虹二路138号6栋1单元2101号</td><td>17308839030</td><td><span class="op-link" data-op="编辑当事人">编辑</span><span class="op-link danger" data-op="注销当事人">注销</span><span class="op-link danger" data-op="查看当事人详情" onclick="cdPartyDetail(0)">详情</span></td></tr>
+                  <tr><td>511023199111011316</td><td>杨伟</td><td>男</td><td><span class="tag green" title="赋分 40 分 · 一般区间，无升红触发项">低风险</span></td><td>河阳市ED县重视实干宁村940号</td><td>18780840632</td><td><span class="op-link" data-op="编辑当事人">编辑</span><span class="op-link danger" data-op="注销当事人">注销</span><span class="op-link danger" data-op="查看当事人详情" onclick="cdPartyDetail(1)">详情</span></td></tr>
+                </tbody>
+              </table></div>
+            </div>
+          </div>
+          <div class="cd-sec" id="cdSecGrade">
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">定级标注</span><button class="btn btn-xs primary" onclick="toast('演示：新增定级标注')">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-bd">
+              <div class="table-wrap"><table class="grid cd-grid">
+                <colgroup><col style="width:9%"><col style="width:34%"><col style="width:16%"><col style="width:11%"><col style="width:20%"><col style="width:10%"></colgroup>
+                <thead><tr><th>纠纷级别</th><th>调级原因</th><th>调级时间</th><th>调级人姓名</th><th>调级人单位</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="tag orange">复杂</span></td><td class="tx">第 3 次调解未达成一致，且乙方已到街道信访窗口登记，综合得分 43 分落入复杂区间</td><td>2026-10-26 17:41:21</td><td>张伟</td><td>巴宜区公安局八一镇派出所</td><td><span class="op-link" data-op="编辑定级标注">编辑</span><span class="op-link danger" data-op="注销定级标注">注销</span><span class="op-link danger" data-op="查看定级依据" onclick="openScore()">依据</span></td></tr>
+                  <tr><td><span class="tag green">一般</span></td><td class="tx">首次登记定级：装修噪音邻里纠纷，双方情绪平稳，历史处置仅 1 次接处警</td><td>2025-11-08 10:20:00</td><td>民警甲</td><td>巴宜区公安局八一镇派出所</td><td><span class="op-link" data-op="编辑定级标注">编辑</span><span class="op-link danger" data-op="注销定级标注">注销</span><span class="op-link danger" data-op="查看定级依据" onclick="openScore()">依据</span></td></tr>
+                </tbody>
+              </table></div>
+            </div>
+          </div>
+          <div class="cd-sec" id="cdSecUnit">
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">涉纠纷单位</span><button class="btn btn-xs primary" onclick="toast('演示：新增涉纠纷单位')">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-bd">
+              <div class="table-wrap"><table class="grid cd-grid">
+                <colgroup><col style="width:17%"><col style="width:16%"><col style="width:20%"><col style="width:11%"><col style="width:15%"><col style="width:11%"><col style="width:10%"></colgroup>
+                <thead><tr><th>单位名称</th><th>社会信用代码</th><th>单位地址</th><th>法定代表人姓名</th><th>法定代表人身份证号码</th><th>联系电话</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr><td>某装饰工程有限公司</td><td>91540400MA6TXXXX1A</td><td>巴宜区八一镇××路 12 号</td><td>罗布</td><td title="540421198502143533">540421198502******33</td><td>139****2211</td><td><span class="op-link" data-op="编辑涉纠纷单位">编辑</span><span class="op-link danger" data-op="注销涉纠纷单位">注销</span><span class="op-link danger" data-op="查看单位详情">详情</span></td></tr>
+                </tbody>
+              </table></div>
+            </div>
+          </div>
+          <div class="cd-sec" id="cdSecMediate">
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">调解信息</span><button class="btn btn-xs primary" onclick="openHandle()">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-bd">
+              <div class="table-wrap"><table class="grid cd-grid">
+                <colgroup><col style="width:16%"><col style="width:16%"><col style="width:14%"><col style="width:9%"><col style="width:22%"><col style="width:9%"><col style="width:14%"></colgroup>
+                <thead><tr><th>调解单位名称</th><th>调解地点</th><th>调解时间</th><th>调解结果</th><th>调解处理信息</th><th>调解人</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr><td>八一镇人民调解委员会</td><td>八一镇某社区调解室</td><td>2026-10-24 02:28:36</td><td><span class="tag green">已解决</span></td><td class="tx">施工方承诺调整作业时段（12:00-14:30、22:00 后停工），双方签订口头协议</td><td>四朗拥姆</td><td><span class="op-link" data-op="编辑调解信息">编辑</span><span class="op-link danger" data-op="注销调解信息">注销</span><span class="op-link danger" data-op="查看调解详情">详情</span></td></tr>
+                  <tr><td>八一镇派出所</td><td>巴宜区八一镇某小区物业办公室</td><td>2026-10-24 14:18:34</td><td><span class="tag green">已解决</span></td><td class="tx">第二次回访调解，双方确认噪音已缓解，乙方撤回信访登记申请</td><td>阿旺罗拉</td><td><span class="op-link" data-op="编辑调解信息">编辑</span><span class="op-link danger" data-op="注销调解信息">注销</span><span class="op-link danger" data-op="查看调解详情">详情</span></td></tr>
+                </tbody>
+              </table></div>
+            </div>
+          </div>
+          <div class="cd-sec" id="cdSecTrace">
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">原因追溯情况</span><button class="btn btn-xs primary" onclick="toast('演示：新增原因追溯记录')">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-bd">
+              <div class="table-wrap"><table class="grid cd-grid">
+                <colgroup><col style="width:10%"><col style="width:14%"><col style="width:52%"><col style="width:10%"><col style="width:14%"></colgroup>
+                <thead><tr><th>原因追溯人</th><th>原因追溯时间</th><th>追溯情况描述</th><th>追溯结果</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr><td>四朗拥姆</td><td>2026-10-24 02:28:36</td><td class="tx">经追溯：纠纷起因为甲方装修工期紧张连续夜间作业，乙方为独居老人对噪音敏感；前期物业两次协调未果升级为警情，属可控的一般邻里噪音矛盾，经调解已缓解。</td><td><span class="tag green">已解决</span></td><td><span class="op-link" data-op="编辑追溯记录">编辑</span><span class="op-link danger" data-op="注销追溯记录">注销</span><span class="op-link danger" data-op="查看追溯详情">详情</span></td></tr>
+                </tbody>
+              </table></div>
+            </div>
+          </div>
+          <div class="cd-sec" id="cdSecDoc">
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">文书信息</span><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-bd">
+              <div class="cd-search">
+                <label>文书名称</label>
+                <select><option>请选择</option><option>调解协议书</option><option>接处警记录</option><option>调解笔录</option><option>送达回执</option></select>
+                <input type="text" placeholder="请输入文书名称关键词">
+                <button class="btn btn-xs primary" onclick="toast('演示：按条件查询文书')">查询</button>
+                <button class="btn btn-xs" onclick="toast('演示：已重置查询条件')">重置</button>
+                <button class="btn btn-xs primary" style="margin-left:auto" onclick="toast('演示：新增文书')">新增文书</button>
+              </div>
+              <div class="table-wrap"><table class="grid cd-grid">
+                <colgroup><col style="width:22%"><col style="width:18%"><col style="width:16%"><col style="width:14%"><col style="width:12%"><col style="width:18%"></colgroup>
+                <thead><tr><th>法律文书名称</th><th>对象名称</th><th>录入时间</th><th>文书状态</th><th>注销标识</th><th>操作</th></tr></thead>
+                <tbody><tr><td colspan="6" class="cd-empty">暂无数据</td></tr></tbody>
+              </table></div>
+              <div style="margin-top:10px"><button class="btn btn-xs" onclick="toast('演示：批量打印已选文书')">批量打印</button></div>
+              <div class="cd-pager">
+                <span>共 0 条</span>
+                <select><option>10条/页</option><option>20条/页</option><option>50条/页</option></select>
+                <button class="pg">‹</button><button class="pg on">1</button><button class="pg">›</button>
+                <span>前往</span><input type="text" value="1" style="width:38px;text-align:center;border:1px solid var(--line);border-radius:5px;padding:3px"><span>页</span>
+              </div>
+            </div>
+          </div>
+          <div class="cd-sec" id="cdSecVisit">
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">回访信息</span><button class="btn btn-xs primary" onclick="openHandle()">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-bd">
+              <div class="table-wrap"><table class="grid cd-grid">
+                <colgroup><col style="width:10%"><col style="width:14%"><col style="width:52%"><col style="width:10%"><col style="width:14%"></colgroup>
+                <thead><tr><th>回访人</th><th>回访时间</th><th>回访情况描述</th><th>回访结果</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr><td>四朗拥姆</td><td>2026-10-24 02:28:36</td><td class="tx">电话回访乙方：反映装修噪音已明显缓解，对调解结果满意；甲方承诺严格遵守作业时段约定。无反弹迹象，暂不需升级防控。</td><td><span class="tag green">已解决</span></td><td><span class="op-link" data-op="编辑回访记录">编辑</span><span class="op-link danger" data-op="注销回访记录">注销</span><span class="op-link danger" data-op="查看回访详情">详情</span></td></tr>
+                </tbody>
+              </table></div>
+            </div>
+          </div>
+          <div class="cd-sec" id="cdSecFollow">
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">跟踪信息</span><button class="btn btn-xs primary" onclick="openHandle()">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-bd">
+              <div class="table-wrap"><table class="grid cd-grid">
+                <colgroup><col style="width:10%"><col style="width:14%"><col style="width:52%"><col style="width:10%"><col style="width:14%"></colgroup>
+                <thead><tr><th>跟踪人</th><th>跟踪时间</th><th>跟踪情况描述</th><th>跟踪结果</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr><td>民警甲</td><td>2026-10-26 10:05:00</td><td class="tx">实地走访双方：甲方已调整作业时段并张贴告知单；乙方情绪平稳，表示暂不再投诉。持续关注至纠纷化解归档。</td><td><span class="tag orange">跟踪中</span></td><td><span class="op-link" data-op="编辑跟踪记录">编辑</span><span class="op-link danger" data-op="注销跟踪记录">注销</span><span class="op-link danger" data-op="查看跟踪详情">详情</span></td></tr>
+                </tbody>
+              </table></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1777,7 +1977,7 @@ table.grid tr:hover td{background:#f7faff}
 
 <script>
 /* ============ 路由与导航 ============ */
-var VIEWS=['home1','home2','operations','population','guard','address','conflict-mgmt','conflict-check','conflict-view'];
+var VIEWS=['home1','home2','operations','population','guard','address','conflict-mgmt','conflict-check','conflict-view','conflict-detail'];
 var charts={};
 function toast(msg){
   var t=document.getElementById('toast');
@@ -2809,8 +3009,77 @@ function openHandle(el){
   if(el&&el.closest){var tr=el.closest('tr');if(tr&&tr.children[1]){var t=tr.children[1].textContent.trim();title='办理：'+(t.length>20?t.slice(0,20)+'…':t);}}
   document.getElementById('hdTitle').textContent=title;
   document.getElementById('cmHandleModal').style.display='flex';
+  renderHandleScore();
 }
 function closeHandle(){document.getElementById('cmHandleModal').style.display='none';}
+/* ---- 矛盾纠纷详情页 ---- */
+function openCmDetail(el){
+  if(el&&el.closest){var tr=el.closest('tr');if(tr&&tr.children[1]){var t=tr.children[1].textContent.trim();var sub=document.getElementById('cdSubTitle');if(sub)sub.textContent='MD2026-5404-0137 · '+(t.length>28?t.slice(0,28)+'…':t);}}
+  showView('conflict-detail');
+}
+function cdFold(btn){
+  var sec=btn.closest('.cd-sec');
+  sec.classList.toggle('off');
+  btn.textContent=sec.classList.contains('off')?'⌄':'⌃';
+}
+function cdPartyDetail(i){
+  var p=SCORE_PARTIES[i];
+  if(!p){toast('演示：查看当事人详情');return;}
+  toast('演示：查看当事人详情 '+p.name+'（'+p.desc+'）');
+}
+/* ---- 办理弹窗 · 赋分参照（按维度） ---- */
+function hdDimQueries(dim,p){
+  var f=p.f||{},D=SCORE_DISPUTE,ls=[];
+  if(dim==='当事人情况'){
+    ls.push('情绪态度查询：'+(f.emotionTxt||'历次接触情绪平稳，无失控记录'));
+    ls.push('极端言行查询：'+(f.extremeTxt||'无威胁、扬言类言行记录'));
+  }else if(dim==='纠纷情况'){
+    ls.push('纠纷台账查询：'+D.type+'，涉及 '+(D.people||'—')+' 人，诉求标的 '+(D.amount||'—'));
+    ls.push('持续时间查询：首次发生 '+(D.first||'—')+'，至今 '+(D.months||'—')+' 个月');
+  }else if(dim==='升级风险'){
+    ls.push('信访涉诉查询：'+(f.petitionTxt||'无信访、诉讼、12345 记录'));
+    ls.push('冲突升级查询：历史最高冲突等级 = '+['无冲突','言语冲突','推搡撕扯','打斗伤人'][D.conflict||0]);
+  }else if(dim==='人员属性与报警'){
+    ls.push('重点人员库比对：'+(f.attr||'无特殊标签'));
+    ls.push('接处警系统查询：一年内同一矛盾报警 '+(f.alarm||0)+' 次');
+  }else if(dim==='化解条件'){
+    ls.push('调解台账查询：累计调解 '+(D.mediate||0)+' 次，最近一次 '+(D.last||'—'));
+    ls.push('诉求与政策边界：标的 '+(D.amount||'—')+'，可协商解决');
+  }
+  return ls;
+}
+function renderHandleScore(){
+  var box=document.getElementById('hdScoreBody');
+  if(!box)return;
+  var dims=scoreDims(),h='';
+  for(var d=0;d<dims.length;d++){
+    var dim=dims[d];
+    h+='<div class="hd-dim"><div class="hd-dim-hd">'+dim.name+'<span class="mx" style="font-size:11.5px;color:var(--txt3);font-weight:400">满分 '+dim.max+' 分</span><span class="rule">'+(DIM_BASIS[dim.name]||'')+'</span></div><div class="hd-dim-bd">';
+    for(var k=0;k<dim.items.length;k++){
+      var it=dim.items[k],idx=SCORE_ITEMS.indexOf(it),B=SCORE_BASIS[it.name]||{};
+      h+='<div class="hd-it"><div class="hd-it-t">'+it.name+'<span class="mx">满分 '+it.max+' 分</span>';
+      for(var pi=0;pi<SCORE_PARTIES.length;pi++){
+        var pp=SCORE_PARTIES[pi];
+        h+='<span class="sc">'+pp.name+' '+(pp.scores[idx]||0)+' 分</span>';
+      }
+      h+='</div>';
+      h+='<div class="hd-rule"><b>赋分规则：</b>0 分：'+it.o0+'；低档 '+it.lo[1]+' 分：'+it.lo[0]+'；中档 '+it.mid[1]+' 分：'+it.mid[0]+'；高档 '+it.hi[1]+' 分：'+it.hi[0]+'</div>';
+      if(B.src)h+='<div class="hd-src">数据来源：'+B.src+(B.pts?('　·　判定要点：'+B.pts):'')+'</div>';
+      h+='<div class="hd-ev"><b>依据（各赋分对象查询结果）：</b><br>';
+      for(var pj=0;pj<SCORE_PARTIES.length;pj++){
+        var pw=SCORE_PARTIES[pj],b=(pw.basis||{})[idx],qs=hdDimQueries(dim.name,pw);
+        h+='<b>'+pw.name+'</b>（当前 '+(pw.scores[idx]||0)+' 分）：';
+        if(b)h+=b.txt+'<span class="sc-src '+(b.auto?'auto':'man')+'">'+(b.auto?'系统自动':'人工研判')+'</span>';
+        else if(qs.length)h+=qs.join('；');
+        else h+='<span class="none">尚未初始化，需民警结合现场情况研判后赋分</span>';
+        h+='<br>';
+      }
+      h+='</div></div>';
+    }
+    h+='</div></div>';
+  }
+  box.innerHTML=h;
+}
 function toggleCloseInfo(){
   var flag=document.getElementById('clFlag').value;
   var res=document.getElementById('mdResult').value;
@@ -3999,6 +4268,12 @@ CHART_DEFS.operations=[
                 <div class="ff full"><label>单位处置要求</label><textarea placeholder="记录对该单位的具体要求、配合事项与完成时限"></textarea></div>
                 <div class="ff full"><label>已关联涉事单位</label><div style="font-size:12px;color:#82878B;line-height:22px">DW5426210001 · 某装饰工程有限公司（施工单位） · 巴宜区八一镇××路 12 号 · 要求：调整作业时段并书面反馈</div></div>
               </div>
+            </div>
+          </div>
+          <div class="wz-sec">
+            <div class="wz-sec-hd">赋分参照（按维度）<span class="tip">每个维度的赋分规则与依据；依据为各赋分对象在该维度的查询结果</span></div>
+            <div class="wz-sec-bd">
+              <div class="hd-score" id="hdScoreBody"></div>
             </div>
           </div>
         </div>
