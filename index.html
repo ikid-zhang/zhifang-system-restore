@@ -229,6 +229,23 @@ table.grid tr:hover td{background:#f7faff}
 .tag.red{background:#fdeaea;color:#e5484d}
 .tag.yel{background:#fff8e1;color:#b58a00}
 .tag.gray{background:#eef1f6;color:#6b7280}
+/* 可点击标签（风险等级 → 赋分参照） */
+.tag.lk{cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px}
+.tag.lk:hover{box-shadow:0 0 0 2px rgba(27,112,224,.20);filter:brightness(.96)}
+/* 当事人赋分参照弹窗 */
+.ps-sum{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.ps-c{flex:1;min-width:160px;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:#f8faff}
+.ps-c .l{font-size:11.5px;color:var(--txt3)}
+.ps-c .n{font-size:18px;font-weight:700;color:var(--txt);line-height:1.5}
+.ps-c .n small{font-size:12px;font-weight:600;color:var(--txt2)}
+.ps-tip{font-size:12px;color:var(--txt2);line-height:1.8;margin-bottom:10px;background:#f8faff;border:1px solid #e3ecfa;border-radius:6px;padding:7px 11px}
+.ps-tip b{color:var(--txt)}
+.ps-dim-q{font-size:12px;color:var(--txt2);background:#f2f6fd;border-radius:6px;padding:6px 10px;margin:0 0 8px;line-height:1.8}
+.ps-dim-q b{color:var(--txt)}
+.ps-rec{display:inline-block;padding:0 8px;border-radius:10px;font-size:11px;line-height:18px;background:#e6f6ee;color:#0e9f5d;font-weight:700}
+.ps-rec.man{background:#fff3e0;color:#e8890c}
+.ps-cur{display:inline-block;padding:0 8px;border-radius:10px;font-size:11px;line-height:18px;background:#eef1f6;color:#6b7280;font-weight:700}
+.ps-cur.on{background:#e8f2ff;color:var(--blue)}
 .op-link{color:var(--blue);cursor:pointer;margin-right:10px;font-size:13px}
 .op-link.danger{color:#e5484d}
 .role-switch{display:inline-flex;align-items:center;font-size:12px;color:var(--txt3);margin-left:12px}
@@ -1855,14 +1872,14 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
         </aside>
         <div class="cd-main">
           <div class="cd-sec" id="cdSecParty">
-            <div class="cd-sec-hd"><span class="bar"></span><span class="t">当事人信息</span><button class="btn btn-xs primary" onclick="toast('演示：新增当事人信息')">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">当事人信息</span><span class="tip" style="font-size:11px;color:#82878B;font-weight:400">点击「人员风险等级」标签可查看该当事人的赋分参照</span><button class="btn btn-xs primary" onclick="toast('演示：新增当事人信息')">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
             <div class="cd-sec-bd">
               <div class="table-wrap"><table class="grid cd-grid">
                 <colgroup><col style="width:16%"><col style="width:8%"><col style="width:6%"><col style="width:11%"><col style="width:24%"><col style="width:12%"><col style="width:10%"></colgroup>
                 <thead><tr><th>证件号码</th><th>姓名</th><th>性别</th><th>人员风险等级</th><th>居住地址</th><th>联系电话</th><th>操作</th></tr></thead>
                 <tbody>
-                  <tr><td>51130419800827301X</td><td>程生</td><td>男</td><td><span class="tag orange" title="赋分 46 分 · 复杂区间，触发项：极端言行（中档）">中风险</span></td><td>江虹二路138号6栋1单元2101号</td><td>17308839030</td><td><span class="op-link" data-op="编辑当事人">编辑</span><span class="op-link danger" data-op="注销当事人">注销</span><span class="op-link danger" data-op="查看当事人详情" onclick="cdPartyDetail(0)">详情</span></td></tr>
-                  <tr><td>511023199111011316</td><td>杨伟</td><td>男</td><td><span class="tag green" title="赋分 40 分 · 一般区间，无升红触发项">低风险</span></td><td>河阳市ED县重视实干宁村940号</td><td>18780840632</td><td><span class="op-link" data-op="编辑当事人">编辑</span><span class="op-link danger" data-op="注销当事人">注销</span><span class="op-link danger" data-op="查看当事人详情" onclick="cdPartyDetail(1)">详情</span></td></tr>
+                  <tr><td>51130419800827301X</td><td>程生</td><td>男</td><td><span class="tag orange lk" title="点击查看赋分参照（5 维度 13 项）· 赋分 46 分 · 复杂区间，触发项：极端言行（中档）" onclick="openPartyScore(0)">中风险</span></td><td>江虹二路138号6栋1单元2101号</td><td>17308839030</td><td><span class="op-link" data-op="编辑当事人">编辑</span><span class="op-link danger" data-op="注销当事人">注销</span><span class="op-link danger" data-op="查看当事人详情" onclick="cdPartyDetail(0)">详情</span></td></tr>
+                  <tr><td>511023199111011316</td><td>杨伟</td><td>男</td><td><span class="tag green lk" title="点击查看赋分参照（5 维度 13 项）· 赋分 40 分 · 一般区间，无升红触发项" onclick="openPartyScore(1)">低风险</span></td><td>河阳市ED县重视实干宁村940号</td><td>18780840632</td><td><span class="op-link" data-op="编辑当事人">编辑</span><span class="op-link danger" data-op="注销当事人">注销</span><span class="op-link danger" data-op="查看当事人详情" onclick="cdPartyDetail(1)">详情</span></td></tr>
                 </tbody>
               </table></div>
             </div>
@@ -2721,8 +2738,8 @@ function putScore(p,name,score,txt,auto){
   if(!p.basis)p.basis={};
   p.basis[idx]={score:score,txt:txt,auto:!!auto};
 }
-function initFromHistory(pid){
-  var p=partyById(pid);if(!p)return;
+/* 按历史处置情况推导赋分：纯计算，写入传入对象，不触碰向导状态 */
+function computeHistoryScores(p){
   var f=p.f||{},D=SCORE_DISPUTE;
   p.scores={};p.basis={};
   putScore(p,'情绪态度',f.emotion||0,f.emotion?('历史处置记载：'+f.emotionTxt+' → '+f.emotion+' 分'):'历史处置数据未覆盖情绪表现，需民警结合最近一次接触研判',!!f.emotion);
@@ -2738,6 +2755,10 @@ function initFromHistory(pid){
   putScore(p,'报警记录',alarmScore(f.alarm),'年内同一矛盾报警 '+(f.alarm||0)+' 次 → '+alarmScore(f.alarm)+' 分',true);
   putScore(p,'化解难度',D.mediate>=3?4:2,D.mediate>=3?('已调解 '+D.mediate+' 次仍未化解，形成僵局 → 4 分'):('调解进展正常，需多次沟通 → 2 分'),true);
   putScore(p,'资源保障',2,'诉求标的 '+D.amount+'，属可协商范围 → 2 分',true);
+}
+function initFromHistory(pid){
+  var p=partyById(pid);if(!p)return;
+  computeHistoryScores(p);
   p.inited=true;
   scGo(SCORE_STEP);
   toast('演示：已按历史处置情况初始化「'+p.name+'」，共 '+partyTotal(p)+' 分');
@@ -3079,6 +3100,74 @@ function renderHandleScore(){
     h+='</div></div>';
   }
   box.innerHTML=h;
+}
+/* ---- 当事人风险等级标签 · 赋分参照弹窗（历史查询推荐赋分） ---- */
+var PS_CUR=-1;
+function partyRecommend(p){
+  var tmp={id:p.id,type:p.type,name:p.name,desc:p.desc,lv:p.lv,scores:{},basis:{},inited:false,f:p.f||{}};
+  computeHistoryScores(tmp);
+  return tmp;
+}
+function openPartyScore(i){
+  var p=SCORE_PARTIES[i];
+  if(!p){toast('演示：该当事人暂无赋分数据');return;}
+  PS_CUR=i;
+  var rec=partyRecommend(p),t=partyTotal(rec),red=isRed(rec);
+  var cur=partyTotal(p),curRed=isRed(p);
+  var h='';
+  h+='<div class="ps-sum">'
+    +'<div class="ps-c"><div class="l">历史查询推荐总分</div><div class="n">'+t+' <small>/ 100 分</small></div></div>'
+    +'<div class="ps-c"><div class="l">推荐等级</div><div class="n">'+suggestLv(t,red)+'</div></div>'
+    +'<div class="ps-c"><div class="l">一票升红</div><div class="n"'+(red?' style="font-size:14px;color:#e5484d"':'')+'>'+(red?('是 · '+redReasons(rec).join('、')):'否')+'</div></div>'
+    +'<div class="ps-c"><div class="l">当前已赋分（'+(p.inited?'已初始化':'未初始化')+'）</div><div class="n">'+cur+' <small>分 · '+suggestLv(cur,curRed)+'</small></div></div>'
+    +'</div>';
+  h+='<div class="ps-tip">下列分值由<b>历史处置情况自动查询推导</b>（接处警、人民调解、信访登记、重点人员库比对、纠纷台账），共 5 个维度 13 个赋分项，供民警赋分时参照；实际取值以赋分向导中人工确认结果为准。</div>';
+  var dims=scoreDims();
+  for(var d=0;d<dims.length;d++){
+    var dim=dims[d],qs=hdDimQueries(dim.name,p),gt=0,k,it,idx;
+    for(k=0;k<dim.items.length;k++)gt+=rec.scores[SCORE_ITEMS.indexOf(dim.items[k])]||0;
+    h+='<div class="hd-dim"><div class="hd-dim-hd">'+dim.name
+      +'<span class="mx" style="font-size:11.5px;color:var(--txt3);font-weight:400">满分 '+dim.max+' 分 · 推荐 '+gt+' 分</span>'
+      +'<span class="rule">'+(DIM_BASIS[dim.name]||'')+'</span></div><div class="hd-dim-bd">';
+    if(qs.length)h+='<div class="ps-dim-q"><b>历史查询：</b>'+qs.join('　|　')+'</div>';
+    for(k=0;k<dim.items.length;k++){
+      it=dim.items[k];idx=SCORE_ITEMS.indexOf(it);
+      var B=SCORE_BASIS[it.name]||{},rv=rec.scores[idx]||0,b=(rec.basis||{})[idx],cv=p.scores[idx]||0;
+      h+='<div class="hd-it"><div class="hd-it-t">'+it.name+'<span class="mx">满分 '+it.max+' 分</span>'
+        +'<span class="ps-rec'+(b&&b.auto?'':' man')+'">推荐 '+rv+' 分 · '+tagOf(idx,rv)+'</span>'
+        +'<span class="ps-cur'+(p.inited?' on':'')+'">'+(p.inited?('当前 '+cv+' 分'):'尚未赋分')+'</span>'
+        +'</div>';
+      h+='<div class="hd-rule"><b>赋分规则：</b>0 分：'+it.o0+'；低档 '+it.lo[1]+' 分：'+it.lo[0]+'；中档 '+it.mid[1]+' 分：'+it.mid[0]+'；高档 '+it.hi[1]+' 分：'+it.hi[0]+'</div>';
+      if(B.src)h+='<div class="hd-src">数据来源：'+B.src+(B.pts?('　·　判定要点：'+B.pts):'')+'</div>';
+      h+='<div class="hd-ev"><b>推荐依据（历史查询）：</b>'+((b&&b.txt)?b.txt:'尚未初始化，需民警结合现场情况研判后赋分')
+        +'<span class="sc-src '+((b&&b.auto)?'auto':'man')+'">'+((b&&b.auto)?'系统自动':'待人工确认')+'</span></div>';
+      if(p.inited&&(p.basis||{})[idx]){
+        var cb=p.basis[idx];
+        h+='<div class="hd-ev" style="background:#fffdf5;border-color:#f3e6c8"><b>当前生效依据：</b>'+cb.txt
+          +'<span class="sc-src '+(cb.auto?'auto':'man')+'">'+(cb.auto?'系统自动':'人工研判')+'</span></div>';
+      }
+      h+='</div>';
+    }
+    h+='</div></div>';
+  }
+  document.getElementById('psBody').innerHTML=h;
+  document.getElementById('psSub').textContent='第 '+(i+1)+' 位当事人 · '+p.name+'（'+p.type+'）· '+p.desc;
+  document.getElementById('partyScoreModal').style.display='flex';
+}
+function closePartyScore(){document.getElementById('partyScoreModal').style.display='none';}
+function psApply(){
+  var p=SCORE_PARTIES[PS_CUR];
+  if(!p){closePartyScore();return;}
+  initFromHistory(p.id);
+  closePartyScore();
+  openPartyScore(PS_CUR);
+  toast('演示：已按历史查询推荐值为「'+p.name+'」赋分，共 '+partyTotal(p)+' 分');
+}
+function psToWizard(){
+  var p=SCORE_PARTIES[PS_CUR];
+  closePartyScore();
+  if(p)curParty=p.id;
+  openScore();
 }
 function toggleCloseInfo(){
   var flag=document.getElementById('clFlag').value;
@@ -4379,6 +4468,17 @@ CHART_DEFS.operations=[
     <div class="wz-sec-hd" style="border-radius:0">赋分依据<span class="tip">《矛盾纠纷赋分标准》· 判定标准 / 数据来源 / 历史依据 / 示例</span></div>
     <div class="sc-basis" id="scBasisBody"></div>
     <div class="pop-foot"><button class="btn" onclick="closeBasis()">关闭</button></div>
+  </div>
+</div>
+<div class="pop-modal-mask" id="partyScoreModal" style="display:none;z-index:330" onclick="if(event.target===this)closePartyScore()">
+  <div class="pop-modal" style="width:min(1040px,95vw);max-height:88vh">
+    <div class="wz-sec-hd" style="border-radius:0">赋分参照 · 当事人<span class="tip" id="psSub"></span><button class="btn btn-xs" onclick="closePartyScore()">关闭</button></div>
+    <div class="pop-modal-bd" id="psBody"></div>
+    <div class="pop-foot">
+      <button class="btn" onclick="closePartyScore()">关闭</button>
+      <button class="btn" onclick="psApply()">按推荐值初始化</button>
+      <button class="btn primary" onclick="psToWizard()">进入赋分向导</button>
+    </div>
   </div>
 </div>
 <div class="fs-mask" id="fsMask"><div class="fs-top"><span class="fs-title" id="fsTitle">图表全屏</span><button class="btn btn-xs" onclick="closeFullscreen()">关闭全屏</button></div><div class="fs-body" id="fsBody"></div></div>
