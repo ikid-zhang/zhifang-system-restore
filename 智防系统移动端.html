@@ -171,6 +171,14 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
 /* 空态 */
 .empty{text-align:center;padding:36px 0;color:var(--txt3);font-size:13px}
 .hint{font-size:11px;color:#4a6fd8;line-height:1.6;padding:10px 12px;background:#eaf1ff;border-radius:14px;margin-bottom:10px}
+/* 12 小时定级与指派 · 超时提醒 */
+.ot-alert{position:relative;display:flex;gap:8px;align-items:flex-start;background:#fdeaea;border:1px solid #f7cdcd;border-radius:14px;padding:10px 11px;margin-bottom:10px}
+.ot-alert .ot-i{width:16px;height:16px;flex:none;margin-top:1px;color:#e5484d}
+.ot-alert .ot-b{flex:1;min-width:0}
+.ot-alert .ot-t{font-size:12.5px;font-weight:600;color:#c0392b;line-height:1.5}
+.ot-alert .ot-s{font-size:11px;color:#a3564e;margin-top:3px;line-height:1.6}
+.ot-alert .ot-x{position:absolute;right:4px;top:4px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;color:#c99090;font-size:15px}
+.tag.ot{background:#e5484d;color:#fff;font-weight:600}
 
 /* ============ 赋分管理 ============ */
 .ms-parties{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px}
@@ -334,8 +342,26 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
     <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">矛盾纠纷</span><span class="ar" onclick="mGo('p-add')">＋上报</span></div>
     <div class="body">
       <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input placeholder="搜索事件名称 / 当事人 / 地点"></div>
+      <div class="ot-alert">
+        <svg class="ot-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.4v.6"/></svg>
+        <div class="ot-b">
+          <div class="ot-t">1 条纠纷已超过 12 小时未完成定级与指派</div>
+          <div class="ot-s">另有 1 条 3 小时内到期。提交后 12 小时内须完成风险定级与责任民警指派，超期自动纳入督办。</div>
+        </div>
+        <span class="ot-x" onclick="this.parentNode.style.display='none'">×</span>
+      </div>
       <div class="seg">
-        <button class="on" onclick="segPick(this)">全部</button><button onclick="segPick(this)">待处置</button><button onclick="segPick(this)">调解中</button><button onclick="segPick(this)">已委托</button><button onclick="segPick(this)">已结案</button>
+        <button class="on" onclick="segPick(this)">全部</button><button onclick="segPick(this)">待定级 2</button><button onclick="segPick(this)">待处置</button><button onclick="segPick(this)">调解中</button><button onclick="segPick(this)">已委托</button><button onclick="segPick(this)">已结案</button>
+      </div>
+      <div class="item" onclick="mGo('p-detail')">
+        <div class="i-hd"><span class="i-t">工布江达县某工地欠薪引发劳资纠纷</span><span class="tag ot">超期未定级 5h</span></div>
+        <div class="i-sub">工布江达县巴河镇某工地 · 涉及 6 人 · 劳动争议</div>
+        <div class="i-ft"><span>上报 2026-10-26 22:10 · 应于 10-27 10:10 前定级</span><span class="ops"><button class="btn-s p" onclick="mGo('p-detail')">去定级</button></span></div>
+      </div>
+      <div class="item" onclick="mGo('p-detail')">
+        <div class="i-hd"><span class="i-t">朗县某村草场地界争议</span><span class="tag o">距定级 3h</span></div>
+        <div class="i-sub">朗县朗镇某村 · 涉及 4 人 · 草场地界</div>
+        <div class="i-ft"><span>上报 2026-10-28 09:40 · 应于 10-28 21:40 前定级</span><span class="ops"><button class="btn-s p" onclick="mGo('p-detail')">去定级</button></span></div>
       </div>
       <div class="item" onclick="mGo('p-detail')">
         <div class="i-hd"><span class="i-t">巴宜区某小区装修噪音引发邻里纠纷</span><span class="tag r">重点</span></div>
@@ -369,6 +395,13 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
   <div class="page" id="p-detail">
     <div class="nav"><button class="bk" onclick="mGo('p-list')">‹</button><span class="tt">纠纷详情</span><span class="ar"></span></div>
     <div class="body">
+      <div class="ot-alert">
+        <svg class="ot-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.4v.6"/></svg>
+        <div class="ot-b">
+          <div class="ot-t">本纠纷已超期 5 小时未完成定级与指派</div>
+          <div class="ot-s">上报时间 2026-10-26 22:10，应于 2026-10-27 10:10 前完成风险定级与责任民警指派，现已自动纳入督办。</div>
+        </div>
+      </div>
       <div class="card"><div class="card-bd">
         <div style="font-size:15px;font-weight:600;line-height:1.5">巴宜区某小区装修噪音引发邻里纠纷</div>
         <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag r">重点级</span><span class="tag o">待处置</span><span class="tag">邻里关系</span></div>
@@ -436,7 +469,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
         </div></div>
       </div>
       <div id="adMore" style="display:none">
-        <div class="hint" style="margin-top:10px">本次排查涉及矛盾纠纷，请跳转至「矛盾纠纷录入」填写事件信息。</div>
+        <div class="hint" style="margin-top:10px">本次排查涉及矛盾纠纷，请跳转至「矛盾纠纷录入」填写事件信息。<b>提交后 12 小时内须完成定级与指派</b>，超期系统自动提醒并纳入督办。</div>
         <div class="item" onclick="mGo('p-dadd')">
           <div class="i-hd"><span class="i-t">填写矛盾纠纷信息</span><span class="tag o">待填写</span></div>
           <div class="i-sub">事件名称、风险等级、涉及领域、矛盾来源、当事人、简要情况</div>
@@ -851,44 +884,11 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
       <button class="p" id="mFinish" style="display:none" onclick="mSaveScore()">生成登记表</button>
     </div>
   </div>
-  <!-- ==================== 我的 ==================== -->
-  <div class="page" id="p-mine">
-    <div class="nav nav-home">
-      <div class="hero" style="margin:0;background:none;padding:0">
-        <div class="u">
-          <div class="av">张</div>
-          <div>
-            <div class="un">张警官</div>
-            <div class="ud">巴宜分局八一派出所 · 社区民警</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="body">
-      <div class="todo" style="grid-template-columns:repeat(3,1fr)">
-        <div class="td"><div class="n">128</div><div class="l">累计调处</div></div>
-        <div class="td"><div class="n">96.2%</div><div class="l">化解率</div></div>
-        <div class="td"><div class="n">42</div><div class="l">本月排查</div></div>
-      </div>
-      <div class="card" style="margin-top:10px">
-        <div class="card-bd" style="padding:0">
-          <div style="padding:13px 12px;border-bottom:1px solid #f0f4fb;display:flex;align-items:center;font-size:14px" onclick="mToast('演示')"><span>我的排查任务</span><span style="margin-left:auto;color:var(--txt3)">›</span></div>
-          <div style="padding:13px 12px;border-bottom:1px solid #f0f4fb;display:flex;align-items:center;font-size:14px" onclick="mToast('演示')"><span>我的纠纷台账</span><span style="margin-left:auto;color:var(--txt3)">›</span></div>
-          <div style="padding:13px 12px;border-bottom:1px solid #f0f4fb;display:flex;align-items:center;font-size:14px" onclick="mToast('演示')"><span>委托办理跟踪</span><span style="margin-left:auto;color:var(--txt3)">›</span></div>
-          <div style="padding:13px 12px;border-bottom:1px solid #f0f4fb;display:flex;align-items:center;font-size:14px" onclick="mToast('演示')"><span>消息通知设置</span><span style="margin-left:auto;color:var(--txt3)">›</span></div>
-          <div style="padding:13px 12px;display:flex;align-items:center;font-size:14px;color:var(--up)" onclick="mToast('演示：退出登录')"><span>退出登录</span></div>
-        </div>
-      </div>
-      <div style="text-align:center;font-size:11px;color:var(--txt3);padding:14px 0">智防系统移动端 v1.0 · 示例市公安局治安管理支队</div>
-    </div>
-  </div>
-
   <div class="tabbar" id="tabbar">
     <div class="tab on" data-page="p-work" data-adv><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></div><span>工作台</span></div>
     <div class="tab" data-page="p-list"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div><span>矛盾纠纷</span><span class="dot">4</span></div>
     <div class="tab" data-page="p-tri"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><span>三地管控</span></div>
     <div class="tab" data-page="p-talk"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.87"/></svg></div><span>警民恳谈</span></div>
-    <div class="tab" data-page="p-mine"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><span>我的</span></div>
   </div>
 
   <div class="toast" id="mToast"></div>
@@ -918,7 +918,7 @@ function mToggleMode(m){
   mApplyMode();
   mToast(MSIMPLE?'演示：已切换为「简单版」（隐藏工作台 / 赋分，调解登记仅保留调解模块）':'演示：已切换为「复杂版」（完整功能）');
 }
-var tabPages=['p-work','p-list','p-tri','p-talk','p-mine'];
+var tabPages=['p-work','p-list','p-tri','p-talk'];
 function mGo(id){
   if(MSIMPLE&&(id==='p-work'||id==='p-score'))id='p-list';
   var all=document.querySelectorAll('.page');
