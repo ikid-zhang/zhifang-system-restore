@@ -633,6 +633,26 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
 .dark-tbl td:first-child{text-align:left;color:#eaf2ff}
 .dark-tbl .num{font-family:'DIN Alternate',DIN,Consolas,monospace;color:#7fe4ff}
 .dark-tbl tr.total td{border-top:1px solid rgba(127,178,242,.4);font-weight:600;color:#ffd76a;background:rgba(127,178,242,.06)}
+/* 首页矛盾纠纷统计 v2：占比条 + 化解率徽标 + 汇总芯片 */
+.dark-tbl.dt2 th{white-space:nowrap;padding:4px 5px}
+.dark-tbl.dt2 td{padding:5px 4px}
+.dark-tbl td.dt-pct{white-space:nowrap}
+.dt-bar{display:inline-block;vertical-align:middle;width:40px;height:5px;border-radius:3px;background:rgba(64,128,220,.18);margin-right:7px;overflow:hidden}
+.dt-bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#2f6fed,#36d0ff);transition:width .3s ease-out}
+.dark-tbl tr.total .dt-bar{background:rgba(127,178,242,.16)}
+.dark-tbl tr.total .dt-bar i{background:linear-gradient(90deg,#ffb03a,#ffd76a)}
+.dark-tbl td.dt-pct em{font-style:normal;color:#bcd6f5;font-variant-numeric:tabular-nums}
+.dark-tbl td.dt-pct em,.dt-rate{font-size:10.5px}
+.dt-rate{display:inline-block;min-width:44px;white-space:nowrap;text-align:center;padding:1px 5px;border-radius:9px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+.dt-rate.g{background:rgba(46,230,168,.14);color:#2ee6a8;border:1px solid rgba(46,230,168,.35)}
+.dt-rate.y{background:rgba(255,176,58,.14);color:#ffb03a;border:1px solid rgba(255,176,58,.35)}
+.dt-rate.r{background:rgba(255,92,92,.14);color:#ff7b7b;border:1px solid rgba(255,92,92,.4)}
+.dark-tbl tbody tr{transition:background .15s ease-out}
+.dark-tbl tbody tr:not(.total):hover td{background:rgba(64,128,220,.10)}
+.dt-chips{display:flex;gap:8px;margin-top:6px}
+.dt-chip{flex:1;display:flex;align-items:baseline;justify-content:center;gap:5px;white-space:nowrap;background:rgba(64,128,220,.10);border:1px solid rgba(64,128,220,.28);border-radius:8px;padding:6px 4px}
+.dt-chip b{font-size:15px;color:#7fe4ff;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.dt-chip span{font-size:11px;color:#8fb0dd}
 .flow-list{display:flex;flex-direction:column;justify-content:space-between;height:100%}
 .fl-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:5px 10px;border-bottom:1px dashed rgba(64,128,220,.22);font-size:12px;color:#bcd6f5}
 .fl-row:last-child{border-bottom:none}
@@ -768,7 +788,7 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
   .grid-guard-charts>*{min-width:0}
   .grid-addr-charts{grid-template-columns:repeat(3,1fr)}
   .sp-grid3{grid-template-columns:1fr 1fr 1fr}
-  .dispute-grid{grid-template-columns:1fr 1fr}
+  .dispute-grid{grid-template-columns:1fr 1.32fr}
   .sc-chart{height:250px}
   .sc-chart.tall{height:440px}
 }
@@ -959,19 +979,23 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
               <div class="cf-jump" data-jump="conflict-mgmt" title="点击进入矛盾纠纷管理">
                 <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷情况（本月：3,268）<span class="go"> › 进入矛盾纠纷首页</span></div>
                 <div class="sc-chart" style="height:170px" id="h1_dispute"></div>
+                <div class="dt-chips">
+                  <div class="dt-chip"><b>3,014</b><span>已化解</span></div>
+                  <div class="dt-chip"><b>254</b><span>在化解</span></div>
+                </div>
               </div>
               <div>
                 <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷类型统计（2026年累计 · 合计3,268件）</div>
-                <table class="dark-tbl">
+                <table class="dark-tbl dt2">
                   <thead><tr><th>纠纷类型</th><th>数量</th><th>占比</th><th>已化解</th><th>化解率</th></tr></thead>
                   <tbody>
-                    <tr><td>婚姻家庭</td><td class="num">1,168</td><td>35.7%</td><td class="num">1,086</td><td>93.0%</td></tr>
-                    <tr><td>邻里关系</td><td class="num">972</td><td>29.7%</td><td class="num">900</td><td>92.6%</td></tr>
-                    <tr><td>劳动争议</td><td class="num">512</td><td>15.7%</td><td class="num">472</td><td>92.2%</td></tr>
-                    <tr><td>借贷纠纷</td><td class="num">386</td><td>11.8%</td><td class="num">352</td><td>91.2%</td></tr>
-                    <tr><td>物业纠纷</td><td class="num">208</td><td>6.4%</td><td class="num">190</td><td>91.3%</td></tr>
-                    <tr><td>其他</td><td class="num">22</td><td>0.7%</td><td class="num">14</td><td>63.6%</td></tr>
-                    <tr class="total"><td>合计</td><td class="num">3,268</td><td>100%</td><td class="num">3,014</td><td>92.2%</td></tr>
+                    <tr><td>婚姻家庭</td><td class="num">1,168</td><td class="dt-pct"><span class="dt-bar"><i style="width:35.7%"></i></span><em>35.7%</em></td><td class="num">1,086</td><td><span class="dt-rate g">93.0%</span></td></tr>
+                    <tr><td>邻里关系</td><td class="num">972</td><td class="dt-pct"><span class="dt-bar"><i style="width:29.7%"></i></span><em>29.7%</em></td><td class="num">900</td><td><span class="dt-rate g">92.6%</span></td></tr>
+                    <tr><td>劳动争议</td><td class="num">512</td><td class="dt-pct"><span class="dt-bar"><i style="width:15.7%"></i></span><em>15.7%</em></td><td class="num">472</td><td><span class="dt-rate g">92.2%</span></td></tr>
+                    <tr><td>借贷纠纷</td><td class="num">386</td><td class="dt-pct"><span class="dt-bar"><i style="width:11.8%"></i></span><em>11.8%</em></td><td class="num">352</td><td><span class="dt-rate g">91.2%</span></td></tr>
+                    <tr><td>物业纠纷</td><td class="num">208</td><td class="dt-pct"><span class="dt-bar"><i style="width:6.4%"></i></span><em>6.4%</em></td><td class="num">190</td><td><span class="dt-rate g">91.3%</span></td></tr>
+                    <tr><td>其他</td><td class="num">22</td><td class="dt-pct"><span class="dt-bar"><i style="width:0.7%"></i></span><em>0.7%</em></td><td class="num">14</td><td><span class="dt-rate r">63.6%</span></td></tr>
+                    <tr class="total"><td>合计</td><td class="num">3,268</td><td class="dt-pct"><span class="dt-bar"><i style="width:100%"></i></span><em>100%</em></td><td class="num">3,014</td><td><span class="dt-rate g">92.2%</span></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -1189,19 +1213,23 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
               <div class="cf-jump" data-jump="conflict-mgmt" title="点击进入矛盾纠纷管理">
                 <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷情况（本月：3,268）<span class="go"> › 进入矛盾纠纷首页</span></div>
                 <div class="sc-chart" style="height:170px" id="h2_dispute"></div>
+                <div class="dt-chips">
+                  <div class="dt-chip"><b>3,014</b><span>已化解</span></div>
+                  <div class="dt-chip"><b>254</b><span>在化解</span></div>
+                </div>
               </div>
               <div>
                 <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷类型统计（2026年累计 · 合计3,268件）</div>
-                <table class="dark-tbl">
+                <table class="dark-tbl dt2">
                   <thead><tr><th>纠纷类型</th><th>数量</th><th>占比</th><th>已化解</th><th>化解率</th></tr></thead>
                   <tbody>
-                    <tr><td>婚姻家庭</td><td class="num">1,168</td><td>35.7%</td><td class="num">1,086</td><td>93.0%</td></tr>
-                    <tr><td>邻里关系</td><td class="num">972</td><td>29.7%</td><td class="num">900</td><td>92.6%</td></tr>
-                    <tr><td>劳动争议</td><td class="num">512</td><td>15.7%</td><td class="num">472</td><td>92.2%</td></tr>
-                    <tr><td>借贷纠纷</td><td class="num">386</td><td>11.8%</td><td class="num">352</td><td>91.2%</td></tr>
-                    <tr><td>物业纠纷</td><td class="num">208</td><td>6.4%</td><td class="num">190</td><td>91.3%</td></tr>
-                    <tr><td>其他</td><td class="num">22</td><td>0.7%</td><td class="num">14</td><td>63.6%</td></tr>
-                    <tr class="total"><td>合计</td><td class="num">3,268</td><td>100%</td><td class="num">3,014</td><td>92.2%</td></tr>
+                    <tr><td>婚姻家庭</td><td class="num">1,168</td><td class="dt-pct"><span class="dt-bar"><i style="width:35.7%"></i></span><em>35.7%</em></td><td class="num">1,086</td><td><span class="dt-rate g">93.0%</span></td></tr>
+                    <tr><td>邻里关系</td><td class="num">972</td><td class="dt-pct"><span class="dt-bar"><i style="width:29.7%"></i></span><em>29.7%</em></td><td class="num">900</td><td><span class="dt-rate g">92.6%</span></td></tr>
+                    <tr><td>劳动争议</td><td class="num">512</td><td class="dt-pct"><span class="dt-bar"><i style="width:15.7%"></i></span><em>15.7%</em></td><td class="num">472</td><td><span class="dt-rate g">92.2%</span></td></tr>
+                    <tr><td>借贷纠纷</td><td class="num">386</td><td class="dt-pct"><span class="dt-bar"><i style="width:11.8%"></i></span><em>11.8%</em></td><td class="num">352</td><td><span class="dt-rate g">91.2%</span></td></tr>
+                    <tr><td>物业纠纷</td><td class="num">208</td><td class="dt-pct"><span class="dt-bar"><i style="width:6.4%"></i></span><em>6.4%</em></td><td class="num">190</td><td><span class="dt-rate g">91.3%</span></td></tr>
+                    <tr><td>其他</td><td class="num">22</td><td class="dt-pct"><span class="dt-bar"><i style="width:0.7%"></i></span><em>0.7%</em></td><td class="num">14</td><td><span class="dt-rate r">63.6%</span></td></tr>
+                    <tr class="total"><td>合计</td><td class="num">3,268</td><td class="dt-pct"><span class="dt-bar"><i style="width:100%"></i></span><em>100%</em></td><td class="num">3,014</td><td><span class="dt-rate g">92.2%</span></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -3490,7 +3518,7 @@ CHART_DEFS.home1=[
     label:{show:false},labelLine:{show:false},silent:true
   }],
   graphic:[
-    {type:'text',left:'center',top:'24%',style:{text:'3,268',fill:'#7fe4ff',fontSize:24,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'24%',style:{text:'3,268',fill:'#7fe4ff',fontSize:27,fontWeight:700,textAlign:'center'}},
     {type:'text',left:'center',top:'47%',style:{text:'本月矛盾纠纷（件）',fill:'#8fb0dd',fontSize:10.5,textAlign:'center'}},
     {type:'text',left:'center',top:'64%',style:{text:'化解率 92.2%',fill:'#2ee6a8',fontSize:10,textAlign:'center'}}
   ]
@@ -3875,7 +3903,7 @@ CHART_DEFS.home2=[
     label:{show:false},labelLine:{show:false},silent:true
   }],
   graphic:[
-    {type:'text',left:'center',top:'24%',style:{text:'3,268',fill:'#7fe4ff',fontSize:24,fontWeight:700,textAlign:'center'}},
+    {type:'text',left:'center',top:'24%',style:{text:'3,268',fill:'#7fe4ff',fontSize:27,fontWeight:700,textAlign:'center'}},
     {type:'text',left:'center',top:'47%',style:{text:'本月矛盾纠纷（件）',fill:'#8fb0dd',fontSize:10.5,textAlign:'center'}},
     {type:'text',left:'center',top:'64%',style:{text:'化解率 92.2%',fill:'#2ee6a8',fontSize:10,textAlign:'center'}}
   ]
