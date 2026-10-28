@@ -678,7 +678,8 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
 .stats-toggle:hover{border-color:var(--blue);color:var(--blue)}
 .stats-toggle svg{width:14px;height:14px;transition:transform .2s}
 .stats-toggle.collapsed svg{transform:rotate(180deg)}
-#guardCharts.collapsed,#addrCharts.collapsed,#popCharts.collapsed{display:none}
+#guardCharts.collapsed,#addrCharts.collapsed,#popCharts.collapsed,
+#cmCharts.collapsed,#ckCharts.collapsed{display:none}
 
 /* ============ 矛盾纠纷模块 ============ */
 .cf-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px}
@@ -1725,7 +1726,9 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
         <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
         <span class="tab-tag">矛盾纠纷管理<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
       </div>
-      <div class="cm5-grid">
+      <div class="addr-stats cm-stats">
+        <div class="addr-stats-hd"><button class="stats-toggle" data-target="cmCharts" onclick="toggleStats(this)" title="收起统计模块" aria-label="收起统计模块"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button></div>
+      <div class="cm5-grid" id="cmCharts">
         <div class="panel">
           <div class="panel-hd">矛盾纠纷总量</div>
           <div class="panel-bd">
@@ -1766,6 +1769,7 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
             </div>
           </div>
         </div>
+      </div>
       </div>
 
       <div class="data-row" style="grid-template-columns:2fr 8fr">
@@ -1827,7 +1831,9 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
         <span class="tab-tag">矛盾纠纷排查<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
       </div>
       <!-- 排查统计（与「矛盾纠纷管理」统计块同构；简单版 / 复杂版均展示） -->
-      <div class="cm5-grid">
+      <div class="addr-stats ck-stats">
+        <div class="addr-stats-hd"><button class="stats-toggle" data-target="ckCharts" onclick="toggleStats(this)" title="收起统计模块" aria-label="收起统计模块"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button></div>
+      <div class="cm5-grid" id="ckCharts">
         <div class="panel">
           <div class="panel-hd">排查总量</div>
           <div class="panel-bd">
@@ -1879,6 +1885,7 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
             <div class="cf-note" title="口径：发现率＝发现矛盾纠纷÷排查记录总量（总量见首张统计卡）；转纠纷登记率＝已转纠纷登记÷发现矛盾纠纷＝118÷162。现场调处化解 44 条指排查当场化解、无需登记入库的简易纠纷；118＋44＝162。">口径：转登记率＝118÷162；现场化解 44 条为当场调处、无需入库的简易纠纷（118＋44＝162）。</div>
           </div>
         </div>
+      </div>
       </div>
 
       <div class="panel">
@@ -2363,9 +2370,22 @@ function pickTab(el){
 function toggleStats(btn){
   var target=btn.getAttribute('data-target')||'guardCharts';
   var g=document.getElementById(target);
+  if(!g)return;
   var c=g.classList.toggle('collapsed');
   btn.classList.toggle('collapsed',c);
-  btn.title=c?'展开统计模块':'收起统计模块';
+  var txt=c?'展开统计模块':'收起统计模块';
+  btn.title=txt;btn.setAttribute('aria-label',txt);
+  /* 展开后重算图表尺寸（折叠期间容器尺寸为 0） */
+  if(!c){
+    var vw=g.closest?g.closest('.view'):null;
+    var vn=vw&&vw.id?vw.id.replace(/^view-/,''):'';
+    setTimeout(function(){
+      Object.keys(charts).forEach(function(v){
+        if(vn&&v!==vn)return;
+        Object.keys(charts[v]||{}).forEach(function(k){if(charts[v][k])charts[v][k].resize();});
+      });
+    },40);
+  }
 }
 var POP_WARN_DATA={
   '甲分局':[['涉恐','8','↑ 2'],['涉毒','156','↑ 8.2%'],['刑释解教','428','↓ 3.1%'],['涉稳','96','↑ 5.4%'],['邪教','12','—'],['肇事肇祸精神病人','34','↑ 1.6%'],['其他重点人员','322','↑ 6.8%']],
