@@ -708,6 +708,14 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
 .stats-toggle.collapsed svg{transform:rotate(180deg)}
 #guardCharts.collapsed,#addrCharts.collapsed,#popCharts.collapsed,
 #cmCharts.collapsed,#ckCharts.collapsed{display:none}
+/* 地址上墙率：四个统计图并排一行（≥1200px）；768–1199px 降级为两列 */
+.ad-wall-panel .panel-hd{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ad-wall-sum{margin-left:8px;font-weight:400;font-size:10.5px;color:var(--txt3);font-variant-numeric:tabular-nums}
+@media (max-width:1439px){.ad-wall-sum .s2{display:none}}
+@media (max-width:1199px){.ad-wall-sum .s2{display:inline}}
+.ad-wall-chart{height:300px}
+@media (max-width:767px){.ad-wall-chart{height:280px}.ad-wall-panel .panel-hd{white-space:normal}.ad-wall-sum{display:block;margin-left:0;margin-top:3px}}
+@media (min-width:768px) and (max-width:1199px){.grid-addr-charts{grid-template-columns:1fr 1fr}}
 
 /* ============ 矛盾纠纷模块 ============ */
 .cf-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px}
@@ -780,7 +788,8 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
   .row-2col{grid-template-columns:1fr 1fr}
   .row-3col{grid-template-columns:repeat(3,1fr)}
   .row-4col{grid-template-columns:repeat(4,1fr)}
-  .grid-pop-charts .chart-light,.grid-guard-charts .chart-light,.grid-addr-charts .chart-light{height:175px!important}
+  .grid-pop-charts .chart-light,.grid-guard-charts .chart-light{height:175px!important}
+  .grid-addr-charts .chart-light{height:230px!important}
 }
 @media (min-width:1200px){
   .grid-home1-r2{grid-template-columns:27% 48% 25%}
@@ -794,7 +803,8 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
   .grid-pop-charts{grid-template-columns:repeat(5,1fr)}
   .grid-guard-charts{grid-template-columns:1.71fr 1fr 1fr 1fr 1fr}
   .grid-guard-charts>*{min-width:0}
-  .grid-addr-charts{grid-template-columns:repeat(3,1fr)}
+  .grid-addr-charts{grid-template-columns:1fr 1fr 1fr 1.4fr}
+  .grid-addr-charts>*{min-width:0}
   .sp-grid3{grid-template-columns:1fr 1fr 1fr}
   .dispute-grid{grid-template-columns:1fr 1.32fr}
   .sc-chart{height:250px}
@@ -1630,6 +1640,12 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
           <div class="panel"><div class="panel-hd">各区县地址分布情况</div><div class="panel-bd"><div class="chart-light" id="ad_dist" style="height:280px"></div></div></div>
           <div class="panel"><div class="panel-hd">二维码绑定情况</div><div class="panel-bd"><div class="chart-light" id="ad_qr" style="height:280px"></div></div></div>
           <div class="panel"><div class="panel-hd">地址层级分类统计</div><div class="panel-bd"><div class="chart-light" id="ad_level" style="height:280px"></div></div></div>
+          <div class="panel ad-wall-panel">
+            <div class="panel-hd" title="统计口径：分母＝标准地址库中地址级别 3–7 的地址数（层级 1–2 为市/区县汇总节点，层级 8 及以上为层户，不计入上墙基数）；分子＝字典 BZDZ_D_QXWBD 中各辖区已上墙地址数；上墙率＝已上墙 ÷ 应上墙 × 100%，目标值 90%">地址上墙率<small class="ad-wall-sum" id="adw_sum">–</small></div>
+            <div class="panel-bd">
+              <div class="chart-light ad-wall-chart" id="ad_wall"></div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="data-row">
@@ -1849,8 +1865,8 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
               <colgroup><col style="width:4%"><col style="width:17%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:9%"><col style="width:10%"><col style="width:10%"><col style="width:18%"></colgroup>
               <thead><tr><th>序号</th><th>事件名称</th><th>矛盾来源</th><th>矛盾纠纷类别</th><th>处理结果</th><th>涉及领域</th><th>管辖分局</th><th>发生时间</th><th>发生地点</th><th style="white-space:nowrap">操作</th></tr></thead>
               <tbody>
-                <tr><td>1</td><td>当事人报警称：工布江达县某工地欠薪引发劳资纠纷 <span class="tag red">超期未定级 5h</span></td><td>工作排查发现</td><td>劳动争议</td><td><span class="tag yel">待定级</span></td><td>劳动用工</td><td>工布江达县公安局</td><td>2026-10-26 22:10:00</td><td>工布江达县某工地</td><td><span class="op-link" data-op="去定级与指派">定级</span><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>2</td><td>当事人报警称：朗县某村草场地界争议 <span class="tag orange">距定级 3h</span></td><td>综治网格化推送</td><td>土地权属</td><td><span class="tag yel">待定级</span></td><td>土地草场</td><td>朗县公安局</td><td>2026-10-28 09:40:00</td><td>朗县某村</td><td><span class="op-link" data-op="去定级与指派">定级</span><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr><td>1</td><td>当事人报警称：工布江达县某工地欠薪引发劳资纠纷 <span class="tag red">超期未定级 5h</span></td><td>工作排查发现</td><td>劳动争议</td><td><span class="tag yel">待定级</span></td><td>劳动用工</td><td>工布江达县公安局</td><td>2026-10-26 22:10:00</td><td>工布江达县某工地</td><td><span class="op-link" data-op="去定级与指派" onclick="openGrade('assign',this)">定级</span><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr><td>2</td><td>当事人报警称：朗县某村草场地界争议 <span class="tag orange">距定级 3h</span></td><td>综治网格化推送</td><td>土地权属</td><td><span class="tag yel">待定级</span></td><td>土地草场</td><td>朗县公安局</td><td>2026-10-28 09:40:00</td><td>朗县某村</td><td><span class="op-link" data-op="去定级与指派" onclick="openGrade('assign',this)">定级</span><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
                 <tr><td>3</td><td>当事人报警称：在巴宜区某小区因装修噪音引发邻里纠纷</td><td>110指令</td><td>邻里关系</td><td><span class="tag green">已化解</span></td><td>家庭邻里</td><td>巴宜分局</td><td>2026-10-22 16:33:24</td><td>巴宜区某小区</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
                 <tr><td>4</td><td>当事人报警称：波密县达兴村某工地劳资纠纷</td><td>110指令</td><td>劳动争议</td><td><span class="tag green">已化解</span></td><td>劳动用工</td><td>波密县公安局</td><td>2026-10-22 12:45:20</td><td>波密县达兴村某工地</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
                 <tr><td>5</td><td>当事人报警称：米林市某酒店欠薪纠纷</td><td>工作排查发现</td><td>劳动争议</td><td><span class="tag orange">正在化解</span></td><td>劳动用工</td><td>米林市公安局</td><td>2026-10-21 21:38:34</td><td>米林市某酒店</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
@@ -1961,8 +1977,8 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
             <colgroup><col style="width:6%"><col style="width:14%"><col style="width:20%"><col style="width:10%"><col style="width:10%"><col style="width:13%"><col style="width:13%"><col style="width:14%"></colgroup>
             <thead><tr><th>序号</th><th>排查时间</th><th>排查地点</th><th>第一责任民警</th><th>联系电话</th><th>是否存在矛盾纠纷</th><th>排查情况</th><th style="white-space:nowrap">操作</th></tr></thead>
             <tbody>
-              <tr><td>1</td><td>2026-10-26 22:10:00</td><td>工布江达县某工地</td><td>民警庚</td><td>133****5566</td><td><span class="tag orange">是</span> <span class="tag red">超期未定级 5h</span></td><td>工地欠薪纠纷，已上报待定级与指派</td><td><span class="op-super"><span class="op-link" data-op="查看排查详情">查看</span></span><span class="op-police"><span class="op-link" data-op="去定级与指派">定级</span><span class="op-link" data-op="查看排查详情">详情</span><span class="op-link" data-op="编辑排查记录">编辑</span><span class="op-link danger" data-op="注销排查记录">注销</span></span></td></tr>
-              <tr><td>2</td><td>2026-10-28 09:40:00</td><td>朗县某村</td><td>民警辛</td><td>132****7788</td><td><span class="tag orange">是</span> <span class="tag yel">距定级 3h</span></td><td>草场地界争议，已上报待定级与指派</td><td><span class="op-super"><span class="op-link" data-op="查看排查详情">查看</span></span><span class="op-police"><span class="op-link" data-op="去定级与指派">定级</span><span class="op-link" data-op="查看排查详情">详情</span><span class="op-link" data-op="编辑排查记录">编辑</span><span class="op-link danger" data-op="注销排查记录">注销</span></span></td></tr>
+              <tr><td>1</td><td>2026-10-26 22:10:00</td><td>工布江达县某工地</td><td>民警庚</td><td>133****5566</td><td><span class="tag orange">是</span> <span class="tag red">超期未定级 5h</span></td><td>工地欠薪纠纷，已上报待定级与指派</td><td><span class="op-super"><span class="op-link" data-op="查看排查详情">查看</span></span><span class="op-police"><span class="op-link" data-op="去定级与指派" onclick="openGrade('assign',this)">定级</span><span class="op-link" data-op="查看排查详情">详情</span><span class="op-link" data-op="编辑排查记录">编辑</span><span class="op-link danger" data-op="注销排查记录">注销</span></span></td></tr>
+              <tr><td>2</td><td>2026-10-28 09:40:00</td><td>朗县某村</td><td>民警辛</td><td>132****7788</td><td><span class="tag orange">是</span> <span class="tag yel">距定级 3h</span></td><td>草场地界争议，已上报待定级与指派</td><td><span class="op-super"><span class="op-link" data-op="查看排查详情">查看</span></span><span class="op-police"><span class="op-link" data-op="去定级与指派" onclick="openGrade('assign',this)">定级</span><span class="op-link" data-op="查看排查详情">详情</span><span class="op-link" data-op="编辑排查记录">编辑</span><span class="op-link danger" data-op="注销排查记录">注销</span></span></td></tr>
               <tr><td>3</td><td>2026-10-22 09:20:00</td><td>巴宜区某小区</td><td>民警甲</td><td>139****1201</td><td><span class="tag green">否</span></td><td>入户走访，未发现矛盾纠纷</td><td><span class="op-super"><span class="op-link" data-op="查看排查详情">查看</span></span><span class="op-police"><span class="op-link" data-op="查看排查详情">详情</span><span class="op-link" data-op="编辑排查记录">编辑</span><span class="op-link danger" data-op="注销排查记录">注销</span></span></td></tr>
               <tr><td>4</td><td>2026-10-22 10:15:00</td><td>波密县某工地</td><td>民警乙</td><td>138****4520</td><td><span class="tag orange">是</span></td><td>工地劳资纠纷已登记，正在开展调解</td><td><span class="op-super"><span class="op-link" data-op="查看排查详情">查看</span></span><span class="op-police"><span class="op-link" data-op="查看排查详情">详情</span><span class="op-link" data-op="编辑排查记录">编辑</span><span class="op-link danger" data-op="注销排查记录">注销</span></span></td></tr>
               <tr><td>5</td><td>2026-10-21 15:40:00</td><td>米林市某村</td><td>民警丙</td><td>137****8812</td><td><span class="tag green">否</span></td><td>村民反映邻里琐事，已现场调处</td><td><span class="op-super"><span class="op-link" data-op="查看排查详情">查看</span></span><span class="op-police"><span class="op-link" data-op="查看排查详情">详情</span><span class="op-link" data-op="编辑排查记录">编辑</span><span class="op-link danger" data-op="注销排查记录">注销</span></span></td></tr>
@@ -2032,9 +2048,9 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
             <option value="y2025">2025 年度（1—12 月）</option>
             <option value="custom">自定义</option>
           </select></span>
-          <span class="f-item">起始月份<select id="rptFrom" onchange="rptRangeChange()"><option value="2025-01">2025-01</option><option value="2025-02">2025-02</option><option value="2025-03">2025-03</option><option value="2025-04">2025-04</option><option value="2025-05">2025-05</option><option value="2025-06">2025-06</option><option value="2025-07">2025-07</option><option value="2025-08">2025-08</option><option value="2025-09">2025-09</option><option value="2025-10">2025-10</option><option value="2025-11">2025-11</option><option value="2025-12">2025-12</option><option value="2026-01">2026-01</option><option value="2026-02">2026-02</option><option value="2026-03">2026-03</option><option value="2026-04">2026-04</option><option value="2026-05">2026-05</option><option value="2026-06">2026-06</option><option value="2026-07">2026-07</option><option value="2026-08">2026-08</option><option value="2026-09">2026-09</option><option value="2026-10">2026-10</option></select></span>
+          <span class="f-item">起始月份<select id="rptFrom" onchange="rptRangeChange()"><option value="2025-01">2025-01</option><option value="2025-02">2025-02</option><option value="2025-03">2025-03</option><option value="2025-04">2025-04</option><option value="2025-05">2025-05</option><option value="2025-06">2025-06</option><option value="2025-07">2025-07</option><option value="2025-08">2025-08</option><option value="2025-09">2025-09</option><option value="2025-10">2025-10</option><option value="2025-11">2025-11</option><option value="2025-12">2025-12</option><option value="2026-01" selected>2026-01</option><option value="2026-02">2026-02</option><option value="2026-03">2026-03</option><option value="2026-04">2026-04</option><option value="2026-05">2026-05</option><option value="2026-06">2026-06</option><option value="2026-07">2026-07</option><option value="2026-08">2026-08</option><option value="2026-09">2026-09</option><option value="2026-10">2026-10</option></select></span>
           <span class="f-item rpt-sep">至</span>
-          <span class="f-item">结束月份<select id="rptTo" onchange="rptRangeChange()"><option value="2025-01">2025-01</option><option value="2025-02">2025-02</option><option value="2025-03">2025-03</option><option value="2025-04">2025-04</option><option value="2025-05">2025-05</option><option value="2025-06">2025-06</option><option value="2025-07">2025-07</option><option value="2025-08">2025-08</option><option value="2025-09">2025-09</option><option value="2025-10">2025-10</option><option value="2025-11">2025-11</option><option value="2025-12">2025-12</option><option value="2026-01">2026-01</option><option value="2026-02">2026-02</option><option value="2026-03">2026-03</option><option value="2026-04">2026-04</option><option value="2026-05">2026-05</option><option value="2026-06">2026-06</option><option value="2026-07">2026-07</option><option value="2026-08">2026-08</option><option value="2026-09">2026-09</option><option value="2026-10">2026-10</option></select></span>
+          <span class="f-item">结束月份<select id="rptTo" onchange="rptRangeChange()"><option value="2025-01">2025-01</option><option value="2025-02">2025-02</option><option value="2025-03">2025-03</option><option value="2025-04">2025-04</option><option value="2025-05">2025-05</option><option value="2025-06">2025-06</option><option value="2025-07">2025-07</option><option value="2025-08">2025-08</option><option value="2025-09">2025-09</option><option value="2025-10">2025-10</option><option value="2025-11">2025-11</option><option value="2025-12">2025-12</option><option value="2026-01">2026-01</option><option value="2026-02">2026-02</option><option value="2026-03">2026-03</option><option value="2026-04">2026-04</option><option value="2026-05">2026-05</option><option value="2026-06">2026-06</option><option value="2026-07">2026-07</option><option value="2026-08">2026-08</option><option value="2026-09">2026-09</option><option value="2026-10" selected>2026-10</option></select></span>
           <button class="btn primary" data-op="演示：按所选周期查询" onclick="rptQuery()">查询</button>
           <button class="btn" data-op="演示：重置为默认周期" onclick="rptReset()">重置</button>
           <span class="rpt-hint" id="rptHint"></span>
@@ -2131,14 +2147,14 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
             </div>
           </div>
           <div class="cd-sec" id="cdSecGrade">
-            <div class="cd-sec-hd"><span class="bar"></span><span class="t">定级标注</span><button class="btn btn-xs primary" onclick="toast('演示：新增定级标注')">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
+            <div class="cd-sec-hd"><span class="bar"></span><span class="t">定级标注</span><button class="btn btn-xs primary" onclick="openGrade('add',this)">＋ 新增</button><button class="fold" onclick="cdFold(this)">⌃</button></div>
             <div class="cd-sec-bd">
               <div class="table-wrap"><table class="grid cd-grid">
                 <colgroup><col style="width:9%"><col style="width:34%"><col style="width:16%"><col style="width:11%"><col style="width:20%"><col style="width:10%"></colgroup>
                 <thead><tr><th>纠纷级别</th><th>调级原因</th><th>调级时间</th><th>调级人姓名</th><th>调级人单位</th><th>操作</th></tr></thead>
                 <tbody>
-                  <tr><td><span class="tag orange">复杂</span></td><td class="tx">第 3 次调解未达成一致，且乙方已到街道信访窗口登记，综合得分 43 分落入复杂区间</td><td>2026-10-26 17:41:21</td><td>张伟</td><td>巴宜区公安局八一镇派出所</td><td><span class="op-link" data-op="编辑定级标注">编辑</span><span class="op-link danger" data-op="注销定级标注">注销</span><span class="op-link danger" data-op="查看定级依据" onclick="openScore()" data-adv>依据</span></td></tr>
-                  <tr><td><span class="tag green">一般</span></td><td class="tx">首次登记定级：装修噪音邻里纠纷，双方情绪平稳，历史处置仅 1 次接处警</td><td>2025-11-08 10:20:00</td><td>民警甲</td><td>巴宜区公安局八一镇派出所</td><td><span class="op-link" data-op="编辑定级标注">编辑</span><span class="op-link danger" data-op="注销定级标注">注销</span><span class="op-link danger" data-op="查看定级依据" onclick="openScore()" data-adv>依据</span></td></tr>
+                  <tr><td><span class="tag orange">关注级</span></td><td class="tx">第 3 次调解未达成一致，且乙方已到街道信访窗口登记，综合得分 43 分落入复杂区间</td><td>2026-10-26 17:41:21</td><td>张伟</td><td>巴宜区公安局八一镇派出所</td><td><span class="op-link" data-op="编辑定级标注" onclick="openGrade('edit',this)">编辑</span><span class="op-link danger" data-op="注销定级标注" onclick="gradeRemove(this)">注销</span><span class="op-link danger" data-op="查看定级依据" onclick="openScore()" data-adv>依据</span></td></tr>
+                  <tr><td><span class="tag green">一般级</span></td><td class="tx">首次登记定级：装修噪音邻里纠纷，双方情绪平稳，历史处置仅 1 次接处警</td><td>2025-11-08 10:20:00</td><td>民警甲</td><td>巴宜区公安局八一镇派出所</td><td><span class="op-link" data-op="编辑定级标注" onclick="openGrade('edit',this)">编辑</span><span class="op-link danger" data-op="注销定级标注" onclick="gradeRemove(this)">注销</span><span class="op-link danger" data-op="查看定级依据" onclick="openScore()" data-adv>依据</span></td></tr>
                 </tbody>
               </table></div>
             </div>
@@ -3165,6 +3181,92 @@ function cmAddSubmit(){closeCmAdd();toast('演示：矛盾纠纷新增成功，�
 function openCheck(){document.getElementById('cmCheckModal').style.display='flex';}
 function closeCheck(){document.getElementById('cmCheckModal').style.display='none';}
 function checkSubmit(){closeCheck();toast('演示：排查记录已登记，12 小时内完成定级与指派');}
+/* -------- 定级标注 / 定级与指派 弹窗 -------- */
+var GRADE_COLOR={'重点级':'red','关注级':'orange','一般级':'green','未定级':'gray'};
+var GRADE_ROW=null,GRADE_MODE='add';
+function gradeNow(){var d=new Date(),p=function(n){return (n<10?'0':'')+n;};
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());}
+function gradeRowOf(el){var n=el;while(n&&n.tagName!=='TR')n=n.parentNode;return n;}
+function gradeSet(id,v){var e=document.getElementById(id);if(e)e.value=(v==null?'':v);}
+function openGrade(mode,el){
+  GRADE_MODE=mode||'add';GRADE_ROW=gradeRowOf(el||null);
+  var m=document.getElementById('cmGradeModal');if(!m)return;
+  var isAssign=(GRADE_MODE==='assign');
+  var asg=m.querySelectorAll('.gr-assign');for(var i=0;i<asg.length;i++)asg[i].style.display=isAssign?'':'none';
+  var title=document.getElementById('gradeTitle'),hint=document.getElementById('gradeHint');
+  if(GRADE_MODE==='edit'&&GRADE_ROW&&GRADE_ROW.cells.length>=5){
+    var c=GRADE_ROW.cells;
+    gradeSet('grLevel',(c[0].textContent||'').trim());gradeSet('grReason',(c[1].textContent||'').trim());
+    gradeSet('grTime',(c[2].textContent||'').trim());gradeSet('grUser',(c[3].textContent||'').trim());
+    gradeSet('grUnit',(c[4].textContent||'').trim());
+    if(title)title.textContent='编辑定级标注';
+  }else{
+    gradeSet('grLevel','关注级');gradeSet('grReason','');gradeSet('grTime',gradeNow());
+    gradeSet('grUser','');gradeSet('grUnit','');
+    if(title)title.textContent=isAssign?'定级与指派':'新增定级标注';
+  }
+  gradeSet('grPolice','');gradeSet('grPhone','');
+  if(hint)hint.textContent=isAssign?'提交后同时完成风险定级与责任民警指派，12 小时计时停止':'风险定级须与责任民警指派在提交后 12 小时内一并完成';
+  m.style.display='flex';
+}
+function closeGrade(){var m=document.getElementById('cmGradeModal');if(m)m.style.display='none';}
+function gradeTag(level){var s=document.createElement('span');s.className='tag '+(GRADE_COLOR[level]||'gray');s.textContent=level;return s;}
+function gradeBuildRow(lv,reason,tm,usr,unit){
+  var tr=document.createElement('tr'),td;
+  td=document.createElement('td');td.appendChild(gradeTag(lv));tr.appendChild(td);
+  td=document.createElement('td');td.className='tx';td.textContent=reason;tr.appendChild(td);
+  [tm,usr,unit].forEach(function(v){var d=document.createElement('td');d.textContent=v;tr.appendChild(d);});
+  td=document.createElement('td');
+  var e=document.createElement('span');e.className='op-link';e.setAttribute('data-op','编辑定级标注');e.textContent='编辑';e.onclick=function(){openGrade('edit',e);};
+  var r=document.createElement('span');r.className='op-link danger';r.setAttribute('data-op','注销定级标注');r.textContent='注销';r.onclick=function(){gradeRemove(r);};
+  var b=document.createElement('span');b.className='op-link danger';b.setAttribute('data-op','查看定级依据');b.setAttribute('data-adv','');b.textContent='依据';b.onclick=function(){openScore();};
+  td.appendChild(e);td.appendChild(r);td.appendChild(b);tr.appendChild(td);
+  return tr;
+}
+function gradeApplyRow(lv,reason,tm,usr,unit){
+  var tbody=document.querySelector('#cdSecGrade tbody');if(!tbody)return;
+  var nr=gradeBuildRow(lv,reason,tm,usr,unit);
+  if(GRADE_MODE==='edit'&&GRADE_ROW&&GRADE_ROW.parentNode===tbody)tbody.replaceChild(nr,GRADE_ROW);
+  else tbody.insertBefore(nr,tbody.firstChild);
+  GRADE_ROW=null;
+}
+function gradeRemove(el){
+  var tr=gradeRowOf(el);if(!tr||!tr.parentNode)return;
+  tr.parentNode.removeChild(tr);GRADE_ROW=null;
+  toast('演示：定级标注已注销');
+}
+function gradeApplyAssign(lv){
+  var tr=GRADE_ROW;if(!tr)return;
+  var sp=tr.getElementsByTagName('span'),del=[],i;
+  for(i=0;i<sp.length;i++){var t=sp[i].textContent||'';if(/超期|距定级/.test(t)||t==='定级')del.push(sp[i]);}
+  for(i=0;i<del.length;i++)if(del[i].parentNode)del[i].parentNode.removeChild(del[i]);
+  var sp2=tr.getElementsByTagName('span');
+  for(i=0;i<sp2.length;i++){if((sp2[i].textContent||'')==='待定级'){sp2[i].textContent=lv;sp2[i].className='tag '+(GRADE_COLOR[lv]||'gray');}}
+  gradeHideBarIfDone(tr);GRADE_ROW=null;
+}
+function gradeHideBarIfDone(tr){
+  var tbl=tr.parentNode;while(tbl&&tbl.tagName!=='TABLE')tbl=tbl.parentNode;if(!tbl)return;
+  var rows=tbl.getElementsByTagName('tr'),i,left=false;
+  for(i=0;i<rows.length;i++){if(/超期|距定级/.test(rows[i].textContent||'')){left=true;break;}}
+  if(left)return;
+  var host=tbl.parentNode;
+  while(host&&!host.querySelector('.ot-bar')&&host.parentNode)host=host.parentNode;
+  var bar=host?host.querySelector('.ot-bar'):null;
+  if(bar)bar.style.display='none';
+}
+function gradeSubmit(){
+  var g=function(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';};
+  var lv=g('grLevel'),reason=g('grReason'),tm=g('grTime'),usr=g('grUser'),unit=g('grUnit'),police=g('grPolice');
+  if(!reason){toast('请填写调级原因');return;}
+  if(!tm){toast('请填写调级时间');return;}
+  if(!usr){toast('请填写调级人姓名');return;}
+  if(!unit){toast('请填写调级人单位');return;}
+  if(GRADE_MODE==='assign'&&!police){toast('请指派责任民警');return;}
+  if(GRADE_MODE==='assign')gradeApplyAssign(lv);
+  else gradeApplyRow(lv,reason,tm,usr,unit);
+  closeGrade();
+  toast(GRADE_MODE==='assign'?'演示：已完成定级与指派，计时停止':(GRADE_MODE==='edit'?'演示：定级标注已保存':'演示：定级标注已新增'));
+}
 function markCompare(root){
   var scope=root||document;
   scope.querySelectorAll('.cm5-cmp i,.cmp').forEach(function(el){
@@ -3531,6 +3633,23 @@ function darkAxis(){
 var CHART_DEFS={};
 var H1_FIRE=[{t:"个人零售",c:"烟花类",x0:0.000,x1:0.686,y0:0.000,y1:0.440,value:56595,color:"#ff5c5c"},{t:"个人零售",c:"爆竹类",x0:0.000,x1:0.686,y0:0.440,y1:0.690,value:32156,color:"#ef6a6e"},{t:"个人零售",c:"礼花弹类",x0:0.000,x1:0.686,y0:0.690,y1:0.840,value:19294,color:"#f48a8d"},{t:"个人零售",c:"组合烟花类",x0:0.000,x1:0.686,y0:0.840,y1:0.940,value:12863,color:"#f8a9ab"},{t:"个人零售",c:"增烟类",x0:0.000,x1:0.686,y0:0.940,y1:0.980,value:5145,color:"#fbc8ca"},{t:"个人零售",c:"其他",x0:0.000,x1:0.686,y0:0.980,y1:1.000,value:2573,color:"#fde4e5"},{t:"商店批发",c:"烟花类",x0:0.686,x1:0.932,y0:0.000,y1:0.440,value:20295,color:"#2f6fed"},{t:"商店批发",c:"爆竹类",x0:0.686,x1:0.932,y0:0.440,y1:0.690,value:11531,color:"#5b8bf2"},{t:"商店批发",c:"礼花弹类",x0:0.686,x1:0.932,y0:0.690,y1:0.840,value:6919,color:"#8fb4ff"},{t:"商店批发",c:"组合烟花类",x0:0.686,x1:0.932,y0:0.840,y1:0.940,value:4612,color:"#b9d4ff"},{t:"商店批发",c:"增烟类",x0:0.686,x1:0.932,y0:0.940,y1:0.980,value:1845,color:"#d5e3ff"},{t:"商店批发",c:"其他",x0:0.686,x1:0.932,y0:0.980,y1:1.000,value:922,color:"#edf3ff"},{t:"单位/集体燃放",c:"烟花类",x0:0.932,x1:0.982,y0:0.000,y1:0.440,value:4125,color:"#17c39a"},{t:"单位/集体燃放",c:"爆竹类",x0:0.932,x1:0.982,y0:0.440,y1:0.690,value:2344,color:"#45cfae"},{t:"单位/集体燃放",c:"礼花弹类",x0:0.932,x1:0.982,y0:0.690,y1:0.840,value:1406,color:"#7fdcc2"},{t:"单位/集体燃放",c:"组合烟花类",x0:0.932,x1:0.982,y0:0.840,y1:0.940,value:938,color:"#b9ecd9"},{t:"单位/集体燃放",c:"增烟类",x0:0.932,x1:0.982,y0:0.940,y1:0.980,value:375,color:"#d5f4ea"},{t:"单位/集体燃放",c:"其他",x0:0.932,x1:0.982,y0:0.980,y1:1.000,value:188,color:"#edfaf6"},{t:"其他",c:"烟花类",x0:0.982,x1:1.000,y0:0.000,y1:0.440,value:1485,color:"#9aa3b2"},{t:"其他",c:"爆竹类",x0:0.982,x1:1.000,y0:0.440,y1:0.690,value:844,color:"#b3bac6"},{t:"其他",c:"礼花弹类",x0:0.982,x1:1.000,y0:0.690,y1:0.840,value:506,color:"#ccd1da"},{t:"其他",c:"组合烟花类",x0:0.982,x1:1.000,y0:0.840,y1:0.940,value:338,color:"#e4e7ec"},{t:"其他",c:"增烟类",x0:0.982,x1:1.000,y0:0.940,y1:0.980,value:135,color:"#f0f2f5"},{t:"其他",c:"其他",x0:0.982,x1:1.000,y0:0.980,y1:1.000,value:67,color:"#f8f9fb"}];
 var AD_LEVELS=[{name:'层户',value:96000,color:'#ffb03a'},{name:'门楼',value:213610,color:'#36b8ff'},{name:'街路巷',value:14320,color:'#2f6fed'}];
+/* 地址上墙率：地址级别 3–7 的地址（分母） ↔ 字典 BZDZ_D_QXWBD 各辖区已上墙地址（分子） */
+var AD_WALL={
+  areas:['甲区','乙县','丙县','丁县','戊县','己县','庚市'],
+  need:[42180,22640,45320,38970,35410,17520,25890],
+  done:[39020,17180,41260,31580,32140,12090,22760],
+  target:90
+};
+function adWallRate(i){return +(AD_WALL.done[i]/AD_WALL.need[i]*100).toFixed(1);}
+function adWallSum(a){return a.reduce(function(s,v){return s+v;},0);}
+function fmtInt(v){return Number(v).toLocaleString();}
+function renderAdWallSum(){
+  var need=adWallSum(AD_WALL.need),done=adWallSum(AD_WALL.done);
+  var rate=+(done/need*100).toFixed(1);
+  var el=document.getElementById('adw_sum');
+  if(el)el.innerHTML='<span class="s1">应上墙 '+fmtInt(need)+'</span><span class="s2"> · 已上墙 '+fmtInt(done)+'</span><span class="s3"> · 上墙率 '+rate.toFixed(1)+'%</span>';
+}
+renderAdWallSum();
 
 /* -------- 首页 v1 图表（保留环形图，列表/卡片改为HTML） -------- */
 CHART_DEFS.home1=[
@@ -4237,7 +4356,44 @@ CHART_DEFS.address=[
       };
     }
   }]
-}}
+}},
+{id:'ad_wall',option:(function(){
+  var A=AD_WALL,T=A.target;
+  var rates=A.need.map(function(n,i){return adWallRate(i);});
+  return {
+    tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(ps){
+      if(!ps||!ps.length)return '';
+      var i=ps[0].dataIndex,left=A.need[i]-A.done[i],r=rates[i],gap=+(r-T).toFixed(1);
+      return '<div style="font-weight:600;margin-bottom:3px">'+A.areas[i]+'</div>'
+        +'<div>应上墙（级别 3–7）：'+fmtInt(A.need[i])+' 条</div>'
+        +'<div>已上墙（BZDZ_D_QXWBD）：'+fmtInt(A.done[i])+' 条</div>'
+        +'<div>未上墙：'+fmtInt(left)+' 条</div>'
+        +'<div>上墙率：<b style="color:'+(r>=T?'#17c39a':'#e5484d')+'">'+r.toFixed(1)+'%</b>（目标 '+T+'%，'+(gap>=0?'+':'')+gap.toFixed(1)+'pp）</div>';
+    }}),
+    legend:{top:0,right:0,textStyle:{color:LIGHT.legendText,fontSize:10},itemWidth:10,itemHeight:7,itemGap:8,data:['应上墙','已上墙','上墙率']},
+    grid:{left:6,right:6,top:28,bottom:0,containLabel:true},
+    xAxis:Object.assign(lightAxis(),{type:'category',data:A.areas,axisLabel:{color:LIGHT.text,fontSize:11,interval:0}}),
+    yAxis:[
+      Object.assign(lightAxis(),{type:'value',
+        min:0,max:function(v){return Math.ceil(v.max/10000)*10000+10000;},
+        splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:function(v){return (v/10000)+'万';}}}),
+      Object.assign(lightAxis(),{type:'value',
+        min:0,max:100,interval:25,splitLine:{show:false},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:'{value}%'}})
+    ],
+    series:[
+      {name:'应上墙',type:'bar',barWidth:16,barGap:'12%',data:A.need,
+        itemStyle:{color:'#dbe7fb',borderRadius:[3,3,0,0]}},
+      {name:'已上墙',type:'bar',barWidth:16,data:A.done,
+        itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#36b8ff'},{offset:1,color:'#2f6fed'}]),borderRadius:[3,3,0,0]},
+        label:{show:true,position:'top',color:'#2f6fed',fontSize:9.5,fontWeight:600,formatter:function(p){return fmtInt(p.value);}}},
+      {name:'上墙率',type:'line',yAxisIndex:1,data:rates,smooth:false,symbol:'circle',symbolSize:6,z:5,
+        lineStyle:{width:2,color:'#ffb03a'},itemStyle:{color:'#ffb03a'},
+        label:{show:true,position:'top',distance:5,fontSize:9.5,fontWeight:700,color:'#e08b1a',formatter:function(p){return p.value.toFixed(1)+'%';}},
+        markLine:{silent:true,symbol:'none',label:{show:false},lineStyle:{color:'#e5484d',type:'dashed',width:1.2},
+          data:[{yAxis:T}]}}
+    ]
+  };
+})()}
 ];
 
 /* -------- 矛盾纠纷图表（浅色） -------- */
@@ -4724,7 +4880,26 @@ function toggleMode(m){
       </div>
     </div>
 
-    <!-- ===== 弹窗：矛盾纠纷委托向导 ===== -->
+    <!-- ===== 弹窗：定级标注 / 定级与指派 ===== -->
+    <div class="pop-modal-mask" id="cmGradeModal" style="display:none;z-index:300" onclick="if(event.target===this)closeGrade()">
+      <div class="pop-modal" style="position:relative;width:min(720px,94vw)">
+        <div class="pop-modal-hd"><span id="gradeTitle">定级标注</span><button class="btn btn-xs" onclick="closeGrade()">关闭</button></div>
+        <div class="cm-wm">严禁泄露公民个人信息和警务工作秘密</div>
+        <div class="cm-form">
+          <div class="ff full" style="padding:0"><div class="sc-dim-t">定级信息<span class="s" id="gradeHint">风险定级须与责任民警指派在提交后 12 小时内一并完成</span></div></div>
+          <div class="ff"><label>纠纷级别<em>*</em></label><select id="grLevel"><option>重点级</option><option>关注级</option><option>一般级</option></select></div>
+          <div class="ff"><label>调级时间<em>*</em></label><input id="grTime" placeholder="YYYY-MM-DD HH:mm:ss"></div>
+          <div class="ff full"><label>调级原因<em>*</em></label><textarea id="grReason" placeholder="请说明本次定级 / 调整级别的依据与理由"></textarea></div>
+          <div class="ff"><label>调级人姓名<em>*</em></label><input id="grUser" placeholder="请输入姓名"></div>
+          <div class="ff"><label>调级人单位<em>*</em></label><input id="grUnit" placeholder="请输入所属单位"></div>
+          <div class="ff gr-assign" style="display:none"><label>责任民警<em>*</em></label><input id="grPolice" placeholder="请输入被指派民警姓名"></div>
+          <div class="ff gr-assign" style="display:none"><label>责任民警电话</label><input id="grPhone" placeholder="请输入联系电话"></div>
+        </div>
+        <div class="pop-foot"><button class="btn" onclick="closeGrade()">取消</button><button class="btn primary" onclick="gradeSubmit()">确认</button></div>
+      </div>
+    </div>
+
+<!-- ===== 弹窗：矛盾纠纷委托向导 ===== -->
     <div class="pop-modal-mask" id="cmEntrustModal" style="display:none;z-index:300" onclick="if(event.target===this)closeEntrust()">
       <div class="pop-modal" style="width:min(880px,94vw)">
         <div class="pop-modal-hd"><span>矛盾纠纷委托</span><button class="btn btn-xs" onclick="closeEntrust()">关闭</button></div>
