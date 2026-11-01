@@ -3720,15 +3720,23 @@ function psToWizard(){
   openScore();
 }
 function toggleCloseInfo(){
-  var flag=document.getElementById('clFlag').value;
-  var res=document.getElementById('mdResult').value;
-  var tip=document.getElementById('clTip');
+  var f=document.getElementById('clFlag'), res=document.getElementById('mdResult'), tip=document.getElementById('clTip');
+  if(!tip||!res)return;
+  var flag=f?f.value:'是';
   if(flag==='否'){tip.textContent='未结案：本次仅登记调解记录，结案信息留待后续填写';tip.style.color='#e5484d';}
-  else if(res==='未达成协议'||res==='终止调解'){tip.textContent='终止调解：请按「终止调解结案」方式填写并说明风险';tip.style.color='#e5484d';}
+  else if(res.value==='未解决'){tip.textContent='调解结果为「未解决」：请填写「未调解工作计划」并说明后续风险';tip.style.color='#e5484d';}
   else {tip.textContent='调解达成或终止后填写，用于闭环归档';tip.style.color='';}
 }
 function hdSubmit(){
-  var flag=document.getElementById('clFlag').value;
+  var simple=(typeof SIMPLE!=='undefined'&&SIMPLE);
+  var flag;
+  if(simple){  /* 简单版仅有调解信息：以调解结果作为纠纷状态 */
+    var r=document.getElementById('mdResult');
+    flag=(r&&r.value==='未解决')?'否':'是';
+  }else{
+    var f=document.getElementById('clFlag');
+    flag=f?f.value:'否';
+  }
   closeHandle();
   toast(flag==='是'?'演示：调解记录已提交，纠纷状态更新为「已解决」':'演示：调解记录已提交，纠纷状态保持「未解决」');
 }
@@ -5124,25 +5132,17 @@ function toggleMode(m){
             <div class="wz-sec-hd">调解信息<span class="tip">一次调解一条记录，可多次调解</span></div>
             <div class="wz-sec-bd">
               <div class="cm-form" style="padding:0">
+                <div class="ff"><label>调解单位名称<em>*</em></label><input placeholder="如：波密县情报指挥中心（办公室、机要文电室）"></div>
+                <div class="ff"><label>调解人<em>*</em></label><input placeholder="请输入调解人姓名"></div>
                 <div class="ff"><label>调解时间<em>*</em></label><input placeholder="请选择时间"></div>
-                <div class="ff"><label>调解方式<em>*</em></label><select><option>现场调解</option><option>视频调解</option><option>电话调解</option><option>背靠背调解</option></select></div>
-                <div class="ff"><label>调解地点</label><input placeholder="请输入地点"></div>
-                <div class="ff"><label>调解单位名称</label><input placeholder="如：八一镇人民调解委员会"></div>
-          <div class="ff"><label>主持调解人<em>*</em></label><input placeholder="请输入"></div>
-                <div class="ff"><label>参与调解人</label><input placeholder="请输入"></div>
-                <div class="ff"><label>当事人到场情况</label><select><option>双方到场</option><option>单方到场</option><option>均未到场</option></select></div>
-                <div class="ff"><label>调解次数</label><input value="第 1 次"></div>
-                <div class="ff"><label>调解结果<em>*</em></label><select id="mdResult" onchange="toggleCloseInfo()"><option>达成协议</option><option>未达成协议</option><option>部分达成协议</option><option>当事人撤回调解</option><option>终止调解</option></select></div>
-                <div class="ff"><label>调解结果代码</label><select><option>请选择</option><option>01 调解成功</option><option>02 部分达成</option><option>03 未达成</option><option>04 终止调解</option></select></div>
-          <div class="ff"><label>协议名称</label><input placeholder="请输入调解协议名称"></div>
-                <div class="ff"><label>是否司法确认</label><select><option>否</option><option>是</option></select></div>
-                <div class="ff full"><label>调解情况记录<em>*</em></label><textarea placeholder="请记录争议焦点、调解过程、双方诉求与让步情况"></textarea></div>
-                <div class="ff full"><label>未调解工作计划</label><textarea placeholder="未达成时填写：下一步工作措施、再次调解时间安排、移交建议"></textarea></div>
-          <div class="ff full"><label>协议主要内容</label><textarea placeholder="请填写协议条款、履行方式与期限"></textarea></div>
+                <div class="ff"><label>调解结果<em>*</em></label><select id="mdResult" onchange="toggleCloseInfo()"><option>已解决</option><option>未解决</option></select></div>
+                <div class="ff full"><label>调解地点</label><input placeholder="请输入调解地点"></div>
+                <div class="ff full"><label>调解处理信息<em>*</em></label><textarea placeholder="请记录争议焦点、调解过程、双方诉求与处理情况"></textarea></div>
+                <div class="ff full"><label>未调解工作计划</label><textarea placeholder="未解决时填写：下一步工作措施、再次调解时间安排、移交建议"></textarea></div>
               </div>
             </div>
           </div>
-          <div class="wz-sec">
+          <div class="wz-sec" data-adv>
             <div class="wz-sec-hd">结案信息<span class="tip" id="clTip">调解达成或终止后填写，用于闭环归档</span></div>
             <div class="wz-sec-bd">
               <div class="cm-form" style="padding:0">
@@ -5169,7 +5169,7 @@ function toggleMode(m){
               </div>
             </div>
           </div>
-          <div class="wz-sec">
+          <div class="wz-sec" data-adv>
             <div class="wz-sec-hd">责任民警与跟踪进展<span class="tip">对应 mdjf_zrmj / mdjf_gzjzqkb，办理过程留痕</span></div>
             <div class="wz-sec-bd">
               <div class="cm-form" style="padding:0">
@@ -5184,7 +5184,7 @@ function toggleMode(m){
               </div>
             </div>
           </div>
-          <div class="wz-sec">
+          <div class="wz-sec" data-adv>
             <div class="wz-sec-hd">监督信息<span class="tip">对应 mdjf_jdxxb，由 24 小时 / 3 日 / 7 日时限引擎生成</span></div>
             <div class="wz-sec-bd">
               <div class="cm-form" style="padding:0">
@@ -5196,7 +5196,7 @@ function toggleMode(m){
               </div>
             </div>
           </div>
-          <div class="wz-sec">
+          <div class="wz-sec" data-adv>
             <div class="wz-sec-hd">涉事单位<span class="tip">对应 mdjf_ssdwb，四路分流环节指定，与「涉纠纷单位」区分</span></div>
             <div class="wz-sec-bd">
               <div class="cm-form" style="padding:0">
@@ -5216,7 +5216,7 @@ function toggleMode(m){
             </div>
           </div>
         </div>
-        <div class="pop-foot"><button class="btn" onclick="closeHandle()">取消</button><button class="btn" onclick="toast('演示：已暂存调解记录')">暂存</button><button class="btn primary" onclick="hdSubmit()">提交</button></div>
+        <div class="pop-foot"><button class="btn" onclick="closeHandle()">取消</button><button class="btn primary" onclick="hdSubmit()">提交</button></div>
       </div>
     </div>
 <div class="pop-modal-mask" id="scoreModal" style="display:none;z-index:320" data-adv onclick="if(event.target===this)closeScore()">

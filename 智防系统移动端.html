@@ -29,7 +29,7 @@ input,select,textarea{font-family:inherit;font-size:14px}
 .modesw span{font-size:10px;line-height:1;padding:4px 9px;border-radius:999px;color:#7b869a;cursor:pointer;white-space:nowrap}
 .modesw span.on{background:#2f6bf6;color:#fff;font-weight:700}
 body.msimple [data-adv]{display:none !important}
-/* 简单版：办理·调解登记 仅保留「调解信息」模块（结案信息等全部隐藏） */
+/* 简单版：办理·调解登记 仅保留「调解信息」模块（结案信息/责任民警/监督信息/涉事单位全部隐藏） */
 .hd-blk{display:block}
 body.msimple .hd-blk{background:#fff;border-radius:18px;box-shadow:var(--sh-sm);padding:14px}
 body.msimple .hd-blk>.form{background:transparent;box-shadow:none;padding:0;border-radius:0;margin-top:0!important}
@@ -533,21 +533,16 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
       <div class="hd-blk">
       <div class="form">
         <div class="fsec">调解信息</div>
+        <div class="fi"><label>调解单位名称<em>*</em></label><input placeholder="如：波密县情报指挥中心（办公室、机要文电室）"></div>
+        <div class="fi"><label>调解人<em>*</em></label><input value="张警官"></div>
         <div class="fi"><label>调解时间<em>*</em></label><input value="2026-10-26 21:30"></div>
-        <div class="fi"><label>调解方式<em>*</em></label><select><option>现场调解</option><option>视频调解</option><option>电话调解</option><option>背靠背调解</option></select></div>
-        <div class="fi"><label>调解地点</label><input placeholder="请输入地点"></div>
-        <div class="fi"><label>调解单位名称</label><input placeholder="如：八一镇人民调解委员会"></div>
-        <div class="fi"><label>主持调解人<em>*</em></label><input value="张警官"></div>
-        <div class="fi"><label>参与调解人</label><input placeholder="请输入"></div>
-        <div class="fi"><label>调解次数</label><input value="第 1 次"></div>
-        <div class="fi"><label>调解结果<em>*</em></label><select id="mdRes" onchange="toggleClose()"><option>达成协议</option><option>部分达成协议</option><option>未达成协议</option><option>当事人撤回调解</option><option>终止调解</option></select></div>
-        <div class="fi"><label>调解情况记录<em>*</em></label><textarea placeholder="请记录争议焦点、调解过程、双方诉求与让步情况"></textarea></div>
-        <div class="fi"><label>调解结果代码</label><select><option>01 调解成功</option><option>02 部分达成</option><option>03 未达成</option><option>04 终止调解</option></select></div>
-        <div class="fi"><label>未调解工作计划</label><textarea placeholder="未达成时填写下一步措施与时间安排"></textarea></div>
-        <div class="fi"><label>协议主要内容</label><textarea placeholder="请填写协议条款、履行方式与期限"></textarea></div>
+        <div class="fi"><label>调解结果<em>*</em></label><select id="mdRes" onchange="toggleClose()"><option>已解决</option><option>未解决</option></select></div>
+        <div class="fi"><label>调解地点</label><input placeholder="请输入调解地点"></div>
+        <div class="fi"><label>调解处理信息<em>*</em></label><textarea placeholder="请记录争议焦点、调解过程、双方诉求与处理情况"></textarea></div>
+        <div class="fi"><label>未调解工作计划</label><textarea placeholder="未解决时填写下一步措施与时间安排"></textarea></div>
       </div>
 
-      <div class="form" style="margin-top:10px">
+      <div class="form" data-adv style="margin-top:10px">
         <div class="fsec">结案信息</div>
         <div class="hint" id="clHint" style="margin-bottom:10px">调解达成或终止后填写，用于闭环归档。</div>
         <div class="fi"><label>是否结案<em>*</em></label><select id="clFlag" onchange="toggleClose()"><option>是</option><option>否</option></select></div>
@@ -600,8 +595,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
         <div class="fi"><label>单位处置要求</label><textarea placeholder="记录对该单位的具体要求与完成时限"></textarea></div>
       </div>
       <div style="display:flex;gap:8px;margin-top:12px">
-        <button class="btn-s gray" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：已暂存调解记录')">暂存</button>
-        <button class="btn-s p" style="flex:2;height:44px;border-radius:8px;font-size:14px" onclick="mHandleSubmit()">提交</button>
+        <button class="btn-s p" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mHandleSubmit()">提交</button>
       </div>
     </div>
   </div>
@@ -1098,11 +1092,12 @@ function toggleDispute(){
   document.getElementById('adMore').style.display=v==='是'?'block':'none';
 }
 function toggleClose(){
-  var flag=document.getElementById('clFlag').value;
-  var res=document.getElementById('mdRes').value;
+  var flag=(document.getElementById('clFlag')||{}).value;
+  var res=(document.getElementById('mdRes')||{}).value;
   var h=document.getElementById('clHint');
+  if(!h)return;
   if(flag==='否'){h.textContent='未结案：本次仅登记调解记录，结案信息留待后续填写。';h.style.color='#e5484d';}
-  else if(res==='未达成协议'||res==='终止调解'){h.textContent='终止调解：请按「终止调解结案」方式填写并说明后续风险。';h.style.color='#e5484d';}
+  else if(res==='未解决'){h.textContent='调解结果为「未解决」：请填写「未调解工作计划」并说明后续风险。';h.style.color='#e5484d';}
   else{h.textContent='调解达成或终止后填写，用于闭环归档。';h.style.color='';}
 }
 /* ===== 委托对象：组织机构树选人 ===== */
@@ -1712,7 +1707,12 @@ function mDelDw(i){M_DW.splice(i,1);mRenderDw();}
 
 /* ===== 调解登记提交 ===== */
 function mHandleSubmit(){
-  var flag=(document.getElementById('clFlag')||{}).value;
+  var flag;
+  if(typeof MSIMPLE!=='undefined'&&MSIMPLE){  /* 简单版仅有调解信息：以调解结果作为纠纷状态 */
+    flag=(document.getElementById('mdRes')||{}).value==='未解决'?'否':'是';
+  }else{
+    flag=(document.getElementById('clFlag')||{}).value;
+  }
   mToast(flag==='否'?'演示：调解记录已提交，纠纷状态保持「未解决」':'演示：调解记录已提交，纠纷状态更新为「已解决」');
 }
 
