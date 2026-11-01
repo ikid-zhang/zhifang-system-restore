@@ -120,6 +120,11 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
 .tag.o{background:#fef1e0;color:#c07208}
 .tag.r{background:#fdeaea;color:var(--up)}
 .tag.gray{background:#f0f2f8;color:var(--txt2)}
+/* 功能标签「应标」：招标文件要求必须具备的功能点 */
+.tag.yb{background:linear-gradient(135deg,#e5484d,#c0202a);color:#fff;font-weight:600;letter-spacing:.2px}
+.yb-mini{display:inline-block;margin-left:3px;padding:0 4px;border-radius:3px;background:#c0202a;color:#fff;font-size:10px;line-height:15px;font-weight:600;vertical-align:1px;font-style:normal}
+.ybtag{position:absolute;top:-4px;right:4px;height:16px;line-height:16px;padding:0 5px;border-radius:8px;background:#c0202a;color:#fff;font-size:9px;font-weight:600;letter-spacing:0}
+.tab .ybtag{top:2px;right:10px}
 .btn-s{height:32px;padding:0 14px;border-radius:999px;color:var(--blue);font-size:12px;font-weight:600;background:#eaf1ff}
 .btn-s.p{background:var(--blue);color:#fff;box-shadow:0 5px 12px rgba(47,107,246,.32)}
 .btn-s.d{color:var(--up);background:#fdeaea}
@@ -340,11 +345,11 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
       <div class="quick">
         <div class="qk" onclick="mGo('p-add')"><div class="qi" style="background:linear-gradient(135deg,#2f6fed,#36b8ff)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div><span>矛盾上报</span></div>
         <div class="qk" onclick="mGo('p-sign')"><div class="qi" style="background:linear-gradient(135deg,#f08a24,#ffb03a)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span>排查签收</span><span class="bd">6</span></div>
-        <div class="qk" onclick="mGo('p-tri')"><div class="qi" style="background:linear-gradient(135deg,#17c39a,#2ee6a8)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><span>三地管控</span></div>
-        <div class="qk" onclick="mGo('p-talk')"><div class="qi" style="background:linear-gradient(135deg,#7F77DD,#AFA9EC)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.87"/></svg></div><span>警民恳谈</span></div>
+        <div class="qk" onclick="mGo('p-tri')"><div class="qi" style="background:linear-gradient(135deg,#17c39a,#2ee6a8)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><span>三地管控</span><span class="ybtag" title="应标功能">应标</span></div>
+        <div class="qk" onclick="mGo('p-talk')"><div class="qi" style="background:linear-gradient(135deg,#7F77DD,#AFA9EC)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.87"/></svg></div><span>警民恳谈</span><span class="ybtag" title="应标功能">应标</span></div>
         <div class="qk" onclick="mGo('p-list')"><div class="qi" style="background:linear-gradient(135deg,#2f6bf6,#4d8bff)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div><span>纠纷列表</span></div>
         <div class="qk" data-adv onclick="mGo('p-score')"><div class="qi" style="background:linear-gradient(135deg,#2f6bf6,#4d8bff)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><span>赋分管理</span></div>
-        <div class="qk" onclick="mGo('p-entrust')"><div class="qi" style="background:linear-gradient(135deg,#BA7517,#EF9F27)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 12h12"/><path d="M12 6l6 6-6 6"/></svg></div><span>委托调解</span></div>
+        <div class="qk" onclick="mGo('p-entrust')"><div class="qi" style="background:linear-gradient(135deg,#BA7517,#EF9F27)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 12h12"/><path d="M12 6l6 6-6 6"/></svg></div><span>委托调解</span><span class="ybtag" title="应标功能">应标</span></div>
         <div class="qk" onclick="mGo('p-dadd')"><div class="qi" style="background:linear-gradient(135deg,#1d4d8f,#2f6bf6)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div><span>纠纷录入</span></div>
       </div>
 
@@ -471,7 +476,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
     </div>
     <div class="actbar">
       <button onclick="mGo('p-handle')">处置</button>
-      <button onclick="mGo('p-entrust')">委托</button>
+      <button onclick="mGo('p-entrust')" title="应标功能">委托<i class="yb-mini">应标</i></button>
       <button data-adv onclick="mGo('p-score')">赋分</button>
       <button class="d" onclick="mToast('演示：注销需填写原因并上级审批')">注销</button>
     </div>
@@ -542,7 +547,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
         <div class="fi"><label>协议主要内容</label><textarea placeholder="请填写协议条款、履行方式与期限"></textarea></div>
       </div>
 
-      <div class="form" data-adv style="margin-top:10px">
+      <div class="form" style="margin-top:10px">
         <div class="fsec">结案信息</div>
         <div class="hint" id="clHint" style="margin-bottom:10px">调解达成或终止后填写，用于闭环归档。</div>
         <div class="fi"><label>是否结案<em>*</em></label><select id="clFlag" onchange="toggleClose()"><option>是</option><option>否</option></select></div>
@@ -596,7 +601,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
       </div>
       <div style="display:flex;gap:8px;margin-top:12px">
         <button class="btn-s gray" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：已暂存调解记录')">暂存</button>
-        <button class="btn-s p" style="flex:2;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：提交成功，纠纷已解决归档')">提交</button>
+        <button class="btn-s p" style="flex:2;height:44px;border-radius:8px;font-size:14px" onclick="mHandleSubmit()">提交</button>
       </div>
     </div>
   </div>
@@ -634,7 +639,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
 
   <!-- ==================== 三地管控 ==================== -->
   <div class="page" id="p-tri">
-    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">三地管控</span><span class="ar"></span></div>
+    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">三地管控<span class="tag yb" style="margin-left:6px;vertical-align:middle" title="应标功能">应标</span></span><span class="ar"></span></div>
     <div class="body">
       <div class="hint">三地＝矛盾纠纷<b>发生地</b>、相关当事人<b>户籍地</b>、<b>经常居住地</b>。三地之间需落实工作衔接与信息共享，由属地责任民警按周期登记管控情况，严防重点人员脱管失控。</div>
       <div class="tri-tabs">
@@ -681,7 +686,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
 
   <!-- ==================== 警民恳谈 ==================== -->
   <div class="page" id="p-talk">
-    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">警民恳谈</span><span class="ar" onclick="mGo('p-talknew')">＋新建</span></div>
+    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">警民恳谈<span class="tag yb" style="margin-left:6px;vertical-align:middle" title="应标功能">应标</span></span><span class="ar" onclick="mGo('p-talknew')">＋新建</span></div>
     <div class="body">
       <div class="hint">通过警民恳谈会、板凳课堂、小院杂谈等形式了解社情民意，收集矛盾纠纷线索；收集到的问题可一键转为排查或纠纷登记。</div>
       <div class="todo" style="margin-bottom:10px">
@@ -710,7 +715,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
 
   <!-- ==================== 警民恳谈 · 新建 ==================== -->
   <div class="page" id="p-talknew">
-    <div class="nav"><button class="bk" onclick="mGo('p-talk')">‹</button><span class="tt">新建恳谈记录</span><span class="ar"></span></div>
+    <div class="nav"><button class="bk" onclick="mGo('p-talk')">‹</button><span class="tt">新建恳谈记录<span class="tag yb" style="margin-left:6px;vertical-align:middle" title="应标功能">应标</span></span><span class="ar"></span></div>
     <div class="body">
       <div class="hint">填写警民恳谈会、板凳课堂、小院杂谈等活动的开展情况；现场收集到的问题可一键转为矛盾纠纷排查或登记。</div>
       <div class="form">
@@ -749,7 +754,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
 
   <!-- ==================== 警民恳谈 · 查看 ==================== -->
   <div class="page" id="p-talkview">
-    <div class="nav"><button class="bk" onclick="mGo('p-talk')">‹</button><span class="tt">恳谈记录详情</span><span class="ar"></span></div>
+    <div class="nav"><button class="bk" onclick="mGo('p-talk')">‹</button><span class="tt">恳谈记录详情<span class="tag yb" style="margin-left:6px;vertical-align:middle" title="应标功能">应标</span></span><span class="ar"></span></div>
     <div class="body">
       <div class="card"><div class="card-bd">
         <div style="font-size:15px;font-weight:600;line-height:1.5">八一镇某社区警民恳谈会</div>
@@ -814,7 +819,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
 
   <!-- ==================== 委托 ==================== -->
   <div class="page" id="p-entrust">
-    <div class="nav"><button class="bk" onclick="mGo('p-detail')">‹</button><span class="tt">委托调解</span><span class="ar"></span></div>
+    <div class="nav"><button class="bk" onclick="mGo('p-detail')">‹</button><span class="tt">委托调解<span class="tag yb" style="margin-left:6px;vertical-align:middle" title="应标功能">应标</span></span><span class="ar"></span></div>
     <div class="body">
       <div class="hint">先选择委托场景，系统按管辖范围与专业方向自动匹配可承接人员；再在<b>组织机构树</b>中展开单位，点选到<b>具体承办人员</b>后方可提交委托。</div>
       <div class="form">
@@ -1021,8 +1026,8 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
   <div class="tabbar" id="tabbar">
     <div class="tab on" data-page="p-work" data-adv><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></div><span>工作台</span></div>
     <div class="tab" data-page="p-list"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div><span>矛盾纠纷</span><span class="dot">4</span></div>
-    <div class="tab" data-page="p-tri"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><span>三地管控</span></div>
-    <div class="tab" data-page="p-talk"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.87"/></svg></div><span>警民恳谈</span></div>
+    <div class="tab" data-page="p-tri"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><span>三地管控</span><span class="ybtag" title="应标功能">应标</span></div>
+    <div class="tab" data-page="p-talk"><div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="#8a97ad" stroke-width="2"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.87"/></svg></div><span>警民恳谈</span><span class="ybtag" title="应标功能">应标</span></div>
   </div>
 
   <div class="toast" id="mToast"></div>
@@ -1050,7 +1055,7 @@ function mToggleMode(m){
   MSIMPLE=(m==='simple');
   try{localStorage.setItem('zf_msimple',MSIMPLE?'1':'0');}catch(e){}
   mApplyMode();
-  mToast(MSIMPLE?'演示：已切换为「简单版」（隐藏工作台 / 赋分，调解登记仅保留调解模块）':'演示：已切换为「复杂版」（完整功能）');
+  mToast(MSIMPLE?'演示：已切换为「简单版」（隐藏工作台 / 赋分，调解登记精简为「调解 + 结案」）':'演示：已切换为「复杂版」（完整功能）');
 }
 var tabPages=['p-work','p-list','p-tri','p-talk'];
 function mGo(id){
@@ -1704,6 +1709,12 @@ function mRenderDw(){
 }
 function mAddDw(){M_DW.push({dwmc:"",shxydm:"",dwdz:"",fddbrxm:"",fddbrsfzh:"",dwlxdh:""});mRenderDw();}
 function mDelDw(i){M_DW.splice(i,1);mRenderDw();}
+
+/* ===== 调解登记提交 ===== */
+function mHandleSubmit(){
+  var flag=(document.getElementById('clFlag')||{}).value;
+  mToast(flag==='否'?'演示：调解记录已提交，纠纷状态保持「未解决」':'演示：调解记录已提交，纠纷状态更新为「已解决」');
+}
 
 /* ===== 警民恳谈 · 新建/查看 ===== */
 var TK_QS=[];
