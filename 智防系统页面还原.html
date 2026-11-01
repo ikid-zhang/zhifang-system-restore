@@ -641,7 +641,7 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
 .dark-tbl td:first-child{text-align:left;color:#eaf2ff}
 .dark-tbl .num{font-family:'DIN Alternate',DIN,Consolas,monospace;color:#7fe4ff}
 .dark-tbl tr.total td{border-top:1px solid rgba(127,178,242,.4);font-weight:600;color:#ffd76a;background:rgba(127,178,242,.06)}
-/* 首页矛盾纠纷统计 v2：占比条 + 化解率徽标 + 汇总芯片 */
+/* 首页矛盾纠纷统计 v2：占比条 + 解决率徽标 + 汇总芯片 */
 .dark-tbl.dt2 th{white-space:nowrap;padding:4px 5px}
 .dark-tbl.dt2 td{padding:5px 4px}
 .dark-tbl td.dt-pct{white-space:nowrap}
@@ -861,7 +861,7 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
 .rpt-tb thead tr.rpt-cap th,.rpt-tb thead tr.rpt-meta th{z-index:5}
 .rpt-tb th.sticky-u{position:sticky;left:0;z-index:4;box-shadow:1px 0 0 0 #dce6f5}
 .rpt-tb td.u{position:sticky;left:0;z-index:2;box-shadow:1px 0 0 0 #dce6f5}
-/* 化解率列：弱化视觉，突出受理 / 化解数值 */
+/* 解决率列：弱化视觉，突出受理 / 化解数值 */
 .rpt-tb td.pc{background:#fcfdff;font-size:11px;color:var(--txt2)}
 .rpt-tb tr:hover td.pc{background:#f3f8ff}
 .rpt-tb td.pc .rpt-rate{font-size:11px;min-width:44px;padding:1px 5px}
@@ -891,6 +891,30 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
 .ck-bar-h s{margin-left:auto;text-decoration:none;font-weight:700;color:#183d70;font-variant-numeric:tabular-nums;white-space:nowrap}
 .ck-bar-tr{display:block;height:10px;background:#e9eef7;border-radius:6px;margin-top:3px;overflow:hidden}
 .ck-bar-f{display:block;height:100%;border-radius:6px}
+/* ---- 处置状态快捷筛选（PC 端） ---- */
+.cf-status-filter{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid #f0f4fa;background:#fff;flex-wrap:wrap}
+.cf-status-filter .lb{font-size:12px;color:var(--txt2);flex:none}
+.cf-status-filter .cf-cnt{margin-left:auto;font-size:12px;color:var(--txt3)}
+.cf-seg{display:inline-flex;background:#eef2f7;border-radius:6px;padding:2px}
+.cf-seg button{cursor:pointer;padding:4px 12px;border:none;background:transparent;border-radius:5px;color:var(--txt2);font-size:12px;font-family:inherit}
+.cf-seg button:hover{color:var(--blue)}
+.cf-seg button.on{background:var(--blue);color:#fff}
+/* ---- 委托对象：组织机构树 ---- */
+.ez-pick{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:760px){.ez-pick{grid-template-columns:1fr}}
+.ez-col{min-width:0}
+.ez-col-hd{font-size:12px;font-weight:700;color:var(--txt);padding:4px 0 6px}
+.ez-tree{max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.ez-tree .tree-item{font-size:12px;padding:8px 10px}
+.ez-tree .tree-children .tree-item{padding-left:26px}
+.ez-person{display:flex;align-items:center;gap:8px}
+.ez-person.active{background:#e8f2ff;color:var(--blue);font-weight:600}
+.ez-av{width:22px;height:22px;border-radius:50%;background:#eef4ff;color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:none}
+.ez-cnt,.ez-role{margin-left:auto;font-size:10px;color:var(--txt3);font-weight:400}
+.ez-sel{border:1px dashed #cfd8e8;border-radius:8px;padding:10px;font-size:12px;color:var(--txt2);background:#fafcff;display:flex;align-items:center;gap:10px;justify-content:space-between}
+.ez-sel .ez-p{display:flex;align-items:center;gap:8px;min-width:0}
+.ez-sel .ez-p b{display:block;font-size:13px;color:var(--txt)}
+.ez-none{color:#9aa3bb}
 </style>
 </head>
 <body>
@@ -998,14 +1022,14 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
                 <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷情况（本月：3,268）<span class="go"> › 进入矛盾纠纷首页</span></div>
                 <div class="sc-chart" style="height:170px" id="h1_dispute"></div>
                 <div class="dt-chips">
-                  <div class="dt-chip"><b>3,014</b><span>已化解</span></div>
-                  <div class="dt-chip"><b>254</b><span>在化解</span></div>
+                  <div class="dt-chip"><b>3,014</b><span>已解决</span></div>
+                  <div class="dt-chip"><b>254</b><span>未办结</span></div>
                 </div>
               </div>
               <div>
                 <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷类型统计（2026年累计 · 合计3,268件）</div>
                 <table class="dark-tbl dt2">
-                  <thead><tr><th>纠纷类型</th><th>数量</th><th>占比</th><th>已化解</th><th>化解率</th></tr></thead>
+                  <thead><tr><th>纠纷类型</th><th>数量</th><th>占比</th><th>已解决</th><th>解决率</th></tr></thead>
                   <tbody>
                     <tr><td>婚姻家庭</td><td class="num">1,168</td><td class="dt-pct"><span class="dt-bar"><i style="width:35.7%"></i></span><em>35.7%</em></td><td class="num">1,086</td><td><span class="dt-rate g">93.0%</span></td></tr>
                     <tr><td>邻里关系</td><td class="num">972</td><td class="dt-pct"><span class="dt-bar"><i style="width:29.7%"></i></span><em>29.7%</em></td><td class="num">900</td><td><span class="dt-rate g">92.6%</span></td></tr>
@@ -1165,7 +1189,7 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
 
       <div class="sc-grid grid-home1-r6">
         <div class="sc-card"><div class="sc-card-hd">安防小区</div><div class="sc-meta"><span>小区总数<b>168</b></span><span>门禁点<b>1,264</b></span><span>常住人口<b>52,300</b></span><span>物业覆盖率<b>86.5%</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_comm" role="img" aria-label="安防小区统计图"></div></div></div>
-        <div class="sc-card cf-jump" data-jump="conflict-mgmt" title="点击进入矛盾纠纷管理"><div class="sc-card-hd">矛盾纠纷排查与化解 <span class="hint">点击查看详情</span></div><div class="sc-meta"><span>本月排查<b>3,268</b></span><span>化解率<b>92.2%</b></span><span>回访满意率<b>95.9%</b></span><span>升级防控<b>328</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_conflict" role="img" aria-label="矛盾纠纷排查与化解统计图"></div></div></div>
+        <div class="sc-card cf-jump" data-jump="conflict-mgmt" title="点击进入矛盾纠纷管理"><div class="sc-card-hd">矛盾纠纷排查与化解 <span class="hint">点击查看详情</span></div><div class="sc-meta"><span>本月排查<b>3,268</b></span><span>解决率<b>92.2%</b></span><span>回访满意率<b>95.9%</b></span><span>升级防控<b>328</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_conflict" role="img" aria-label="矛盾纠纷排查与化解统计图"></div></div></div>
         <div class="sc-card"><div class="sc-card-hd">犬只管理</div><div class="sc-meta"><span>登记总数<b>7,168</b></span><span>电子养犬证<b>6,842</b></span><span>禁养检出<b>1,388</b></span><span>疫苗接种率<b>95.3%</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_dog" role="img" aria-label="犬只管理统计图"></div></div></div>
         <div class="sc-card"><div class="sc-card-hd">问卷调查管理</div><div class="sc-meta"><span>回收问卷<b>12,480</b></span><span>参与率<b>86.4%</b></span><span>满意度均值<b>8.5</b></span><span>目标<b>≥8.5</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_survey" role="img" aria-label="问卷调查管理统计图"></div></div></div>
         <div class="sc-card"><div class="sc-card-hd">平安信箱</div><div class="sc-meta"><span>信件总量<b>1,240</b></span><span>实名率<b>91.5%</b></span><span>平均办理<b>2.3天</b></span><span>按时结案率<b>96.8%</b></span></div><div class="sc-card-bd"><div class="sc-chart" style="height:230px" id="h1_mail" role="img" aria-label="平安信箱统计图"></div></div></div>
@@ -1232,14 +1256,14 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
                 <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷情况（本月：3,268）<span class="go"> › 进入矛盾纠纷首页</span></div>
                 <div class="sc-chart" style="height:170px" id="h2_dispute"></div>
                 <div class="dt-chips">
-                  <div class="dt-chip"><b>3,014</b><span>已化解</span></div>
-                  <div class="dt-chip"><b>254</b><span>在化解</span></div>
+                  <div class="dt-chip"><b>3,014</b><span>已解决</span></div>
+                  <div class="dt-chip"><b>254</b><span>未办结</span></div>
                 </div>
               </div>
               <div>
                 <div style="font-size:12px;color:#8fb0dd;margin-bottom:2px">矛盾纠纷类型统计（2026年累计 · 合计3,268件）</div>
                 <table class="dark-tbl dt2">
-                  <thead><tr><th>纠纷类型</th><th>数量</th><th>占比</th><th>已化解</th><th>化解率</th></tr></thead>
+                  <thead><tr><th>纠纷类型</th><th>数量</th><th>占比</th><th>已解决</th><th>解决率</th></tr></thead>
                   <tbody>
                     <tr><td>婚姻家庭</td><td class="num">1,168</td><td class="dt-pct"><span class="dt-bar"><i style="width:35.7%"></i></span><em>35.7%</em></td><td class="num">1,086</td><td><span class="dt-rate g">93.0%</span></td></tr>
                     <tr><td>邻里关系</td><td class="num">972</td><td class="dt-pct"><span class="dt-bar"><i style="width:29.7%"></i></span><em>29.7%</em></td><td class="num">900</td><td><span class="dt-rate g">92.6%</span></td></tr>
@@ -1713,7 +1737,7 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
         <div class="cf-card hero">
           <div class="hero-main">
             <div class="l">矛盾纠纷总量</div>
-            <div class="f">历史累计入库 · 已化解 3,014 件，整体化解率 <b>92.2%</b></div>
+            <div class="f">历史累计入库 · 已解决 3,014 件，整体解决率 <b>92.2%</b></div>
           </div>
           <div class="hero-num"><span class="v">5,214</span><small>件</small></div>
         </div>
@@ -1730,7 +1754,7 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
 
       <div class="cf-grid3">
         <div class="panel"><div class="panel-hd">矛盾纠纷类型统计</div><div class="panel-bd"><div class="chart-light" id="cf_type" style="height:290px"></div></div></div>
-        <div class="panel"><div class="panel-hd">矛盾纠纷化解情况</div><div class="panel-bd"><div class="chart-light" id="cf_resolve" style="height:290px"></div></div></div>
+        <div class="panel"><div class="panel-hd">矛盾纠纷处置情况</div><div class="panel-bd"><div class="chart-light" id="cf_resolve" style="height:290px"></div></div></div>
         <div class="panel"><div class="panel-hd">矛盾纠纷等级分布</div><div class="panel-bd"><div class="chart-light" id="cf_level" style="height:290px"></div></div></div>
       </div>
 
@@ -1740,7 +1764,7 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
           <div class="table-wrap" style="padding:0 16px 14px">
             <table class="grid cf-report">
               <colgroup><col style="width:24%"><col style="width:14%"><col style="width:14%"><col style="width:16%"><col style="width:16%"></colgroup>
-              <thead><tr><th>纠纷类型</th><th>数量（件）</th><th>占比</th><th>已化解（件）</th><th>化解率</th></tr></thead>
+              <thead><tr><th>纠纷类型</th><th>数量（件）</th><th>占比</th><th>已解决（件）</th><th>解决率</th></tr></thead>
               <tbody>
                 <tr><td>婚姻家庭</td><td><b>1,168</b></td><td>35.7%</td><td>1,086</td><td>93.0%</td></tr>
                 <tr><td>邻里关系</td><td><b>972</b></td><td>29.7%</td><td>900</td><td>92.6%</td></tr>
@@ -1752,21 +1776,21 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
               </tbody>
             </table>
           </div>
-          <div class="cf-note" style="padding:0 16px 14px">校验：1,168＋972＋512＋386＋208＋22＝3,268；已化解 3,014÷3,268＝92.2%。</div>
+          <div class="cf-note" style="padding:0 16px 14px">校验：1,168＋972＋512＋386＋208＋22＝3,268；已解决 3,014÷3,268＝92.2%。</div>
         </div>
         <div class="panel">
-          <div class="panel-hd">统计报表 · 按化解情况</div>
+          <div class="panel-hd">统计报表 · 按处置情况</div>
           <div class="panel-bd">
             <div class="cf-status" style="margin-bottom:12px">
-              <div class="st"><b>3,014</b><span>已化解</span></div>
-              <div class="st"><b>186</b><span>正在化解</span></div>
-              <div class="st"><b>68</b><span>已掌握</span></div>
+              <div class="st"><b>3,014</b><span>已解决</span></div>
+              <div class="st"><b>186</b><span>未解决</span></div>
+              <div class="st"><b>68</b><span>移交</span></div>
               <div class="st"><b>328</b><span>升级防控</span></div>
-              <div class="st"><b>254</b><span>未化解（7.8%）</span></div>
+              <div class="st"><b>254</b><span>未办结（7.8%）</span></div>
             </div>
-            <div class="cf-totalbar"><span class="tt">化解率 92.2%</span><div class="track"><div class="fill" style="width:92.2%;background:linear-gradient(90deg,#17c39a,#2ee6a8)"></div></div><span class="tv">3,014 / 3,268 件</span></div>
-            <div class="cf-totalbar" style="margin-top:8px"><span class="tt">未化解 7.8%</span><div class="track"><div class="fill" style="width:7.8%;background:linear-gradient(90deg,#ff6b6b,#ffb03a)"></div></div><span class="tv">254 / 3,268 件</span></div>
-            <div class="cf-note">口径：未化解＝正在化解 186＋已掌握 68；化解率＝已化解÷当年总量。升级防控 328 件为重点跟进件。</div>
+            <div class="cf-totalbar"><span class="tt">解决率 92.2%</span><div class="track"><div class="fill" style="width:92.2%;background:linear-gradient(90deg,#17c39a,#2ee6a8)"></div></div><span class="tv">3,014 / 3,268 件</span></div>
+            <div class="cf-totalbar" style="margin-top:8px"><span class="tt">未办结 7.8%</span><div class="track"><div class="fill" style="width:7.8%;background:linear-gradient(90deg,#ff6b6b,#ffb03a)"></div></div><span class="tv">254 / 3,268 件</span></div>
+            <div class="cf-note">口径：未办结＝未解决 186＋移交 68；解决率＝已解决÷当年总量。升级防控 328 件为重点跟进件。</div>
           </div>
         </div>
       </div>
@@ -1846,13 +1870,20 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
         <div class="panel" style="min-width:0">
           <div class="filter-bar" style="flex-wrap:nowrap">
             <span class="f-item">矛盾来源<select><option>请选择</option><option>110指令</option><option>案事件系统推送</option><option>综治网格化推送</option><option>12345推送</option><option>工作排查发现</option><option>部门移交</option><option>案件转办移交</option></select></span>
-            <span class="f-item">矛盾纠纷等级<select><option>请选择</option><option>重点级</option><option>关注级</option><option>一般级</option><option>未定级</option></select></span>
-            <span class="f-item">处理结果<select><option>请选择</option><option>已化解</option><option>正在化解</option><option>已掌握</option></select></span>
+            <span class="f-item">矛盾纠纷等级<select><option>请选择</option><option>一般</option><option>关注</option><option>重点</option><option>待定级</option></select></span>
+            <span class="f-item">处理结果<select><option>请选择</option><option>移交</option><option>已解决</option><option>未解决</option></select></span>
             <input type="text" placeholder="请输入完整事件名称" style="flex:1;min-width:90px">
             <button class="btn primary" data-op="演示：查询">查询</button>
             <button class="btn" data-op="演示：重置">重置</button>
             <button class="btn" data-op="演示：高级搜索">高级搜索</button>
             <button class="btn" data-op="演示：赋分管理" onclick="openScore(this)" data-adv>赋分管理</button><button class="btn primary" data-op="演示：新增矛盾纠纷" onclick="openCmAdd()">＋ 新增</button>
+          </div>
+          <div class="cf-status-filter">
+            <span class="lb">处置状态</span>
+            <div class="cf-seg">
+              <button class="on" data-st="all" onclick="pickCfStatus(this)">全部</button><button data-st="待定级" onclick="pickCfStatus(this)">待定级</button><button data-st="移交" onclick="pickCfStatus(this)">移交</button><button data-st="已解决" onclick="pickCfStatus(this)">已解决</button><button data-st="未解决" onclick="pickCfStatus(this)">未解决</button>
+            </div>
+            <span class="cf-cnt" id="cfCnt"></span>
           </div>
           <div class="ot-bar">
             <span class="ot-ic">!</span>
@@ -1865,16 +1896,16 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
               <colgroup><col style="width:4%"><col style="width:17%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:9%"><col style="width:10%"><col style="width:10%"><col style="width:18%"></colgroup>
               <thead><tr><th>序号</th><th>事件名称</th><th>矛盾来源</th><th>矛盾纠纷类别</th><th>处理结果</th><th>涉及领域</th><th>管辖分局</th><th>发生时间</th><th>发生地点</th><th style="white-space:nowrap">操作</th></tr></thead>
               <tbody>
-                <tr><td>1</td><td>当事人报警称：工布江达县某工地欠薪引发劳资纠纷 <span class="tag red">超期未定级 5h</span></td><td>工作排查发现</td><td>劳动争议</td><td><span class="tag yel">待定级</span></td><td>劳动用工</td><td>工布江达县公安局</td><td>2026-10-26 22:10:00</td><td>工布江达县某工地</td><td><span class="op-link" data-op="去定级与指派" onclick="openGrade('assign',this)">定级</span><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>2</td><td>当事人报警称：朗县某村草场地界争议 <span class="tag orange">距定级 3h</span></td><td>综治网格化推送</td><td>土地权属</td><td><span class="tag yel">待定级</span></td><td>土地草场</td><td>朗县公安局</td><td>2026-10-28 09:40:00</td><td>朗县某村</td><td><span class="op-link" data-op="去定级与指派" onclick="openGrade('assign',this)">定级</span><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>3</td><td>当事人报警称：在巴宜区某小区因装修噪音引发邻里纠纷</td><td>110指令</td><td>邻里关系</td><td><span class="tag green">已化解</span></td><td>家庭邻里</td><td>巴宜分局</td><td>2026-10-22 16:33:24</td><td>巴宜区某小区</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>4</td><td>当事人报警称：波密县达兴村某工地劳资纠纷</td><td>110指令</td><td>劳动争议</td><td><span class="tag green">已化解</span></td><td>劳动用工</td><td>波密县公安局</td><td>2026-10-22 12:45:20</td><td>波密县达兴村某工地</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>5</td><td>当事人报警称：米林市某酒店欠薪纠纷</td><td>工作排查发现</td><td>劳动争议</td><td><span class="tag orange">正在化解</span></td><td>劳动用工</td><td>米林市公安局</td><td>2026-10-21 21:38:34</td><td>米林市某酒店</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>6</td><td>当事人报警称：经开区某家庭纠纷警情</td><td>110指令</td><td>婚姻家庭</td><td><span class="tag">已掌握</span></td><td>婚姻情感</td><td>经开区公安分局</td><td>2026-10-21 17:40:35</td><td>经开区某居民小区</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>7</td><td>当事人报警称：波密县某汽修厂噪音扰民</td><td>12345推送</td><td>邻里关系</td><td><span class="tag green">已化解</span></td><td>家庭邻里</td><td>波密县公安局</td><td>2026-10-21 16:29:38</td><td>波密县某汽修厂</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>8</td><td>当事人报警称：高新区某餐馆借款纠纷</td><td>案事件系统推送</td><td>借贷纠纷</td><td><span class="tag orange">正在化解</span></td><td>经济借贷</td><td>高新区公安分局</td><td>2026-10-20 22:54:11</td><td>高新区某餐馆</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>9</td><td>当事人报警称：察隅县某小区停车位纠纷</td><td>综治网格化推送</td><td>物业纠纷</td><td><span class="tag green">已化解</span></td><td>物业服务</td><td>察隅县公安局</td><td>2026-10-20 20:50:25</td><td>察隅县某小区</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
-                <tr><td>10</td><td>当事人报警称：波密县玉普乡某工程队欠薪</td><td>部门移交</td><td>劳动争议</td><td><span class="tag">已掌握</span></td><td>劳动用工</td><td>波密县公安局</td><td>2026-10-20 15:20:35</td><td>波密县玉普乡某工程队</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr data-st="待定级"><td>1</td><td>当事人报警称：工布江达县某工地欠薪引发劳资纠纷 <span class="tag red">超期未定级 5h</span></td><td>工作排查发现</td><td>劳动争议</td><td><span class="tag yel">待定级</span></td><td>劳动用工</td><td>工布江达县公安局</td><td>2026-10-26 22:10:00</td><td>工布江达县某工地</td><td><span class="op-link" data-op="去定级与指派" onclick="openGrade('assign',this)">定级</span><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr data-st="待定级"><td>2</td><td>当事人报警称：朗县某村草场地界争议 <span class="tag orange">距定级 3h</span></td><td>综治网格化推送</td><td>土地权属</td><td><span class="tag yel">待定级</span></td><td>土地草场</td><td>朗县公安局</td><td>2026-10-28 09:40:00</td><td>朗县某村</td><td><span class="op-link" data-op="去定级与指派" onclick="openGrade('assign',this)">定级</span><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr data-st="已解决"><td>3</td><td>当事人报警称：在巴宜区某小区因装修噪音引发邻里纠纷</td><td>110指令</td><td>邻里关系</td><td><span class="tag green">已解决</span></td><td>家庭邻里</td><td>巴宜分局</td><td>2026-10-22 16:33:24</td><td>巴宜区某小区</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr data-st="已解决"><td>4</td><td>当事人报警称：波密县达兴村某工地劳资纠纷</td><td>110指令</td><td>劳动争议</td><td><span class="tag green">已解决</span></td><td>劳动用工</td><td>波密县公安局</td><td>2026-10-22 12:45:20</td><td>波密县达兴村某工地</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr data-st="未解决"><td>5</td><td>当事人报警称：米林市某酒店欠薪纠纷</td><td>工作排查发现</td><td>劳动争议</td><td><span class="tag orange">未解决</span></td><td>劳动用工</td><td>米林市公安局</td><td>2026-10-21 21:38:34</td><td>米林市某酒店</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr data-st="移交"><td>6</td><td>当事人报警称：经开区某家庭纠纷警情</td><td>110指令</td><td>婚姻家庭</td><td><span class="tag">移交</span></td><td>婚姻情感</td><td>经开区公安分局</td><td>2026-10-21 17:40:35</td><td>经开区某居民小区</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr data-st="已解决"><td>7</td><td>当事人报警称：波密县某汽修厂噪音扰民</td><td>12345推送</td><td>邻里关系</td><td><span class="tag green">已解决</span></td><td>家庭邻里</td><td>波密县公安局</td><td>2026-10-21 16:29:38</td><td>波密县某汽修厂</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr data-st="未解决"><td>8</td><td>当事人报警称：高新区某餐馆借款纠纷</td><td>案事件系统推送</td><td>借贷纠纷</td><td><span class="tag orange">未解决</span></td><td>经济借贷</td><td>高新区公安分局</td><td>2026-10-20 22:54:11</td><td>高新区某餐馆</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr data-st="已解决"><td>9</td><td>当事人报警称：察隅县某小区停车位纠纷</td><td>综治网格化推送</td><td>物业纠纷</td><td><span class="tag green">已解决</span></td><td>物业服务</td><td>察隅县公安局</td><td>2026-10-20 20:50:25</td><td>察隅县某小区</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
+                <tr data-st="移交"><td>10</td><td>当事人报警称：波密县玉普乡某工程队欠薪</td><td>部门移交</td><td>劳动争议</td><td><span class="tag">移交</span></td><td>劳动用工</td><td>波密县公安局</td><td>2026-10-20 15:20:35</td><td>波密县玉普乡某工程队</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span><span class="op-link" data-op="委托调解" onclick="openEntrust(this)">委托</span><span class="op-link danger" data-op="注销纠纷">注销</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -1999,7 +2030,7 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
           <div class="table-wrap" style="padding:0 16px 14px">
             <table class="grid cf-report">
               <colgroup><col style="width:24%"><col style="width:14%"><col style="width:14%"><col style="width:16%"><col style="width:16%"></colgroup>
-              <thead><tr><th>纠纷类型</th><th>数量（件）</th><th>占比</th><th>已化解（件）</th><th>化解率</th></tr></thead>
+              <thead><tr><th>纠纷类型</th><th>数量（件）</th><th>占比</th><th>已解决（件）</th><th>解决率</th></tr></thead>
               <tbody>
                 <tr><td>婚姻家庭</td><td><b>1,168</b></td><td>35.7%</td><td>1,086</td><td>93.0%</td></tr>
                 <tr><td>邻里关系</td><td><b>972</b></td><td>29.7%</td><td>900</td><td>92.6%</td></tr>
@@ -2011,21 +2042,21 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
               </tbody>
             </table>
           </div>
-          <div class="cf-note" style="padding:0 16px 14px">校验：1,168＋972＋512＋386＋208＋22＝3,268；已化解 3,014÷3,268＝92.2%。</div>
+          <div class="cf-note" style="padding:0 16px 14px">校验：1,168＋972＋512＋386＋208＋22＝3,268；已解决 3,014÷3,268＝92.2%。</div>
         </div>
         <div class="panel">
-          <div class="panel-hd">统计报表 · 按化解情况</div>
+          <div class="panel-hd">统计报表 · 按处置情况</div>
           <div class="panel-bd">
             <div class="cf-status" style="margin-bottom:12px">
-              <div class="st"><b>3,014</b><span>已化解</span></div>
-              <div class="st"><b>186</b><span>正在化解</span></div>
-              <div class="st"><b>68</b><span>已掌握</span></div>
+              <div class="st"><b>3,014</b><span>已解决</span></div>
+              <div class="st"><b>186</b><span>未解决</span></div>
+              <div class="st"><b>68</b><span>移交</span></div>
               <div class="st"><b>328</b><span>升级防控</span></div>
-              <div class="st"><b>254</b><span>未化解（7.8%）</span></div>
+              <div class="st"><b>254</b><span>未办结（7.8%）</span></div>
             </div>
-            <div class="cf-totalbar"><span class="tt">化解率 92.2%</span><div class="track"><div class="fill" style="width:92.2%;background:linear-gradient(90deg,#17c39a,#2ee6a8)"></div></div><span class="tv">3,014 / 3,268 件</span></div>
-            <div class="cf-totalbar" style="margin-top:8px"><span class="tt">未化解 7.8%</span><div class="track"><div class="fill" style="width:7.8%;background:linear-gradient(90deg,#ff6b6b,#ffb03a)"></div></div><span class="tv">254 / 3,268 件</span></div>
-            <div class="cf-note">口径：未化解＝正在化解 186＋已掌握 68；化解率＝已化解÷当年总量。升级防控 328 件为重点跟进件。</div>
+            <div class="cf-totalbar"><span class="tt">解决率 92.2%</span><div class="track"><div class="fill" style="width:92.2%;background:linear-gradient(90deg,#17c39a,#2ee6a8)"></div></div><span class="tv">3,014 / 3,268 件</span></div>
+            <div class="cf-totalbar" style="margin-top:8px"><span class="tt">未办结 7.8%</span><div class="track"><div class="fill" style="width:7.8%;background:linear-gradient(90deg,#ff6b6b,#ffb03a)"></div></div><span class="tv">254 / 3,268 件</span></div>
+            <div class="cf-note">口径：未办结＝未解决 186＋移交 68；解决率＝已解决÷当年总量。升级防控 328 件为重点跟进件。</div>
           </div>
         </div>
       </div>
@@ -2087,14 +2118,14 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
             <colgroup><col style="width:5%"><col style="width:19%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:7%"><col style="width:6%"><col style="width:8%"><col style="width:8%"><col style="width:11%"><col style="width:12%"><col style="width:6%"><col style="width:5%"></colgroup>
             <thead><tr><th>序号</th><th>事件名称</th><th>矛盾来源</th><th>矛盾纠纷类别</th><th>处理结果</th><th>涉及领域</th><th>当事人数</th><th>管辖分局</th><th>管辖市局</th><th>发生时间</th><th>发生地点</th><th>是否移交</th><th style="white-space:nowrap">操作</th></tr></thead>
             <tbody>
-              <tr><td>1</td><td>当事人报警称：在巴宜区某小区因装修噪音引发邻里纠纷</td><td>110指令</td><td>治安调解（含简易治安调解）</td><td><span class="tag green">已化解</span></td><td>邻里关系</td><td>3</td><td>540402000000</td><td>540400000000</td><td>2026-10-22 16:33:24</td><td>巴宜区某小区</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
-              <tr><td>2</td><td>当事人报警称：波密县达兴村某工地劳资纠纷</td><td>110指令</td><td>民事调解</td><td><span class="tag green">已化解</span></td><td>劳动争议</td><td>2</td><td>540424000000</td><td>540400000000</td><td>2026-10-22 12:45:20</td><td>波密县达兴村某工地</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
-              <tr><td>3</td><td>当事人报警称：米林市某酒店欠薪纠纷</td><td>工作排查发现</td><td>民事调解</td><td><span class="tag orange">正在化解</span></td><td>劳动争议</td><td>2</td><td>540481000000</td><td>540400000000</td><td>2026-10-21 21:38:34</td><td>米林市某酒店</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
-              <tr><td>4</td><td>当事人报警称：经开区某家庭纠纷警情</td><td>110指令</td><td>治安调解（含简易治安调解）</td><td><span class="tag">已掌握</span></td><td>婚姻家庭</td><td>1</td><td>540402000000</td><td>540400000000</td><td>2026-10-21 17:40:35</td><td>经开区某小区</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
-              <tr><td>5</td><td>当事人报警称：波密县某汽修厂噪音扰民</td><td>12345推送</td><td>民事调解</td><td><span class="tag green">已化解</span></td><td>邻里关系</td><td>3</td><td>540424000000</td><td>540400000000</td><td>2026-10-21 16:29:38</td><td>波密县某汽修厂</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
-              <tr><td>6</td><td>当事人报警称：高新区某餐馆借款纠纷</td><td>案事件系统推送</td><td>民事调解</td><td><span class="tag orange">正在化解</span></td><td>借贷纠纷</td><td>2</td><td>540402000000</td><td>540400000000</td><td>2026-10-20 22:54:11</td><td>高新区某餐馆</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
-              <tr><td>7</td><td>当事人报警称：察隅县某小区停车位纠纷</td><td>综治网格化推送</td><td>民事调解</td><td><span class="tag green">已化解</span></td><td>物业纠纷</td><td>2</td><td>540425000000</td><td>540400000000</td><td>2026-10-20 20:50:25</td><td>察隅县某小区</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
-              <tr><td>8</td><td>当事人报警称：波密县玉普乡某工程队欠薪</td><td>部门移交</td><td>民事调解</td><td><span class="tag">已掌握</span></td><td>劳动争议</td><td>4</td><td>540424000000</td><td>540400000000</td><td>2026-10-20 15:20:35</td><td>波密县玉普乡某工地</td><td>是</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>1</td><td>当事人报警称：在巴宜区某小区因装修噪音引发邻里纠纷</td><td>110指令</td><td>治安调解（含简易治安调解）</td><td><span class="tag green">已解决</span></td><td>邻里关系</td><td>3</td><td>540402000000</td><td>540400000000</td><td>2026-10-22 16:33:24</td><td>巴宜区某小区</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>2</td><td>当事人报警称：波密县达兴村某工地劳资纠纷</td><td>110指令</td><td>民事调解</td><td><span class="tag green">已解决</span></td><td>劳动争议</td><td>2</td><td>540424000000</td><td>540400000000</td><td>2026-10-22 12:45:20</td><td>波密县达兴村某工地</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>3</td><td>当事人报警称：米林市某酒店欠薪纠纷</td><td>工作排查发现</td><td>民事调解</td><td><span class="tag orange">未解决</span></td><td>劳动争议</td><td>2</td><td>540481000000</td><td>540400000000</td><td>2026-10-21 21:38:34</td><td>米林市某酒店</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>4</td><td>当事人报警称：经开区某家庭纠纷警情</td><td>110指令</td><td>治安调解（含简易治安调解）</td><td><span class="tag">移交</span></td><td>婚姻家庭</td><td>1</td><td>540402000000</td><td>540400000000</td><td>2026-10-21 17:40:35</td><td>经开区某小区</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>5</td><td>当事人报警称：波密县某汽修厂噪音扰民</td><td>12345推送</td><td>民事调解</td><td><span class="tag green">已解决</span></td><td>邻里关系</td><td>3</td><td>540424000000</td><td>540400000000</td><td>2026-10-21 16:29:38</td><td>波密县某汽修厂</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>6</td><td>当事人报警称：高新区某餐馆借款纠纷</td><td>案事件系统推送</td><td>民事调解</td><td><span class="tag orange">未解决</span></td><td>借贷纠纷</td><td>2</td><td>540402000000</td><td>540400000000</td><td>2026-10-20 22:54:11</td><td>高新区某餐馆</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>7</td><td>当事人报警称：察隅县某小区停车位纠纷</td><td>综治网格化推送</td><td>民事调解</td><td><span class="tag green">已解决</span></td><td>物业纠纷</td><td>2</td><td>540425000000</td><td>540400000000</td><td>2026-10-20 20:50:25</td><td>察隅县某小区</td><td>否</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
+              <tr><td>8</td><td>当事人报警称：波密县玉普乡某工程队欠薪</td><td>部门移交</td><td>民事调解</td><td><span class="tag">移交</span></td><td>劳动争议</td><td>4</td><td>540424000000</td><td>540400000000</td><td>2026-10-20 15:20:35</td><td>波密县玉普乡某工地</td><td>是</td><td><span class="op-link" data-op="查看详情" onclick="openCmDetail(this)">查看</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -2153,8 +2184,8 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
                 <colgroup><col style="width:9%"><col style="width:34%"><col style="width:16%"><col style="width:11%"><col style="width:20%"><col style="width:10%"></colgroup>
                 <thead><tr><th>纠纷级别</th><th>调级原因</th><th>调级时间</th><th>调级人姓名</th><th>调级人单位</th><th>操作</th></tr></thead>
                 <tbody>
-                  <tr><td><span class="tag orange">关注级</span></td><td class="tx">第 3 次调解未达成一致，且乙方已到街道信访窗口登记，综合得分 43 分落入复杂区间</td><td>2026-10-26 17:41:21</td><td>张伟</td><td>巴宜区公安局八一镇派出所</td><td><span class="op-link" data-op="编辑定级标注" onclick="openGrade('edit',this)">编辑</span><span class="op-link danger" data-op="注销定级标注" onclick="gradeRemove(this)">注销</span><span class="op-link danger" data-op="查看定级依据" onclick="openScore()" data-adv>依据</span></td></tr>
-                  <tr><td><span class="tag green">一般级</span></td><td class="tx">首次登记定级：装修噪音邻里纠纷，双方情绪平稳，历史处置仅 1 次接处警</td><td>2025-11-08 10:20:00</td><td>民警甲</td><td>巴宜区公安局八一镇派出所</td><td><span class="op-link" data-op="编辑定级标注" onclick="openGrade('edit',this)">编辑</span><span class="op-link danger" data-op="注销定级标注" onclick="gradeRemove(this)">注销</span><span class="op-link danger" data-op="查看定级依据" onclick="openScore()" data-adv>依据</span></td></tr>
+                  <tr><td><span class="tag orange">关注</span></td><td class="tx">第 3 次调解未达成一致，且乙方已到街道信访窗口登记，综合得分 43 分落入复杂区间</td><td>2026-10-26 17:41:21</td><td>张伟</td><td>巴宜区公安局八一镇派出所</td><td><span class="op-link" data-op="编辑定级标注" onclick="openGrade('edit',this)">编辑</span><span class="op-link danger" data-op="注销定级标注" onclick="gradeRemove(this)">注销</span><span class="op-link danger" data-op="查看定级依据" onclick="openScore()" data-adv>依据</span></td></tr>
+                  <tr><td><span class="tag green">一般</span></td><td class="tx">首次登记定级：装修噪音邻里纠纷，双方情绪平稳，历史处置仅 1 次接处警</td><td>2025-11-08 10:20:00</td><td>民警甲</td><td>巴宜区公安局八一镇派出所</td><td><span class="op-link" data-op="编辑定级标注" onclick="openGrade('edit',this)">编辑</span><span class="op-link danger" data-op="注销定级标注" onclick="gradeRemove(this)">注销</span><span class="op-link danger" data-op="查看定级依据" onclick="openScore()" data-adv>依据</span></td></tr>
                 </tbody>
               </table></div>
             </div>
@@ -2669,7 +2700,7 @@ var SCORE_ITEMS=[
  {dim:"化解条件",name:"资源保障",max:5,o0:"无需额外资源",lo:["少量协调",2],mid:["需大额资金/政策支持",4],hi:["诉求超政策范围、无法满足",5]}
 ];
 var SCORE_RED_ITEMS=["极端言行","冲突升级","涉访涉诉","人员属性"];/* 一票升红：四项任一高档 */
-var SCORE_RED_TOTAL=81;/* 一票升红：总分达到重大区间 */
+var SCORE_RED_TOTAL=81;/* 一票升红：总分达到重点区间 */
 /* 本纠纷历史处置情况（初始化赋分数据源） */
 var SCORE_DISPUTE={
   code:"MD2026-5404-0137",type:"邻里纠纷 · 装修噪音",
@@ -2683,7 +2714,7 @@ var SCORE_DISPUTE={
     {d:"2026-07-09",t:"110接处警",b:"施工方夜间赶工，甲方情绪失控",r:"处警制止，甲方现场辱骂",key:1},
     {d:"2026-08-14",t:"人民调解",b:"司法所第 2 次调解",r:"甲方扬言「再不管就自己解决」，调解中断",key:1},
     {d:"2026-09-30",t:"信访登记",b:"乙方向街道信访窗口反映装修扰民",r:"转送派出所办理，未进入诉讼",key:1},
-    {d:"2026-10-21",t:"人民调解",b:"派出所第 3 次调解",r:"仍未化解，矛盾进入僵局",key:1}
+    {d:"2026-10-21",t:"人民调解",b:"派出所第 3 次调解",r:"仍未办结，矛盾进入僵局",key:1}
   ]
 };
 /* 赋分依据：判定要点 / 数据来源 / 示例 */
@@ -2710,15 +2741,15 @@ var SCORE_BASIS={
  "资源保障":{src:"诉求标的 / 政策边界",pts:"诉求金额与政策资源匹配度；超出政策范围的按高档计。",eg:"索赔 2.6 万元、可协商 → 低档 2 分"}
 };
 var SCORE_PARTIES=[
- {id:1,type:"个人",name:"程生",desc:"装修噪音邻里纠纷 · 甲方（楼上住户）",lv:"未定级",scores:{},basis:{},inited:false,
+ {id:1,type:"个人",name:"程生",desc:"装修噪音邻里纠纷 · 甲方（楼上住户）",lv:"待定级",scores:{},basis:{},inited:false,
   f:{alarm:2,prior:"一般纠纷前科",attr:"普通群众",emotion:7,emotionTxt:"2026-07-09 处警记载「情绪失控、现场辱骂」",emotionPt:"07-09 处警：情绪失控、现场辱骂",extreme:7,extremeTxt:"2026-08-14 调解笔录记载「再不管就自己解决」",extremePt:"08-14 调解：扬言「再不管就自己解决」",petition:0}},
- {id:2,type:"个人",name:"杨伟",desc:"装修噪音邻里纠纷 · 乙方（楼下老人）",lv:"未定级",scores:{},basis:{},inited:false,
+ {id:2,type:"个人",name:"杨伟",desc:"装修噪音邻里纠纷 · 乙方（楼下老人）",lv:"待定级",scores:{},basis:{},inited:false,
   f:{alarm:1,prior:"无",attr:"一般关注：独居老人",emotion:4,emotionTxt:"2026-05-22 调解记载「情绪激动、言辞激烈」",emotionPt:"05-22 调解：情绪激动、言辞激烈",extreme:0,extremeTxt:"",petition:1,petitionTxt:"2026-09-30 街道信访窗口登记",petitionPt:"09-30 已到街道信访窗口登记"}},
- {id:3,type:"单位",name:"某装饰工程有限公司",desc:"施工方 · 装修作业时间管理责任",lv:"未定级",scores:{},basis:{},inited:false,
+ {id:3,type:"单位",name:"某装饰工程有限公司",desc:"施工方 · 装修作业时间管理责任",lv:"待定级",scores:{},basis:{},inited:false,
   f:{alarm:0,prior:"无",attr:"企业（无特殊属性）",emotion:0,emotionTxt:"",extreme:0,extremeTxt:"",petition:0}}
 ];
 var SCORE_REGS=[];
-var curParty=1,curLv="未定级",SCORE_STEP=1,SC_DIM=0,SCORE_PICKED=false;
+var curParty=1,curLv="待定级",SCORE_STEP=1,SC_DIM=0,SCORE_PICKED=false;
 var SCORE_STEPS=["赋分对象","历史初始化","逐维度赋分","综合定级","赋分登记表"];
 function curPartyObj(){for(var i=0;i<SCORE_PARTIES.length;i++){if(SCORE_PARTIES[i].id===curParty)return SCORE_PARTIES[i];}return SCORE_PARTIES[0];}
 function openScore(el){
@@ -2792,7 +2823,7 @@ function pickParty(id){curParty=id;scGo(SCORE_STEP);}
 function partyById(id){for(var i=0;i<SCORE_PARTIES.length;i++){if(SCORE_PARTIES[i].id===id)return SCORE_PARTIES[i];}return null;}
 function addParty(){
   var id=SCORE_PARTIES.length?SCORE_PARTIES[SCORE_PARTIES.length-1].id+1:1;
-  SCORE_PARTIES.push({id:id,type:"个人",name:"新增当事人 "+id,desc:"待补充当事人信息",lv:"未定级",scores:{},basis:{},inited:false,
+  SCORE_PARTIES.push({id:id,type:"个人",name:"新增当事人 "+id,desc:"待补充当事人信息",lv:"待定级",scores:{},basis:{},inited:false,
     f:{alarm:0,prior:"无",attr:"普通群众",emotion:0,emotionTxt:"",extreme:0,extremeTxt:"",petition:0}});
   curParty=id;scGo(SCORE_STEP);
   toast('演示：已添加赋分对象，请补充信息并完成赋分');
@@ -2924,13 +2955,13 @@ function redReasons(p){
 function isRed(p){return redReasons(p).length>0;}
 function indexOfItem(n){for(var i=0;i<SCORE_ITEMS.length;i++){if(SCORE_ITEMS[i].name===n)return i;}return -1;}
 function suggestLv(total,red){
-  if(red)return '重大';
-  if(total<=0)return '未定级';
+  if(red)return '重点';
+  if(total<=0)return '待定级';
   if(total<=30)return '一般';
-  if(total<=80)return '复杂';
-  return '重大';
+  if(total<=80)return '关注';
+  return '重点';
 }
-function lvRange(){return '0 分→未定级，1–30→一般，31–80→复杂，81–100→重大';}
+function lvRange(){return '0 分→待定级，1–30→一般，31–80→关注，81–100→重点';}
 /* ---- 纠纷综合定级：各当事人 / 涉事单位分数综合评估 ---- */
 function synthEval(){
   var max=0,sum=0,n=0,redAny=false,names=[];
@@ -2941,7 +2972,7 @@ function synthEval(){
   }
   var avg=n?Math.round(sum/n*10)/10:0;
   var comp=n?Math.round(max*0.7+avg*0.3):0;
-  var lv=redAny?'重大':suggestLv(comp,false);
+  var lv=redAny?'重点':suggestLv(comp,false);
   return {max:max,avg:avg,sum:sum,comp:comp,lv:lv,redAny:redAny,names:names,n:n};
 }
 function renderSynth(){
@@ -2956,14 +2987,14 @@ function renderSynth(){
   document.getElementById('scSynTb').innerHTML=h;
   document.getElementById('scFormula').innerHTML=
      '<b>综合得分</b> = <code>最高分 '+s.max+' × 70%</code> + <code>平均分 '+s.avg+' × 30%</code> = <code>'+s.comp+' 分</code><br>'
-    +'<span style="color:#5f6f8a">等级映射：'+lvRange()+'；一票升红：极端言行 / 冲突升级 / 涉访涉诉 / 人员属性任一项为高档，或对象总分≥'+SCORE_RED_TOTAL+' 分 → 纠纷直接列为重大</span>';
-  var lvCls={'未定级':'','一般':'green','复杂':'orange','重大':'red'}[s.lv]||'';
+    +'<span style="color:#5f6f8a">等级映射：'+lvRange()+'；一票升红：极端言行 / 冲突升级 / 涉访涉诉 / 人员属性任一项为高档，或对象总分≥'+SCORE_RED_TOTAL+' 分 → 纠纷直接列为重点</span>';
+  var lvCls={'待定级':'','一般':'green','关注':'orange','重点':'red'}[s.lv]||'';
   document.getElementById('scSynLv').innerHTML=
      '<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">'
     +'<div><div style="font-size:11px;color:#82878B">纠纷综合得分</div><div style="font-size:24px;font-weight:700;color:#1B70E0;line-height:1.2">'+s.comp+'<span style="font-size:12px;color:#82878B;font-weight:400"> 分</span></div></div>'
     +'<div><div style="font-size:11px;color:#82878B">综合建议等级</div><div><span class="tag '+lvCls+'">'+s.lv+'</span></div></div>'
     +'<div style="flex:1;min-width:200px;font-size:11px;color:'+(s.redAny?'#e5484d':'#5f6f8a')+'">'
-    +(s.redAny?('⚠ 触发一票升红：'+s.names.join('；')+'，纠纷等级直接列为重大。'):'未触发一票升红，按综合得分落入区间定级。')
+    +(s.redAny?('⚠ 触发一票升红：'+s.names.join('；')+'，纠纷等级直接列重点。'):'未触发一票升红，按综合得分落入区间定级。')
     +'</div></div>'
     +'<div style="margin-top:8px;font-size:11px;color:#82878B">最终等级以民警在底部「纠纷最终等级」中确认的结果为准。</div>';
 }
@@ -3030,7 +3061,7 @@ function computeHistoryScores(p){
   putScore(p,'冲突升级',confScore(D.conflict),'历史最高冲突等级：'+confName(D.conflict)+' → '+confScore(D.conflict)+' 分',true,'最高冲突：'+confName(D.conflict));
   putScore(p,'人员属性',attrScore(f.attr),'人员标签：'+(f.attr||'普通群众')+' → '+attrScore(f.attr)+' 分',true,'标签：'+(f.attr||'普通群众'));
   putScore(p,'报警记录',alarmScore(f.alarm),'年内同一矛盾报警 '+(f.alarm||0)+' 次 → '+alarmScore(f.alarm)+' 分',true,'年内同矛盾报警 '+(f.alarm||0)+' 次');
-  putScore(p,'化解难度',D.mediate>=3?4:2,D.mediate>=3?('已调解 '+D.mediate+' 次仍未化解，形成僵局 → 4 分'):('调解进展正常，需多次沟通 → 2 分'),true,D.mediate>=3?('调解 '+D.mediate+' 次未果，已僵局'):'需多次沟通');
+  putScore(p,'化解难度',D.mediate>=3?4:2,D.mediate>=3?('已调解 '+D.mediate+' 次仍未办结，形成僵局 → 4 分'):('调解进展正常，需多次沟通 → 2 分'),true,D.mediate>=3?('调解 '+D.mediate+' 次未果，已僵局'):'需多次沟通');
   putScore(p,'资源保障',2,'诉求标的 '+D.amount+'，属可协商范围 → 2 分',true,'标的 '+D.amount+'，可协商');
 }
 function initFromHistory(pid){
@@ -3182,7 +3213,7 @@ function openCheck(){document.getElementById('cmCheckModal').style.display='flex
 function closeCheck(){document.getElementById('cmCheckModal').style.display='none';}
 function checkSubmit(){closeCheck();toast('演示：排查记录已登记，12 小时内完成定级与指派');}
 /* -------- 定级标注 / 定级与指派 弹窗 -------- */
-var GRADE_COLOR={'重点级':'red','关注级':'orange','一般级':'green','未定级':'gray'};
+var GRADE_COLOR={'重点':'red','关注':'orange','一般':'green','待定级':'gray'};
 var GRADE_ROW=null,GRADE_MODE='add';
 function gradeNow(){var d=new Date(),p=function(n){return (n<10?'0':'')+n;};
   return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());}
@@ -3201,7 +3232,7 @@ function openGrade(mode,el){
     gradeSet('grUnit',(c[4].textContent||'').trim());
     if(title)title.textContent='编辑定级标注';
   }else{
-    gradeSet('grLevel','关注级');gradeSet('grReason','');gradeSet('grTime',gradeNow());
+    gradeSet('grLevel','关注');gradeSet('grReason','');gradeSet('grTime',gradeNow());
     gradeSet('grUser','');gradeSet('grUnit','');
     if(title)title.textContent=isAssign?'定级与指派':'新增定级标注';
   }
@@ -3282,17 +3313,17 @@ markCompare();
 /* ============ 委托向导：场景 → 可选目标 ============ */
 var ENTRUST_TARGETS={
   '人民调解组织':[
-    {n:'巴宜区人民调解委员会',t:'单位',a:'巴宜区 · 八一镇',s:'邻里关系 / 婚姻家庭 / 土地草场',load:'在办 12 件',rate:'化解率 94.1%'},
-    {n:'米林市人民调解中心',t:'单位',a:'米林市',s:'邻里关系 / 劳资争议',load:'在办 8 件',rate:'化解率 91.7%'},
-    {n:'波密县扎木镇人民调解委员会',t:'单位',a:'波密县 · 扎木镇',s:'邻里关系 / 草场地界',load:'在办 5 件',rate:'化解率 96.2%'},
-    {n:'察隅县竹瓦根镇人民调解委员会',t:'单位',a:'察隅县',s:'邻里关系 / 地界争议',load:'在办 4 件',rate:'化解率 93.0%'}
+    {n:'巴宜区人民调解委员会',t:'单位',a:'巴宜区 · 八一镇',s:'邻里关系 / 婚姻家庭 / 土地草场',load:'在办 12 件',rate:'解决率 94.1%'},
+    {n:'米林市人民调解中心',t:'单位',a:'米林市',s:'邻里关系 / 劳资争议',load:'在办 8 件',rate:'解决率 91.7%'},
+    {n:'波密县扎木镇人民调解委员会',t:'单位',a:'波密县 · 扎木镇',s:'邻里关系 / 草场地界',load:'在办 5 件',rate:'解决率 96.2%'},
+    {n:'察隅县竹瓦根镇人民调解委员会',t:'单位',a:'察隅县',s:'邻里关系 / 地界争议',load:'在办 4 件',rate:'解决率 93.0%'}
   ],
   '行业性专业性调解':[
-    {n:'林芝市劳动争议调解委员会',t:'单位',a:'市本级',s:'劳资争议 / 工伤赔偿',load:'在办 21 件',rate:'化解率 88.6%'},
-    {n:'林芝市物业纠纷调解委员会',t:'单位',a:'市本级',s:'物业服务 / 邻里关系',load:'在办 9 件',rate:'化解率 90.2%'},
-    {n:'林芝市道路交通事故调解委员会',t:'单位',a:'市本级',s:'交通事故赔偿',load:'在办 7 件',rate:'化解率 92.5%'},
-    {n:'林芝市医疗纠纷调解委员会',t:'单位',a:'市本级',s:'医患纠纷',load:'在办 3 件',rate:'化解率 86.7%'},
-    {n:'林芝市消费与借贷纠纷调解委员会',t:'单位',a:'市本级',s:'消费纠纷 / 民间借贷',load:'在办 6 件',rate:'化解率 89.4%'}
+    {n:'林芝市劳动争议调解委员会',t:'单位',a:'市本级',s:'劳资争议 / 工伤赔偿',load:'在办 21 件',rate:'解决率 88.6%'},
+    {n:'林芝市物业纠纷调解委员会',t:'单位',a:'市本级',s:'物业服务 / 邻里关系',load:'在办 9 件',rate:'解决率 90.2%'},
+    {n:'林芝市道路交通事故调解委员会',t:'单位',a:'市本级',s:'交通事故赔偿',load:'在办 7 件',rate:'解决率 92.5%'},
+    {n:'林芝市医疗纠纷调解委员会',t:'单位',a:'市本级',s:'医患纠纷',load:'在办 3 件',rate:'解决率 86.7%'},
+    {n:'林芝市消费与借贷纠纷调解委员会',t:'单位',a:'市本级',s:'消费纠纷 / 民间借贷',load:'在办 6 件',rate:'解决率 89.4%'}
   ],
   '司法所 / 法律援助':[
     {n:'巴宜区司法局八一司法所',t:'单位',a:'巴宜区',s:'法律咨询 / 法律援助',load:'在办 11 件',rate:'办结率 95.3%'},
@@ -3300,25 +3331,25 @@ var ENTRUST_TARGETS={
     {n:'米林市司法局',t:'单位',a:'米林市',s:'法律咨询 / 普法宣传',load:'在办 6 件',rate:'办结率 94.0%'}
   ],
   '乡镇（街道）综治中心':[
-    {n:'八一镇综治中心',t:'单位',a:'巴宜区 · 八一镇',s:'综合调处 / 部门联动',load:'在办 14 件',rate:'化解率 90.9%'},
-    {n:'扎木镇综治中心',t:'单位',a:'波密县 · 扎木镇',s:'综合调处 / 部门联动',load:'在办 7 件',rate:'化解率 93.5%'},
-    {n:'米林镇综治中心',t:'单位',a:'米林市',s:'综合调处 / 部门联动',load:'在办 5 件',rate:'化解率 91.2%'}
+    {n:'八一镇综治中心',t:'单位',a:'巴宜区 · 八一镇',s:'综合调处 / 部门联动',load:'在办 14 件',rate:'解决率 90.9%'},
+    {n:'扎木镇综治中心',t:'单位',a:'波密县 · 扎木镇',s:'综合调处 / 部门联动',load:'在办 7 件',rate:'解决率 93.5%'},
+    {n:'米林镇综治中心',t:'单位',a:'米林市',s:'综合调处 / 部门联动',load:'在办 5 件',rate:'解决率 91.2%'}
   ],
   '派出所驻所调解室':[
-    {n:'八一派出所驻所调解室',t:'单位',a:'巴宜区 · 八一镇',s:'治安调解 / 简易调解',load:'在办 18 件',rate:'化解率 95.8%'},
-    {n:'扎木派出所驻所调解室',t:'单位',a:'波密县',s:'治安调解 / 简易调解',load:'在办 9 件',rate:'化解率 94.4%'},
-    {n:'米林派出所驻所调解室',t:'单位',a:'米林市',s:'治安调解 / 简易调解',load:'在办 6 件',rate:'化解率 93.7%'}
+    {n:'八一派出所驻所调解室',t:'单位',a:'巴宜区 · 八一镇',s:'治安调解 / 简易调解',load:'在办 18 件',rate:'解决率 95.8%'},
+    {n:'扎木派出所驻所调解室',t:'单位',a:'波密县',s:'治安调解 / 简易调解',load:'在办 9 件',rate:'解决率 94.4%'},
+    {n:'米林派出所驻所调解室',t:'单位',a:'米林市',s:'治安调解 / 简易调解',load:'在办 6 件',rate:'解决率 93.7%'}
   ],
   '属地单位 / 用工单位':[
-    {n:'林芝××建筑工程有限公司',t:'单位',a:'巴宜区',s:'劳资争议 / 工伤',load:'在办 2 件',rate:'化解率 100%'},
-    {n:'林芝××物业服务有限责任公司',t:'单位',a:'巴宜区 · 八一镇',s:'物业服务 / 邻里关系',load:'在办 3 件',rate:'化解率 88.9%'},
-    {n:'波密县××旅游开发有限公司',t:'单位',a:'波密县',s:'劳资争议 / 旅游服务',load:'在办 1 件',rate:'化解率 100%'}
+    {n:'林芝××建筑工程有限公司',t:'单位',a:'巴宜区',s:'劳资争议 / 工伤',load:'在办 2 件',rate:'解决率 100%'},
+    {n:'林芝××物业服务有限责任公司',t:'单位',a:'巴宜区 · 八一镇',s:'物业服务 / 邻里关系',load:'在办 3 件',rate:'解决率 88.9%'},
+    {n:'波密县××旅游开发有限公司',t:'单位',a:'波密县',s:'劳资争议 / 旅游服务',load:'在办 1 件',rate:'解决率 100%'}
   ],
   '个人调解员':[
-    {n:'扎西（乡贤调解员）',t:'个人',a:'巴宜区 · 八一镇',s:'邻里关系 / 草场地界',load:'在办 3 件',rate:'化解率 97.1%'},
-    {n:'卓玛（退休法官）',t:'个人',a:'市本级',s:'婚姻家庭 / 民间借贷',load:'在办 4 件',rate:'化解率 96.0%'},
-    {n:'王××（执业律师）',t:'个人',a:'市本级',s:'劳动争议 / 合同纠纷',load:'在办 5 件',rate:'化解率 93.8%'},
-    {n:'次仁（村（居）法律顾问）',t:'个人',a:'米林市',s:'土地草场 / 邻里关系',load:'在办 2 件',rate:'化解率 95.5%'}
+    {n:'扎西（乡贤调解员）',t:'个人',a:'巴宜区 · 八一镇',s:'邻里关系 / 草场地界',load:'在办 3 件',rate:'解决率 97.1%'},
+    {n:'卓玛（退休法官）',t:'个人',a:'市本级',s:'婚姻家庭 / 民间借贷',load:'在办 4 件',rate:'解决率 96.0%'},
+    {n:'王××（执业律师）',t:'个人',a:'市本级',s:'劳动争议 / 合同纠纷',load:'在办 5 件',rate:'解决率 93.8%'},
+    {n:'次仁（村（居）法律顾问）',t:'个人',a:'米林市',s:'土地草场 / 邻里关系',load:'在办 2 件',rate:'解决率 95.5%'}
   ]
 };
 var currentWz=1,ezTarget=null,ezCase='';
@@ -3330,20 +3361,18 @@ function openEntrust(el){
   document.getElementById('ezDesc').value='';
   document.getElementById('ezDue').value='';
   document.getElementById('ezKw').value='';
-  document.getElementById('ezKind').value='';
   renderEzTargets();wzGo(1);
   document.getElementById('cmEntrustModal').style.display='flex';
 }
 function closeEntrust(){document.getElementById('cmEntrustModal').style.display='none';}
-function onEzSceneChange(){ezTarget=null;renderEzTargets();}
+function onEzSceneChange(){ezTarget=null;EZ_PERSON=null;renderEzTargets();if(typeof renderEzTree==='function')renderEzTree();var s=document.getElementById('ezSel');if(s)s.innerHTML='<span class="ez-none">尚未选择，请从左侧组织机构树中点选具体人员</span>';}
 function renderEzTargets(){
   var scene=document.getElementById('ezScene').value;
   var tip=document.getElementById('ezScopeTip'),box=document.getElementById('ezTargets');
   if(!scene){tip.style.display='';tip.textContent='请先在上一步选择委托场景。';box.innerHTML='';return;}
   var kw=(document.getElementById('ezKw').value||'').trim();
-  var kind=document.getElementById('ezKind').value;
   var list=(ENTRUST_TARGETS[scene]||[]).filter(function(o){
-    return (!kind||o.t===kind)&&(!kw||o.n.indexOf(kw)>=0||o.s.indexOf(kw)>=0||o.a.indexOf(kw)>=0);
+    return (!kw||o.n.indexOf(kw)>=0||o.s.indexOf(kw)>=0||o.a.indexOf(kw)>=0);
   });
   tip.style.display='';
   tip.textContent='场景「'+scene+'」下共匹配 '+list.length+' 个可承接目标（按管辖范围与专业方向自动筛选）。';
@@ -3388,9 +3417,120 @@ function wzGo(n){
   document.getElementById('wzSubmit').style.display=n===3?'':'none';
 }
 function wzSubmit(){
-  if(!ezTarget){toast('请选择委托目标');return;}
+  if(!EZ_PERSON){toast('请先在组织机构树中选择到具体承办人员');return;}
   closeEntrust();
-  toast('演示：已委托「'+ezTarget.n+'」，纠纷状态变更为 已委托 · 调解中');
+  toast('演示：已委托「'+ezTarget.n+'」，纠纷状态变更为「移交」');
+}
+
+/* ============ 处置状态快捷筛选（PC 端） ============ */
+var CF_STATUS='all';
+function pickCfStatus(btn){
+  var box=btn.parentNode,bs=box.getElementsByTagName('button'),i;
+  for(i=0;i<bs.length;i++)bs[i].className='';
+  btn.className='on';
+  CF_STATUS=btn.getAttribute('data-st');
+  applyCfStatus();
+}
+function applyCfStatus(){
+  var rows=document.querySelectorAll('#view-conflict-mgmt tbody tr[data-st]'),i,shown=0;
+  for(i=0;i<rows.length;i++){
+    var tr=rows[i],st=tr.getAttribute('data-st');
+    var ok=(CF_STATUS==='all'||st===CF_STATUS);
+    tr.style.display=ok?'':'none';
+    if(ok)shown++;
+  }
+  var c=document.getElementById('cfCnt');
+  if(c)c.textContent='共 '+shown+' 条';
+}
+
+/* ============ 委托对象：组织机构树选人 ============ */
+var EZ_ORG=[
+  {n:'林芝市公安局',c:[
+    {n:'治安管理支队',c:[
+      {p:'李××',r:'支队长',s:'综合调处 / 部门联动'},
+      {p:'王××',r:'民警',s:'治安调解'}
+    ]},
+    {n:'巴宜分局',c:[
+      {n:'八一镇派出所',c:[
+        {p:'张警官',r:'责任民警',s:'邻里关系 / 婚姻家庭'},
+        {p:'赵警官',r:'社区民警',s:'物业纠纷 / 邻里关系'}
+      ]},
+      {n:'八一镇人民调解委员会',c:[
+        {p:'扎西（乡贤调解员）',r:'调解员',s:'邻里关系 / 草场地界'}
+      ]}
+    ]},
+    {n:'米林市公安局',c:[
+      {n:'米林镇派出所',c:[
+        {p:'卓玛（退休法官）',r:'特邀调解员',s:'婚姻家庭 / 民间借贷'},
+        {p:'孙警官',r:'责任民警',s:'劳资争议'}
+      ]}
+    ]},
+    {n:'波密县公安局',c:[
+      {n:'扎木镇派出所',c:[
+        {p:'王××（执业律师）',r:'法律顾问',s:'劳动争议 / 合同纠纷'},
+        {p:'周警官',r:'责任民警',s:'劳资争议 / 工伤'}
+      ]}
+    ]},
+    {n:'林芝市司法局',c:[
+      {n:'林芝市法律援助中心',c:[
+        {p:'次仁（村（居）法律顾问）',r:'法律顾问',s:'土地草场 / 邻里关系'},
+        {p:'吴××',r:'援助律师',s:'法律援助 / 诉讼引导'}
+      ]}
+    ]}
+  ]}
+];
+var EZ_PERSON=null;
+function ezCount(list){
+  var n=0;
+  (list||[]).forEach(function(o){ if(o.c)n+=ezCount(o.c); else if(o.p)n++; });
+  return n;
+}
+function ezTreeHtml(list,path,kw){
+  var h='';
+  (list||[]).forEach(function(o){
+    var here=path?path+' / '+o.n:o.n;
+    if(o.c){
+      var sub=ezTreeHtml(o.c,here,kw);
+      var hit=kw&&here.indexOf(kw)>=0;
+      if(kw&&!hit&&!sub)return;
+      h+='<div class="tree-item'+(hit?' open':'')+'" onclick="ezToggleUnit(this)">'
+        +'<span class="t-arr">›</span>'+o.n+'<span class="ez-cnt">'+ezCount(o.c)+' 人</span></div>'
+        +'<div class="tree-children"'+(hit?' style="display:block"':'')+'>'+sub+'</div>';
+    } else if(o.p){
+      if(kw&&!(o.p.indexOf(kw)>=0||path.indexOf(kw)>=0))return;
+      var on=(EZ_PERSON&&EZ_PERSON.unit===path&&EZ_PERSON.name===o.p)?' active':'';
+      h+='<div class="tree-item ez-person'+on+'" data-p="'+o.p+'" data-u="'+path+'" data-r="'+o.r+'" data-s="'+o.s+'" onclick="ezPickPerson(this)">'
+        +'<span class="ez-av">'+o.p.slice(0,1)+'</span>'+o.p+'<span class="ez-role">'+o.r+'</span></div>';
+    }
+  });
+  return h;
+}
+function renderEzTree(){
+  var el=document.getElementById('ezTreeKw'),box=document.getElementById('ezTree');
+  if(!el||!box)return;
+  box.innerHTML=ezTreeHtml(EZ_ORG,'',(el.value||'').trim());
+}
+function ezToggleUnit(el){
+  var cls=el.className.indexOf('open')>=0;
+  var sib=el.nextElementSibling;
+  if(sib&&sib.className.indexOf('tree-children')>=0)sib.style.display=cls?'none':'block';
+  if(cls)el.className=el.className.replace(' open',''); else el.className+=' open';
+}
+function ezPickPerson(el){
+  var name=el.getAttribute('data-p'),unit=el.getAttribute('data-u'),
+      role=el.getAttribute('data-r')||'',skill=el.getAttribute('data-s')||'';
+  EZ_PERSON={name:name,unit:unit,role:role,skill:skill};
+  ezTarget={n:name,t:'个人',a:unit,s:skill||'—',load:'在办 —',rate:'—'};
+  renderEzTree();renderEzTargets();
+  var sel=document.getElementById('ezSel');
+  if(sel)sel.innerHTML='<div class="ez-p"><span class="ez-av">'+name.slice(0,1)+'</span><div><b>'+name+'</b><span>'+unit+'　'+role+'</span></div>'
+    +'<button class="btn btn-xs" onclick="ezClearPerson()">清除</button>';
+}
+function ezClearPerson(){
+  EZ_PERSON=null;ezTarget=null;
+  renderEzTree();renderEzTargets();
+  var sel=document.getElementById('ezSel');
+  if(sel)sel.innerHTML='<span class="ez-none">尚未选择，请从左侧组织机构树中点选具体人员</span>';
 }
 
 /* ============ 办理 / 调解登记（含结案信息） ============ */
@@ -3587,7 +3727,7 @@ function toggleCloseInfo(){
 function hdSubmit(){
   var flag=document.getElementById('clFlag').value;
   closeHandle();
-  toast(flag==='是'?'演示：调解记录已提交，纠纷已结案归档':'演示：调解记录已提交，纠纷继续办理中');
+  toast(flag==='是'?'演示：调解记录已提交，纠纷状态更新为「已解决」':'演示：调解记录已提交，纠纷状态保持「未解决」');
 }
 function setCheckRole(el,role){
   var sec=document.getElementById('view-conflict-check');
@@ -3657,13 +3797,13 @@ CHART_DEFS.home1=[
   tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}%'}),
   series:[{
     type:'pie',radius:['58%','78%'],center:['50%','50%'],
-    data:[{value:92.2,name:'化解率',itemStyle:{color:'#2ee6a8'}},{value:7.8,name:'待处理',itemStyle:{color:'rgba(64,128,220,.22)'}}],
+    data:[{value:92.2,name:'解决率',itemStyle:{color:'#2ee6a8'}},{value:7.8,name:'待处理',itemStyle:{color:'rgba(64,128,220,.22)'}}],
     label:{show:false},labelLine:{show:false},silent:true
   }],
   graphic:[
     {type:'text',left:'center',top:'24%',style:{text:'3,268',fill:'#7fe4ff',fontSize:27,fontWeight:700,textAlign:'center'}},
     {type:'text',left:'center',top:'47%',style:{text:'本月矛盾纠纷（件）',fill:'#8fb0dd',fontSize:10.5,textAlign:'center'}},
-    {type:'text',left:'center',top:'64%',style:{text:'化解率 92.2%',fill:'#2ee6a8',fontSize:10,textAlign:'center'}}
+    {type:'text',left:'center',top:'64%',style:{text:'解决率 92.2%',fill:'#2ee6a8',fontSize:10,textAlign:'center'}}
   ]
 }},
 {id:'h1_drone',option:{
@@ -3790,7 +3930,7 @@ CHART_DEFS.home1=[
 }},
 {id:'h1_conflict',option:{
   tooltip:Object.assign(darkTooltip(),{formatter:function(p){
-    return p.name+'：'+p.value.toLocaleString()+' 件（'+(p.value/3268*100).toFixed(1)+'%）<br/>化解率 92.2% · 回访满意率 95.9%';
+    return p.name+'：'+p.value.toLocaleString()+' 件（'+(p.value/3268*100).toFixed(1)+'%）<br/>解决率 92.2% · 回访满意率 95.9%';
   }}),
   series:[{name:'矛盾纠纷类型',type:'pie',roseType:'radius',radius:['30%','58%'],center:['50%','54%'],
     data:[
@@ -3804,7 +3944,7 @@ CHART_DEFS.home1=[
   }],
   graphic:[
     {type:'text',left:'center',top:'40%',style:{text:'3,268 件',fill:'#7fe4ff',fontSize:13,fontWeight:700,textAlign:'center'}},
-    {type:'text',left:'center',top:'46%',style:{text:'化解率 92.2%',fill:'#8fb0dd',fontSize:8.5,textAlign:'center'}},
+    {type:'text',left:'center',top:'46%',style:{text:'解决率 92.2%',fill:'#8fb0dd',fontSize:8.5,textAlign:'center'}},
     {type:'text',left:'center',top:'52%',style:{text:'回访满意率 95.9%',fill:'#8fb0dd',fontSize:8,textAlign:'center'}}
   ]
 }},
@@ -4042,13 +4182,13 @@ CHART_DEFS.home2=[
   tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}%'}),
   series:[{
     type:'pie',radius:['58%','78%'],center:['50%','50%'],
-    data:[{value:92.2,name:'化解率',itemStyle:{color:'#2ee6a8'}},{value:7.8,name:'待处理',itemStyle:{color:'rgba(64,128,220,.22)'}}],
+    data:[{value:92.2,name:'解决率',itemStyle:{color:'#2ee6a8'}},{value:7.8,name:'待处理',itemStyle:{color:'rgba(64,128,220,.22)'}}],
     label:{show:false},labelLine:{show:false},silent:true
   }],
   graphic:[
     {type:'text',left:'center',top:'24%',style:{text:'3,268',fill:'#7fe4ff',fontSize:27,fontWeight:700,textAlign:'center'}},
     {type:'text',left:'center',top:'47%',style:{text:'本月矛盾纠纷（件）',fill:'#8fb0dd',fontSize:10.5,textAlign:'center'}},
-    {type:'text',left:'center',top:'64%',style:{text:'化解率 92.2%',fill:'#2ee6a8',fontSize:10,textAlign:'center'}}
+    {type:'text',left:'center',top:'64%',style:{text:'解决率 92.2%',fill:'#2ee6a8',fontSize:10,textAlign:'center'}}
   ]
 }},
 {id:'h2_drone',option:{
@@ -4402,7 +4542,7 @@ var CF_SRC=[['110系统推送',1042],['工作排查发现',786],['综治网格�
 var CF_TREND_DAYS=['10-20','10-21','10-22','10-23','10-24','10-25','10-26'];
 var CF_TREND=[38,45,41,52,44,39,47];
 var CF_TYPES=[['婚姻家庭',1168,'#ff6b6b'],['邻里关系',972,'#2f6fed'],['劳动争议',512,'#36b8ff'],['借贷纠纷',386,'#ffb03a'],['物业纠纷',208,'#2ee6a8'],['其他',22,'#b9a4ff']];
-var CF_LEVELS=[['重点级',328,'#e5484d'],['关注级',512,'#ffb03a'],['一般级',1842,'#2f6fed'],['未定级',586,'#36b8ff']];
+var CF_LEVELS=[['重点',328,'#e5484d'],['关注',512,'#ffb03a'],['一般',1842,'#2f6fed'],['待定级',586,'#36b8ff']];
 function cfSourceOption(id){
   var data=CF_SRC.slice().reverse();
   var yData=data.map(function(d){return d[0];});
@@ -4445,16 +4585,16 @@ CHART_DEFS.conflict=[
   legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10},itemWidth:10,itemHeight:8},
   series:[{type:'pie',radius:['50%','72%'],center:['50%','40%'],
     data:[
-      {value:3014,name:'已化解',itemStyle:{color:'#17c39a'}},
-      {value:186,name:'正在化解',itemStyle:{color:'#ffb03a'}},
-      {value:68,name:'已掌握',itemStyle:{color:'#8fb4ff'}}
+      {value:3014,name:'已解决',itemStyle:{color:'#17c39a'}},
+      {value:186,name:'未解决',itemStyle:{color:'#ffb03a'}},
+      {value:68,name:'移交',itemStyle:{color:'#8fb4ff'}}
     ],
     label:{show:false},labelLine:{show:false},
     itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
   }],
   graphic:[
     {type:'text',left:'center',top:'27%',style:{text:'92.2%',fill:'#17c39a',fontSize:24,fontWeight:700,textAlign:'center'}},
-    {type:'text',left:'center',top:'45%',style:{text:'化解率',fill:'#5f6f8a',fontSize:11,textAlign:'center'}}
+    {type:'text',left:'center',top:'45%',style:{text:'解决率',fill:'#5f6f8a',fontSize:11,textAlign:'center'}}
   ]
 }},
 {id:'cf_level',option:{
@@ -4479,7 +4619,7 @@ CHART_DEFS['conflict-mgmt']=[
     {name:'已办理',type:'bar',stack:'s',data:[960,725,483,386,269,144,48],barWidth:13,itemStyle:{color:'#2ee6a8'}},
     {name:'办理中',type:'bar',stack:'s',data:[39,28,16,11,8,5,2],itemStyle:{color:'#ffb03a'}},
     {name:'待办理',type:'bar',stack:'s',data:[31,25,18,16,10,5,1],itemStyle:{color:'#2f6fed'}},
-    {name:'已掌握',type:'bar',stack:'s',data:[12,8,6,5,4,2,1],itemStyle:{color:'#36b8ff'}}
+    {name:'移交',type:'bar',stack:'s',data:[12,8,6,5,4,2,1],itemStyle:{color:'#36b8ff'}}
   ]
 }},
 {id:'cm_trend',option:(function(){var o=JSON.parse(JSON.stringify(CHART_DEFS.conflict[1].option));o.xAxis.axisLabel={interval:0,fontSize:9,color:LIGHT.axisLabel};o.legend={top:0,right:0,textStyle:{color:LIGHT.legendText,fontSize:10},itemWidth:10,itemHeight:8};
@@ -4637,9 +4777,9 @@ function rptRender(){
   var lv=!d.ta?'—':(rate>=90?'优':(rate>=85?'良':(rate>=83?'关注':'预警')));
   var sum='';
   sum+='<div class="st"><b>'+d.ta+'</b><span>受理总量（件）</span></div>';
-  sum+='<div class="st"><b>'+d.tr+'</b><span>已化解（件）</span></div>';
-  sum+='<div class="st"><b>'+rate.toFixed(1)+'%<span class="rpt-rate sm '+(d.ta?rptRateCls(rate):'g')+'">'+lv+'</span></b><span>整体化解率</span></div>';
-  sum+='<div class="st"><b>'+(d.ta-d.tr)+'</b><span>未化解（件）</span></div>';
+  sum+='<div class="st"><b>'+d.tr+'</b><span>已解决（件）</span></div>';
+  sum+='<div class="st"><b>'+rate.toFixed(1)+'%<span class="rpt-rate sm '+(d.ta?rptRateCls(rate):'g')+'">'+lv+'</span></b><span>整体解决率</span></div>';
+  sum+='<div class="st"><b>'+(d.ta-d.tr)+'</b><span>未办结（件）</span></div>';
   sum+='<div class="st"><b>'+RPT_UNITS.length+'</b><span>纳入单位</span></div>';
   sum+='<div class="st"><b>'+d.months+'</b><span>统计月份数</span></div>';
   document.getElementById('rptSum').innerHTML=sum;
@@ -4652,7 +4792,7 @@ function rptRender(){
   h+='<tr class="rpt-meta"><th colspan="28">统计周期：'+rptPeriodTxt(from,to)+'（共 '+d.months+' 个月）　|　单位：件　|　数据源：矛盾纠纷排查台账</th></tr>';
   h+='<tr class="rpt-grp"><th rowspan="2" class="u sticky-u">单位</th>';
   for(t=0;t<8;t++)h+='<th colspan="3">'+RPT_TYPES[t]+'</th>';
-  h+='<th rowspan="2" class="tt st-r1">合计受理</th><th rowspan="2" class="tt st-r2">合计化解</th><th rowspan="2" class="tt st-r3">化解率</th></tr>';
+  h+='<th rowspan="2" class="tt st-r1">合计受理</th><th rowspan="2" class="tt st-r2">合计化解</th><th rowspan="2" class="tt st-r3">解决率</th></tr>';
   h+='<tr class="rpt-sub">';
   for(t=0;t<8;t++)h+='<th>受理</th><th>化解</th><th>率</th>';
   h+='</tr></thead><tbody>';
@@ -4677,8 +4817,8 @@ function rptRender(){
   h+='<td class="tt pc st-r3">'+rptPct(d.tr,d.ta)+'</td></tr>';
   h+='</tbody>';
   document.getElementById('rptTb').innerHTML=h;
-  document.getElementById('rptNote').innerHTML='口径：化解率＝化解件数 ÷ 受理件数；统计周期 '+rptPeriodTxt(from,to)+'（共 '+d.months+' 个月）；数据源：矛盾纠纷排查台账（单位 × 类型交叉统计），与「矛盾纠纷排查」列表及统计卡同源。'
-    +' 化解率标识：<span class="rpt-rate g">≥90% 优</span> <span class="rpt-rate y">85%—90% 良</span> <span class="rpt-rate o">83%—85% 关注</span> <span class="rpt-rate r">＜83% 预警</span>；空值以「—」表示当期无受理。切换统计周期后全表按月度台账重新汇总。';
+  document.getElementById('rptNote').innerHTML='口径：解决率＝化解件数 ÷ 受理件数；统计周期 '+rptPeriodTxt(from,to)+'（共 '+d.months+' 个月）；数据源：矛盾纠纷排查台账（单位 × 类型交叉统计），与「矛盾纠纷排查」列表及统计卡同源。'
+    +' 解决率标识：<span class="rpt-rate g">≥90% 优</span> <span class="rpt-rate y">85%—90% 良</span> <span class="rpt-rate o">83%—85% 关注</span> <span class="rpt-rate r">＜83% 预警</span>；空值以「—」表示当期无受理。切换统计周期后全表按月度台账重新汇总。';
   document.getElementById('rptHint').textContent='已选 '+d.months+' 个月：'+from+' 至 '+to;
 }
 function rptPresetChange(){
@@ -4775,7 +4915,7 @@ function toggleMode(m){
           <div class="ff"><label>大类纠纷类型</label><select><option>请选择</option><option>婚姻家庭</option><option>邻里关系</option><option>劳动争议</option><option>借贷债务</option><option>物业管理</option><option>土地草场</option><option>医患纠纷</option><option>其他</option></select></div>
           <div class="ff"><label>小类纠纷类型</label><select><option>请选择</option><option>离婚纠纷</option><option>赡养抚养</option><option>噪音扰民</option><option>房屋漏水</option><option>地界争议</option><option>草场边界</option><option>工资拖欠</option><option>工伤赔偿</option><option>其他</option></select></div>
           <div class="ff"><label>影响程度</label><select><option>请选择</option><option>轻微</option><option>一般</option><option>较大</option><option>重大</option></select></div>
-          <div class="ff"><label>调处状态</label><select><option>待调处</option><option>调处中</option><option>已化解</option><option>已终止</option><option>已移交</option></select></div>
+          <div class="ff"><label>调处状态</label><select><option>待定级</option><option>未解决</option><option>已解决</option><option>移交</option></select></div>
           <div class="ff"><label>是否关注</label><select><option>否</option><option>是</option></select></div>
 
           <div class="ff full" style="padding:0"><div class="sc-dim-t">风险特征<span class="s">持械 / 扬言为赋分与升级防控的关键判据</span></div></div>
@@ -4887,7 +5027,7 @@ function toggleMode(m){
         <div class="cm-wm">严禁泄露公民个人信息和警务工作秘密</div>
         <div class="cm-form">
           <div class="ff full" style="padding:0"><div class="sc-dim-t">定级信息<span class="s" id="gradeHint">风险定级须与责任民警指派在提交后 12 小时内一并完成</span></div></div>
-          <div class="ff"><label>纠纷级别<em>*</em></label><select id="grLevel"><option>重点级</option><option>关注级</option><option>一般级</option></select></div>
+          <div class="ff"><label>纠纷级别<em>*</em></label><select id="grLevel"><option>一般</option><option>关注</option><option>重点</option></select></div>
           <div class="ff"><label>调级时间<em>*</em></label><input id="grTime" placeholder="YYYY-MM-DD HH:mm:ss"></div>
           <div class="ff full"><label>调级原因<em>*</em></label><textarea id="grReason" placeholder="请说明本次定级 / 调整级别的依据与理由"></textarea></div>
           <div class="ff"><label>调级人姓名<em>*</em></label><input id="grUser" placeholder="请输入姓名"></div>
@@ -4936,12 +5076,21 @@ function toggleMode(m){
           </div>
 
           <div class="wz-pane" id="wzP2">
-            <div class="wz-search">
-              <input id="ezKw" placeholder="搜索单位/个人名称" oninput="renderEzTargets()">
-              <select id="ezKind" onchange="renderEzTargets()" style="height:32px;border:1px solid #E3E6ED;border-radius:6px;padding:0 10px;font-size:13px"><option value="">全部类型</option><option value="单位">单位</option><option value="个人">个人</option></select>
-            </div>
             <div class="wz-tip" id="ezScopeTip">请先在上一步选择委托场景。</div>
-            <div class="wz-targets" id="ezTargets"></div>
+            <div class="ez-pick">
+              <div class="ez-col">
+                <div class="ez-col-hd">组织机构树 · 选择委托对象（可展开到具体人员）</div>
+                <div class="wz-search"><input id="ezTreeKw" placeholder="搜索单位 / 姓名" oninput="renderEzTree()"></div>
+                <div class="tree ez-tree" id="ezTree"></div>
+              </div>
+              <div class="ez-col">
+                <div class="ez-col-hd">已选委托对象</div>
+                <div class="ez-sel" id="ezSel"><span class="ez-none">尚未选择，请从左侧组织机构树中点选具体人员</span></div>
+                <div class="ez-col-hd" style="margin-top:12px">场景匹配目标（推荐，点击可直接选用）</div>
+                <div class="wz-search"><input id="ezKw" placeholder="搜索单位/个人名称" oninput="renderEzTargets()"></div>
+                <div class="wz-targets" id="ezTargets"></div>
+              </div>
+            </div>
           </div>
 
           <div class="wz-pane" id="wzP3">
@@ -4951,7 +5100,7 @@ function toggleMode(m){
                 <div class="wz-sum" id="ezSummary"></div>
               </div>
             </div>
-            <div class="wz-tip">提交后生成委托单并推送至被委托方，纠纷状态变更为「已委托 · 调解中」，办理结果需在办结后回写。</div>
+            <div class="wz-tip">提交后生成委托单并推送至被委托方，纠纷状态变更为「移交」，办理结果需在办结后回写。</div>
           </div>
         </div>
         <div class="pop-foot">
@@ -5112,7 +5261,7 @@ function toggleMode(m){
             <div id="scDims"></div>
           </div>
           <div class="sc-pane" id="scPane4">
-            <div class="wz-tip">第 4 步：综合定级。纠纷等级不再取单一对象分数，而是按各当事人、涉事单位的分数<b>综合评估</b>：取最高分与平均分加权计算综合得分，任一对象触发一票升红则纠纷直接列为重大；最终等级由民警手动确认。</div>
+            <div class="wz-tip">第 4 步：综合定级。纠纷等级不再取单一对象分数，而是按各当事人、涉事单位的分数<b>综合评估</b>：取最高分与平均分加权计算综合得分，任一对象触发一票升红则纠纷直接列重点；最终等级由民警手动确认。</div>
             <div class="sc-syn">
               <div class="sc-synhd">各当事人 / 涉事单位赋分汇总</div>
               <div class="sc-synbd"><div id="scSynTb"></div></div>
@@ -5126,7 +5275,7 @@ function toggleMode(m){
             </div>
             <div class="sc-syn">
               <div class="sc-synhd">定级说明（民警填写）</div>
-              <div class="sc-synbd"><textarea class="sc-note" id="scNote" placeholder="请填写综合定级理由，如：甲方三次调解未果且存在扬言报复情形，乙方已信访登记，综合评估为复杂纠纷……"></textarea></div>
+              <div class="sc-synbd"><textarea class="sc-note" id="scNote" placeholder="请填写综合定级理由，如：甲方三次调解未果且存在扬言报复情形，乙方已信访登记，综合评估为关注纠纷……"></textarea></div>
             </div>
           </div>
           <div class="sc-pane" id="scPane5">
@@ -5138,13 +5287,13 @@ function toggleMode(m){
           <div class="sc-total" id="scTotal">0<small>/100 分</small></div>
           <span class="sc-kv">当前对象：<b id="scCurName">—</b></span>
           <span class="sc-red off" id="scRed">一票升红：否</span>
-          <span class="sc-kv">综合得分：<b id="scComp">0</b> · 综合建议：<b id="scCompLv">未定级</b></span>
+          <span class="sc-kv">综合得分：<b id="scComp">0</b> · 综合建议：<b id="scCompLv">待定级</b></span>
           <span class="sc-kv">纠纷最终等级（民警确认）</span>
           <div class="sc-lv" id="scLv">
-            <button class="on" data-lv="未定级" onclick="pickLv(this)">未定级</button>
+            <button class="on" data-lv="待定级" onclick="pickLv(this)">待定级</button>
             <button data-lv="一般" onclick="pickLv(this)">一般</button>
-            <button data-lv="复杂" onclick="pickLv(this)">复杂</button>
-            <button data-lv="重大" onclick="pickLv(this)">重大</button>
+            <button data-lv="关注" onclick="pickLv(this)">关注</button>
+            <button data-lv="重点" onclick="pickLv(this)">重点</button>
           </div>
         </div>
       </div>

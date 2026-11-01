@@ -269,6 +269,43 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
 /* 提示条 */
 .toast{position:absolute;left:50%;bottom:92px;transform:translateX(-50%);background:rgba(26,34,52,.92);color:#fff;font-size:13px;padding:10px 18px;border-radius:999px;z-index:99;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap;max-width:90%;box-shadow:0 10px 30px rgba(26,34,52,.3)}
 .toast.on{opacity:1}
+
+/* ===== 委托：组织机构树选人 ===== */
+.m-cnt{font-size:11px;color:var(--txt3);margin:-2px 6px 8px}
+.mpick{background:#fff;border-radius:18px;box-shadow:var(--sh-sm);padding:12px 14px 14px;margin-bottom:10px}
+.mpick-hd{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;margin-bottom:9px}
+.mpick-hd::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--blue)}
+.mpick-cnt{margin-left:auto;font-size:11px;font-weight:400;color:var(--txt3)}
+.mtree-kw{width:100%;height:34px;border:1px solid var(--line);border-radius:10px;padding:0 12px;font-size:12px;color:var(--txt);background:#f7f9ff;margin-bottom:8px;outline:none}
+.mtree-kw:focus{border-color:var(--blue);background:#fff}
+.mtree{max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:6px;background:#fbfcff}
+.mt-u{margin-bottom:2px}
+.mt-uh{display:flex;align-items:center;gap:6px;height:32px;font-size:12.5px;font-weight:600;color:var(--txt);cursor:pointer;border-radius:8px;padding:0 6px}
+.mt-uh:active{background:#eef3ff}
+.mt-ar{width:14px;flex:none;text-align:center;color:var(--txt3);font-size:12px}
+.mt-uc{display:none;padding-left:14px}
+.mt-p{display:flex;align-items:center;gap:8px;padding:7px 6px;border-radius:9px;cursor:pointer;border:1px solid transparent}
+.mt-p:active{background:#f1f5ff}
+.mt-p.on{border-color:var(--blue);background:#eaf1ff}
+.mav{width:30px;height:30px;border-radius:50%;background:#eef4ff;color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:12px;flex:none}
+.mtx{flex:1;min-width:0}
+.mtx .mn{font-size:12.5px;font-weight:600;color:var(--txt);line-height:1.3}
+.mtx .md{font-size:10.5px;color:var(--txt3);margin-top:2px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.msel{background:#fff;border-radius:18px;box-shadow:var(--sh-sm);padding:12px 14px;margin-bottom:4px}
+.msel-hd{display:flex;align-items:center;font-size:12px;font-weight:700;color:var(--txt2);margin-bottom:8px}
+.mclr{margin-left:auto;font-size:11px;font-weight:500;color:var(--up);background:#fdeaea;padding:3px 10px;border-radius:999px}
+.msel-bd{display:flex;align-items:center;gap:9px}
+.msel-none{font-size:11.5px;color:var(--txt3);padding:2px 0}
+.mtgt{display:flex;flex-direction:column;gap:8px}
+.mtgt-row{display:flex;align-items:center;gap:9px;background:#fff;border-radius:14px;box-shadow:var(--sh-sm);padding:10px 12px;border:1px solid transparent;cursor:pointer}
+.mtgt-row.on{border-color:var(--blue);background:#eaf1ff}
+.tk-q{border:1px solid #eef1fa;border-radius:14px;padding:11px 12px;margin-bottom:10px}
+.tk-q:last-child{margin-bottom:0}
+.tk-q .tk-qh{font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;line-height:1.5}
+.tk-q .tk-qn{width:18px;height:18px;border-radius:50%;background:#eaf1ff;color:var(--blue);font-size:10px;display:flex;align-items:center;justify-content:center;flex:none}
+.tk-q .tk-qb{font-size:11px;color:var(--txt2);margin-top:5px;line-height:1.7}
+.tk-q .tk-qf{margin-top:7px}
+.tk-qf .tk-del{margin-left:auto;font-size:11px;color:var(--up);font-weight:400;cursor:pointer}
 </style>
 </head>
 <body>
@@ -294,7 +331,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
     <div class="body">
       <div class="todo">
         <div class="td"><div class="n red">6</div><div class="l">待签收</div></div>
-        <div class="td"><div class="n orange">4</div><div class="l">待处置</div></div>
+        <div class="td"><div class="n orange">4</div><div class="l">未解决</div></div>
         <div class="td"><div class="n">3</div><div class="l">待回访</div></div>
         <div class="td"><div class="n red">2</div><div class="l">临期预警</div></div>
       </div>
@@ -323,7 +360,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
         <div class="i-ft"><span>任务编号 PC20261022031</span><span class="ops"><button class="btn-s p" onclick="mGo('p-sign')">去签收</button></span></div>
       </div>
       <div class="item">
-        <div class="i-hd"><span class="i-t">回访任务：波密县某工地劳资纠纷</span><span class="tag g">已化解</span></div>
+        <div class="i-hd"><span class="i-t">回访任务：波密县某工地劳资纠纷</span><span class="tag g">已解决</span></div>
         <div class="i-sub">化解后第 7 日回访，需确认工资支付到位</div>
         <div class="i-ft"><span>应回访日期 2026-10-28</span><span class="ops"><button class="btn-s" onclick="mToast('演示：进入回访登记')">去回访</button></span></div>
       </div>
@@ -351,42 +388,43 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
         <span class="ot-x" onclick="this.parentNode.style.display='none'">×</span>
       </div>
       <div class="seg">
-        <button class="on" onclick="segPick(this)">全部</button><button onclick="segPick(this)">待定级 2</button><button onclick="segPick(this)">待处置</button><button onclick="segPick(this)">调解中</button><button onclick="segPick(this)">已委托</button><button onclick="segPick(this)">已结案</button>
+        <button class="on" data-st="all" onclick="mPickSt(this)">全部</button><button data-st="待定级" onclick="mPickSt(this)">待定级</button><button data-st="移交" onclick="mPickSt(this)">移交</button><button data-st="已解决" onclick="mPickSt(this)">已解决</button><button data-st="未解决" onclick="mPickSt(this)">未解决</button>
       </div>
-      <div class="item" onclick="mGo('p-detail')">
+      <div class="m-cnt" id="mCnt"></div>
+      <div class="item" data-st="待定级" onclick="mGo('p-detail')">
         <div class="i-hd"><span class="i-t">工布江达县某工地欠薪引发劳资纠纷</span><span class="tag ot">超期未定级 5h</span></div>
         <div class="i-sub">工布江达县巴河镇某工地 · 涉及 6 人 · 劳动争议</div>
-        <div class="i-ft"><span>上报 2026-10-26 22:10 · 应于 10-27 10:10 前定级</span><span class="ops"><button class="btn-s p" onclick="mGo('p-detail')">去定级</button></span></div>
+        <div class="i-ft"><span>上报 2026-10-26 22:10 · 应于 10-27 10:10 前定级</span><span class="ops"><button class="btn-s p" onclick="event.stopPropagation();mGo('p-handle')">去处置</button></span></div>
       </div>
-      <div class="item" onclick="mGo('p-detail')">
+      <div class="item" data-st="待定级" onclick="mGo('p-detail')">
         <div class="i-hd"><span class="i-t">朗县某村草场地界争议</span><span class="tag o">距定级 3h</span></div>
         <div class="i-sub">朗县朗镇某村 · 涉及 4 人 · 草场地界</div>
-        <div class="i-ft"><span>上报 2026-10-28 09:40 · 应于 10-28 21:40 前定级</span><span class="ops"><button class="btn-s p" onclick="mGo('p-detail')">去定级</button></span></div>
+        <div class="i-ft"><span>上报 2026-10-28 09:40 · 应于 10-28 21:40 前定级</span><span class="ops"><button class="btn-s p" onclick="event.stopPropagation();mGo('p-handle')">去处置</button></span></div>
       </div>
-      <div class="item" onclick="mGo('p-detail')">
+      <div class="item" data-st="未解决" onclick="mGo('p-detail')">
         <div class="i-hd"><span class="i-t">巴宜区某小区装修噪音引发邻里纠纷</span><span class="tag r">重点</span></div>
         <div class="i-sub">巴宜区某小区 3 栋 · 涉及 3 人 · 邻里关系</div>
-        <div class="i-ft"><span class="tag o">待处置</span><span>2026-10-22 16:33</span></div>
+        <div class="i-ft"><span class="tag o">未解决</span><span>2026-10-22 16:33</span></div>
       </div>
-      <div class="item" onclick="mGo('p-detail')">
+      <div class="item" data-st="未解决" onclick="mGo('p-detail')">
         <div class="i-hd"><span class="i-t">波密县达兴村某工地劳资纠纷</span><span class="tag">关注</span></div>
         <div class="i-sub">波密县达兴村某工地 · 涉及 2 人 · 劳动争议</div>
-        <div class="i-ft"><span class="tag">调解中</span><span>2026-10-22 12:45</span></div>
+        <div class="i-ft"><span class="tag">未解决</span><span>2026-10-22 12:45</span></div>
       </div>
-      <div class="item" onclick="mGo('p-detail')">
+      <div class="item" data-st="移交" onclick="mGo('p-detail')">
         <div class="i-hd"><span class="i-t">米林市某酒店欠薪纠纷</span><span class="tag">关注</span></div>
         <div class="i-sub">米林市某酒店 · 涉及 2 人 · 劳动争议</div>
-        <div class="i-ft"><span class="tag g">已委托</span><span>2026-10-21 21:38</span></div>
+        <div class="i-ft"><span class="tag g">移交</span><span>2026-10-21 21:38</span></div>
       </div>
-      <div class="item" onclick="mGo('p-detail')">
+      <div class="item" data-st="已解决" onclick="mGo('p-detail')">
         <div class="i-hd"><span class="i-t">经开区某家庭纠纷警情</span><span class="tag gray">一般</span></div>
         <div class="i-sub">经开区某居民小区 · 涉及 2 人 · 婚姻家庭</div>
-        <div class="i-ft"><span class="tag gray">已结案</span><span>2026-10-21 17:40</span></div>
+        <div class="i-ft"><span class="tag gray">已解决</span><span>2026-10-21 17:40</span></div>
       </div>
-      <div class="item" onclick="mGo('p-detail')">
+      <div class="item" data-st="已解决" onclick="mGo('p-detail')">
         <div class="i-hd"><span class="i-t">察隅县某小区停车位纠纷</span><span class="tag gray">一般</span></div>
         <div class="i-sub">察隅县某小区 · 涉及 4 人 · 物业纠纷</div>
-        <div class="i-ft"><span class="tag gray">已结案</span><span>2026-10-20 20:50</span></div>
+        <div class="i-ft"><span class="tag gray">已解决</span><span>2026-10-20 20:50</span></div>
       </div>
     </div>
   </div>
@@ -404,7 +442,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
       </div>
       <div class="card"><div class="card-bd">
         <div style="font-size:15px;font-weight:600;line-height:1.5">巴宜区某小区装修噪音引发邻里纠纷</div>
-        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag r">重点级</span><span class="tag o">待处置</span><span class="tag">邻里关系</span></div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag r">重点</span><span class="tag o">未解决</span><span class="tag">邻里关系</span></div>
       </div></div>
       <div class="card"><div class="card-hd">基本信息</div><div class="card-bd">
         <div class="kv">
@@ -558,7 +596,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
       </div>
       <div style="display:flex;gap:8px;margin-top:12px">
         <button class="btn-s gray" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：已暂存调解记录')">暂存</button>
-        <button class="btn-s p" style="flex:2;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：提交成功，纠纷已结案归档')">提交</button>
+        <button class="btn-s p" style="flex:2;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：提交成功，纠纷已解决归档')">提交</button>
       </div>
     </div>
   </div>
@@ -598,7 +636,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
   <div class="page" id="p-tri">
     <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">三地管控</span><span class="ar"></span></div>
     <div class="body">
-      <div class="hint">三地＝矛盾纠纷<b>发生地</b>、相关当事人<b>户籍地</b>、<b>经常居住地</b>。三地之间需落实工作衔接与信息共享，执行「双排查、双通报」，严防重点人员脱管失控。</div>
+      <div class="hint">三地＝矛盾纠纷<b>发生地</b>、相关当事人<b>户籍地</b>、<b>经常居住地</b>。三地之间需落实工作衔接与信息共享，由属地责任民警按周期登记管控情况，严防重点人员脱管失控。</div>
       <div class="tri-tabs">
         <button class="on" onclick="triPick(this)">发生地</button><button onclick="triPick(this)">户籍地</button><button onclick="triPick(this)">经常居住地</button>
       </div>
@@ -609,7 +647,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
             <div style="font-size:15px;font-weight:600">次仁××</div>
             <div style="font-size:12px;color:var(--txt2)">男 · 34 岁 · 涉及邻里 / 草场地界纠纷</div>
           </div>
-          <span class="tag r">高风险</span>
+          <span class="tag r">重点</span>
         </div>
       </div></div>
 
@@ -619,58 +657,158 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
       </div>
       <div class="tri-box" style="margin-bottom:10px">
         <div class="tp"><span style="width:6px;height:6px;border-radius:50%;background:var(--blue)"></span>户籍地（协管）</div>
-        <div class="td">米林市米林镇某村 · 米林市公安局<br>责任民警：李警官 138****4520<br>协查状态：<span style="color:var(--down)">已签收 · 已反馈</span></div>
+        <div class="td">米林市米林镇某村 · 米林市公安局<br>责任民警：李警官 138****4520</div>
       </div>
       <div class="tri-box" style="margin-bottom:10px">
         <div class="tp"><span style="width:6px;height:6px;border-radius:50%;background:var(--warn)"></span>经常居住地（协管）</div>
-        <div class="td">巴宜区八一镇某出租屋 · 八一派出所<br>责任民警：王警官 137****8812<br>协查状态：<span style="color:#c8780a">已签收 · 待反馈（剩余 1 天）</span></div>
+        <div class="td">巴宜区八一镇某出租屋 · 八一派出所<br>责任民警：王警官 137****8812</div>
       </div>
 
-      <div class="sec-t">协查通报记录</div>
+      <div class="sec-t">管控记录</div>
       <div class="card"><div class="card-bd">
         <div class="tl">
-          <div class="n"><div class="t">经常居住地已签收协查</div><div class="d">八一派出所王警官签收，承诺 10 月 27 日前反馈现实表现</div><div class="tm">2026-10-25 15:40</div></div>
-          <div class="n"><div class="t">户籍地反馈协查结果</div><div class="d">米林市公安局反馈：无前科，家庭关系稳定，近半年无异常</div><div class="tm">2026-10-24 11:08</div></div>
-          <div class="n"><div class="t">发起三地协查通报</div><div class="d">向户籍地、经常居住地推送协查函，落实双排查双通报</div><div class="tm">2026-10-23 09:30 · 张警官</div></div>
+          <div class="n"><div class="t">经常居住地管控登记</div><div class="d">八一派出所王警官入户走访，现实表现平稳，暂无异常</div><div class="tm">2026-10-25 15:40</div></div>
+          <div class="n"><div class="t">户籍地管控登记</div><div class="d">米林市公安局走访核实：无前科，家庭关系稳定，近半年无异常</div><div class="tm">2026-10-24 11:08</div></div>
+          <div class="n"><div class="t">发生地管控登记</div><div class="d">第一警务区张警官建立管控台账，落实每周走访一次</div><div class="tm">2026-10-23 09:30</div></div>
         </div>
       </div></div>
 
       <div style="display:flex;gap:8px">
-        <button class="btn-s" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：发起三地协查通报')">发起协查</button>
-        <button class="btn-s p" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：登记管控记录')">登记管控</button>
+        <button class="btn-s p" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：管控记录登记成功')">登记管控</button>
       </div>
     </div>
   </div>
 
   <!-- ==================== 警民恳谈 ==================== -->
   <div class="page" id="p-talk">
-    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">警民恳谈</span><span class="ar" onclick="mToast('演示：新建恳谈记录')">＋新建</span></div>
+    <div class="nav"><button class="bk" onclick="mGo('p-work')">‹</button><span class="tt">警民恳谈</span><span class="ar" onclick="mGo('p-talknew')">＋新建</span></div>
     <div class="body">
       <div class="hint">通过警民恳谈会、板凳课堂、小院杂谈等形式了解社情民意，收集矛盾纠纷线索；收集到的问题可一键转为排查或纠纷登记。</div>
       <div class="todo" style="margin-bottom:10px">
         <div class="td"><div class="n">28</div><div class="l">本月场次</div></div>
         <div class="td"><div class="n">416</div><div class="l">参与群众</div></div>
         <div class="td"><div class="n orange">37</div><div class="l">收集问题</div></div>
-        <div class="td"><div class="n">31</div><div class="l">已办结</div></div>
+        <div class="td"><div class="n">12</div><div class="l">覆盖村居</div></div>
       </div>
-      <div class="seg">
-        <button class="on" onclick="segPick(this)">全部</button><button onclick="segPick(this)">待开展</button><button onclick="segPick(this)">已开展</button><button onclick="segPick(this)">待办结</button>
+      <div class="item" onclick="mGo('p-talkview')">
+        <div class="i-hd"><span class="i-t">八一镇某社区警民恳谈会</span></div>
+        <div class="i-sub">时间：2026-10-24 19:30　地点：某社区党群服务中心<br>参与：社区干部 3 人、网格员 5 人、群众代表 26 人<br>收集问题：5 条</div>
+        <div class="i-ft"><span>主持人：张警官</span><span class="ops"><button class="btn-s gray" onclick="event.stopPropagation();mGo('p-talkview')">查看</button></span></div>
       </div>
-      <div class="item">
-        <div class="i-hd"><span class="i-t">八一镇某社区警民恳谈会</span><span class="tag g">已办结</span></div>
-        <div class="i-sub">时间：2026-10-24 19:30　地点：某社区党群服务中心<br>参与：社区干部 3 人、网格员 5 人、群众代表 26 人<br>收集问题：5 条（已办结 5 条）</div>
-        <div class="i-ft"><span>主持人：张警官</span><span class="ops"><button class="btn-s gray">查看</button></span></div>
+      <div class="item" onclick="mGo('p-talkview')">
+        <div class="i-hd"><span class="i-t">某村「板凳课堂」法治宣讲</span></div>
+        <div class="i-sub">时间：2026-10-26 16:00　地点：某村村委会<br>参与：村两委 4 人、群众 38 人<br>收集问题：4 条</div>
+        <div class="i-ft"><span>主持人：张警官</span><span class="ops"><button class="btn-s gray" onclick="event.stopPropagation();mGo('p-talkview')">查看</button></span></div>
       </div>
-      <div class="item">
-        <div class="i-hd"><span class="i-t">某村「板凳课堂」法治宣讲</span><span class="tag o">待办结</span></div>
-        <div class="i-sub">时间：2026-10-26 16:00　地点：某村村委会<br>参与：村两委 4 人、群众 38 人<br>收集问题：4 条（已办结 2 条）</div>
-        <div class="i-ft"><span>主持人：张警官</span><span class="ops"><button class="btn-s p" onclick="mToast('演示：问题转办结登记')">去办结</button></span></div>
+      <div class="item" onclick="mGo('p-talkview')">
+        <div class="i-hd"><span class="i-t">某小区物业纠纷专场恳谈</span></div>
+        <div class="i-sub">时间：2026-10-28 19:00　地点：某小区物业会议室<br>议题：停车收费、公共区域使用、装修噪音</div>
+        <div class="i-ft"><span>主持人：张警官</span><span class="ops"><button class="btn-s gray" onclick="event.stopPropagation();mGo('p-talkview')">查看</button></span></div>
       </div>
-      <div class="item">
-        <div class="i-hd"><span class="i-t">某小区物业纠纷专场恳谈</span><span class="tag">待开展</span></div>
-        <div class="i-sub">计划时间：2026-10-28 19:00　地点：某小区物业会议室<br>议题：停车收费、公共区域使用、装修噪音</div>
-        <div class="i-ft"><span>主持人：张警官</span><span class="ops"><button class="btn-s">提醒</button></span></div>
+    </div>
+  </div>
+
+  <!-- ==================== 警民恳谈 · 新建 ==================== -->
+  <div class="page" id="p-talknew">
+    <div class="nav"><button class="bk" onclick="mGo('p-talk')">‹</button><span class="tt">新建恳谈记录</span><span class="ar"></span></div>
+    <div class="body">
+      <div class="hint">填写警民恳谈会、板凳课堂、小院杂谈等活动的开展情况；现场收集到的问题可一键转为矛盾纠纷排查或登记。</div>
+      <div class="form">
+        <div class="fsec">活动信息</div>
+        <div class="fi"><label>活动名称<em>*</em></label><input placeholder="如：八一镇某社区警民恳谈会"></div>
+        <div class="fi"><label>活动形式<em>*</em></label><select><option>警民恳谈会</option><option>板凳课堂</option><option>小院杂谈</option><option>入户走访</option><option>法治宣讲</option><option>其他</option></select></div>
+        <div class="fi"><label>活动时间<em>*</em></label><input placeholder="请选择活动开始时间"></div>
+        <div class="fi"><label>活动地点<em>*</em></label><input placeholder="请输入活动地点"></div>
+        <div class="fi"><label>主持人<em>*</em></label><input placeholder="请输入主持人姓名"></div>
+        <div class="fi"><label>组织单位</label><input placeholder="如：八一镇派出所"></div>
+        <div class="fi"><label>所属派出所 / 警务区</label><select><option>八一镇派出所 · 第一警务区</option><option>八一镇派出所 · 第二警务区</option><option>百巴镇派出所 · 第一警务区</option></select></div>
       </div>
+      <div class="form" style="margin-top:10px">
+        <div class="fsec">参与情况</div>
+        <div class="fi"><div class="row"><div><label>社区 / 村两委（人）</label><input placeholder="0"></div><div><label>网格员（人）</label><input placeholder="0"></div></div></div>
+        <div class="fi"><div class="row"><div><label>群众代表（人）</label><input placeholder="0"></div><div><label>其他人员（人）</label><input placeholder="0"></div></div></div>
+        <div class="fi"><label>参与总人数</label><input placeholder="系统自动汇总，可手工校正"></div>
+      </div>
+      <div class="form" style="margin-top:10px">
+        <div class="fsec">活动内容</div>
+        <div class="fi"><label>活动议题<em>*</em></label><textarea placeholder="请填写本次恳谈的主要议题与宣讲内容"></textarea></div>
+        <div class="fi"><label>群众反映重点</label><textarea placeholder="记录群众集中反映的问题、诉求与情绪动向"></textarea></div>
+        <div class="fi"><label>现场处置情况</label><textarea placeholder="对现场可答复、可协调事项的处理结果"></textarea></div>
+      </div>
+
+      <div class="sec-t">收集问题（逐条登记）</div>
+      <div class="form" id="tkQBox"></div>
+      <div style="margin:8px 0 12px"><button class="btn-s gray" style="width:100%;height:40px;border-radius:12px" onclick="mTalkAddQ()">＋ 添加收集问题</button></div>
+
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="btn-s gray" style="flex:1;height:44px;border-radius:999px;font-size:14px" onclick="mToast('演示：已暂存草稿')">暂存</button>
+        <button class="btn-s p" style="flex:2;height:44px;border-radius:999px;font-size:14px" onclick="mTalkSubmit()">提交</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 警民恳谈 · 查看 ==================== -->
+  <div class="page" id="p-talkview">
+    <div class="nav"><button class="bk" onclick="mGo('p-talk')">‹</button><span class="tt">恳谈记录详情</span><span class="ar"></span></div>
+    <div class="body">
+      <div class="card"><div class="card-bd">
+        <div style="font-size:15px;font-weight:600;line-height:1.5">八一镇某社区警民恳谈会</div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag">警民恳谈会</span><span class="tag gray">收集问题 5 条</span></div>
+      </div></div>
+
+      <div class="card"><div class="card-hd">活动信息</div><div class="card-bd">
+        <div class="kv">
+          <div class="k">活动时间</div><div class="v">2026-10-24 19:30</div>
+          <div class="k">活动地点</div><div class="v">八一镇某社区党群服务中心</div>
+          <div class="k">主持人</div><div class="v">张警官 139****1201</div>
+          <div class="k">组织单位</div><div class="v">八一镇派出所 · 第一警务区</div>
+          <div class="k">参与人员</div><div class="v">共 34 人（社区干部 3 人、网格员 5 人、群众代表 26 人）</div>
+          <div class="k">登记人</div><div class="v">张警官 · 2026-10-24 21:10</div>
+        </div>
+      </div></div>
+
+      <div class="card"><div class="card-hd">活动内容</div><div class="card-bd" style="font-size:13px;color:var(--txt2);line-height:1.7">
+        <div style="color:var(--txt);font-weight:600;margin-bottom:6px">活动议题</div>
+        通报辖区近期治安形势，围绕小区停车收费、公共区域使用、装修噪音等热点问题听取群众意见，同步开展秋冬季防火防盗与反诈宣传。
+        <div style="color:var(--txt);font-weight:600;margin:12px 0 6px">群众反映重点</div>
+        群众集中反映小区停车位不足、夜间装修噪音扰民、楼道堆放杂物等问题，希望物业与派出所加强日常巡查。
+        <div style="color:var(--txt);font-weight:600;margin:12px 0 6px">现场处置情况</div>
+        对楼道堆放杂物问题当场协调物业限期清理；停车收费争议由社区牵头另行召开业主协商会；噪音扰民问题已登记，交由社区民警跟进调解。
+      </div></div>
+
+      <div class="sec-t">收集问题（5 条）</div>
+      <div class="card"><div class="card-bd">
+        <div class="tk-q">
+          <div class="tk-qh"><span class="tk-qn">1</span>楼道堆放杂物存在消防隐患</div>
+          <div class="tk-qb">物业纠纷 · 反映人：王先生 138****3341<br>处置情况：当场协调物业于 3 日内完成清理</div>
+        </div>
+        <div class="tk-q">
+          <div class="tk-qh"><span class="tk-qn">2</span>小区夜间装修噪音扰民</div>
+          <div class="tk-qb">邻里关系 · 反映人：李女士 135****8820<br>处置情况：已登记，交由社区民警跟进调解</div>
+        </div>
+        <div class="tk-q">
+          <div class="tk-qh"><span class="tk-qn">3</span>停车位收费未经业主同意</div>
+          <div class="tk-qb">物业纠纷 · 反映人：多位群众<br>处置情况：转社区居委会牵头召开业主协商会</div>
+        </div>
+        <div class="tk-q">
+          <div class="tk-qh"><span class="tk-qn">4</span>小区路灯损坏夜间出行不便</div>
+          <div class="tk-qb">其他诉求 · 反映人：次仁××<br>处置情况：已协调市政部门更换</div>
+        </div>
+        <div class="tk-q">
+          <div class="tk-qh"><span class="tk-qn">5</span>建议增设小区电动车充电桩</div>
+          <div class="tk-qb">其他诉求 · 反映人：赵先生<br>处置情况：转社区与物业研究选址方案</div>
+        </div>
+      </div></div>
+
+      <div class="card"><div class="card-hd">办理轨迹</div><div class="card-bd">
+        <div class="tl">
+          <div class="n"><div class="t">分办落实</div><div class="d">5 条问题已逐条分办：2 条当场协调到位、2 条转社区办理、1 条由社区民警跟进</div><div class="tm">2026-10-26 10:20</div></div>
+          <div class="n"><div class="t">登记收集问题</div><div class="d">张警官录入恳谈记录并登记群众反映问题 5 条</div><div class="tm">2026-10-24 21:10</div></div>
+          <div class="n"><div class="t">开展恳谈活动</div><div class="d">八一镇派出所联合社区组织警民恳谈会，34 人参加</div><div class="tm">2026-10-24 19:30</div></div>
+        </div>
+      </div></div>
+
+      <div style="margin-top:4px"><button class="btn-s gray" style="width:100%;height:44px;border-radius:999px;font-size:14px" onclick="mGo('p-talk')">返回列表</button></div>
     </div>
   </div>
 
@@ -678,29 +816,25 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
   <div class="page" id="p-entrust">
     <div class="nav"><button class="bk" onclick="mGo('p-detail')">‹</button><span class="tt">委托调解</span><span class="ar"></span></div>
     <div class="body">
-      <div class="hint">选择委托场景后，系统按管辖范围与专业方向自动匹配可承接的单位或个人。</div>
+      <div class="hint">先选择委托场景，系统按管辖范围与专业方向自动匹配可承接人员；再在<b>组织机构树</b>中展开单位，点选到<b>具体承办人员</b>后方可提交委托。</div>
       <div class="form">
-        <div class="fi"><label>委托场景<em>*</em></label><select onchange="mToast('演示：已按场景刷新可选目标')"><option>人民调解组织</option><option>行业性专业性调解</option><option>司法所 / 法律援助</option><option>乡镇（街道）综治中心</option><option>派出所驻所调解室</option><option>属地单位 / 用工单位</option><option>个人调解员</option></select></div>
+        <div class="fi"><label>委托场景<em>*</em></label><select id="mScene" onchange="mSceneChange()"><option>人民调解组织</option><option>行业性专业性调解</option><option>司法所 / 法律援助</option><option>乡镇（街道）综治中心</option><option>派出所驻所调解室</option><option>属地单位 / 用工单位</option><option>个人调解员</option></select></div>
         <div class="fi"><label>委托形式<em>*</em></label><select><option>委托调解</option><option>委托调查核实</option><option>委托稳控帮扶</option><option>委托回访</option></select></div>
         <div class="fi"><label>办理时限<em>*</em></label><input placeholder="请选择截止日期"></div>
         <div class="fi"><label>委托描述<em>*</em></label><textarea placeholder="请填写矛盾基本情况、前期调处经过、委托目的"></textarea></div>
       </div>
-      <div class="sec-t">选择委托目标</div>
-      <div class="item" onclick="pickTg(this)">
-        <div class="i-hd"><span class="i-t">巴宜区人民调解委员会</span><span class="tag">单位</span></div>
-        <div class="i-sub">巴宜区 · 八一镇 · 擅长邻里关系 / 婚姻家庭 / 土地草场<br>在办 12 件 · 化解率 94.1%</div>
+      <div class="sec-t">选择委托对象</div>
+      <div class="mpick">
+        <div class="mpick-hd"><span>组织机构</span><span class="mpick-cnt" id="mTreeCnt"></span></div>
+        <input class="mtree-kw" id="mTreeKw" placeholder="搜索单位 / 人员" oninput="renderMTree()">
+        <div class="mtree" id="mTree"></div>
       </div>
-      <div class="item" onclick="pickTg(this)">
-        <div class="i-hd"><span class="i-t">八一镇综治中心</span><span class="tag">单位</span></div>
-        <div class="i-sub">巴宜区 · 八一镇 · 综合调处 / 部门联动<br>在办 14 件 · 化解率 90.9%</div>
-      </div>
-      <div class="item" onclick="pickTg(this)">
-        <div class="i-hd"><span class="i-t">扎西（乡贤调解员）</span><span class="tag g">个人</span></div>
-        <div class="i-sub">巴宜区 · 八一镇 · 擅长邻里关系 / 草场地界<br>在办 3 件 · 化解率 97.1%</div>
-      </div>
+      <div class="msel" id="mSel"></div>
+      <div class="sec-t">场景匹配目标</div>
+      <div class="mtgt" id="mTgt"></div>
       <div style="display:flex;gap:8px;margin-top:6px">
         <button class="btn-s gray" style="flex:1;height:44px;border-radius:8px;font-size:14px" onclick="mGo('p-detail')">取消</button>
-        <button class="btn-s p" style="flex:2;height:44px;border-radius:8px;font-size:14px" onclick="mToast('演示：委托已提交，状态变更为 已委托 · 调解中')">确认委托</button>
+        <button class="btn-s p" style="flex:2;height:44px;border-radius:8px;font-size:14px" onclick="mEntrustSubmit()">确认委托</button>
       </div>
     </div>
   </div>
@@ -718,7 +852,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
       <div class="form" style="margin-top:10px">
         <div class="fsec">矛盾纠纷信息</div>
         <div class="fi"><label>事件名称<em>*</em></label><input placeholder="请输入矛盾事件名称"></div>
-        <div class="fi"><label>风险等级<em>*</em></label><select><option>请选择</option><option>未定级</option><option>一般</option><option>复杂</option><option>重大</option></select></div>
+        <div class="fi"><label>风险等级<em>*</em></label><select><option>请选择</option><option>一般</option><option>关注</option><option>重点</option></select></div>
         <div class="fi"><label>涉及领域<em>*</em></label><select><option>请选择</option><option>邻里关系</option><option>婚姻家庭</option><option>劳动争议</option><option>借贷纠纷</option><option>物业纠纷</option><option>草场地界</option><option>其他</option></select></div>
         <div class="fi"><label>矛盾来源<em>*</em></label><select><option>工作排查发现</option><option>110指令</option><option>12345推送</option><option>综治网格化推送</option><option>部门移交</option></select></div>
         <div class="fi"><label>矛盾纠纷类别</label><select><option>民事调解</option><option>治安调解</option><option>其他</option></select></div>
@@ -733,7 +867,7 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
         <div class="fi"><label>是否群体性事件</label><select><option>否</option><option>是</option></select></div>
         <div class="fi"><label>是否重点人员参与</label><select><option>否</option><option>是</option></select></div>
         <div class="fi"><label>是否找到其他当事人</label><select><option>是</option><option>否</option></select></div>
-        <div class="fi"><label>调处状态</label><select><option>待调处</option><option>调处中</option><option>已化解</option><option>已终止</option><option>已移交</option></select></div>
+        <div class="fi"><label>调处状态</label><select><option>待定级</option><option>未解决</option><option>已解决</option><option>移交</option></select></div>
         <div class="fi"><label>所属分县局</label><select><option>巴宜分局</option><option>波密县公安局</option><option>米林市公安局</option><option>工布江达县公安局</option></select></div>
         <div class="fi"><label>所属市局</label><select><option>林芝市公安局</option></select></div>
         <div class="fi"><label>派出所 / 责任区</label><select><option>八一镇派出所 · 第一责任区</option><option>八一镇派出所 · 第二责任区</option><option>百巴镇派出所 · 第一责任区</option></select></div>
@@ -839,14 +973,14 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
           <div class="card-bd" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
             <div class="ms-total" id="mTotal">0<small>/100 分</small></div>
             <span class="ms-red off" id="mRed">一票升红：否</span>
-            <span style="font-size:12px;color:var(--txt2)">建议：<b id="mSuggest" style="color:var(--txt)">未定级</b></span>
+            <span style="font-size:12px;color:var(--txt2)">建议：<b id="mSuggest" style="color:var(--txt)">待定级</b></span>
           </div>
         </div>
         <div class="mdimnav" id="mDimNav"></div>
         <div id="mDims"></div>
       </div>
       <div class="ms-pane" id="mPane4">
-        <div class="hint">第 4 步：综合定级。纠纷等级按各对象分数<b>综合评估</b>：最高分×70% + 平均分×30%；任一对象触发一票升红则纠纷直接列为重大。</div>
+        <div class="hint">第 4 步：综合定级。纠纷等级按各对象分数<b>综合评估</b>：最高分×70% + 平均分×30%；任一对象触发一票升红则纠纷直接列为重点。</div>
         <div class="card">
           <div class="card-bd" style="padding:0">
             <div class="mhd">各对象赋分汇总</div>
@@ -864,12 +998,12 @@ body.msimple .hd-blk>.form:first-child .fsec{padding-top:0}
           <div class="card-bd">
             <div class="mhd" style="padding:0 0 8px;border:none">纠纷最终等级（民警确认）</div>
             <div class="ms-lv" id="mLv">
-              <button class="on" data-lv="未定级" onclick="mPickLv(this)">未定级</button>
+              <button class="on" data-lv="待定级" onclick="mPickLv(this)">待定级</button>
               <button data-lv="一般" onclick="mPickLv(this)">一般</button>
-              <button data-lv="复杂" onclick="mPickLv(this)">复杂</button>
-              <button data-lv="重大" onclick="mPickLv(this)">重大</button>
+              <button data-lv="关注" onclick="mPickLv(this)">关注</button>
+              <button data-lv="重点" onclick="mPickLv(this)">重点</button>
             </div>
-            <textarea class="mnote" id="mNote" style="margin-top:10px" placeholder="请填写综合定级理由，如：甲方三次调解未果且有扬言情形，乙方已信访登记，综合评估为复杂纠纷……"></textarea>
+            <textarea class="mnote" id="mNote" style="margin-top:10px" placeholder="请填写综合定级理由，如：甲方三次调解未果且有扬言情形，乙方已信访登记，综合评估为关注纠纷……"></textarea>
           </div>
         </div>
       </div>
@@ -966,12 +1100,176 @@ function toggleClose(){
   else if(res==='未达成协议'||res==='终止调解'){h.textContent='终止调解：请按「终止调解结案」方式填写并说明后续风险。';h.style.color='#e5484d';}
   else{h.textContent='调解达成或终止后填写，用于闭环归档。';h.style.color='';}
 }
-function pickTg(el){
-  var box=el.parentElement;
-  var its=box.querySelectorAll('.item');
-  for(var i=0;i<its.length;i++){its[i].style.borderColor='';its[i].style.background='';}
-  el.style.borderColor='#2f6bf6';el.style.background='#eaf1ff';
-  mToast('演示：已选择「'+el.querySelector('.i-t').textContent+'」');
+/* ===== 委托对象：组织机构树选人 ===== */
+var M_ORG=[
+ {n:'林芝市公安局',c:[
+   {n:'治安管理支队',c:[
+     {p:'李××',r:'支队长',s:'综合调处 / 部门联动'},
+     {p:'王××',r:'民警',s:'治安调解'}
+   ]},
+   {n:'巴宜分局',c:[
+     {n:'八一镇派出所',c:[
+       {p:'张警官',r:'责任民警',s:'邻里关系 / 婚姻家庭'},
+       {p:'赵警官',r:'社区民警',s:'物业纠纷 / 邻里关系'}
+     ]},
+     {n:'八一镇人民调解委员会',c:[
+       {p:'扎西（乡贤调解员）',r:'调解员',s:'邻里关系 / 草场地界'}
+     ]}
+   ]}
+ ]},
+ {n:'米林市公安局',c:[
+   {n:'米林镇派出所',c:[
+     {p:'卓玛（退休法官）',r:'特邀调解员',s:'婚姻家庭 / 民间借贷'},
+     {p:'孙警官',r:'责任民警',s:'劳资争议'}
+   ]}
+ ]},
+ {n:'波密县公安局',c:[
+   {n:'扎木镇派出所',c:[
+     {p:'王××（执业律师）',r:'法律顾问',s:'劳动争议 / 合同纠纷'},
+     {p:'周警官',r:'责任民警',s:'劳资争议 / 工伤'}
+   ]}
+ ]},
+ {n:'林芝市司法局',c:[
+   {n:'林芝市法律援助中心',c:[
+     {p:'次仁（村（居）法律顾问）',r:'法律顾问',s:'土地草场 / 邻里关系'},
+     {p:'吴××',r:'援助律师',s:'法律援助 / 诉讼引导'}
+   ]}
+ ]}
+];
+var M_PERSON=null;
+var M_ST='all';
+function mPersonCount(list){
+  var n=0;
+  (list||[]).forEach(function(o){ if(o.c)n+=mPersonCount(o.c); else if(o.p)n++; });
+  return n;
+}
+function mFlat(list,out,path){
+  (list||[]).forEach(function(o){
+    var here=path?path+' / '+o.n:o.n;
+    if(o.c)mFlat(o.c,out,here);
+    else if(o.p)out.push({p:o.p,u:path,r:o.r,s:o.s});
+  });
+  return out;
+}
+function mTreeHtml(list,path,kw){
+  var h='';
+  (list||[]).forEach(function(o){
+    var here=path?path+' / '+o.n:o.n;
+    if(o.c){
+      var sub=mTreeHtml(o.c,here,kw);
+      if(kw&&!sub)return;
+      h+='<div class="mt-u"><div class="mt-uh" onclick="mToggleUnit(this)">'
+        +'<span class="mt-ar">'+(kw?'\u2212':'+')+'</span>'+o.n+'</div>'
+        +'<div class="mt-uc"'+(kw?' style="display:block"':'')+'>'+sub+'</div></div>';
+    }else{
+      if(kw){
+        var blob=o.p+' '+o.r+' '+(o.s||'')+' '+(path||'');
+        if(blob.indexOf(kw)<0)return;
+      }
+      var on=(M_PERSON&&M_PERSON.n===o.p)?' on':'';
+      h+='<div class="mt-p'+on+'" data-mp="'+o.p+'" data-mu="'+path+'" data-mr="'+o.r+'" data-ms="'+o.s+'" onclick="mPickPerson(this)">'
+        +'<div class="mav">'+o.p.charAt(0)+'</div>'
+        +'<div class="mtx"><div class="mn">'+o.p+'</div><div class="md">'+o.r+' \u00b7 '+o.s+'</div></div></div>';
+    }
+  });
+  return h;
+}
+function renderMTree(){
+  var box=document.getElementById('mTree');
+  if(!box)return;
+  var kwEl=document.getElementById('mTreeKw');
+  var kw=kwEl?(kwEl.value||'').trim():'';
+  box.innerHTML=mTreeHtml(M_ORG,'',kw);
+  var c=document.getElementById('mTreeCnt');
+  if(c)c.textContent='共 '+mPersonCount(M_ORG)+' 名可委托人员';
+}
+function mToggleUnit(el){
+  var c=el.nextElementSibling;
+  if(!c)return;
+  var open=c.style.display==='block';
+  c.style.display=open?'none':'block';
+  var ar=el.querySelector('.mt-ar');
+  if(ar)ar.textContent=open?'+':'\u2212';
+}
+function mPickPerson(el){
+  var n=el.getAttribute('data-mp')||'';
+  var u=el.getAttribute('data-mu')||'';
+  var r=el.getAttribute('data-mr')||'';
+  var sk=el.getAttribute('data-ms')||'';
+  M_PERSON={n:n,t:'个人',a:u,r:r,s:sk};
+  renderMTree();
+  renderMSel();
+  renderMTgt();
+  mToast('演示：已选择委托对象「'+n+'」');
+}
+function mClearPerson(){
+  M_PERSON=null;
+  renderMTree();
+  renderMSel();
+  renderMTgt();
+}
+function renderMSel(){
+  var box=document.getElementById('mSel');
+  if(!box)return;
+  if(!M_PERSON){
+    box.innerHTML='<div class="msel-none">请先在组织机构树中选择到具体承办人员</div>';
+    return;
+  }
+  box.innerHTML='<div class="msel-hd"><span>已选委托对象</span><span class="mclr" onclick="mClearPerson()">清除</span></div>'
+    +'<div class="msel-bd"><div class="mav">'+M_PERSON.n.charAt(0)+'</div>'
+    +'<div class="mtx"><div class="mn">'+M_PERSON.n+'</div>'
+    +'<div class="md">'+M_PERSON.a+' \u00b7 '+M_PERSON.r+' \u00b7 擅长'+M_PERSON.s+'</div></div></div>';
+}
+var M_SCENE_KW={'人民调解组织':'邻里','行业性专业性调解':'劳','司法所 / 法律援助':'法律','乡镇（街道）综治中心':'综合','派出所驻所调解室':'治安','属地单位 / 用工单位':'劳资','个人调解员':''};
+function renderMTgt(){
+  var box=document.getElementById('mTgt');
+  if(!box)return;
+  var sel=document.getElementById('mScene');
+  var kw=sel?(M_SCENE_KW[sel.value]||''):'';
+  var all=mFlat(M_ORG,[],'');
+  var h='';
+  all.forEach(function(o){
+    if(kw){
+      var blob=(o.s||'')+' '+(o.u||'');
+      if(blob.indexOf(kw)<0)return;
+    }
+    var on=(M_PERSON&&M_PERSON.n===o.p)?' on':'';
+    h+='<div class="mtgt-row'+on+'" data-mp="'+o.p+'" data-mu="'+o.u+'" data-mr="'+o.r+'" data-ms="'+o.s+'" onclick="mPickPerson(this)">'
+      +'<div class="mav">'+o.p.charAt(0)+'</div>'
+      +'<div class="mtx"><div class="mn">'+o.p+'</div><div class="md">'+o.u+' \u00b7 '+o.r+' \u00b7 '+o.s+'</div></div></div>';
+  });
+  box.innerHTML=h||'<div class="msel-none">当前场景暂无匹配人员，请调整委托场景</div>';
+}
+function mSceneChange(){
+  M_PERSON=null;
+  renderMTree();
+  renderMSel();
+  renderMTgt();
+  mToast('演示：已按场景刷新匹配人员');
+}
+function mEntrustSubmit(){
+  if(!M_PERSON){mToast('演示：请先在组织机构树中选择到具体承办人员');return;}
+  mToast('演示：已委托「'+M_PERSON.n+'」（'+M_PERSON.a+'），纠纷状态变更为「移交」');
+}
+/* ===== 列表处置状态快捷筛选 ===== */
+function mPickSt(btn){
+  var box=btn.parentElement;
+  for(var i=0;i<box.children.length;i++)box.children[i].classList.remove('on');
+  btn.classList.add('on');
+  M_ST=btn.getAttribute('data-st')||'all';
+  mApplyListFilter();
+  mToast('演示：切换「'+btn.textContent.trim()+'」筛选');
+}
+function mApplyListFilter(){
+  var items=document.querySelectorAll('#p-list .item[data-st]');
+  var shown=0;
+  for(var i=0;i<items.length;i++){
+    var ok=(M_ST==='all'||items[i].getAttribute('data-st')===M_ST);
+    items[i].style.display=ok?'':'none';
+    if(ok)shown++;
+  }
+  var c=document.getElementById('mCnt');
+  if(c)c.textContent='共 '+shown+' 条';
 }
 document.getElementById('tabbar').addEventListener('click',function(e){
   var t=e.target.closest('.tab');if(!t)return;
@@ -994,7 +1292,7 @@ var MS_ITEMS=[
  {dim:"化解条件",name:"资源保障",max:5,o0:"无需额外资源",lo:["少量协调",2],mid:["需大额资金/政策支持",4],hi:["诉求超政策范围、无法满足",5]}
 ];
 var MS_RED=["极端言行","冲突升级","涉访涉诉","人员属性"];/* 一票升红：四项任一高档 */
-var MS_RED_TOTAL=81;/* 一票升红：总分达到重大区间 */
+var MS_RED_TOTAL=81;/* 一票升红：总分达到重点区间 */
 /* 历史处置情况（初始化赋分数据源） */
 var MS_DISPUTE={
   code:"MD2026-5404-0137",type:"邻里纠纷 · 装修噪音",
@@ -1039,7 +1337,7 @@ var MS_PARTIES=[
  {id:3,name:"某装饰工程有限公司",type:"单位",desc:"施工单位",scores:{},basis:{},inited:false,
   f:{alarm:0,prior:"无",attr:"企业（无特殊属性）",emotion:0,emotionTxt:"",extreme:0,extremeTxt:"",petition:0}}
 ];
-var MS_REGS=[],msParty=1,msLv="未定级",MS_STEP=1,MS_DIM=0,MS_PICKED=false;
+var MS_REGS=[],msParty=1,msLv="待定级",MS_STEP=1,MS_DIM=0,MS_PICKED=false;
 var MS_STEPS=["赋分对象","历史初始化","逐维度赋分","综合定级","赋分登记表"];
 function msObj(){for(var i=0;i<MS_PARTIES.length;i++){if(MS_PARTIES[i].id===msParty)return MS_PARTIES[i];}return MS_PARTIES[0];}
 function msIdx(n){for(var i=0;i<MS_ITEMS.length;i++){if(MS_ITEMS[i].name===n)return i;}return -1;}
@@ -1049,7 +1347,7 @@ function msReasons(p){var rs=[];
   if(msTotal(p)>=MS_RED_TOTAL)rs.push("总分≥"+MS_RED_TOTAL+"分");
   return rs;}
 function msRed(p){return msReasons(p).length>0;}
-function msSuggest(t,red){if(red)return "重大";if(t<=0)return "未定级";if(t<=30)return "一般";if(t<=80)return "复杂";return "重大";}
+function msSuggest(t,red){if(red)return "重点";if(t<=0)return "待定级";if(t<=30)return "一般";if(t<=80)return "关注";return "重点";}
 function mRenderParties(){
   var h="";
   for(var i=0;i<MS_PARTIES.length;i++){var p=MS_PARTIES[i];
@@ -1195,7 +1493,7 @@ function mSynth(){
   }
   var avg=n?Math.round(sum/n*10)/10:0;
   var comp=n?Math.round(max*0.7+avg*0.3):0;
-  return {max:max,avg:avg,comp:comp,lv:redAny?"重大":msSuggest(comp,false),redAny:redAny,names:names};
+  return {max:max,avg:avg,comp:comp,lv:redAny?"重点":msSuggest(comp,false),redAny:redAny,names:names};
 }
 function mRenderSynth(){
   var s=mSynth(),h='<table class="msyntb"><tr><th>对象</th><th>总分</th><th>对象等级</th><th>升红</th></tr>';
@@ -1208,8 +1506,8 @@ function mRenderSynth(){
   document.getElementById("mSynTb").innerHTML=h;
   document.getElementById("mFormula").innerHTML=
      '综合得分 = <code>最高分 '+s.max+' × 70%</code> + <code>平均分 '+s.avg+' × 30%</code> = <code>'+s.comp+' 分</code><br>'
-    +'<span style="color:var(--txt2)">等级映射：0 分→未定级，1–30→一般，31–80→复杂，81–100→重大；一票升红任一项高档或对象总分≥'+MS_RED_TOTAL+' 分 → 直接列重大</span>';
-  var cl={'未定级':'','一般':'green','复杂':'orange','重大':'red'}[s.lv]||'';
+    +'<span style="color:var(--txt2)">等级映射：0 分→待定级，1–30→一般，31–80→关注，81–100→重点；一票升红任一项高档或对象总分≥'+MS_RED_TOTAL+' 分 → 直接列重点</span>';
+  var cl={'待定级':'','一般':'green','关注':'orange','重点':'red'}[s.lv]||'';
   document.getElementById("mSynLv").innerHTML=
      '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">'
     +'<div><div style="font-size:11px;color:var(--txt3)">纠纷综合得分</div><div style="font-size:22px;font-weight:800;color:var(--blue)">'+s.comp+'</div></div>'
@@ -1406,9 +1704,42 @@ function mRenderDw(){
 }
 function mAddDw(){M_DW.push({dwmc:"",shxydm:"",dwdz:"",fddbrxm:"",fddbrsfzh:"",dwlxdh:""});mRenderDw();}
 function mDelDw(i){M_DW.splice(i,1);mRenderDw();}
+
+/* ===== 警民恳谈 · 新建/查看 ===== */
+var TK_QS=[];
+function mTalkAddQ(){TK_QS.push({lx:'邻里关系',nr:'',fyr:'',cs:''});mRenderTkQ();}
+function mDelTkQ(i){TK_QS.splice(i,1);mRenderTkQ();}
+function mRenderTkQ(){
+  var box=document.getElementById('tkQBox');
+  if(!box)return;
+  var h='';
+  for(var i=0;i<TK_QS.length;i++){
+    var o=TK_QS[i];
+    h+='<div class="tk-q">'
+      +'<div class="tk-qh"><span class="tk-qn">'+(i+1)+'</span>'+(o.nr||'未填写问题描述')+'</div>'
+      +'<div class="tk-qb">'+o.lx+' · 反映人：'+(o.fyr||'未填写')+(o.cs?'<br>处置情况：'+o.cs:'')+'</div>'
+      +'<div class="tk-qf"><span class="tk-del" style="float:right;color:var(--up)" onclick="mDelTkQ('+i+')">删除本条</span></div>'
+      +'</div>'
+      +'<div class="fi"><label>问题 #{0}</label><input value="{1}" placeholder="请简要描述群众反映的问题" oninput="TK_QS[{2}].nr=this.value" onblur="mRenderTkQ()"></div>'.replace('{0}',String(i+1)).replace('{1}',o.nr).replace('{2}',String(i))
+      +'<div class="fi"><div class="row"><div><label>问题类型</label><select onchange="TK_QS['+i+'].lx=this.value;mRenderTkQ()">'
+        +['邻里关系','婚姻家庭','物业纠纷','劳动争议','土地草场','借贷债务','其他诉求'].map(function(t){return '<option'+(t===o.lx?' selected':'')+'>'+t+'</option>';}).join('')
+        +'</select></div><div><label>反映人</label><input value="'+(o.fyr||'')+'" placeholder="姓名或联系方式" oninput="TK_QS['+i+'].fyr=this.value" onblur="mRenderTkQ()"></div></div></div>'
+      +'<div class="fi"><label>处置情况</label><input value="'+(o.cs||'')+'" placeholder="现场答复或后续跟进情况" oninput="TK_QS['+i+'].cs=this.value" onblur="mRenderTkQ()"></div>';
+  }
+  if(!TK_QS.length)h='<div style="font-size:12px;color:var(--txt3);padding:8px 0">尚未登记收集到的问题</div>';
+  box.innerHTML=h;
+}
+function mTalkSubmit(){
+  var n=TK_QS.length;
+  mToast(n?'演示：恳谈记录已提交，登记收集问题 '+n+' 条':'演示：恳谈记录已提交');
+  TK_QS=[];
+  setTimeout(function(){mGo('p-talk');mRenderTkQ();},900);
+}
+mRenderTkQ();
 mGo('p-work');
 mRenderDsr();mRenderDw();
 msStepsHtml();msGo(1);mRenderReg();
+renderMTree();renderMSel();renderMTgt();mApplyListFilter();
 mApplyMode();
 </script>
 </body>
