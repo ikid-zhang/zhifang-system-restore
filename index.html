@@ -947,6 +947,23 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
       <div class="nav-item" data-target="conflict-report"><span class="dot"></span>矛盾纠纷报表</div>
       <div class="nav-item" data-target="conflict-view" data-adv><span class="dot"></span>矛盾纠纷查看</div>
     </div>
+    <div class="nav-item" data-toggle><span class="dot"></span>大型活动<span class="arr">›</span></div>
+    <div class="subnav">
+      <div class="nav-item" data-target="activity-control"><span class="dot"></span>人员布控</div>
+      <div class="nav-item" data-target="activity-focus"><span class="dot"></span>关注人员管理</div>
+    </div>
+    <div class="nav-item" data-toggle><span class="dot"></span>移动警务<span class="arr">›</span></div>
+    <div class="subnav">
+      <div class="nav-item" data-toggle><span class="dot"></span>重点地址标记<span class="arr">›</span></div>
+      <div class="subnav">
+        <div class="nav-item" data-target="addr-mylist"><span class="dot"></span>我的列表</div>
+      </div>
+      <div class="nav-item" data-target="mobile-resign"><span class="dot"></span>离职继承申请</div>
+    </div>
+    <div class="nav-item" data-toggle><span class="dot"></span>林安码<span class="arr">›</span></div>
+    <div class="subnav">
+      <div class="nav-item" data-target="hj-cert"><span class="dot"></span>户籍证明</div>
+    </div>
   </nav>
   <div class="side-foot">示例市公安局治安管理支队<br>2026 · 需求原型还原</div>
 </aside>
@@ -2283,14 +2300,626 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
       </div>
     </section>
 
+    <!-- ===== 视图：大型活动 · 人员布控 ===== -->
+    <section class="view" id="view-activity-control">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
+        <span class="tab-tag">人员布控<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
+      </div>
+      <div class="panel">
+        <div class="filter-bar" style="flex-wrap:wrap;row-gap:10px">
+          <span class="f-item" style="flex:1 1 220px">任务名称<input type="text" placeholder="请输入任务名称" style="flex:1"></span>
+          <span class="f-item" style="flex:1 1 220px">人员等级<select style="flex:1"><option>请选择人员等级</option><option>一级</option><option>二级</option><option>三级</option></select></span>
+          <span class="f-item" style="flex:1 1 220px">人员类型<select style="flex:1"><option>请选择人员类型</option><option>布控人员</option><option>一般人员</option><option>工作人员</option></select></span>
+          <span class="f-item" style="flex:1 1 300px">布控时限<input type="text" placeholder="开始日期" style="flex:1"><span class="time-to">~</span><input type="text" placeholder="结束日期" style="flex:1"></span>
+          <span style="flex:1 1 100%;display:flex;justify-content:flex-end;gap:8px">
+            <button class="btn primary" data-op="演示：查询">查询</button>
+            <button class="btn" data-op="演示：重置">重置</button>
+            <button class="btn primary" onclick="openBkAdd()">＋ 新增</button>
+          </span>
+        </div>
+        <div class="table-wrap">
+          <table class="grid">
+            <colgroup><col style="width:9%"><col style="width:9%"><col style="width:7%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:8%"><col style="width:12%"><col style="width:8%"><col style="width:10%"><col style="width:11%"></colgroup>
+            <thead><tr><th>任务名称</th><th>布控人电话</th><th>人员等级</th><th>人员类型</th><th>布控事由</th><th>处置措施</th><th>报警方式</th><th>布控时限</th><th>布控源设置</th><th>布控设置</th><th>操作</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>一般人员</td><td>1800002456</td><td><span class="tag red">一级</span></td><td>布控人员</td><td>测试数据</td><td>—</td><td>—</td><td>—</td>
+                <td>网吧</td><td>核心:处置重置</td>
+                <td><span class="op-link" data-op="查看布控任务">查看</span><span class="op-link" data-op="编辑布控任务" onclick="openBkAdd()">编辑</span><span class="op-link danger" data-op="删除布控任务" onclick="toast('演示：删除布控任务')">删除</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pager"><span>共 1 条数据</span><span>10条/页</span><span>‹</span><span class="on">1</span><span>›</span></div>
+      </div>
+    </section>
+
+    <!-- ===== 视图：大型活动 · 关注人员管理 ===== -->
+    <section class="view" id="view-activity-focus">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
+        <span class="tab-tag">关注人员管理<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
+      </div>
+      <div class="panel">
+        <div class="filter-bar" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px 18px;padding:14px 16px">
+          <span class="f-item">活动名称<select style="flex:1"><option>请选择活动或删除活动</option><option>桃花旅游文化节</option><option>工布新年民俗活动</option></select></span>
+          <span class="f-item">姓名<input type="text" placeholder="请输入姓名" style="flex:1"></span>
+          <span class="f-item">证件号码<input type="text" placeholder="请输入证件号码" style="flex:1"></span>
+          <span class="f-item">人员类别<select style="flex:1"><option>请选择人员类别</option><option>参会人员</option><option>工作人员</option><option>服务员</option><option>司机</option><option>团体</option></select></span>
+          <span class="f-item">布控状态<select style="flex:1"><option>请选择布控的状态</option><option>在控</option><option>失控</option></select></span>
+          <span class="f-item">管控单位<select style="flex:1"><option>请选择管控单位</option><option>八一镇派出所</option><option>百巴镇派出所</option><option>鲁朗镇派出所</option></select></span>
+          <span class="f-item">管控级别<select style="flex:1"><option>请选择管控级别</option><option>高</option><option>中</option><option>低</option></select></span>
+          <span style="grid-column:1/-1;display:flex;justify-content:flex-end;gap:8px">
+            <button class="btn primary" data-op="演示：查询">查询</button>
+            <button class="btn" data-op="演示：重置">重置</button>
+            <button class="btn primary" onclick="openFocusAdd()">＋ 新增</button>
+          </span>
+        </div>
+        <div class="table-wrap">
+          <table class="grid">
+            <thead><tr><th style="width:36px"><input type="checkbox" onclick="var c=this.checked;this.closest('table').querySelectorAll('tbody input[type=checkbox]').forEach(function(i){i.checked=c})"></th><th>人员姓名</th><th>身份证号码</th><th>联系电话</th><th>籍贯</th><th>政治面貌</th><th>民族</th><th>人员类别</th><th>管控单位</th><th>管控级别</th><th>静控状态</th><th>操作</th></tr></thead>
+            <tbody>
+              <tr><td><input type="checkbox"></td><td>张可</td><td>430102199003152345</td><td>139****0231</td><td>湖南长沙</td><td>群众</td><td>汉族</td><td>参会人员</td><td>八一镇派出所</td><td>高</td><td><span class="tag green">在控</span></td><td><span class="op-link" data-op="查看关注人员详情">详情</span><span class="op-link" data-op="编辑关注人员" onclick="openFocusAdd()">编辑</span><span class="op-link danger" data-op="删除关注人员" onclick="toast('演示：删除关注人员')">删除</span><span class="op-link" data-op="查看应对点位">应对点位</span><span class="op-link" data-op="见面核查" onclick="toast('演示：发起见面核查')">见面核查</span></td></tr>
+              <tr><td><input type="checkbox"></td><td>谢峰</td><td>430102199103152346</td><td>137****5580</td><td>湖南株洲</td><td>群众</td><td>汉族</td><td>工作人员</td><td>八一镇派出所</td><td>中</td><td><span class="tag green">在控</span></td><td><span class="op-link" data-op="查看关注人员详情">详情</span><span class="op-link" data-op="编辑关注人员" onclick="openFocusAdd()">编辑</span><span class="op-link danger" data-op="删除关注人员" onclick="toast('演示：删除关注人员')">删除</span><span class="op-link" data-op="查看应对点位">应对点位</span><span class="op-link" data-op="见面核查" onclick="toast('演示：发起见面核查')">见面核查</span></td></tr>
+              <tr><td><input type="checkbox"></td><td>白洋</td><td>210102198907196789</td><td>136****7712</td><td>辽宁沈阳</td><td>党员</td><td>汉族</td><td>参会人员</td><td>八一镇派出所</td><td>中</td><td><span class="tag green">在控</span></td><td><span class="op-link" data-op="查看关注人员详情">详情</span><span class="op-link" data-op="编辑关注人员" onclick="openFocusAdd()">编辑</span><span class="op-link danger" data-op="删除关注人员" onclick="toast('演示：删除关注人员')">删除</span><span class="op-link" data-op="查看应对点位">应对点位</span><span class="op-link" data-op="见面核查" onclick="toast('演示：发起见面核查')">见面核查</span></td></tr>
+              <tr><td><input type="checkbox"></td><td>董超</td><td>230102198705174567</td><td>135****3394</td><td>黑龙江哈尔滨</td><td>群众</td><td>汉族</td><td>司机</td><td>八一镇派出所</td><td>中</td><td><span class="tag green">在控</span></td><td><span class="op-link" data-op="查看关注人员详情">详情</span><span class="op-link" data-op="编辑关注人员" onclick="openFocusAdd()">编辑</span><span class="op-link danger" data-op="删除关注人员" onclick="toast('演示：删除关注人员')">删除</span><span class="op-link" data-op="查看应对点位">应对点位</span><span class="op-link" data-op="见面核查" onclick="toast('演示：发起见面核查')">见面核查</span></td></tr>
+              <tr><td><input type="checkbox"></td><td>张利</td><td>412825197202120467</td><td>138****6621</td><td>河南驻马店</td><td>群众</td><td>汉族</td><td>司机</td><td>百巴镇派出所</td><td>低</td><td><span class="tag green">在控</span></td><td><span class="op-link" data-op="查看关注人员详情">详情</span><span class="op-link" data-op="编辑关注人员" onclick="openFocusAdd()">编辑</span><span class="op-link danger" data-op="删除关注人员" onclick="toast('演示：删除关注人员')">删除</span><span class="op-link" data-op="查看应对点位">应对点位</span><span class="op-link" data-op="见面核查" onclick="toast('演示：发起见面核查')">见面核查</span></td></tr>
+              <tr><td><input type="checkbox"></td><td>罗佳</td><td>520102198904163456</td><td>158****9057</td><td>贵州贵阳</td><td>群众</td><td>苗族</td><td>参会人员</td><td>八一镇派出所</td><td>高</td><td><span class="tag green">在控</span></td><td><span class="op-link" data-op="查看关注人员详情">详情</span><span class="op-link" data-op="编辑关注人员" onclick="openFocusAdd()">编辑</span><span class="op-link danger" data-op="删除关注人员" onclick="toast('演示：删除关注人员')">删除</span><span class="op-link" data-op="查看应对点位">应对点位</span><span class="op-link" data-op="见面核查" onclick="toast('演示：发起见面核查')">见面核查</span></td></tr>
+              <tr><td><input type="checkbox"></td><td>程糖</td><td>340103198602078909</td><td>159****4432</td><td>安徽蚌埠</td><td>群众</td><td>汉族</td><td>工作人员</td><td>八一镇派出所</td><td>中</td><td><span class="tag green">在控</span></td><td><span class="op-link" data-op="查看关注人员详情">详情</span><span class="op-link" data-op="编辑关注人员" onclick="openFocusAdd()">编辑</span><span class="op-link danger" data-op="删除关注人员" onclick="toast('演示：删除关注人员')">删除</span><span class="op-link" data-op="查看应对点位">应对点位</span><span class="op-link" data-op="见面核查" onclick="toast('演示：发起见面核查')">见面核查</span></td></tr>
+              <tr><td><input type="checkbox"></td><td>韩雪</td><td>220102198406185678</td><td>131****2210</td><td>吉林长春</td><td>群众</td><td>汉族</td><td>服务员</td><td>八一镇派出所</td><td>中</td><td><span class="tag red">失控</span></td><td><span class="op-link" data-op="查看关注人员详情">详情</span><span class="op-link" data-op="编辑关注人员" onclick="openFocusAdd()">编辑</span><span class="op-link danger" data-op="删除关注人员" onclick="toast('演示：删除关注人员')">删除</span><span class="op-link" data-op="查看应对点位">应对点位</span><span class="op-link" data-op="见面核查" onclick="toast('演示：发起见面核查')">见面核查</span></td></tr>
+              <tr><td><input type="checkbox"></td><td>张东</td><td>513825198302242411</td><td>186****7754</td><td>四川甘孜</td><td>群众</td><td>藏族</td><td>服务员</td><td>八一镇派出所</td><td>低</td><td><span class="tag green">在控</span></td><td><span class="op-link" data-op="查看关注人员详情">详情</span><span class="op-link" data-op="编辑关注人员" onclick="openFocusAdd()">编辑</span><span class="op-link danger" data-op="删除关注人员" onclick="toast('演示：删除关注人员')">删除</span><span class="op-link" data-op="查看应对点位">应对点位</span><span class="op-link" data-op="见面核查" onclick="toast('演示：发起见面核查')">见面核查</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pager"><span>共 9 条</span><span>10条/页</span><span>‹</span><span class="on">1</span><span>›</span><span>前往</span><input value="1"><span>页</span></div>
+      </div>
+    </section>
+
+    <!-- ===== 视图：移动警务 · 重点地址标记（H5 移动端） ===== -->
+    <section class="view" id="view-addr-mylist">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
+        <span>移动警务</span><span>/</span>
+        <span class="tab-tag">重点地址标记<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
+      </div>
+      <div class="panel" style="padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <div style="align-self:flex-start;font-size:13px;color:var(--muted)">H5 移动端预览（原型）· 列表右上角「标记」按钮弹出标记表单</div>
+        <div class="am-phone">
+          <div class="am-head">
+            <div class="am-status"><span>18:10</span><span>5G 📶 🔋86%</span></div>
+            <div class="am-nav"><span class="am-back">‹</span><span class="am-title">重点地址标记</span><span style="width:56px"></span></div>
+            <div class="am-hero">
+              <div class="am-hero-t">我的标记</div>
+              <div class="am-hero-s">标记重点地址，默认仅自己可见，助力日常巡防</div>
+            </div>
+          </div>
+          <div class="am-scroll">
+            <div class="am-toolbar">
+              <span>共 <b id="amCount">2</b> 条标记</span>
+              <button class="am-btn-main" onclick="amOpen()">📍 标记</button>
+            </div>
+            <div class="am-cards" id="amCards">
+              <div class="am-card">
+                <div class="am-card-top"><b>八一镇重点值守点</b><span class="am-tag">仅我能看</span></div>
+                <div class="am-card-addr">📍 西藏自治区林芝市巴宜区八一镇福州大道12号</div>
+                <div class="am-card-row"><span>标记原因</span><em>活动核心安保值守点</em></div>
+                <div class="am-card-row"><span>标记时间</span><em>2026-11-01 09:12</em></div>
+                <div class="am-card-ops"><span onclick="toast('演示：查看标记')">查看</span><span onclick="amOpen()">编辑</span><span class="danger" onclick="amDel(this)">删除</span></div>
+              </div>
+              <div class="am-card">
+                <div class="am-card-top"><b>鲁朗景区疏导点</b><span class="am-tag">仅我能看</span></div>
+                <div class="am-card-addr">📍 西藏自治区林芝市巴宜区鲁朗镇扎西岗村</div>
+                <div class="am-card-row"><span>标记原因</span><em>游客密集区人员疏导</em></div>
+                <div class="am-card-row"><span>标记时间</span><em>2026-11-01 14:30</em></div>
+                <div class="am-card-ops"><span onclick="toast('演示：查看标记')">查看</span><span onclick="amOpen()">编辑</span><span class="danger" onclick="amDel(this)">删除</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- 弹窗：标记地址 -->
+          <div class="am-mask" id="amMask" style="display:none" onclick="amCloseAll()"></div>
+          <div class="am-sheet" id="amSheet" style="display:none">
+            <div class="am-grab"></div>
+            <div class="am-sheet-hd"><b>标记地址</b><span class="am-x" onclick="amClose()">✕</span></div>
+            <div class="am-sheet-bd">
+              <div class="am-fi">
+                <label><em>*</em>地址选择</label>
+                <div class="am-fi-ctl ph" id="amAddrShow" onclick="amOpenAddr()">请选择地址 <i>›</i></div>
+              </div>
+              <div class="am-fi">
+                <label><em>*</em>标记原因</label>
+                <textarea id="amReason" placeholder="请输入标记原因"></textarea>
+              </div>
+              <div class="am-fi">
+                <label>地图采点<span class="am-opt">（非必填）</span></label>
+                <div class="am-point" id="amPointMap" onclick="amPoint()">🗺️ 点击采点</div>
+              </div>
+            </div>
+            <div class="am-sheet-ft">
+              <button class="am-btn-ghost" onclick="amClose()">取消</button>
+              <button class="am-btn-main" style="flex:1.6" onclick="amSubmit()">确定</button>
+            </div>
+          </div>
+          <!-- 弹窗：请选择常住地址（地址选择组件） -->
+          <div class="am-sheet" id="amAddrSheet" style="display:none">
+            <div class="am-sheet-hd"><b>请选择常住地址</b><span class="am-x" onclick="amCloseAddr()">✕</span></div>
+            <div class="am-sheet-bd">
+              <div class="am-addr-bar">
+                <div class="am-town" onclick="amTown()"><span id="amTownTxt">请先选择地址所属街道/乡镇（社区/村）</span> <span class="am-chev">▼</span>
+                  <div class="am-town-list" id="amTownList" style="display:none">
+                    <div onclick="amTownPick(this,event)">巴宜区 · 八一镇</div>
+                    <div onclick="amTownPick(this,event)">巴宜区 · 鲁朗镇</div>
+                    <div onclick="amTownPick(this,event)">巴宜区 · 更章门巴民族乡</div>
+                    <div onclick="amTownPick(this,event)">米林市 · 派镇</div>
+                    <div onclick="amTownPick(this,event)">波密县 · 扎木镇</div>
+                  </div>
+                </div>
+                <label class="am-default">默认地址 <input type="radio" name="amDefault"></label>
+              </div>
+              <div class="am-searchbar">
+                <span class="am-mag">🔍</span>
+                <input id="asInput" placeholder="请输入路(村)名称或者门牌号搜索地址" onkeydown="if(event.key==='Enter')amSearch()">
+                <span class="am-scan" onclick="toast('演示：调起扫一扫，识别地址二维码')">⧉</span>
+              </div>
+              <div class="as-results2" id="asResults" style="display:none"></div>
+              <div class="am-tips">
+                <div class="am-tips-t">- 温馨提示 -</div>
+                <div class="am-tips-box">
+                  <p>① 支持模糊搜索，关键字搜索。</p>
+                  <p>② 支持扫描地址二维码，获取地址信息。</p>
+                  <p>③ 选择地址前，请先确认该地址的房屋已经进行 房屋码备案；如未被备案，请先进行 <span class="am-link" onclick="toast('演示：跳转房屋码申报')">房屋码申报</span>。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 视图：移动警务 · 离职继承申请（H5 嵌入） ===== -->
+    <section class="view" id="view-mobile-resign">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
+        <span>移动警务</span><span>/</span>
+        <span class="tab-tag">离职继承申请<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
+      </div>
+      <div class="panel" style="padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <div style="align-self:flex-start;font-size:13px;color:var(--muted)">H5 移动端预览（原型）</div>
+        <iframe src="离职继承H5重构.html" title="公安离职继承 H5" style="width:430px;max-width:100%;height:960px;border:none;border-radius:28px;box-shadow:0 12px 40px rgba(20,40,80,.14)"></iframe>
+      </div>
+    </section>
+
+    <!-- ===== 视图：林安码 · 户籍证明（H5 移动端） ===== -->
+    <section class="view" id="view-hj-cert">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
+        <span>林安码</span><span>/</span>
+        <span class="tab-tag">户籍证明<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
+      </div>
+      <div class="panel" style="padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <div style="align-self:flex-start;font-size:13px;color:var(--muted)">H5 移动端预览（原型）· 页面底部含林芝各区县户籍办理咨询电话</div>
+        <div class="am-phone hj-phone">
+          <div class="hj-status"><span>18:29</span><span>📶 ᯤ 🔋</span></div>
+          <div class="hj-nav">
+            <span class="am-back">‹</span><span class="hj-nav-t">户籍证明</span>
+            <span class="hj-cap">••<i></i>⊙</span>
+          </div>
+          <div class="hj-hero">
+            <div>
+              <div class="hj-hero-t">户政查询服务</div>
+              <div class="hj-hero-s">户籍证明<span class="sep">｜</span>百家姓</div>
+            </div>
+          </div>
+          <div class="am-scroll hj-scroll">
+            <div class="hj-wrap">
+              <div class="hj-grid">
+                <div class="hj-cell" onclick="toast('演示：户籍证明开具')"><b>户籍证明开具</b><span class="ico">📜</span></div>
+                <div class="hj-cell" onclick="toast('演示：户籍业务进度查询')"><b>户籍业务进度查询</b><span class="ico">🔎</span></div>
+                <div class="hj-cell" onclick="toast('演示：姓名生僻字查询')"><b>姓名生僻字查询</b><span class="ico">🔎👤</span></div>
+                <div class="hj-cell" onclick="toast('演示：姓名全国重名度查询')"><b>姓名全国重名度查询</b><span class="ico">🔍📄</span></div>
+                <div class="hj-cell hj-wide" onclick="toast('演示：百家姓排名')"><b>百家姓排名</b><span class="ico">📑🙋</span></div>
+              </div>
+              <div class="hj-tel">
+                <div class="hj-tel-hd">📞 户籍办理咨询电话</div>
+                <div class="hj-tel-row"><b>林芝市公安局户政管理大厅</b><em>0894-5822310</em></div>
+                <div class="hj-tel-row"><b>巴宜区公安局户政服务窗口</b><em>0894-5831048</em></div>
+                <div class="hj-tel-row"><b>米林市公安局户政服务窗口</b><em>0894-5452110</em></div>
+                <div class="hj-tel-row"><b>工布江达县公安局户政服务窗口</b><em>0894-5412348</em></div>
+                <div class="hj-tel-row"><b>波密县公安局户政服务窗口</b><em>0894-5422657</em></div>
+                <div class="hj-tel-row"><b>察隅县公安局户政服务窗口</b><em>0894-5436210</em></div>
+                <div class="hj-tel-row"><b>朗县公安局户政服务窗口</b><em>0894-5443157</em></div>
+                <div class="hj-tel-row"><b>墨脱县公安局户政服务窗口</b><em>0894-5489310</em></div>
+                <div class="hj-tel-tip">服务时间：工作日 09:30-13:00，15:30-18:30（号码为演示数据，以实际公布为准）</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
+
+<!-- ============ 移动警务 · 重点地址标记（H5 移动端弹层） ============ -->
+<style>
+.am-phone{
+  width:430px;max-width:100%;height:940px;position:relative;overflow:hidden;
+  background:#F5F6FA;border-radius:28px;box-shadow:0 12px 40px rgba(20,40,80,.14);
+  display:flex;flex-direction:column;
+}
+.am-head{background:linear-gradient(178deg,#1E47C4 0%,#1E47C4 158px,#F5F6FA 158px);color:#fff}
+.am-status{height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:13px;font-weight:600}
+.am-nav{display:flex;align-items:center;height:46px;padding:0 14px}
+.am-nav .am-back{font-size:20px;width:28px}
+.am-nav .am-title{flex:1;text-align:center;font-size:17px;font-weight:600}
+.am-hero{padding:2px 18px 14px}
+.am-hero-t{font-size:21px;font-weight:700}
+.am-hero-s{font-size:12px;opacity:.75;margin-top:3px}
+.am-scroll{flex:1;overflow:auto;padding:0 12px 24px}
+.am-toolbar{display:flex;align-items:center;justify-content:space-between;padding:2px 4px 10px;font-size:13px;color:#5A6478}
+.am-toolbar b{color:#1E47C4}
+.am-btn-main{
+  border:none;cursor:pointer;font-family:inherit;font-weight:600;font-size:14px;color:#fff;
+  background:linear-gradient(90deg,#3D6BF0,#1E47C4);border-radius:18px;padding:8px 18px;
+}
+.am-cards{display:flex;flex-direction:column;gap:10px}
+.am-card{background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(28,35,51,.05)}
+.am-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.am-card-top b{font-size:15px;color:#1C2333}
+.am-tag{font-size:11px;color:#5A6478;background:#F0F2F7;border-radius:4px;padding:2px 8px;flex-shrink:0}
+.am-card-addr{font-size:12px;color:#5A6478;margin:7px 0 2px;line-height:1.5}
+.am-card-row{display:flex;gap:8px;font-size:12px;padding:4px 0 0}
+.am-card-row span{color:#9AA3B5;flex-shrink:0}
+.am-card-row em{font-style:normal;color:#3a4356}
+.am-card-ops{display:flex;justify-content:flex-end;gap:18px;margin-top:9px;padding-top:9px;border-top:1px solid #EDF0F5}
+.am-card-ops span{font-size:13px;color:#2B5CE6;cursor:pointer}
+.am-card-ops .danger{color:#D6404B}
+/* 林安码 · 户籍证明（H5） */
+.hj-phone{background:linear-gradient(180deg,#C9E2FA 0%,#E8F3FE 260px,#F5F6FA 640px)}
+.hj-status{height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:14px;font-weight:600;color:#1C2333}
+.hj-nav{display:flex;align-items:center;height:46px;padding:0 14px;color:#1C2333}
+.hj-nav .hj-nav-t{font-size:17px;font-weight:600;margin-left:6px}
+.hj-cap{margin-left:auto;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.75);border-radius:16px;padding:5px 12px;font-size:13px;color:#1C2333}
+.hj-cap i{width:1px;height:14px;background:#C6CCDA}
+.hj-hero{display:flex;align-items:flex-end;justify-content:space-between;padding:6px 20px 0;min-height:120px}
+.hj-hero-t{font-size:27px;font-weight:800;color:#2B7DE9;letter-spacing:1px;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.hj-hero-s{font-size:14px;color:#5B8FD9;margin-top:5px;letter-spacing:2px}
+.hj-hero-s .sep{margin:0 6px;opacity:.6}
+.hj-scroll{padding:16px 12px 24px}
+.hj-wrap{background:#fff;border-radius:22px 22px 0 0;padding:16px 14px 18px;box-shadow:0 -4px 20px rgba(43,125,233,.06)}
+.hj-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hj-cell{
+  position:relative;border-radius:14px;min-height:118px;padding:16px 14px;cursor:pointer;overflow:hidden;
+  background:linear-gradient(160deg,#EAF3FE 0%,#F7FAFF 70%);border:1px solid #E4EFFB;
+}
+.hj-cell b{font-size:15px;color:#1C2333;position:relative;z-index:1;line-height:1.4;display:block}
+.hj-cell .ico{position:absolute;right:10px;bottom:8px;font-size:34px;opacity:.92}
+.hj-cell:active{transform:scale(.98)}
+.hj-wide{grid-column:1/3;min-height:96px;display:flex;align-items:center}
+.hj-tel{margin-top:14px;border-radius:14px;padding:13px 14px 10px;background:linear-gradient(180deg,#F0F7FF 0%,#FFFFFF 100%);border:1px solid #DCE9F8}
+.hj-tel-hd{font-size:14px;font-weight:700;color:#1E47C4;display:flex;align-items:center;gap:6px;padding-bottom:6px}
+.hj-tel-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed #E3EDF8;font-size:11px}
+.hj-tel-row b{color:#1C2333;font-weight:500}
+.hj-tel-row em{font-style:normal;color:#2B5CE6;font-weight:700;letter-spacing:.5px;flex-shrink:0;font-size:11px}
+.hj-tel-tip{font-size:11px;color:#9AA3B5;padding-top:9px;line-height:1.6}
+/* 底部弹层 */
+.am-mask{position:absolute;inset:0;background:rgba(15,23,42,.45);z-index:20}
+.am-sheet{
+  position:absolute;left:0;right:0;bottom:0;background:#fff;z-index:21;
+  border-radius:18px 18px 0 0;padding:8px 16px 26px;
+  box-shadow:0 -8px 30px rgba(15,23,42,.18);max-height:88%;overflow:auto;
+}
+#amAddrSheet{z-index:23}
+.am-grab{width:40px;height:4px;border-radius:2px;background:#DDE1EA;margin:2px auto 8px}
+.am-sheet-hd{display:flex;align-items:center;justify-content:center;position:relative;padding:6px 0 12px}
+.am-sheet-hd b{font-size:16px;color:#1C2333}
+.am-sheet-hd .am-x{position:absolute;right:0;font-size:16px;color:#9AA3B5;cursor:pointer}
+.am-sheet-bd{display:flex;flex-direction:column;gap:14px}
+.am-fi label{display:block;font-size:13px;color:#5A6478;margin-bottom:7px}
+.am-fi label em{color:#D6404B;font-style:normal;margin-right:2px}
+.am-fi .am-opt{color:#9AA3B5}
+.am-fi-ctl{
+  min-height:42px;display:flex;align-items:center;justify-content:space-between;
+  background:#F7F8FC;border-radius:10px;padding:0 12px;font-size:14px;color:#1C2333;cursor:pointer;
+}
+.am-fi-ctl.ph{color:#9AA3B5}
+.am-fi-ctl i{font-style:normal;color:#C6CCDA}
+.am-fi textarea{
+  width:100%;min-height:74px;border:none;outline:none;resize:none;background:#F7F8FC;
+  border-radius:10px;padding:11px 12px;font-size:14px;font-family:inherit;color:#1C2333;
+}
+.am-fi textarea::placeholder{color:#9AA3B5}
+.am-point{
+  min-height:64px;border:1px dashed #C9D4EE;border-radius:10px;background:#FAFBFF;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:13px;color:#7a8699;cursor:pointer;
+}
+.am-point.done{border-style:solid;border-color:#34C17E;background:#F2FBF7;color:#0FA968;font-weight:600}
+.am-sheet-ft{display:flex;gap:12px;margin-top:16px}
+.am-sheet-ft button{flex:1;height:44px;border-radius:22px;font-size:15px;cursor:pointer;font-family:inherit}
+.am-btn-ghost{background:#fff;color:#2B5CE6;border:1.5px solid #2B5CE6}
+/* 地址选择组件（参考截图） */
+.am-addr-bar{display:flex;align-items:center;gap:10px}
+.am-town{
+  flex:1;position:relative;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:6px;
+  background:#F7F8FC;border-radius:8px;padding:8px 10px;font-size:12.5px;color:#9AA3B5;cursor:pointer;
+}
+.am-town.picked{color:#1C2333}
+.am-chev{font-size:10px;color:#9AA3B5}
+.am-town-list{
+  position:absolute;top:44px;left:0;right:0;background:#fff;border-radius:10px;z-index:5;
+  box-shadow:0 8px 24px -8px rgba(15,35,80,.3);overflow:hidden;
+}
+.am-town-list div{padding:10px 12px;font-size:13px;color:#1f2d3d;border-bottom:1px solid #f0f3f8}
+.am-town-list div:last-child{border-bottom:none}
+.am-town-list div:hover{background:#eef4ff;color:#2B5CE6}
+.am-default{display:flex;align-items:center;gap:5px;font-size:13px;color:#3a4358;flex-shrink:0;cursor:pointer}
+.am-searchbar{
+  display:flex;align-items:center;gap:8px;background:#F7F8FC;border-radius:10px;
+  padding:10px 12px;
+}
+.am-searchbar .am-mag{font-size:14px}
+.am-searchbar input{flex:1;border:none;outline:none;background:transparent;font-size:14px;color:#1C2333;min-width:0}
+.am-searchbar input::placeholder{color:#9AA3B5}
+.am-searchbar .am-scan{font-size:16px;color:#5A6478;cursor:pointer}
+.as-results2{display:flex;flex-direction:column;background:#fff;border:1px solid #EDF0F5;border-radius:10px;overflow:hidden}
+.as-results2 .as-item{padding:11px 12px;font-size:13px;color:#1f2d3d;cursor:pointer;border-bottom:1px solid #f0f3f8}
+.as-results2 .as-item:last-child{border-bottom:none}
+.as-results2 .as-item:hover{background:#eef4ff;color:#2B5CE6}
+.am-tips{margin-top:6px}
+.am-tips-t{text-align:center;font-size:14px;color:#3a4358;font-weight:600;margin:10px 0 12px}
+.am-tips-box{background:#F7F8FC;border-radius:10px;padding:14px}
+.am-tips-box p{font-size:13px;color:#3a4358;line-height:2}
+.am-link{color:#2B5CE6;cursor:pointer}
+</style>
+
+<script>
+var ADDR_MOCK=[
+ '西藏自治区林芝市巴宜区八一镇幸福小区1栋',
+ '西藏自治区林芝市巴宜区八一镇福州大道12号',
+ '西藏自治区林芝市巴宜区八一镇广东路政务服务中心',
+ '西藏自治区林芝市巴宜区鲁朗镇扎西岗村',
+ '西藏自治区林芝市米林市派镇雅鲁藏布大峡谷景区',
+ '西藏自治区林芝市波密县扎木镇帕隆藏布江畔'];
+function amMaskShow(on){document.getElementById('amMask').style.display=on?'block':'none';}
+function amOpen(){amMaskShow(true);document.getElementById('amSheet').style.display='block';}
+function amClose(){document.getElementById('amSheet').style.display='none';amCloseAddr();amMaskShow(false);}
+function amOpenAddr(){document.getElementById('amAddrSheet').style.display='block';}
+function amCloseAddr(){document.getElementById('amAddrSheet').style.display='none';document.getElementById('asResults').style.display='none';}
+function amCloseAll(){amClose();}
+function amTown(){var l=document.getElementById('amTownList');l.style.display=l.style.display==='block'?'none':'block';}
+function amTownPick(el,e){e.stopPropagation();document.getElementById('amTownTxt').textContent=el.textContent;el.parentElement.style.display='none';}
+function amSearch(){
+ var q=document.getElementById('asInput').value.trim();
+ var box=document.getElementById('asResults');
+ if(!q){box.style.display='none';return;}
+ var list=ADDR_MOCK.filter(function(a){return a.indexOf(q)>=0;});
+ if(!list.length)list=['未找到匹配地址，请调整关键词重试'];
+ box.innerHTML=list.map(function(a){return '<div class="as-item" onclick="amPick(this)">'+a+'</div>';}).join('');
+ box.style.display='flex';
+}
+function amPick(el){
+ var t=el.textContent;
+ if(t.indexOf('未找到')===0){return;}
+ var show=document.getElementById('amAddrShow');
+ show.textContent=t;show.classList.remove('ph');
+ amCloseAddr();toast('演示：已选择地址');
+}
+function amPoint(){
+ var p=document.getElementById('amPointMap');
+ p.classList.add('done');
+ p.textContent='📍 已采点：29.6523°N, 94.3624°E（演示坐标）';
+ toast('演示：地图采点成功');
+}
+function amCardHtml(name,addr,reason,ds){
+ return '<div class="am-card">'
+  +'<div class="am-card-top"><b>'+name+'</b><span class="am-tag">仅我能看</span></div>'
+  +'<div class="am-card-addr">📍 '+addr+'</div>'
+  +'<div class="am-card-row"><span>标记原因</span><em>'+reason+'</em></div>'
+  +'<div class="am-card-row"><span>标记时间</span><em>'+ds+'</em></div>'
+  +'<div class="am-card-ops"><span onclick="toast(\'演示：查看标记\')">查看</span><span onclick="amOpen()">编辑</span><span class="danger" onclick="amDel(this)">删除</span></div>'
+  +'</div>';
+}
+function amSubmit(){
+ var show=document.getElementById('amAddrShow');
+ var addr=show.classList.contains('ph')?'':show.textContent.replace(' ›','').trim();
+ var name=addr?addr.split('巴宜区').pop().split('市').pop().slice(0,12):'';
+ var reason=document.getElementById('amReason').value.trim();
+ if(!addr){toast('请先选择地址');amOpenAddr();return;}
+ if(!reason){toast('请填写标记原因');return;}
+ var d=new Date();
+ var ds=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+ var box=document.getElementById('amCards');
+ box.insertAdjacentHTML('afterbegin',amCardHtml(name||'(未命名标记)',addr,reason,ds));
+ var c=document.getElementById('amCount');c.textContent=parseInt(c.textContent,10)+1;
+ document.getElementById('amReason').value='';
+ show.textContent='请选择地址 ›';show.classList.add('ph');
+ var pm=document.getElementById('amPointMap');pm.classList.remove('done');pm.textContent='🗺️ 点击采点';
+ amClose();toast('演示：标记已提交，仅我能看');
+}
+function amDel(el){
+ var card=el.closest('.am-card');
+ if(card)card.remove();
+ var c=document.getElementById('amCount');c.textContent=Math.max(0,parseInt(c.textContent,10)-1);
+ toast('演示：已删除标记');
+}
+</script>
+
+<!-- ============ 大型活动 · 新增布控弹窗 ============ -->
+<style>
+.bk-form{display:flex;flex-direction:column;gap:12px}
+.bk-fi{display:flex;align-items:center;gap:10px;min-width:0}
+.bk-fi>label{width:104px;text-align:right;font-size:13px;color:#4A5058;flex:none;white-space:nowrap}
+.bk-fi>label em{color:#e5484d;font-style:normal;margin-right:3px}
+.bk-fi input[type=text],.bk-fi select{flex:1;min-width:0;height:32px;border:1px solid #E3E6ED;border-radius:6px;padding:0 10px;font-size:13px;color:#1f2d3d;background:#fff;outline:none}
+.bk-fi input:focus,.bk-fi select:focus{border-color:#1B70E0}
+.bk-range{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.bk-range input{flex:1}
+.bk-range .sep{color:#9aa3bb;font-size:12px}
+.bk-up{width:88px;height:88px;border:1px dashed #c3cfe4;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#7a8699;font-size:12px;cursor:pointer;background:#fafcff;overflow:hidden;position:relative;text-align:center}
+.bk-up:hover{border-color:#1B70E0;color:#1B70E0}
+.bk-up img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.bk-up.has span{display:none}
+.bk-del{font-size:12px;color:#1B70E0;cursor:pointer;background:none;border:none;padding:0}
+.bk-cks{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:#4A5058;flex:1}
+.bk-cks label{display:flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap}
+.fm-tabs{display:flex;gap:26px;padding:0 22px;border-bottom:1px solid var(--line)}
+.fm-tab{padding:12px 2px;font-size:14px;color:#4A5058;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;user-select:none}
+.fm-tab.active{color:#1B70E0;border-bottom-color:#1B70E0;font-weight:600}
+.fm-hd{background:linear-gradient(90deg,#2f7fd0,#1B70E0);color:#fff}
+.fm-hd .btn-xs{background:rgba(255,255,255,.18);border-color:transparent;color:#fff}
+.fm-imp{border:1px dashed #c3cfe4;border-radius:10px;background:#fafcff;padding:28px 20px;text-align:center;color:#7a8699;font-size:13px}
+</style>
+
+<div class="pop-modal-mask" id="bkAddModal" style="display:none;z-index:300" onclick="if(event.target===this)closeBkAdd()">
+  <div class="pop-modal" style="width:min(680px,94vw)">
+    <div class="pop-modal-hd fm-hd"><span>新增布控</span><button class="btn btn-xs" onclick="closeBkAdd()">关闭</button></div>
+    <div class="pop-modal-bd" style="padding:18px 22px">
+      <div class="bk-form">
+        <div class="bk-fi"><label><em>*</em>任务名称：</label><input type="text" placeholder="请输入"></div>
+        <div class="bk-fi"><label><em>*</em>布控人电话：</label><input type="text" placeholder="请输入"></div>
+        <div class="bk-fi"><label><em>*</em>人员等级：</label><select><option></option><option>一级</option><option>二级</option><option>三级</option></select></div>
+        <div class="bk-fi"><label><em>*</em>人员类型：</label><select><option></option><option>布控人员</option><option>一般人员</option><option>工作人员</option></select></div>
+        <div class="bk-fi"><label><em>*</em>布控事由：</label><input type="text" placeholder="请输入"></div>
+        <div class="bk-fi"><label>处置措施：</label><input type="text" placeholder="请输入"></div>
+        <div class="bk-fi"><label>报警方式：</label><select><option></option><option>短信</option><option>电话</option><option>APP 推送</option></select></div>
+        <div class="bk-fi"><label>报警接收人：</label><input type="text" placeholder="请输入"></div>
+        <div class="bk-fi"><label>布控时限：</label><div class="bk-range"><input type="text" placeholder="开始日期"><span class="sep">~</span><input type="text" placeholder="结束日期"></div></div>
+        <div class="bk-fi"><label>布控要素：</label><input type="text" placeholder="请输入"></div>
+        <div class="bk-fi"><label>关联要素：</label><input type="text" placeholder="请输入"></div>
+        <div class="bk-fi" style="align-items:flex-start">
+          <label style="margin-top:4px"><em>*</em>人像：</label>
+          <div style="display:flex;align-items:center;gap:10px">
+            <label class="bk-up" id="bkPhotoUp" title="上传人像照片">
+              <img id="bkPhotoImg" alt=""><span>＋<br>上传</span>
+              <input type="file" accept="image/*" style="display:none" onchange="previewPhoto(this,'bkPhotoImg','bkPhotoUp')">
+            </label>
+            <button class="bk-del" style="display:none" id="bkPhotoDel" onclick="removePhoto('bkPhotoUp','bkPhotoImg',null)">删除照片</button>
+          </div>
+        </div>
+        <div class="bk-fi" style="align-items:flex-start">
+          <label style="margin-top:2px">点位布控类型：</label>
+          <div class="bk-cks">
+            <label><input type="checkbox">核心场馆</label>
+            <label><input type="checkbox">住地</label>
+            <label><input type="checkbox">周边建筑物</label>
+            <label><input type="checkbox">制高点</label>
+          </div>
+        </div>
+        <div class="bk-fi" style="align-items:flex-start">
+          <label style="margin-top:2px">圈层设置：</label>
+          <div class="bk-cks">
+            <label><input type="checkbox">核心处置圈</label>
+            <label><input type="checkbox">中心管控圈</label>
+            <label><input type="checkbox">抵达预警圈</label>
+            <label><input type="checkbox">外围感知圈</label>
+          </div>
+        </div>
+        <div class="bk-fi" style="align-items:center">
+          <label><em>*</em>布控源设置：</label>
+          <div class="bk-cks">
+            <label><input type="checkbox">网吧</label>
+            <label><input type="checkbox">卡口</label>
+            <label><input type="checkbox">天网</label>
+            <label><input type="checkbox">旅店</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;padding:12px 22px;border-top:1px solid var(--line)">
+      <button class="btn" onclick="closeBkAdd()">取消</button>
+      <button class="btn primary" onclick="toast('演示：布控任务已提交');closeBkAdd()">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 大型活动 · 关注人员信息弹窗（录入 / 导入） ============ -->
+<div class="pop-modal-mask" id="focusAddModal" style="display:none;z-index:300" onclick="if(event.target===this)closeFocusAdd()">
+  <div class="pop-modal" style="width:min(620px,94vw)">
+    <div class="pop-modal-hd fm-hd"><span>关注人员信息</span><button class="btn btn-xs" onclick="closeFocusAdd()">×</button></div>
+    <div class="fm-tabs">
+      <div class="fm-tab active" onclick="switchFocusTab('input',this)">录入</div>
+      <div class="fm-tab" onclick="switchFocusTab('import',this)">导入</div>
+    </div>
+    <div class="pop-modal-bd" id="focusTabInput" style="padding:18px 22px">
+      <div class="bk-form">
+        <div class="bk-fi"><label>人员姓名：</label><input type="text" placeholder="请输入人员姓名"></div>
+        <div class="bk-fi"><label>籍贯：</label><input type="text" placeholder="请输入籍贯"></div>
+        <div class="bk-fi"><label>身份证号码：</label><input type="text" placeholder="请输入身份证号码"></div>
+        <div class="bk-fi"><label>联系电话：</label><input type="text" placeholder="请输入联系电话"></div>
+        <div class="bk-fi"><label>政治面貌：</label><input type="text" placeholder="请输入政治面貌"></div>
+        <div class="bk-fi"><label>民族：</label><select><option>请选择民族</option><option>汉族</option><option>藏族</option><option>苗族</option><option>回族</option><option>其他</option></select></div>
+        <div class="bk-fi"><label>人员类别：</label><select><option></option><option>参会人员</option><option>工作人员</option><option>服务员</option><option>司机</option><option>团体</option></select></div>
+        <div class="bk-fi"><label>管控单位：</label><select><option></option><option>八一镇派出所</option><option>百巴镇派出所</option><option>鲁朗镇派出所</option></select></div>
+        <div class="bk-fi"><label>管控级别：</label><select><option></option><option>高</option><option>中</option><option>低</option></select></div>
+        <div class="bk-fi"><label>稳控状态：</label><select><option></option><option>在控</option><option>失控</option></select></div>
+        <div class="bk-fi" style="align-items:flex-start">
+          <label style="margin-top:4px">人员照片：</label>
+          <div style="display:flex;align-items:center;gap:10px">
+            <label class="bk-up" id="fsPhotoUp" title="添加人员照片">
+              <img id="fsPhotoImg" alt=""><span>＋<br>添加照片</span>
+              <input type="file" accept="image/*" style="display:none" onchange="previewPhoto(this,'fsPhotoImg','fsPhotoUp')">
+            </label>
+            <button class="bk-del" style="display:none" id="fsPhotoDel" onclick="removePhoto('fsPhotoUp','fsPhotoImg','fsPhotoDel')">删除照片</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pop-modal-bd" id="focusTabImport" style="display:none;padding:18px 22px">
+      <div class="fm-imp">
+        <div style="font-size:34px;line-height:1;margin-bottom:10px">📄</div>
+        <div>请按模板整理人员信息后批量导入（支持 .xlsx）</div>
+        <div style="margin-top:12px;display:flex;justify-content:center;gap:10px">
+          <button class="btn" onclick="toast('演示：已下载导入模板')">下载模板</button>
+          <button class="btn primary" onclick="toast('演示：请选择导入文件')">选择文件</button>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;padding:12px 22px;border-top:1px solid var(--line)">
+      <button class="btn" onclick="closeFocusAdd()">取消</button>
+      <button class="btn primary" onclick="toast('演示：关注人员已保存');closeFocusAdd()">确定</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ 大型活动模块交互 ============ */
+function openBkAdd(){document.getElementById('bkAddModal').style.display='flex';}
+function closeBkAdd(){document.getElementById('bkAddModal').style.display='none';}
+function openFocusAdd(){document.getElementById('focusAddModal').style.display='flex';}
+function closeFocusAdd(){document.getElementById('focusAddModal').style.display='none';}
+function switchFocusTab(name,btn){
+  document.querySelectorAll('#focusAddModal .fm-tab').forEach(function(t){t.classList.toggle('active',t===btn);});
+  document.getElementById('focusTabInput').style.display=(name==='input'?'':'none');
+  document.getElementById('focusTabImport').style.display=(name==='import'?'':'none');
+}
+function previewPhoto(input,imgId,wrapId){
+  var f=input.files&&input.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(e){
+    var img=document.getElementById(imgId);
+    img.src=e.target.result;img.style.display='block';
+    document.getElementById(wrapId).classList.add('has');
+    var del=document.getElementById(wrapId==='bkPhotoUp'?'bkPhotoDel':'fsPhotoDel');
+    if(del)del.style.display='';
+  };
+  r.readAsDataURL(f);
+}
+function removePhoto(wrapId,imgId,delId){
+  var wrap=document.getElementById(wrapId);
+  var inp=wrap.querySelector('input[type=file]');
+  if(inp)inp.value='';
+  var img=document.getElementById(imgId);img.src='';img.style.display='none';
+  wrap.classList.remove('has');
+  if(delId){var del=document.getElementById(delId);if(del)del.style.display='none';}
+}
+</script>
 
 <div id="toast" style="position:fixed;left:50%;bottom:42px;transform:translateX(-50%) translateY(20px);background:rgba(15,35,80,.92);color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:all .25s;z-index:99;box-shadow:0 6px 20px rgba(0,0,0,.25)"></div>
 
 <script>
 /* ============ 路由与导航 ============ */
-var VIEWS=['home1','home2','operations','population','guard','address','conflict-mgmt','conflict-check','conflict-report','conflict-view','conflict-detail'];
+var VIEWS=['home1','home2','operations','population','guard','address','conflict-mgmt','conflict-check','conflict-report','conflict-view','conflict-detail','activity-control','activity-focus','addr-mylist','mobile-resign','hj-cert'];
 var charts={};
 function toast(msg){
   var t=document.getElementById('toast');

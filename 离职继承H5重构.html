@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>公安离职继承 H5 · 原型</title>
+<style>
+  :root{
+    --blue:#2B5CE6;
+    --blue-deep:#1E47C4;
+    --blue-bg:#EEF3FF;
+    --red:#D6404B;
+    --green:#0FA968;
+    --orange:#F2882B;
+    --ink:#1C2333;
+    --ink-2:#5A6478;
+    --ink-3:#9AA3B5;
+    --line:#EDF0F5;
+    --card-r:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    background:#eceef3;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;
+    min-height:100vh;
+    display:flex;justify-content:center;
+    padding:24px 12px 60px;
+  }
+  .phone{
+    width:430px;max-width:100%;
+    background:#F5F6FA;border-radius:28px;overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.28);
+    position:relative;
+  }
+
+  /* ================= 新版设计 ================= */
+  #v-new{background:linear-gradient(178deg,var(--blue-deep) 0%,var(--blue-deep) 158px,#F5F6FA 158px)}
+  .statusbar{
+    height:38px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 18px;font-size:13px;font-weight:600;color:#fff;
+  }
+  .navbar{
+    display:flex;align-items:center;height:48px;padding:0 14px;color:#fff;
+  }
+  .navbar .back{font-size:20px;width:28px}
+  .navbar .ttl{flex:1;text-align:center;font-size:17px;font-weight:600;margin-right:28px}
+  .n-head{padding:0 16px 14px;color:#fff}
+  .n-head .title{font-size:22px;font-weight:700;margin:2px 0 4px}
+  .n-head .sub{font-size:12px;opacity:.75}
+  .steps{display:flex;align-items:center;padding:14px 4px 0}
+  .steps .st{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;opacity:.85}
+  .steps .st i{
+    width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.25);
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-style:normal;font-weight:600;
+  }
+  .steps .st.on i{background:#fff;color:var(--blue)}
+  .steps .st.on{opacity:1;font-weight:600}
+  .steps .ln{flex:1;height:1px;background:rgba(255,255,255,.35);margin:0 6px 14px}
+  .n-body{padding:14px 14px 130px}
+  .card{
+    background:#fff;border-radius:var(--card-r);padding:16px;margin-bottom:12px;
+    box-shadow:0 2px 10px rgba(28,35,51,.04);
+  }
+  .c-hd{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+  .c-hd .bar{width:4px;height:15px;border-radius:2px;background:var(--blue)}
+  .c-hd b{font-size:15px;color:var(--ink)}
+  .c-hd .hint{margin-left:auto;font-size:11px;color:var(--ink-3)}
+  .c-hd .hint.warn{color:var(--orange);font-weight:600}
+
+  .f-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .f-row:last-child{border-bottom:none}
+  .f-row .k{color:var(--ink-2)}
+  .f-row .k em{color:var(--red);font-style:normal;margin-right:2px}
+  .f-row .v{color:var(--ink);display:flex;align-items:center;gap:4px}
+  .f-row .v.ph{color:var(--ink-3)}
+  .f-row .arr{color:#C6CCDA;font-size:13px}
+
+  .badge{
+    font-size:11px;color:var(--blue);background:var(--blue-bg);
+    padding:2px 8px;border-radius:4px;font-weight:600;
+  }
+  .chips{display:flex;gap:8px;padding:12px 0 4px;flex-wrap:wrap}
+  .chip{
+    padding:7px 16px;border-radius:8px;font-size:13px;color:var(--ink-2);
+    background:#F4F6FA;border:1px solid transparent;cursor:pointer;
+  }
+  .chip.on{background:var(--blue-bg);color:var(--blue);border-color:var(--blue);font-weight:600}
+
+  /* 接收人卡 */
+  .receiver{
+    display:flex;align-items:center;gap:12px;padding:13px 0;
+  }
+  .avatar{
+    width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#3D6BF0,#2247C8);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;flex-shrink:0;
+  }
+  .receiver .who b{display:block;font-size:15px;color:var(--ink)}
+  .receiver .who span{font-size:12px;color:var(--ink-3)}
+  .receiver .act{margin-left:auto;font-size:12px;color:var(--blue);border:1px solid var(--blue);border-radius:14px;padding:5px 12px}
+
+  /* 交接清单 */
+  .handover{padding:4px 0}
+  .h-item{
+    display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);
+  }
+  .h-item:last-child{border-bottom:none}
+  .h-ico{
+    width:32px;height:32px;border-radius:8px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;font-size:15px;
+    background:#F4F6FA;color:var(--ink-3);
+  }
+  .h-item.done .h-ico{background:#E5F7EF;color:var(--green)}
+  .h-item .t{flex:1}
+  .h-item .t b{display:block;font-size:14px;color:var(--ink);font-weight:500}
+  .h-item .t span{font-size:11px;color:var(--ink-3)}
+  .h-item .st-tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px}
+  .h-item.done .st-tag{color:var(--green);background:#E5F7EF}
+  .h-item:not(.done) .st-tag{color:var(--orange);background:#FDF1E3}
+  .switch{position:relative;width:42px;height:24px;border-radius:12px;background:#DDE1EA;cursor:pointer;flex-shrink:0;transition:.2s}
+  .switch::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.2s}
+  .switch.on{background:var(--green)}
+  .switch.on::after{left:20px}
+  .progress{display:flex;align-items:center;gap:10px;margin-top:10px}
+  .progress .track{flex:1;height:6px;border-radius:3px;background:#F0F2F7;overflow:hidden}
+  .progress .track i{display:block;height:100%;width:50%;background:linear-gradient(90deg,#34C17E,#0FA968);border-radius:3px}
+  .progress span{font-size:11px;color:var(--green);font-weight:600}
+
+  textarea.ta{
+    width:100%;border:none;outline:none;resize:none;background:#F7F8FC;border-radius:10px;
+    padding:12px;font-size:14px;color:var(--ink);min-height:92px;font-family:inherit;margin-top:10px;
+  }
+  textarea.ta::placeholder{color:var(--ink-3)}
+  .counter{text-align:right;font-size:11px;color:var(--ink-3);margin-top:4px}
+
+  .seg2{display:flex;background:#F4F6FA;border-radius:10px;padding:3px;margin-top:12px}
+  .seg2 div{flex:1;text-align:center;padding:8px 0;font-size:13px;color:var(--ink-2);border-radius:8px;cursor:pointer}
+  .seg2 div.on{background:#fff;color:var(--red);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+
+  .uploader{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+  .up-box{
+    width:78px;height:78px;border:1px dashed #C9D4EE;border-radius:10px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+    color:var(--ink-3);font-size:11px;cursor:pointer;
+  }
+  .up-box .plus{font-size:24px;color:#AAB6D8;line-height:1}
+  .up-tip{font-size:11px;color:var(--ink-3);line-height:1.7;margin-top:10px}
+
+  .n-foot{
+    position:absolute;bottom:0;left:0;right:0;background:#fff;
+    display:flex;gap:12px;padding:12px 16px 24px;box-shadow:0 -6px 20px rgba(28,35,51,.06);
+  }
+  .n-foot button{
+    flex:1;height:46px;border-radius:23px;font-size:16px;border:none;font-family:inherit;cursor:pointer;
+  }
+  .n-foot .submit{background:linear-gradient(90deg,#3D6BF0,var(--blue-deep));color:#fff;font-weight:600;flex:1}
+
+  /* 接收人搜索底部弹层 */
+  .sheet-mask{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:60;align-items:flex-end}
+  .sheet-mask.show{display:flex}
+  .sheet{width:100%;max-width:430px;margin:0 auto;background:#fff;border-radius:18px 18px 0 0;padding:4px 0 24px;animation:up .25s ease}
+  @keyframes up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .sh-hd{display:flex;align-items:center;justify-content:center;position:relative;padding:14px 16px 10px}
+  .sh-hd b{font-size:16px;color:var(--ink)}
+  .sh-hd .x{position:absolute;right:14px;top:12px;font-size:22px;color:var(--ink-3);border:none;background:none;cursor:pointer;line-height:1}
+  .sh-search{display:flex;gap:8px;padding:0 16px 12px}
+  .sh-search input{flex:1;height:42px;border:1px solid #E3E6ED;border-radius:10px;padding:0 14px;font-size:14px;outline:none}
+  .sh-search input:focus{border-color:var(--blue)}
+  .sh-list{max-height:330px;overflow:auto;padding:0 8px}
+  .sh-person{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;cursor:pointer}
+  .sh-person:hover,.sh-person:active{background:#F4F6FA}
+  .sh-person .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#3D6BF0,#2247C8);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;flex-shrink:0}
+  .sh-person .who{flex:1;min-width:0}
+  .sh-person .who b{display:block;font-size:15px;color:var(--ink)}
+  .sh-person .who span{font-size:12px;color:var(--ink-3)}
+  .sh-person .pick{font-size:13px;color:var(--blue);font-weight:600}
+  .sh-empty{padding:28px 16px;text-align:center;color:var(--ink-3);font-size:13px}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="view on" id="v-new">
+    <div class="statusbar" style="background:transparent"><span>09:30</span><span>5G 📶 🔋86%</span></div>
+    <div class="navbar" style="background:transparent"><span class="back">‹</span><span class="ttl">离职继承申请</span></div>
+
+    <div class="n-head">
+      <div class="title">离职继承申请</div>
+      <div class="sub">林芝市公安机关 · 队伍管理平台</div>
+    </div>
+
+    <div class="n-body">
+
+      <!-- 基本信息 -->
+      <div class="card">
+        <div class="c-hd"><span class="bar"></span><b>基本信息</b></div>
+        <div class="f-row"><span class="k">申请人</span><span class="v">王国庆 <span class="badge">警号 422011</span></span></div>
+        <div class="f-row"><span class="k">所属单位</span><span class="v">林芝市公安局××支队</span></div>
+        <div class="chips" id="chips">
+          <span class="chip on">调离</span><span class="chip">退休</span><span class="chip">辞职</span><span class="chip">其他</span>
+        </div>
+        <div class="f-row"><span class="k"><em>*</em>最后工作日</span><span class="v ph">请选择日期 <span class="arr">›</span></span></div>
+        <div class="f-row"><span class="k"><em>*</em>交接截止日期</span><span class="v ph">请选择日期 <span class="arr">›</span></span></div>
+      </div>
+
+      <!-- 交接接收人 -->
+      <div class="card">
+        <div class="c-hd"><span class="bar"></span><b>交接接收人</b><span class="hint">离职继承对象</span></div>
+        <div class="receiver" onclick="openReceiver()">
+          <div class="avatar" id="rcAv">拉</div>
+          <div class="who"><b id="rcName">拉巴次仁</b><span id="rcInfo">警号 422012 · 同部门民警</span></div>
+          <div class="act">更换</div>
+        </div>
+      </div>
+
+      <!-- 交接清单 -->
+      <div class="card">
+        <div class="c-hd"><span class="bar"></span><b>交接清单</b><span class="hint warn">提交前须全部完成</span></div>
+        <div class="handover">
+          <div class="h-item done">
+            <div class="h-ico">📁</div>
+            <div class="t"><b>案件卷宗交接</b></div>
+            <span class="st-tag">已交接</span>
+            <div class="switch on" onclick="tg(this)"></div>
+          </div>
+          <div class="h-item done">
+            <div class="h-ico">🛡️</div>
+            <div class="t"><b>警用装备交接</b></div>
+            <span class="st-tag">已交接</span>
+            <div class="switch on" onclick="tg(this)"></div>
+          </div>
+          <div class="h-item">
+            <div class="h-ico">🔑</div>
+            <div class="t"><b>系统权限移交</b></div>
+            <span class="st-tag">待移交</span>
+            <div class="switch" onclick="tg(this)"></div>
+          </div>
+          <div class="h-item">
+            <div class="h-ico">💻</div>
+            <div class="t"><b>工作账号注销</b></div>
+            <span class="st-tag">待注销</span>
+            <div class="switch" onclick="tg(this)"></div>
+          </div>
+        </div>
+        <div class="progress"><div class="track"><i id="pbar"></i></div><span id="ptxt">2/4 已完成</span></div>
+      </div>
+
+      <!-- 申请说明 -->
+      <div class="card">
+        <div class="c-hd"><span class="bar"></span><b>申请说明</b></div>
+        <div class="f-row" style="border-bottom:1px solid var(--line)"><span class="k"><em>*</em>离职原因</span></div>
+        <textarea class="ta" maxlength="200" placeholder="请详细说明离职原因及特殊情况（涉密事项请勿填写）" oninput="document.getElementById('cnt').textContent=this.value.length+'/200'"></textarea>
+        <div class="counter" id="cnt">0/200</div>
+        <div class="f-row"><span class="k">备注</span></div>
+        <textarea class="ta" style="min-height:60px" placeholder="可填写其他需要说明的事项"></textarea>
+        <div class="f-row"><span class="k">紧急程度</span></div>
+        <div class="seg2" id="seg2">
+          <div class="on">普通</div><div>重要</div><div>紧急</div>
+        </div>
+      </div>
+
+      <!-- 证明材料 -->
+      <div class="card">
+        <div class="c-hd"><span class="bar"></span><b>证明材料</b><span class="hint">选填</span></div>
+        <div class="uploader">
+          <div class="up-box"><span class="plus">＋</span>上传材料</div>
+        </div>
+        <div class="up-tip">支持 jpg / png / pdf 格式，单个文件不超过 10MB，最多 9 份<br>涉及国家秘密的材料请线下移交，严禁拍照上传</div>
+      </div>
+
+    </div>
+
+    <div class="n-foot">
+      <button class="submit">提交离职申请</button>
+    </div>
+  </div>
+
+  <!-- 交接接收人 · 搜索选择弹层 -->
+  <div class="sheet-mask" id="rcSheet" onclick="if(event.target===this)closeReceiver()">
+    <div class="sheet">
+      <div class="sh-hd"><b>选择交接接收人</b><button class="x" onclick="closeReceiver()">×</button></div>
+      <div class="sh-search">
+        <input id="rcInput" type="text" placeholder="输入姓名 / 警号 / 单位搜索" oninput="searchReceiver()" onkeydown="if(event.key==='Enter')searchReceiver()">
+      </div>
+      <div class="sh-list" id="rcList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function tg(el){
+  el.classList.toggle('on');
+  var item=el.closest('.h-item');
+  item.classList.toggle('done');
+  var tag=item.querySelector('.st-tag');
+  var on=el.classList.contains('on');
+  tag.textContent = on ? (item.querySelector('.t b').textContent.includes('注销')?'已注销':'已交接') : (item.querySelector('.t b').textContent.includes('注销')?'待注销':'待移交');
+  var done=document.querySelectorAll('#v-new .h-item.done').length;
+  document.querySelector('#pbar').style.width=(done/4*100)+'%';
+  document.getElementById('ptxt').textContent=done+'/4 已完成';
+}
+document.querySelectorAll('#chips .chip').forEach(function(c){
+  c.onclick=function(){
+    document.querySelectorAll('#chips .chip').forEach(function(x){x.classList.remove('on')});
+    c.classList.add('on');
+  };
+});
+document.querySelectorAll('#seg2 div').forEach(function(c){
+  c.onclick=function(){
+    document.querySelectorAll('#seg2 div').forEach(function(x){x.classList.remove('on')});
+    c.classList.add('on');
+  };
+});
+
+/* ===== 交接接收人 · 搜索选择 ===== */
+var RECEIVERS=[
+  {name:'拉巴次仁',info:'警号 422012 · 同部门民警'},
+  {name:'次仁旺堆',info:'警号 421089 · 同部门民警'},
+  {name:'扎西顿珠',info:'警号 423456 · 治安大队'},
+  {name:'普布次仁',info:'警号 420033 · 刑侦大队'},
+  {name:'白玛央金',info:'警号 421200 · 政治处'},
+  {name:'达瓦罗布',info:'警号 424501 · 警务保障室'}
+];
+function openReceiver(){
+  document.getElementById('rcInput').value='';
+  searchReceiver();
+  document.getElementById('rcSheet').classList.add('show');
+}
+function closeReceiver(){
+  document.getElementById('rcSheet').classList.remove('show');
+}
+function searchReceiver(){
+  var q=document.getElementById('rcInput').value.trim().toLowerCase();
+  var list=RECEIVERS.filter(function(r){
+    return !q || r.name.toLowerCase().indexOf(q)>=0 || r.info.toLowerCase().indexOf(q)>=0;
+  });
+  var box=document.getElementById('rcList');
+  if(!list.length){
+    box.innerHTML='<div class="sh-empty">未找到匹配的人员，请调整关键词</div>';
+    return;
+  }
+  box.innerHTML=list.map(function(r){
+    return '<div class="sh-person" onclick="pickReceiver(\''+r.name+'\',\''+r.info+'\')">'
+      +'<div class="av">'+r.name.charAt(0)+'</div>'
+      +'<div class="who"><b>'+r.name+'</b><span>'+r.info+'</span></div>'
+      +'<div class="pick">选择</div></div>';
+  }).join('');
+}
+function pickReceiver(name,info){
+  document.getElementById('rcName').textContent=name;
+  document.getElementById('rcInfo').textContent=info;
+  document.getElementById('rcAv').textContent=name.charAt(0);
+  closeReceiver();
+}
+</script>
+</body>
+</html>
