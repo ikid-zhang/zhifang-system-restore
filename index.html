@@ -767,7 +767,14 @@ table.cd-grid td.tx{white-space:normal;min-width:150px}
 @media (max-width:767px){.cf-cards{grid-template-columns:repeat(2,1fr)}.cf-grid3{grid-template-columns:1fr}}
 
 /* ============ 响应式：桌面 ============ */
-.grid-pop-charts,.grid-guard-charts,.grid-addr-charts,.data-row{display:grid;grid-template-columns:1fr;gap:14px}
+.grid-pop-charts,.grid-guard-charts,.grid-addr-charts,.grid-campus-charts,.data-row{display:grid;grid-template-columns:1fr;gap:14px}
+#campusDbCharts.collapsed,#campusSenseCharts.collapsed,#campusAlarmCharts.collapsed{display:none}
+@media (min-width:980px){.grid-campus-charts{grid-template-columns:repeat(3,1fr)}.grid-campus-charts>*{min-width:0}}
+/* 校园安全：统计板块 5 图一行 */
+@media (min-width:1200px){.grid-campus-charts.g5{grid-template-columns:repeat(5,1fr)}.grid-campus-charts.g5 .panel-bd{padding:6px 4px 4px}.grid-campus-charts.g5 .panel-hd{font-size:12.5px;padding:8px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+@media (min-width:980px) and (max-width:1199px){.grid-campus-charts.g5{grid-template-columns:repeat(3,1fr)}.grid-campus-charts.g5>*{min-width:0}}
+@media (min-width:1200px){.grid-campus-charts.g4{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:980px) and (max-width:1199px){.grid-campus-charts.g4{grid-template-columns:repeat(2,1fr)}.grid-campus-charts.g4>*{min-width:0}}
 @media (min-width:768px){
   .sidebar{transform:none}
   .menu-btn{display:none}
@@ -939,6 +946,10 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
     <div class="nav-item" data-toggle><span class="dot"></span>校园安全<span class="arr">›</span></div>
     <div class="subnav">
       <div class="nav-item" data-target="guard"><span class="dot"></span>护学岗管理</div>
+      <div class="nav-item" data-target="campus-db"><span class="dot"></span>风险人员数据库</div>
+      <div class="nav-item" data-target="campus-sense"><span class="dot"></span>前端感知源</div>
+      <div class="nav-item" data-target="campus-terminal"><span class="dot"></span>预警终端管理</div>
+      <div class="nav-item" data-target="campus-alarm"><span class="dot"></span>一键报警</div>
     </div>
     <div class="nav-item" data-toggle><span class="dot"></span>矛盾纠纷<span class="arr">›</span></div>
     <div class="subnav">
@@ -1669,6 +1680,288 @@ table.rpt-tb{min-width:1080px;table-layout:auto;font-size:12.5px}
           </table>
         </div>
         <div class="pager"><span>共 6 条</span><span>10条/页</span><span>前往</span><input value="1"><span>页</span></div>
+      </div>
+    </section>
+
+    <!-- ===== 视图：校园安全 · 风险人员数据库 ===== -->
+    <section class="view" id="view-campus-db">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
+        <span class="tab-tag">风险人员数据库<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center">
+        <button class="btn tab-btn" data-tab="今日" onclick="pickTab(this)">今日</button>
+        <button class="btn tab-btn" data-tab="本周" onclick="pickTab(this)">本周</button>
+        <button class="btn tab-btn" data-tab="本月" onclick="pickTab(this)">本月</button>
+        <button class="btn tab-btn primary" data-tab="本季度" onclick="pickTab(this)">本季度</button>
+        <button class="btn tab-btn" data-tab="本年" onclick="pickTab(this)">本年</button>
+        <button class="stats-toggle" style="margin-left:auto" data-target="campusDbCharts" onclick="toggleStats(this)" title="收起统计模块" aria-label="收起统计模块"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      </div>
+
+
+      <div class="guard-stats">
+        <div class="grid-campus-charts g5" id="campusDbCharts">
+          <div class="panel"><div class="panel-hd tip-wrap">核心指标总览<span class="tip">口径：各指标单位见数值标签；条形长度为对数刻度，便于跨量级对比</span></div><div class="panel-bd"><div class="chart-light" id="cd_kpi" style="height:200px"></div></div></div>
+          <div class="panel"><div class="panel-hd">六类风险人员特征分布（条）</div><div class="panel-bd"><div class="chart-light" id="cd_type" style="height:200px"></div></div></div>
+          <div class="panel"><div class="panel-hd">各辖区特征码数量（条）</div><div class="panel-bd"><div class="chart-light" id="cd_area" style="height:200px"></div></div></div>
+          <div class="panel"><div class="panel-hd tip-wrap">近 7 日入库与比对趋势<span class="tip">口径：柱为每日新增特征码条数，线为当日比对请求量（万次）</span></div><div class="panel-bd"><div class="chart-light" id="cd_trend" style="height:200px"></div></div></div>
+          <div class="panel"><div class="panel-hd tip-wrap">近 7 日比对命中<span class="tip">口径：与风险人员特征码比对成功并推送预警的次数</span></div><div class="panel-bd"><div class="chart-light" id="cd_hit" style="height:200px"></div></div></div>
+        </div>
+      </div>
+
+      <div class="data-row">
+        <div class="tree">
+          <div class="tree-search">
+            <input type="text" placeholder="输入辖区名称">
+            <button class="btn primary" data-op="演示：查询">查询</button>
+            <button class="btn" data-op="演示：重置">重置</button>
+          </div>
+          <div class="tree-item active" onclick="pickTree(this)"><span class="t-arr">›</span>全部辖区</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>甲区</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>乙县</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>丙县</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>丁县</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>戊县</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>己县</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>庚市</div>
+        </div>
+        <div class="panel" style="min-width:0">
+          <div class="panel-hd">风险人员特征库（仅存特征码）
+            <span class="panel-hd-extra"><button class="btn primary" data-op="演示：新增风险人员" onclick="toast('演示：新增风险人员（录入特征码 + 分类标签）')">＋ 新增风险人员</button></span>
+          </div>
+          <div class="filter-bar fb-guard">
+            <span class="f-item">风险分类<select><option>请选择</option><option>涉校矛盾纠纷重点人员</option><option>刑满释放人员</option><option>社区矫正对象</option><option>肇事肇祸精神障碍患者</option><option>吸毒人员</option><option>涉访重点人员</option></select></span>
+            <span class="f-item">维护部门<select><option>请选择</option><option>派出所</option><option>街道</option><option>司法所</option><option>卫健</option><option>禁毒</option><option>信访</option></select></span>
+            <span class="f-item">维护人<input type="text" placeholder="请输入"></span>
+            <span class="f-item time-item">最近入库<input type="text" placeholder="请选择时间"><span class="time-to">至</span><input type="text" placeholder="请选择时间"></span>
+            <button class="btn primary" data-op="演示：查询">查询</button>
+            <button class="btn" data-op="演示：重置">重置</button>
+            <button class="btn" data-op="演示：导出">导出</button>
+          </div>
+          <div class="table-wrap">
+            <table class="grid">
+              <colgroup><col style="width:6%"><col style="width:21%"><col style="width:9%"><col style="width:12%"><col style="width:8%"><col style="width:12%"><col style="width:8%"><col style="width:24%"></colgroup>
+              <thead><tr><th>序号</th><th>风险分类</th><th>特征码条数</th><th>维护部门</th><th>维护人</th><th>最近入库</th><th>状态</th><th>操作</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>涉校矛盾纠纷重点人员</td><td>318</td><td>派出所 / 街道</td><td>人员甲</td><td>2026-10-26 15:20</td><td><span class="tag green">在用</span></td><td><span class="op-link" data-op="查看特征明细" onclick="toast('演示：查看特征明细（仅特征码 + 标签）')">查看</span><span class="op-link" data-op="维护特征" onclick="toast('演示：维护风险人员特征')">维护</span><span class="op-link danger" data-op="停用" onclick="toast('演示：停用该分类特征（需二次确认）')">停用</span></td></tr>
+                <tr><td>2</td><td>刑满释放人员</td><td>247</td><td>司法所 / 公安</td><td>人员乙</td><td>2026-10-24 10:06</td><td><span class="tag green">在用</span></td><td><span class="op-link" data-op="查看特征明细" onclick="toast('演示：查看特征明细（仅特征码 + 标签）')">查看</span><span class="op-link" data-op="维护特征" onclick="toast('演示：维护风险人员特征')">维护</span><span class="op-link danger" data-op="停用" onclick="toast('演示：停用该分类特征（需二次确认）')">停用</span></td></tr>
+                <tr><td>3</td><td>社区矫正对象</td><td>196</td><td>司法所</td><td>人员丙</td><td>2026-10-21 09:42</td><td><span class="tag green">在用</span></td><td><span class="op-link" data-op="查看特征明细" onclick="toast('演示：查看特征明细（仅特征码 + 标签）')">查看</span><span class="op-link" data-op="维护特征" onclick="toast('演示：维护风险人员特征')">维护</span><span class="op-link danger" data-op="停用" onclick="toast('演示：停用该分类特征（需二次确认）')">停用</span></td></tr>
+                <tr><td>4</td><td>肇事肇祸精神障碍患者</td><td>154</td><td>卫健 / 公安</td><td>人员丁</td><td>2026-10-20 16:31</td><td><span class="tag orange">待复核</span></td><td><span class="op-link" data-op="查看特征明细" onclick="toast('演示：查看特征明细（仅特征码 + 标签）')">查看</span><span class="op-link" data-op="维护特征" onclick="toast('演示：维护风险人员特征')">维护</span><span class="op-link danger" data-op="停用" onclick="toast('演示：停用该分类特征（需二次确认）')">停用</span></td></tr>
+                <tr><td>5</td><td>吸毒人员</td><td>231</td><td>禁毒 / 公安</td><td>人员戊</td><td>2026-10-18 11:15</td><td><span class="tag green">在用</span></td><td><span class="op-link" data-op="查看特征明细" onclick="toast('演示：查看特征明细（仅特征码 + 标签）')">查看</span><span class="op-link" data-op="维护特征" onclick="toast('演示：维护风险人员特征')">维护</span><span class="op-link danger" data-op="停用" onclick="toast('演示：停用该分类特征（需二次确认）')">停用</span></td></tr>
+                <tr><td>6</td><td>涉访重点人员</td><td>140</td><td>信访 / 公安</td><td>人员己</td><td>2026-10-15 14:08</td><td><span class="tag green">在用</span></td><td><span class="op-link" data-op="查看特征明细" onclick="toast('演示：查看特征明细（仅特征码 + 标签）')">查看</span><span class="op-link" data-op="维护特征" onclick="toast('演示：维护风险人员特征')">维护</span><span class="op-link danger" data-op="停用" onclick="toast('演示：停用该分类特征（需二次确认）')">停用</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pager"><span>共 6 条</span><span>10条/页</span><span>前往</span><input value="1"><span>页</span></div>
+        </div>
+      </div>
+
+          </section>
+
+    <!-- ===== 视图：校园安全 · 前端感知源 ===== -->
+    <section class="view" id="view-campus-sense">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
+        <span class="tab-tag">前端感知源<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center">
+        <button class="btn tab-btn" data-tab="今日" onclick="pickTab(this)">今日</button>
+        <button class="btn tab-btn" data-tab="本周" onclick="pickTab(this)">本周</button>
+        <button class="btn tab-btn" data-tab="本月" onclick="pickTab(this)">本月</button>
+        <button class="btn tab-btn primary" data-tab="本季度" onclick="pickTab(this)">本季度</button>
+        <button class="btn tab-btn" data-tab="本年" onclick="pickTab(this)">本年</button>
+        <button class="stats-toggle" style="margin-left:auto" data-target="campusSenseCharts" onclick="toggleStats(this)" title="收起统计模块" aria-label="收起统计模块"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      </div>
+
+
+      <div class="guard-stats">
+        <div class="grid-campus-charts g5" id="campusSenseCharts">
+          <div class="panel"><div class="panel-hd tip-wrap">核心指标总览<span class="tip">口径：各指标单位见数值标签；条形长度为对数刻度，便于跨量级对比</span></div><div class="panel-bd"><div class="chart-light" id="cs_kpi" style="height:200px"></div></div></div>
+          <div class="panel"><div class="panel-hd">感知源状态分布（路）</div><div class="panel-bd"><div class="chart-light" id="cs_status" style="height:200px"></div></div></div>
+          <div class="panel"><div class="panel-hd">各校今日识别人次（TOP5）</div><div class="panel-bd"><div class="chart-light" id="cs_rank" style="height:200px"></div></div></div>
+          <div class="panel"><div class="panel-hd tip-wrap">近 7 日命中预警趋势<span class="tip">口径：当日比对命中并成功推送双端预警的事件数</span></div><div class="panel-bd"><div class="chart-light" id="cs_hit" style="height:200px"></div></div></div>
+          <div class="panel"><div class="panel-hd">近 7 日抓拍量（人次）</div><div class="panel-bd"><div class="chart-light" id="cs_cap" style="height:200px"></div></div></div>
+        </div>
+      </div>
+
+      <div class="data-row">
+        <div class="tree">
+          <div class="tree-search">
+            <input type="text" placeholder="输入学校或辖区名称">
+            <button class="btn primary" data-op="演示：查询">查询</button>
+            <button class="btn" data-op="演示：重置">重置</button>
+          </div>
+          <div class="tree-item active" onclick="pickTree(this)"><span class="t-arr">›</span>全部学校</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>戊县示范幼儿园</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>丙县示范小学</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>甲市第一中学</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>戊县职业高中</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>丙县第二幼儿园</div>
+        </div>
+        <div class="panel" style="min-width:0">
+          <div class="panel-hd">校园周边感知源
+            <span class="panel-hd-extra"><button class="btn primary" data-op="演示：新增感知源" onclick="toast('演示：新增感知源并下发注册参数')">＋ 新增感知源</button></span>
+          </div>
+          <div class="filter-bar fb-guard">
+            <span class="f-item">感知源类型<select><option>请选择</option><option>人脸抓拍机</option><option>街面感知杆</option><option>球机</option></select></span>
+            <span class="f-item">状态<select><option>请选择</option><option>在线</option><option>调试</option><option>离线</option></select></span>
+            <span class="f-item">部署位置<input type="text" placeholder="请输入"></span>
+            <span class="f-item">覆盖学校<input type="text" placeholder="请输入"></span>
+            <button class="btn primary" data-op="演示：查询">查询</button>
+            <button class="btn" data-op="演示：重置">重置</button>
+            <button class="btn" data-op="演示：导出">导出</button>
+          </div>
+          <div class="table-wrap">
+            <table class="grid">
+              <colgroup><col style="width:16%"><col style="width:11%"><col style="width:8%"><col style="width:15%"><col style="width:9%"><col style="width:8%"><col style="width:12%"><col style="width:21%"></colgroup>
+              <thead><tr><th>部署位置</th><th>感知源类型</th><th>状态</th><th>覆盖学校</th><th>今日识别</th><th>命中预警</th><th>最近心跳</th><th>操作</th></tr></thead>
+              <tbody>
+                <tr><td>示范幼儿园大门</td><td>人脸抓拍机</td><td><span class="tag green">在线</span></td><td>戊县示范幼儿园</td><td>1,204</td><td>2</td><td>17:18:32</td><td><span class="op-link" data-op="远程配置" onclick="toast('演示：经硬件控制接口下发远程配置')">配置</span><span class="op-link" data-op="抓拍查阅" onclick="toast('演示：查看该感知源抓拍记录')">抓拍记录</span><span class="op-link" data-op="远程重启" onclick="toast('演示：经硬件控制接口远程重启')">重启</span></td></tr>
+                <tr><td>示范小学正门</td><td>人脸抓拍机</td><td><span class="tag green">在线</span></td><td>丙县示范小学</td><td>2,186</td><td>4</td><td>17:18:29</td><td><span class="op-link" data-op="远程配置" onclick="toast('演示：经硬件控制接口下发远程配置')">配置</span><span class="op-link" data-op="抓拍查阅" onclick="toast('演示：查看该感知源抓拍记录')">抓拍记录</span><span class="op-link" data-op="远程重启" onclick="toast('演示：经硬件控制接口远程重启')">重启</span></td></tr>
+                <tr><td>中学门口街道</td><td>街面感知杆</td><td><span class="tag green">在线</span></td><td>甲市第一中学</td><td>1,532</td><td>3</td><td>17:18:21</td><td><span class="op-link" data-op="远程配置" onclick="toast('演示：经硬件控制接口下发远程配置')">配置</span><span class="op-link" data-op="抓拍查阅" onclick="toast('演示：查看该感知源抓拍记录')">抓拍记录</span><span class="op-link" data-op="远程重启" onclick="toast('演示：经硬件控制接口远程重启')">重启</span></td></tr>
+                <tr><td>职高校侧门</td><td>人脸抓拍机</td><td><span class="tag orange">调试</span></td><td>戊县职业高中</td><td>876</td><td>1</td><td>17:16:58</td><td><span class="op-link" data-op="远程配置" onclick="toast('演示：经硬件控制接口下发远程配置')">配置</span><span class="op-link" data-op="抓拍查阅" onclick="toast('演示：查看该感知源抓拍记录')">抓拍记录</span><span class="op-link" data-op="远程重启" onclick="toast('演示：经硬件控制接口远程重启')">重启</span></td></tr>
+                <tr><td>幼儿园后街</td><td>街面感知杆</td><td><span class="tag red">离线</span></td><td>丙县第二幼儿园</td><td>—</td><td>—</td><td>11:02:47</td><td><span class="op-link" data-op="告警记录" onclick="toast('演示：离线告警已推送至维护人员')">告警记录</span><span class="op-link" data-op="远程重启" onclick="toast('演示：经硬件控制接口远程重启')">重启</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pager"><span>共 5 条</span><span>10条/页</span><span>前往</span><input value="1"><span>页</span></div>
+        </div>
+      </div>
+
+          </section>
+
+    <!-- ===== 视图：校园安全 · 预警终端管理 ===== -->
+    <section class="view" id="view-campus-terminal">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
+        <span class="tab-tag">预警终端管理<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center">
+        <button class="btn tab-btn" data-tab="今日" onclick="pickTab(this)">今日</button>
+        <button class="btn tab-btn" data-tab="本周" onclick="pickTab(this)">本周</button>
+        <button class="btn tab-btn" data-tab="本月" onclick="pickTab(this)">本月</button>
+        <button class="btn tab-btn primary" data-tab="本季度" onclick="pickTab(this)">本季度</button>
+        <button class="btn tab-btn" data-tab="本年" onclick="pickTab(this)">本年</button>
+        <button class="stats-toggle" style="margin-left:auto" data-target="campusTerminalCharts" onclick="toggleStats(this)" title="收起统计模块" aria-label="收起统计模块"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      </div>
+
+
+      <div class="guard-stats">
+        <div class="grid-campus-charts g4" id="campusTerminalCharts">
+          <div class="panel"><div class="panel-hd tip-wrap">核心指标总览<span class="tip">口径：各指标单位见数值标签；条形长度为对数刻度，便于跨量级对比</span></div><div class="panel-bd"><div class="chart-light" id="tx_kpi" style="height:200px"></div></div></div>
+          <div class="panel"><div class="panel-hd tip-wrap">近 7 日终端在线率<span class="tip">口径：当日有心跳上报的终端 / 已部署终端总数，按 24 时点均值统计</span></div><div class="panel-bd"><div class="chart-light" id="tx_online" style="height:200px"></div></div></div>
+          <div class="panel"><div class="panel-hd">各辖区终端部署量（台）</div><div class="panel-bd"><div class="chart-light" id="tx_area" style="height:200px"></div></div></div>
+          <div class="panel"><div class="panel-hd">终端故障类型分布</div><div class="panel-bd"><div class="chart-light" id="tx_fault" style="height:200px"></div></div></div>
+        </div>
+      </div>
+
+      <div class="data-row">
+        <div class="tree">
+          <div class="tree-search">
+            <input type="text" placeholder="输入学校或终端编号">
+            <button class="btn primary" data-op="演示：查询">查询</button>
+            <button class="btn" data-op="演示：重置">重置</button>
+          </div>
+          <div class="tree-item active" onclick="pickTree(this)"><span class="t-arr">›</span>全部辖区</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>甲区</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>乙县</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>丙县</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>丁县</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>戊县</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>己县</div>
+          <div class="tree-item" onclick="pickTree(this)"><span class="t-arr">›</span>庚市</div>
+        </div>
+        <div class="panel" style="min-width:0">
+          <div class="panel-hd">预警终端台账
+            <span class="panel-hd-extra">
+              <button class="btn" data-op="演示：批量自检" onclick="toast('演示：向全部在线终端下发自检指令')">批量自检</button>
+              <button class="btn primary" data-op="演示：新增终端" onclick="toast('演示：登记新增终端（编号 / 型号 / 安装位置 / 绑定学校）')">＋ 新增终端</button>
+            </span>
+          </div>
+          <div class="filter-bar fb-guard">
+            <span class="f-item">所属辖区<select><option>请选择</option><option>甲区</option><option>乙县</option><option>丙县</option><option>丁县</option><option>戊县</option><option>己县</option><option>庚市</option></select></span>
+            <span class="f-item">在线状态<select><option>请选择</option><option>在线</option><option>离线</option><option>故障</option></select></span>
+            <span class="f-item">绑定学校<input type="text" placeholder="请输入"></span>
+            <span class="f-item">终端编号<input type="text" placeholder="请输入"></span>
+            <button class="btn primary" data-op="演示：查询">查询</button>
+            <button class="btn" data-op="演示：重置">重置</button>
+            <button class="btn" data-op="演示：导出">导出</button>
+          </div>
+          <div class="table-wrap">
+            <table class="grid">
+              <colgroup><col style="width:5%"><col style="width:13%"><col style="width:17%"><col style="width:11%"><col style="width:9%"><col style="width:8%"><col style="width:11%"><col style="width:7%"><col style="width:19%"></colgroup>
+              <thead><tr><th>序号</th><th>终端编号</th><th>绑定学校</th><th>安装位置</th><th>在线状态</th><th>本月报警</th><th>最后心跳</th><th>固件版本</th><th>操作</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>ALM-EW-0021</td><td>戊县示范幼儿园</td><td>门卫室外侧</td><td><span class="tag green">在线</span></td><td>32</td><td>2026-10-27 17:20:11</td><td>V2.1.3</td><td><span class="op-link" data-op="查看终端" onclick="toast('演示：查看终端详情与心跳曲线')">详情</span><span class="op-link" data-op="远程自检" onclick="toast('演示：经硬件控制接口发起终端自检')">自检</span><span class="op-link" data-op="远程重启" onclick="toast('演示：经硬件控制接口远程重启')">重启</span><span class="op-link danger" data-op="解绑" onclick="toast('演示：解绑终端（需二次确认并记录日志）')">解绑</span></td></tr>
+                <tr><td>2</td><td>ALM-JZ-0008</td><td>甲市第一中学</td><td>东门值班室</td><td><span class="tag green">在线</span></td><td>24</td><td>2026-10-27 17:19:46</td><td>V2.1.3</td><td><span class="op-link" data-op="查看终端" onclick="toast('演示：查看终端详情与心跳曲线')">详情</span><span class="op-link" data-op="远程自检" onclick="toast('演示：经硬件控制接口发起终端自检')">自检</span><span class="op-link" data-op="远程重启" onclick="toast('演示：经硬件控制接口远程重启')">重启</span><span class="op-link danger" data-op="解绑" onclick="toast('演示：解绑终端（需二次确认并记录日志）')">解绑</span></td></tr>
+                <tr><td>3</td><td>ALM-BX-0015</td><td>丙县示范小学</td><td>教学楼一层大厅</td><td><span class="tag green">在线</span></td><td>27</td><td>2026-10-27 17:18:02</td><td>V2.1.2</td><td><span class="op-link" data-op="查看终端" onclick="toast('演示：查看终端详情与心跳曲线')">详情</span><span class="op-link" data-op="远程自检" onclick="toast('演示：经硬件控制接口发起终端自检')">自检</span><span class="op-link" data-op="远程升级" onclick="toast('演示：下发固件升级任务（V2.1.3）')">升级</span><span class="op-link danger" data-op="解绑" onclick="toast('演示：解绑终端（需二次确认并记录日志）')">解绑</span></td></tr>
+                <tr><td>4</td><td>ALM-EY-0033</td><td>丙县第二幼儿园</td><td>后街围栏立柱</td><td><span class="tag red">离线</span></td><td>14</td><td>2026-10-27 11:02:47</td><td>V2.1.1</td><td><span class="op-link" data-op="查看终端" onclick="toast('演示：查看终端详情与心跳曲线')">详情</span><span class="op-link" data-op="告警记录" onclick="toast('演示：离线告警已推送至维护人员')">告警记录</span><span class="op-link" data-op="派单处理" onclick="toast('演示：生成现场处理工单并推送维护人员')">派单</span></td></tr>
+                <tr><td>5</td><td>ALM-ZG-0006</td><td>戊县职业高中</td><td>宿舍楼值守点</td><td><span class="tag orange">故障</span></td><td>18</td><td>2026-10-27 16:58:12</td><td>V2.1.2</td><td><span class="op-link" data-op="查看终端" onclick="toast('演示：查看终端详情与心跳曲线')">详情</span><span class="op-link" data-op="远程自检" onclick="toast('演示：经硬件控制接口发起终端自检')">自检</span><span class="op-link" data-op="派单处理" onclick="toast('演示：生成现场处理工单并推送维护人员')">派单</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pager"><span>共 86 条</span><span>10条/页</span><span>前往</span><input value="1"><span>页</span></div>
+        </div>
+      </div>
+
+          </section>
+
+    <!-- ===== 视图：校园安全 · 一键报警 ===== -->
+    <section class="view" id="view-campus-alarm">
+      <div class="breadcrumb">
+        <span class="crumb-link" data-target="home1" onclick="showView(this.getAttribute('data-target'))">首页</span><span>/</span>
+        <span class="tab-tag">一键报警<span class="close-x" data-op="关闭标签页" onclick="toast('关闭标签页')">×</span></span>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center">
+        <button class="btn tab-btn" data-tab="今日" onclick="pickTab(this)">今日</button>
+        <button class="btn tab-btn" data-tab="本周" onclick="pickTab(this)">本周</button>
+        <button class="btn tab-btn" data-tab="本月" onclick="pickTab(this)">本月</button>
+        <button class="btn tab-btn primary" data-tab="本季度" onclick="pickTab(this)">本季度</button>
+        <button class="btn tab-btn" data-tab="本年" onclick="pickTab(this)">本年</button>
+        <button class="stats-toggle" style="margin-left:auto" data-target="campusAlarmCharts" onclick="toggleStats(this)" title="收起统计模块" aria-label="收起统计模块"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      </div>
+
+      <div class="guard-stats">
+        <div class="grid-campus-charts" id="campusAlarmCharts">
+          <div class="panel"><div class="panel-hd">报警类型分布</div><div class="panel-bd"><div class="chart-light" id="al_type" style="height:236px"></div></div></div>
+          <div class="panel"><div class="panel-hd tip-wrap">近 7 日报警与平均响应<span class="tip">口径：柱为每日报警起数，线为当日平均响应时长（秒）</span></div><div class="panel-bd"><div class="chart-light" id="al_trend" style="height:236px"></div></div></div>
+          <div class="panel"><div class="panel-hd">各辖区报警量（起）</div><div class="panel-bd"><div class="chart-light" id="al_area" style="height:236px"></div></div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-hd">移动端报警内容
+          <span class="panel-hd-extra">
+            <button class="btn" data-op="演示：批量导出" onclick="toast('演示：导出报警记录（含处置结果与响应时长）')">导出</button>
+          </span>
+        </div>
+        <div class="filter-bar fb-guard">
+          <span class="f-item">所属辖区<select><option>请选择</option><option>甲区</option><option>乙县</option><option>丙县</option><option>丁县</option><option>戊县</option><option>己县</option><option>庚市</option></select></span>
+          <span class="f-item">报警类型<select><option>请选择</option><option>可疑人员</option><option>突发冲突</option><option>可疑物品</option><option>其他求助</option></select></span>
+          <span class="f-item">处置状态<select><option>请选择</option><option>处置中</option><option>已处置</option><option>误报关闭</option></select></span>
+          <span class="f-item">学校 / 终端<input type="text" placeholder="请输入"></span>
+          <span class="f-item">报警时间<input type="text" placeholder="2026-11-01 至 2026-11-05"></span>
+          <button class="btn primary" data-op="演示：查询">查询</button>
+          <button class="btn" data-op="演示：重置">重置</button>
+        </div>
+        <div class="table-wrap">
+          <table class="grid">
+            <colgroup><col style="width:5%"><col style="width:12%"><col style="width:16%"><col style="width:11%"><col style="width:9%"><col style="width:9%"><col style="width:8%"><col style="width:8%"><col style="width:12%"><col style="width:10%"></colgroup>
+            <thead><tr><th>序号</th><th>报警时间</th><th>报警学校</th><th>终端编号</th><th>报警类型</th><th>触发方式</th><th>响应时长</th><th>处置状态</th><th>处置结果</th><th>操作</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>2026-11-05 09:46:12</td><td>林芝市八一中学</td><td>ALM-JZ-0008</td><td>可疑人员</td><td>一键按钮</td><td>48 秒</td><td><span class="tag orange">处置中</span></td><td>派出所已出警</td><td><span class="op-link" data-op="查看报警" onclick="toast('演示：查看报警详情、定位与抓拍截图')">详情</span><span class="op-link" data-op="指挥调度" onclick="toast('演示：向出警组下发调度指令')">调度</span></td></tr>
+              <tr><td>2</td><td>2026-11-05 08:12:03</td><td>戊县示范幼儿园</td><td>ALM-EW-0021</td><td>突发冲突</td><td>一键按钮</td><td>62 秒</td><td><span class="tag green">已处置</span></td><td>现场调解完毕</td><td><span class="op-link" data-op="查看报警" onclick="toast('演示：查看报警详情、定位与抓拍截图')">详情</span><span class="op-link" data-op="监控回放" onclick="toast('演示：调取报警前后 5 分钟监控回放')">回放</span></td></tr>
+              <tr><td>3</td><td>2026-11-05 07:35:41</td><td>丙县示范小学</td><td>ALM-BX-0015</td><td>其他求助</td><td>一键按钮</td><td>85 秒</td><td><span class="tag green">已处置</span></td><td>学生已送医</td><td><span class="op-link" data-op="查看报警" onclick="toast('演示：查看报警详情、定位与抓拍截图')">详情</span><span class="op-link" data-op="监控回放" onclick="toast('演示：调取报警前后 5 分钟监控回放')">回放</span></td></tr>
+              <tr><td>4</td><td>2026-11-04 16:40:22</td><td>丙县第二幼儿园</td><td>ALM-EY-0033</td><td>可疑物品</td><td>一键按钮</td><td>74 秒</td><td><span class="tag green">已处置</span></td><td>排除隐患</td><td><span class="op-link" data-op="查看报警" onclick="toast('演示：查看报警详情、定位与抓拍截图')">详情</span><span class="op-link" data-op="监控回放" onclick="toast('演示：调取报警前后 5 分钟监控回放')">回放</span></td></tr>
+              <tr><td>5</td><td>2026-11-04 14:05:10</td><td>戊县职业高中</td><td>ALM-ZG-0006</td><td>突发冲突</td><td>移动端</td><td>96 秒</td><td><span class="tag gray">误报关闭</span></td><td>误触，已核实</td><td><span class="op-link" data-op="查看报警" onclick="toast('演示：查看报警详情、定位与抓拍截图')">详情</span><span class="op-link" data-op="误报说明" onclick="toast('演示：查看误报原因说明与审核记录')">误报说明</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pager"><span>共 5 条</span><span>10条/页</span><span>前往</span><input value="1"><span>页</span></div>
       </div>
     </section>
 
@@ -2919,7 +3212,7 @@ function removePhoto(wrapId,imgId,delId){
 
 <script>
 /* ============ 路由与导航 ============ */
-var VIEWS=['home1','home2','operations','population','guard','address','conflict-mgmt','conflict-check','conflict-report','conflict-view','conflict-detail','activity-control','activity-focus','addr-mylist','mobile-resign','hj-cert'];
+var VIEWS=['home1','home2','operations','population','guard','address','conflict-mgmt','conflict-check','conflict-report','conflict-view','conflict-detail','activity-control','activity-focus','addr-mylist','mobile-resign','hj-cert','campus-db','campus-sense','campus-terminal','campus-alarm'];
 var charts={};
 function toast(msg){
   var t=document.getElementById('toast');
@@ -4461,21 +4754,20 @@ CHART_DEFS.home1=[
   }]
 }},
 {id:'h1_addr',option:{
-  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}条（{d}%）'}),
-  legend:{show:false},
-  series:[{
-    type:'pie',radius:['55%','76%'],center:['50%','48%'],
-    data:[
-      {value:14320,name:'街路巷',itemStyle:{color:'#36d0ff'}},
-      {value:213610,name:'门楼牌',itemStyle:{color:'#2f6fed'}},
-      {value:96000,name:'层户',itemStyle:{color:'#ffb03a'}}
-    ],
-    label:{show:false},labelLine:{show:false},
-    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
+  tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
+    var m={'#2f6fed':'门楼牌','#ffb03a':'层户','#36d0ff':'街路巷'};var n=m[p.color]||'';
+    return n?n+'：'+(n=='门楼牌'?'213,610（65.9%）':n=='层户'?'96,000（29.6%）':'14,320（4.4%）'):'';}},
+  grid:{left:'center',top:20,width:136,height:136},
+  xAxis:{type:'category',data:['0','1','2','3','4','5','6','7','8','9'],show:false},
+  yAxis:{type:'category',data:['0','1','2','3','4','5','6','7','8','9'],show:false,inverse:true},
+  series:[{type:'heatmap',itemStyle:{borderColor:'#0a2144',borderWidth:1,borderRadius:2},
+    data:(function(){var a=[];var n1=66,n2=95;for(var i=0;i<100;i++){
+      var c=i<n1?'#2f6fed':(i<n2?'#ffb03a':'#36d0ff');
+      a.push({value:[i%10,Math.floor(i/10),1],itemStyle:{color:c}});}return a;})()
   }],
   graphic:[
-    {type:'text',left:'center',top:'36%',style:{text:'323,930',fill:'#7fe4ff',fontSize:20,fontWeight:700,textAlign:'center'}},
-    {type:'text',left:'center',top:'56%',style:{text:'标准地址总数',fill:'#8fb0dd',fontSize:11,textAlign:'center'}}
+    {type:'text',left:'center',top:0,style:{text:'标准地址 323,930 条 · 每格 1%',fill:'#8fb0dd',fontSize:9.5}},
+    {type:'text',right:'center',top:'86%',style:{text:'门楼牌 65.9%　层户 29.6%　街路巷 4.4%',fill:'#9fb8d8',fontSize:8.5}}
   ]
 }},
 {id:'h1_pop',option:{
@@ -4508,42 +4800,49 @@ CHART_DEFS.home1=[
   ]
 }},
 {id:'h1_house',option:{
-  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}间（{d}%）'}),
-  legend:{show:false},
-  series:[{
-    type:'pie',radius:['55%','76%'],center:['50%','48%'],
-    data:[
-      {value:52160,name:'自住',itemStyle:{color:'#2f6fed'}},
-      {value:15480,name:'出租',itemStyle:{color:'#36d0ff'}},
-      {value:5980,name:'闲置',itemStyle:{color:'#ffb03a'}},
-      {value:1628,name:'其他',itemStyle:{color:'#b9a4ff'}}
-    ],
-    label:{show:false},labelLine:{show:false},
-    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
-  }],
-  graphic:[
-    {type:'text',left:'center',top:'36%',style:{text:'75,248',fill:'#7fe4ff',fontSize:20,fontWeight:700,textAlign:'center'}},
-    {type:'text',left:'center',top:'56%',style:{text:'实有房屋总数',fill:'#8fb0dd',fontSize:11,textAlign:'center'}}
-  ]
+  tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},trigger:'axis',axisPointer:{type:'shadow'},formatter:function(ps){
+    var tot={巴宜:38000,雅下:24000,米林:13248};var s=ps[0].name+' 派出所（'+tot[ps[0].name].toLocaleString()+' 间）<br/>';
+    for(var i=0;i<ps.length;i++){s+=ps[i].marker+ps[i].seriesName+'：'+ps[i].value.toLocaleString()+' 间<br/>';}
+    return s;}},
+  grid:{left:6,right:8,top:22,bottom:0,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'category',data:['巴宜','雅下','米林'],axisLabel:{color:DARK.text,fontSize:9.5},axisTick:{show:false}}),
+  yAxis:Object.assign(darkAxis(),{type:'value',show:false,max:30000}),
+  series:[
+    {name:'自住',type:'bar',barWidth:8,barGap:'35%',data:[27000,16500,8660],itemStyle:{color:'#2f6fed',borderRadius:[2,2,0,0]}},
+    {name:'出租',type:'bar',barWidth:8,data:[7600,4900,2980],itemStyle:{color:'#36d0ff',borderRadius:[2,2,0,0]}},
+    {name:'闲置',type:'bar',barWidth:8,data:[2600,1900,1480],itemStyle:{color:'#ffb03a',borderRadius:[2,2,0,0]}},
+    {name:'其他',type:'bar',barWidth:8,data:[800,700,128],itemStyle:{color:'#b9a4ff',borderRadius:[2,2,0,0]}}
+  ],
+  graphic:[{type:'text',left:'center',top:0,style:{text:'实有房屋 75,248 间 · 辖区 × 使用性质并排对比',fill:'#8fb0dd',fontSize:9.5}}]
 }},
 {id:'h1_unit',option:{
-  tooltip:Object.assign(darkTooltip(),{formatter:'{b}：{c}家（{d}%）'}),
-  legend:{show:false},
-  series:[{
-    type:'pie',radius:['55%','76%'],center:['50%','48%'],
-    data:[
-      {value:9860,name:'企业',itemStyle:{color:'#36d0ff'}},
-      {value:4120,name:'机关事业单位',itemStyle:{color:'#2f6fed'}},
-      {value:3750,name:'个体工商户',itemStyle:{color:'#ffb03a'}},
-      {value:1463,name:'其他',itemStyle:{color:'#2ee6a8'}}
-    ],
-    label:{show:false},labelLine:{show:false},
-    itemStyle:{borderRadius:4,borderColor:'#0a2144',borderWidth:2}
-  }],
-  graphic:[
-    {type:'text',left:'center',top:'36%',style:{text:'19,193',fill:'#7fe4ff',fontSize:20,fontWeight:700,textAlign:'center'}},
-    {type:'text',left:'center',top:'56%',style:{text:'实有单位总数',fill:'#8fb0dd',fontSize:11,textAlign:'center'}}
-  ]
+  tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},trigger:'axis',axisPointer:{type:'shadow'},formatter:function(ps){
+    var tgt={'企业':10500,'机关事业单位':4500,'个体工商户':4000,'其他':1600};
+    var s=ps[0].name+'<br/>';
+    for(var i=0;i<ps.length;i++){if(ps[i].seriesName=='完成率'){continue;}
+      s+=ps[i].marker+'实有：'+ps[i].value.toLocaleString()+' 家<br/>';}
+    var v=ps[0].value;var g=tgt[ps[0].name];
+    return s+'目标：'+g.toLocaleString()+' 家　完成率 '+(v/g*100).toFixed(1)+'%';}},
+  grid:{left:6,right:78,top:8,bottom:2,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'value',max:11000,show:false}),
+  yAxis:Object.assign(darkAxis(),{type:'category',inverse:true,data:['企业','机关事业单位','个体工商户','其他'],
+    axisLabel:{color:DARK.text,fontSize:9.5},axisTick:{show:false},splitLine:{show:false}}),
+  series:[
+    {name:'实有数量',type:'bar',barWidth:9,showBackground:true,
+      backgroundStyle:{color:'rgba(64,128,220,.14)',borderRadius:5},
+      data:[
+        {value:9860,itemStyle:{color:'#36d0ff',borderRadius:5}},
+        {value:4120,itemStyle:{color:'#2f6fed',borderRadius:5}},
+        {value:3750,itemStyle:{color:'#ffb03a',borderRadius:5}},
+        {value:1463,itemStyle:{color:'#2ee6a8',borderRadius:5}}
+      ],
+      label:{show:true,position:'right',color:'#dcebff',fontSize:8.5,
+        formatter:function(p){var tgt=[10500,4500,4000,1600][p.dataIndex];return p.value.toLocaleString()+' / '+tgt.toLocaleString()+'（'+(p.value/tgt*100).toFixed(0)+'%）';}}},
+    {name:'目标线',type:'scatter',symbol:'rect',symbolSize:[3,16],silent:true,
+      itemStyle:{color:'#ffffff'},
+      data:[[10500,0],[4500,1],[4000,2],[1600,3]]}
+  ],
+  graphic:[{type:'text',left:'center',top:0,style:{text:'实有单位 19,193 家 · 实有 vs 年度目标',fill:'#8fb0dd',fontSize:9.5}}]
 }},
 {id:'h1_comm',option:{
   tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},trigger:'axis',axisPointer:{type:'shadow'},formatter:function(ps){
@@ -4569,24 +4868,26 @@ CHART_DEFS.home1=[
   ]
 }},
 {id:'h1_conflict',option:{
-  tooltip:Object.assign(darkTooltip(),{formatter:function(p){
-    return p.name+'：'+p.value.toLocaleString()+' 件（'+(p.value/3268*100).toFixed(1)+'%）<br/>解决率 92.2% · 回访满意率 95.9%';
-  }}),
-  series:[{name:'矛盾纠纷类型',type:'pie',roseType:'radius',radius:['30%','58%'],center:['50%','54%'],
-    data:[
-      {value:1168,name:'婚姻家庭',itemStyle:{color:'#ff5c5c'}},{value:972,name:'邻里关系',itemStyle:{color:'#36d0ff'}},{value:512,name:'劳动争议',itemStyle:{color:'#2ee6a8'}},
-      {value:386,name:'借贷纠纷',itemStyle:{color:'#ffb03a'}},{value:208,name:'物业纠纷',itemStyle:{color:'#b9a4ff'}},{value:22,name:'其他',itemStyle:{color:'#8a94a6'}}
-    ],
-    label:{show:true,fontSize:7.5,formatter:function(p){return p.name+' '+p.value;},color:'#dcebff'},
-    labelLine:{length:5,length2:3,lineStyle:{color:'rgba(64,128,220,.4)'}},
-    itemStyle:{borderColor:'#0a2144',borderWidth:2,borderRadius:3},
-    emphasis:{itemStyle:{shadowBlur:10,shadowColor:'rgba(0,0,0,.4)'}}
-  }],
-  graphic:[
-    {type:'text',left:'center',top:'40%',style:{text:'3,268 件',fill:'#7fe4ff',fontSize:13,fontWeight:700,textAlign:'center'}},
-    {type:'text',left:'center',top:'46%',style:{text:'解决率 92.2%',fill:'#8fb0dd',fontSize:8.5,textAlign:'center'}},
-    {type:'text',left:'center',top:'52%',style:{text:'回访满意率 95.9%',fill:'#8fb0dd',fontSize:8,textAlign:'center'}}
-  ]
+  tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},trigger:'axis',formatter:function(ps){
+    var t=0;for(var i=0;i<ps.length;i++){t+=ps[i].value;}
+    var s=ps[0].name+'　合计 '+t.toLocaleString()+' 件<br/>';
+    for(var j=0;j<ps.length;j++){s+=ps[j].marker+ps[j].seriesName+'：'+ps[j].value.toLocaleString()+' 件<br/>';}
+    return s;}},
+  legend:{top:0,left:'center',textStyle:{color:DARK.legendText,fontSize:8},itemWidth:8,itemHeight:8,itemGap:7,data:['婚姻家庭','邻里关系','劳动争议','其他']},
+  grid:{left:8,right:8,top:26,bottom:0,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'category',boundaryGap:false,data:['6月','7月','8月','9月','10月','11月'],axisLabel:{color:DARK.text,fontSize:8.5},axisTick:{show:false}}),
+  yAxis:Object.assign(darkAxis(),{type:'value',max:3600,axisLabel:{color:DARK.axisLabel,fontSize:8},splitLine:{lineStyle:{color:DARK.splitLine}}}),
+  series:[
+    {name:'婚姻家庭',type:'line',stack:'cf',smooth:true,symbol:'none',lineStyle:{width:0},itemStyle:{color:'#ff5c5c'},
+      areaStyle:{color:'rgba(255,92,92,.55)'},data:[980,1020,1080,1120,1150,1168]},
+    {name:'邻里关系',type:'line',stack:'cf',smooth:true,symbol:'none',lineStyle:{width:0},itemStyle:{color:'#36d0ff'},
+      areaStyle:{color:'rgba(54,208,255,.5)'},data:[860,890,920,950,960,972]},
+    {name:'劳动争议',type:'line',stack:'cf',smooth:true,symbol:'none',lineStyle:{width:0},itemStyle:{color:'#2ee6a8'},
+      areaStyle:{color:'rgba(46,230,168,.45)'},data:[520,500,480,500,510,512]},
+    {name:'其他',type:'line',stack:'cf',smooth:true,symbol:'none',lineStyle:{width:0},itemStyle:{color:'#b9a4ff'},
+      areaStyle:{color:'rgba(185,164,255,.45)'},data:[700,680,650,640,630,616]}
+  ],
+  graphic:[{type:'text',left:4,top:2,style:{text:'近 6 月排查趋势',fill:'#8fb0dd',fontSize:8.5}}]
 }},
 {id:'h1_dog',option:{
   tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
@@ -4632,22 +4933,24 @@ CHART_DEFS.home1=[
 }},
 {id:'h1_mail',option:{
   tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
-    return p.name+'：'+p.value.toLocaleString()+' 件（'+(p.value/1240*100).toFixed(1)+'%）<br/>实名率 91.5% · 按时结案率 96.8%';}},
-  series:[{
-    type:'pie',radius:['45%','78%'],center:['50%','47%'],
-    data:[
-      {value:560,name:'投诉',itemStyle:{color:'#ff5c5c'}},
-      {value:380,name:'建议',itemStyle:{color:'#36d0ff'}},
-      {value:300,name:'咨询',itemStyle:{color:'#2ee6a8'}}
-    ],
-    label:{show:true,formatter:function(p){return p.name+' '+p.value.toLocaleString();},color:'#dcebff',fontSize:9,lineHeight:13},
-    labelLine:{length:8,length2:8,lineStyle:{color:'rgba(64,128,220,.5)',width:1}},
-    itemStyle:{borderColor:'#0a2144',borderWidth:2,borderRadius:4}
-  }],
-  graphic:[
-    {type:'text',left:'center',top:'30%',style:{text:'1,240 件',fill:'#7fe4ff',fontSize:15,fontWeight:700,textAlign:'center'}},
-    {type:'text',left:'center',top:'48%',style:{text:'信件总量',fill:'#8fb0dd',fontSize:9,textAlign:'center'}}
-  ]
+    return p.name+'：'+p.value.toLocaleString()+' 件（'+(p.value/1240*100).toFixed(1)+'%）';}},
+  grid:{left:6,right:104,top:10,bottom:6,containLabel:true},
+  xAxis:Object.assign(darkAxis(),{type:'value',show:false,max:650}),
+  yAxis:Object.assign(darkAxis(),{type:'category',inverse:true,data:['投诉','建议','咨询'],
+    axisLabel:{color:DARK.text,fontSize:10},axisTick:{show:false},splitLine:{show:false}}),
+  series:[
+    {name:'信件',type:'bar',barWidth:2,itemStyle:{color:'rgba(140,170,210,.45)'},
+      data:[560,380,300],silent:true},
+    {name:'信件数量',type:'scatter',symbolSize:11,
+      data:[
+        {value:560,name:'投诉',itemStyle:{color:'#ff5c5c',borderColor:'rgba(255,255,255,.6)',borderWidth:1.5}},
+        {value:380,name:'建议',itemStyle:{color:'#36d0ff',borderColor:'rgba(255,255,255,.6)',borderWidth:1.5}},
+        {value:300,name:'咨询',itemStyle:{color:'#2ee6a8',borderColor:'rgba(255,255,255,.6)',borderWidth:1.5}}
+      ],
+      label:{show:true,position:'right',color:'#dcebff',fontSize:9,distance:8,
+        formatter:function(p){return p.value.toLocaleString()+' 件 · '+(p.value/1240*100).toFixed(1)+'%';}}}
+  ],
+  graphic:[{type:'text',left:'center',top:0,style:{text:'信件 1,240 件 · 三类排名',fill:'#8fb0dd',fontSize:9.5}}]
 }},
 {id:'h1_oil',option:{
   tooltip:{backgroundColor:'rgba(10,33,68,.96)',borderColor:'rgba(64,128,220,.5)',textStyle:{color:'#dcebff',fontSize:11},formatter:function(p){
@@ -4920,37 +5223,48 @@ CHART_DEFS.population=[
   color:['#2f6fed','#3d7bf7','#4d8bfa','#5f99fb','#6fa7fc','#80b4fc','#90c0fd','#a0ccfd','#b9d4ff']
 }},
 {id:'pop_in',option:{
-  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 人（{d}%）'}),
-  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10},itemWidth:8,itemHeight:8},
-  series:[{
-    type:'pie',roseType:'radius',radius:['22%','72%'],center:['50%','44%'],
+  tooltip:Object.assign(lightTooltip(),{formatter:function(p){
+    var v={昌都:'8,081',拉萨:'3,160',日喀则:'2,770',山南:'2,090'};
+    var s={昌都:'50.2%',拉萨:'19.6%',日喀则:'17.2%',山南:'13.0%'};
+    return p.name+'：'+v[p.name]+' 人（'+s[p.name]+'）';}}),
+  grid:{left:4,right:4,top:20,bottom:18},
+  xAxis:{type:'value',min:0,max:100,show:false},
+  yAxis:{type:'value',min:0,max:100,show:false},
+  series:[{type:'scatter',
     data:[
-      {value:8081,name:'昌都',itemStyle:{color:'#2f6fed'}},
-      {value:3160,name:'拉萨',itemStyle:{color:'#36b8ff'}},
-      {value:2770,name:'日喀则',itemStyle:{color:'#8fb4ff'}},
-      {value:2090,name:'山南',itemStyle:{color:'#b9d4ff'}}
+      {name:'昌都',value:[11,52,8081],symbolSize:58,itemStyle:{color:'#2f6fed'}},
+      {name:'拉萨',value:[37,52,3160],symbolSize:37,itemStyle:{color:'#22b07d'}},
+      {name:'日喀则',value:[61,52,2770],symbolSize:35,itemStyle:{color:'#f59a23'}},
+      {name:'山南',value:[84,52,2090],symbolSize:33,itemStyle:{color:'#8f6fe8'}}
     ],
-    label:{show:true,formatter:function(p){return p.name+'\n'+p.value.toLocaleString()+'（'+p.percent+'%）';},color:LIGHT.text,fontSize:8.5},
-    labelLine:{length:8,length2:4,lineStyle:{color:'#c9d6ee'}},
-    itemStyle:{borderRadius:3,borderColor:'#fff',borderWidth:1.5}
-  }]
+    label:{show:true,position:'inside',color:'#fff',fontSize:8.5,lineHeight:10,formatter:function(p){var s={昌都:'50.2%',拉萨:'19.6%',日喀则:'17.2%',山南:'13.0%'};return p.name+'\n'+s[p.name];}}
+  }],
+  graphic:[
+    {type:'text',left:'center',top:2,style:{text:'气泡大小 = 流入人数',fill:'#82878B',fontSize:8}},
+    {type:'text',left:'center',bottom:2,style:{text:'昌都 8,081 · 拉萨 3,160 · 日喀则 2,770 · 山南 2,090',fill:'#82878B',fontSize:8}}
+  ]
 }},
 {id:'pop_city',option:{
-  tooltip:Object.assign(lightTooltip(),{formatter:function(p){return p.name+'：'+p.value.toLocaleString()+' 人（'+p.percent+'%）';}}),
-  graphic:{type:'text',left:'center',top:'42%',style:{text:'市域内流动',fill:'#5f6f8a',fontSize:10}},
-  series:[{type:'pie',radius:['38%','68%'],center:['50%','50%'],startAngle:90,
-    label:{show:true,color:'#1f2d3d',fontSize:8.5,formatter:function(p){return p.name+'\n'+p.value.toLocaleString()+'（'+p.percent+'%）';}},
-    labelLine:{show:true,length:8,length2:8,lineStyle:{color:'#c9d6ee'}},
-    itemStyle:{borderColor:'#fff',borderWidth:1},
+  tooltip:Object.assign(lightTooltip(),{formatter:function(p){
+    var v={巴宜:'8,623',雅下:'4,320',米林:'318',波密:'45',察隅:'30',墨脱:'12'};
+    var s={巴宜:'64.6%',雅下:'32.4%',米林:'2.4%',波密:'0.3%',察隅:'0.2%',墨脱:'0.1%'};
+    return p.name+'：'+v[p.name]+' 人（'+s[p.name]+'）';}}),
+  grid:{left:6,right:106,top:6,bottom:18,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'log',min:10,max:10000,splitLine:{show:false},axisLabel:{show:false},axisLine:{show:true,lineStyle:{color:'#e3e9f4'}},axisTick:{show:false}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,data:['巴宜','雅下','米林','波密','察隅','墨脱'],axisLine:{show:false},axisTick:{show:false},axisLabel:{color:LIGHT.text,fontSize:9.5}}),
+  series:[{type:'scatter',
+    symbolSize:function(v){return Math.max(6,Math.sqrt(v[0])/8);},
     data:[
-      {name:'巴宜',value:8623,itemStyle:{color:'#2f6fed'}},
-      {name:'雅下',value:4320,itemStyle:{color:'#3d7bf7'}},
-      {name:'米林',value:318,itemStyle:{color:'#5f99fb'}},
-      {name:'波密',value:45,itemStyle:{color:'#80b4fc'}},
-      {name:'察隅',value:30,itemStyle:{color:'#90c0fd'}},
-      {name:'墨脱',value:12,itemStyle:{color:'#b9d4ff'}}
-    ]}
-  ]
+      {value:[8623,'巴宜'],itemStyle:{color:'#2f6fed'}},
+      {value:[4320,'雅下'],itemStyle:{color:'#22b07d'}},
+      {value:[318,'米林'],itemStyle:{color:'#f59a23'}},
+      {value:[45,'波密'],itemStyle:{color:'#8f6fe8'}},
+      {value:[30,'察隅'],itemStyle:{color:'#e0556d'}},
+      {value:[12,'墨脱'],itemStyle:{color:'#36c8ff'}}
+    ],
+    label:{show:true,position:'right',color:'#82878B',fontSize:8.5,formatter:function(p){var s=['8,623 人 · 64.6%','4,320 人 · 32.4%','318 人 · 2.4%','45 人 · 0.3%','30 人 · 0.2%','12 人 · 0.1%'];return s[p.dataIndex];}}
+  }],
+  graphic:[{type:'text',left:'center',bottom:2,style:{text:'横轴对数刻度 · 圆点大小 = 流动人口规模',fill:'#82878B',fontSize:8}}]
 }},
 {id:'pop_gender',option:{
   tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 人';}}),
@@ -5076,6 +5390,224 @@ CHART_DEFS.guard=[{id:'gd_school',option:{
     label:{show:false},labelLine:{show:false},
     itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2}
   }]
+}},
+];
+
+/* -------- 校园安全：风险人员数据库（5 图，窄面板适配） -------- */
+CHART_DEFS['campus-db']=[
+{id:'cd_kpi',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:function(p){var f=['1,286','23','32,481','462','99.7','100'];var u=['条','人','次','ms','%','%'];return p.name+'：'+f[p.dataIndex]+' '+u[p.dataIndex];}}),
+  grid:{left:2,right:58,top:8,bottom:0,containLabel:true},
+  xAxis:{type:'log',min:1,max:100000,show:false},
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
+    data:['特征码总数',
+    '本月新增',
+    '今日比对',
+    '比对响应',
+    '数据质量',
+    '日志留痕'],axisLine:{show:false},axisTick:{show:false},axisLabel:{color:LIGHT.text,fontSize:8.5}}),
+  series:[{type:'bar',barWidth:6,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
+    data:[1286,23,32481,462,99.7,100],
+    label:{show:true,position:'right',color:'#2f6fed',fontSize:8,
+      formatter:function(p){var f=['1,286','23','32,481','462','99.7','100'];var u=['条','人','次','ms','%','%'];return f[p.dataIndex]+' '+u[p.dataIndex];}}
+  }]
+}},
+{id:'cd_type',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+' 条';}}),
+  grid:{left:2,right:32,top:4,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{show:false},axisLabel:{show:false}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
+    data:['涉访','肇事肇祸','社区矫正','吸毒','刑释','涉校矛盾'],axisLine:{show:false},axisTick:{show:false},axisLabel:{color:LIGHT.text,fontSize:9}}),
+  series:[{type:'bar',data:[140,154,196,231,247,318],barWidth:9,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:2},
+    label:{show:true,position:'right',color:'#2f6fed',fontSize:8.5}}]
+}},
+{id:'cd_area',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+' 条';}}),
+  grid:{left:2,right:4,top:14,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲区','乙县','丙县','丁县','戊县','己县','庚市'],axisLabel:{color:LIGHT.text,fontSize:8,interval:0,rotate:45,margin:4}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:8}}),
+  series:[{type:'bar',data:[286,198,214,176,158,142,112],barWidth:10,
+    itemStyle:{color:'#2f6fed',borderRadius:[2,2,0,0]},label:{show:true,position:'top',color:'#2f6fed',fontSize:8}}]
+}},
+{id:'cd_trend',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis'}),
+  legend:{data:['新增入库','比对量(万)'],textStyle:{color:LIGHT.legendText,fontSize:8.5},top:0,left:0,itemWidth:8,itemHeight:6,itemGap:8},
+  grid:{left:2,right:4,top:26,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',boundaryGap:false,data:['21','22','23','24','25','26','27'],axisLabel:{color:LIGHT.text,fontSize:8}}),
+  yAxis:[
+    Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:8}}),
+    Object.assign(lightAxis(),{type:'value',splitLine:{show:false},axisLabel:{show:false}})
+  ],
+  series:[
+    {name:'新增入库',type:'bar',data:[12,18,9,15,21,14,23],barWidth:7,itemStyle:{color:'#c6d8f5',borderRadius:[2,2,0,0]}},
+    {name:'比对量(万)',type:'line',yAxisIndex:1,smooth:true,data:[2.8,3.1,2.9,3.3,3.6,3.2,3.5],symbolSize:4,
+      lineStyle:{color:'#2f6fed',width:1.8},itemStyle:{color:'#2f6fed'}}
+  ]
+}},
+{id:'cd_hit',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',valueFormatter:function(v){return v+' 次';}}),
+  grid:{left:2,right:6,top:14,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',boundaryGap:false,data:['21','22','23','24','25','26','27'],axisLabel:{color:LIGHT.text,fontSize:8}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:8}}),
+  series:[{type:'line',smooth:true,data:[46,58,41,63,52,70,58],symbolSize:4,
+    lineStyle:{color:'#e5484d',width:1.8},itemStyle:{color:'#e5484d'},
+    areaStyle:{color:'rgba(229,72,77,.10)'},label:{show:true,position:'top',color:'#e5484d',fontSize:7.5}}]
+}},
+];
+
+/* -------- 校园安全：前端感知源（5 图，窄面板适配） -------- */
+CHART_DEFS['campus-sense']=[
+{id:'cs_kpi',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:function(p){var f=['42 / 46','38,720','11','≤3 秒','86','6.8%'];var u=['路','人次','次','秒','所',''];return p.name+'：'+f[p.dataIndex]+' '+u[p.dataIndex];}}),
+  grid:{left:2,right:58,top:8,bottom:0,containLabel:true},
+  xAxis:{type:'log',min:1,max:100000,show:false},
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
+    data:['在线感知源',
+    '今日识别',
+    '今日命中',
+    '双端时延',
+    '覆盖学校',
+    '误报率'],axisLine:{show:false},axisTick:{show:false},axisLabel:{color:LIGHT.text,fontSize:8.5}}),
+  series:[{type:'bar',barWidth:6,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
+    data:[42,38720,11,3,86,6.8],
+    label:{show:true,position:'right',color:'#2f6fed',fontSize:8,
+      formatter:function(p){var f=['42 / 46','38,720','11','≤3 秒','86','6.8%'];var u=['路','人次','次','秒','所',''];return f[p.dataIndex]+' '+u[p.dataIndex];}}
+  }]
+}},
+{id:'cs_status',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 路（{d}%）'}),
+  legend:{bottom:0,left:'center',itemWidth:8,itemHeight:6,itemGap:8,textStyle:{color:LIGHT.legendText,fontSize:9}},
+  graphic:{type:'text',left:'center',top:'30%',style:{text:'91.3%',fill:'#16a34a',fontSize:15,fontWeight:'bold'}},
+  series:[{type:'pie',radius:['38%','58%'],center:['50%','34%'],
+    data:[
+      {value:42,name:'在线',itemStyle:{color:'#2ee6a8'}},
+      {value:2,name:'调试',itemStyle:{color:'#ffb03a'}},
+      {value:2,name:'离线',itemStyle:{color:'#e5484d'}}
+    ],
+    label:{show:false},labelLine:{show:false},
+    itemStyle:{borderRadius:2,borderColor:'#fff',borderWidth:1.5}}]
+}},
+{id:'cs_rank',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 人次';}}),
+  grid:{left:2,right:34,top:4,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'value',splitLine:{show:false},axisLabel:{show:false}}),
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
+    data:['戊县职业高中','戊县示范幼儿园','甲市第一中学','丙县示范小学'],axisLine:{show:false},axisTick:{show:false},
+    axisLabel:{color:LIGHT.text,fontSize:8.5,formatter:function(v){return v.length>7?v.slice(0,7)+'…':v;}}}),
+  series:[{type:'bar',data:[876,1204,1532,2186],barWidth:10,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:2},
+    label:{show:true,position:'right',color:'#2f6fed',fontSize:8}}]
+}},
+{id:'cs_hit',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',valueFormatter:function(v){return v+' 次';}}),
+  grid:{left:2,right:6,top:14,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',boundaryGap:false,data:['21','22','23','24','25','26','27'],axisLabel:{color:LIGHT.text,fontSize:8}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:8}}),
+  series:[{type:'line',smooth:true,data:[9,12,8,14,11,13,11],symbolSize:4,
+    lineStyle:{color:'#e5484d',width:1.8},itemStyle:{color:'#e5484d'},
+    areaStyle:{color:'rgba(229,72,77,.10)'},label:{show:true,position:'top',color:'#e5484d',fontSize:7.5}}]
+}},
+{id:'cs_cap',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toLocaleString()+' 人次';}}),
+  grid:{left:2,right:4,top:12,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['21','22','23','24','25','26','27'],axisLabel:{color:LIGHT.text,fontSize:8}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:8,formatter:function(v){return (v/10000)+'w';}}}),
+  series:[{type:'bar',data:[31200,33800,30100,35600,38400,36200,39720],barWidth:10,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#36b8ff'},{offset:1,color:'#2f6fed'}]),borderRadius:[2,2,0,0]}}]
+}},
+];
+
+/* -------- 校园安全：一键报警 -------- */
+CHART_DEFS['campus-alarm']=[
+{id:'al_type',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 起（{d}%）'}),
+  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10},itemWidth:9,itemHeight:7},
+  series:[{type:'pie',radius:['44%','66%'],center:['50%','42%'],
+    data:[
+      {value:2,name:'可疑人员',itemStyle:{color:'#2f6fed'}},
+      {value:2,name:'突发冲突',itemStyle:{color:'#e5484d'}},
+      {value:1,name:'其他求助',itemStyle:{color:'#2ee6a8'}}
+    ],
+    label:{show:true,formatter:'{b}\n{c} 起',color:LIGHT.text,fontSize:10},
+    labelLine:{length:8,length2:6,lineStyle:{color:'#c9d6ee'}},
+    itemStyle:{borderRadius:3,borderColor:'#fff',borderWidth:2}}]
+}},
+{id:'al_trend',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis'}),
+  legend:{data:['报警起数','平均响应(秒)'],textStyle:{color:LIGHT.legendText,fontSize:10},top:0,left:0,itemWidth:9,itemHeight:7,itemGap:10},
+  grid:{left:4,right:4,top:26,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['10-29','10-30','10-31','11-01','11-02','11-03','11-04'],axisLabel:{color:LIGHT.text,fontSize:10}}),
+  yAxis:[
+    Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10}}),
+    Object.assign(lightAxis(),{type:'value',max:120,splitLine:{show:false},axisLabel:{show:false}})
+  ],
+  series:[
+    {name:'报警起数',type:'bar',data:[6,4,7,5,8,6,5],barWidth:12,itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]},label:{show:true,position:'top',color:'#2f6fed',fontSize:10}},
+    {name:'平均响应(秒)',type:'line',yAxisIndex:1,smooth:true,data:[58,66,71,62,74,69,65],symbolSize:5,lineStyle:{color:'#ffb03a',width:2},itemStyle:{color:'#ffb03a'}}
+  ]
+}},
+{id:'al_area',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+' 起';}}),
+  grid:{left:4,right:12,top:14,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲区','乙县','丙县','丁县','戊县','己县','庚市'],axisLabel:{color:LIGHT.text,fontSize:10,interval:0,rotate:30}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10}}),
+  series:[{type:'bar',data:[9,6,8,4,11,3,4],barWidth:14,
+    itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]},label:{show:true,position:'top',color:'#2f6fed',fontSize:10}}]
+}},
+];
+/* -------- 校园安全：预警终端管理 -------- */
+CHART_DEFS['campus-terminal']=[
+{id:'tx_kpi',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:function(p){var f=['86','84','2','5','62','98.8'];var u=['台','台','台','起','秒','%'];return p.name+'：'+f[p.dataIndex]+' '+u[p.dataIndex];}}),
+  grid:{left:2,right:58,top:8,bottom:0,containLabel:true},
+  xAxis:{type:'log',min:1,max:100000,show:false},
+  yAxis:Object.assign(lightAxis(),{type:'category',inverse:true,
+    data:['已部署终端',
+    '在线终端',
+    '离线故障',
+    '今日报警',
+    '平均响应',
+    '自检合格'],axisLine:{show:false},axisTick:{show:false},axisLabel:{color:LIGHT.text,fontSize:8.5}}),
+  series:[{type:'bar',barWidth:6,
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#2f6fed'},{offset:1,color:'#36b8ff'}]),borderRadius:3},
+    data:[86,84,2,5,62,98.8],
+    label:{show:true,position:'right',color:'#2f6fed',fontSize:8,
+      formatter:function(p){var f=['86','84','2','5','62','98.8'];var u=['台','台','台','起','秒','%'];return f[p.dataIndex]+' '+u[p.dataIndex];}}
+  }]
+}},
+{id:'tx_online',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',valueFormatter:function(v){return v+'%';}}),
+  grid:{left:4,right:12,top:14,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',boundaryGap:false,data:['10-21','10-22','10-23','10-24','10-25','10-26','10-27'],axisLabel:{color:LIGHT.text,fontSize:10}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',min:90,max:100,splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10,formatter:'{value}%'}}),
+  series:[{type:'line',smooth:true,data:[97.7,96.5,98.8,97.7,95.3,98.8,97.7],symbolSize:6,
+    lineStyle:{color:'#2f6fed',width:2},itemStyle:{color:'#2f6fed'},
+    areaStyle:{color:'rgba(47,111,237,.12)'},label:{show:true,position:'top',color:'#2f6fed',fontSize:10,formatter:'{c}%'}}]
+}},
+{id:'tx_area',option:{
+  tooltip:Object.assign(lightTooltip(),{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+' 台';}}),
+  grid:{left:4,right:12,top:14,bottom:0,containLabel:true},
+  xAxis:Object.assign(lightAxis(),{type:'category',data:['甲区','乙县','丙县','丁县','戊县','己县','庚市'],axisLabel:{color:LIGHT.text,fontSize:10,interval:0,rotate:30}}),
+  yAxis:Object.assign(lightAxis(),{type:'value',splitLine:{lineStyle:{color:LIGHT.splitLine}},axisLabel:{color:LIGHT.axisLabel,fontSize:10}}),
+  series:[{type:'bar',data:[18,12,14,8,20,7,7],barWidth:14,
+    itemStyle:{color:'#2f6fed',borderRadius:[3,3,0,0]},label:{show:true,position:'top',color:'#2f6fed',fontSize:10}}]
+}},
+{id:'tx_fault',option:{
+  tooltip:Object.assign(lightTooltip(),{formatter:'{b}：{c} 台（{d}%）'}),
+  legend:{bottom:0,textStyle:{color:LIGHT.legendText,fontSize:10},itemWidth:9,itemHeight:7},
+  series:[{type:'pie',radius:['44%','66%'],center:['50%','42%'],
+    data:[
+      {value:6,name:'网络异常',itemStyle:{color:'#2f6fed'}},
+      {value:4,name:'电源故障',itemStyle:{color:'#ffb03a'}},
+      {value:2,name:'按键失灵',itemStyle:{color:'#e5484d'}},
+      {value:2,name:'固件异常',itemStyle:{color:'#9fb3d6'}}
+    ],
+    label:{show:true,formatter:'{b}\n{c} 台',color:LIGHT.text,fontSize:10},
+    labelLine:{length:8,length2:6,lineStyle:{color:'#c9d6ee'}},
+    itemStyle:{borderRadius:3,borderColor:'#fff',borderWidth:2}}]
 }},
 ];
 

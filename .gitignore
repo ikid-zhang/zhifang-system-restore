@@ -6,3 +6,6 @@ _shots/
 _verify/
 ui-design-runs/
 *.docx
+_build_doc.py
+campus-arch.png
+校园安全*.md
