@@ -9,3 +9,7 @@ ui-design-runs/
 _build_doc.py
 campus-arch.png
 校园安全*.md
+
+# 社区服务本地截图
+社区服务/shots/
+._*

@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="theme-color" content="#0E2422">
+<title>社区服务 · 群防群治居民端</title>
+<style>
+:root{
+  --page:#E7EDEC; --bg:#F3F6F5; --surface:#FFFFFF; --panel:#EDF2F1;
+  --ink1:#0E2422; --ink2:#3A4B4A; --ink3:#6B7D7C;
+  --line:rgba(14,36,34,.11); --line2:rgba(14,36,34,.055);
+  --accent:#176C6B; --accent2:#C4633F;
+  --soft:rgba(23,108,107,.09); --soft2:rgba(196,99,63,.10);
+  --up:#2C7A62; --warn:#A9711A; --down:#B23A2C;
+  --r:3px; --rbtn:999px; --tab:62px;
+  --ease:cubic-bezier(.22,.75,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--page);color:var(--ink1);overflow:hidden;
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.ic{width:22px;height:22px;fill:currentColor;flex:0 0 auto}
+.ic.sm{width:17px;height:17px}
+.ic.lg{width:26px;height:26px}
+.n{font-variant-numeric:tabular-nums}
+
+.stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 0%,#F6F9F8 0%,var(--page) 62%,#DCE5E3 100%)}
+.phone{position:relative;width:390px;height:844px;background:var(--bg);overflow:hidden;
+  border-radius:22px;box-shadow:0 36px 80px -30px rgba(14,36,34,.42)}
+@media (max-width:430px){.phone{width:100%;height:100%;border-radius:0;box-shadow:none}}
+
+.status{height:44px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;font-size:13px;color:var(--ink2);background:var(--surface);
+  font-variant-numeric:tabular-nums}
+.status .r{display:flex;align-items:center;gap:6px;color:var(--ink2)}
+.status .bar{width:17px;height:10px;border:1.2px solid currentColor;border-radius:2px;position:relative;opacity:.55}
+.status .bar::after{content:"";position:absolute;inset:1px 6px 1px 1px;background:currentColor;border-radius:1px}
+
+.topbar{position:relative;z-index:60;background:var(--surface);
+  border-bottom:1px solid var(--line2)}
+.toprow{height:52px;display:flex;align-items:center;gap:8px;padding:0 10px 0 6px;position:relative}
+.tback{width:40px;height:40px;display:grid;place-items:center;color:var(--ink2);border-radius:var(--rbtn)}
+.ttitle{position:absolute;left:60px;right:60px;top:0;height:52px;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;font-size:16px;font-weight:600;
+  letter-spacing:.01em;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topact{display:flex;align-items:center;gap:2px}
+.topact button{width:38px;height:38px;display:grid;place-items:center;color:var(--ink2);border-radius:var(--rbtn)}
+.titles{display:flex;align-items:center;justify-content:space-between;padding:2px 16px 12px 18px}
+.titles h1{font-size:21px;font-weight:700;letter-spacing:-.01em}
+.titles .ta{display:flex;gap:4px}
+.titles .ta button{width:36px;height:36px;display:grid;place-items:center;color:var(--ink2);border-radius:var(--rbtn);position:relative}
+.titles .ta .dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--accent2)}
+
+.views{position:absolute;top:141px;bottom:var(--tab);left:0;right:0;overflow:hidden}
+.view{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding-bottom:18px;transition:opacity .18s var(--ease)}
+.view[hidden]{display:none}
+
+.hero{margin:12px 14px 0;border-radius:var(--r);overflow:hidden;position:relative;height:158px}
+.hero img{width:100%;height:100%;object-fit:cover}
+.hero .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,20,18,.10) 0%,rgba(9,20,18,.58) 44%,rgba(9,20,18,.94) 100%)}
+.hero .hb{position:absolute;left:14px;right:14px;bottom:12px;color:#fff}
+.hero .hb .k{font-size:11px;letter-spacing:.14em;opacity:.78;margin-bottom:5px}
+.hero .hb .t{font-size:16px;font-weight:600;line-height:1.35}
+.hero .hb .m{font-size:12px;opacity:.82;margin-top:5px}
+
+.quick{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 14px 0}
+.quick button{background:var(--surface);border:1px solid var(--line2);border-radius:var(--r);
+  padding:11px 0 9px;display:grid;justify-items:center;gap:6px;color:var(--ink1);font-size:11.5px}
+.quick button .ic{color:var(--accent)}
+.quick button span{line-height:1}
+
+.sec{margin:22px 14px 8px;display:flex;align-items:baseline;gap:8px}
+.sec h2{font-size:15px;font-weight:700;letter-spacing:.01em}
+.sec .sub{font-size:12px;color:var(--ink3)}
+.sec .more{margin-left:auto;font-size:12.5px;color:var(--accent);display:flex;align-items:center;gap:3px}
+
+.card{background:var(--surface);border:1px solid var(--line2);border-radius:var(--r);margin:0 14px}
+.rows{background:var(--surface);border:1px solid var(--line2);border-radius:var(--r);margin:0 14px;overflow:hidden}
+.row{display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid var(--line2);width:100%}
+.row:last-child{border-bottom:0}
+.row .av{width:42px;height:42px;border-radius:var(--r);display:grid;place-items:center;
+  font-size:15px;font-weight:600;color:#fff;background:var(--accent);flex:0 0 auto}
+.row .av.alt{background:var(--ink1)}
+.row .av.warn{background:var(--accent2)}
+.row .txt{min-width:0;flex:1}
+.row .txt b{display:block;font-size:15px;font-weight:600;letter-spacing:.005em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .txt small{display:block;font-size:12.5px;color:var(--ink3);margin-top:3px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .meta{text-align:right;flex:0 0 auto;color:var(--ink3);font-size:12px;font-variant-numeric:tabular-nums}
+.row .badge{display:inline-grid;place-items:center;min-width:19px;height:19px;padding:0 6px;margin-top:5px;
+  border-radius:var(--rbtn);background:var(--accent2);color:#fff;font-size:11px;font-weight:600}
+
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:var(--rbtn);
+  font-size:11.5px;letter-spacing:.02em;white-space:nowrap}
+.tag.ok{color:var(--up);background:rgba(44,122,98,.10)}
+.tag.wait{color:var(--warn);background:rgba(169,113,26,.11)}
+.tag.need{color:var(--accent2);background:var(--soft2)}
+.tag.plain{color:var(--ink3);background:var(--panel)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:38px;padding:0 16px;
+  border-radius:var(--rbtn);font-size:13.5px;font-weight:600;letter-spacing:.01em;white-space:nowrap}
+.btn.pri{background:var(--accent);color:#fff}
+.btn.gho{background:transparent;color:var(--accent);border:1px solid rgba(23,108,107,.34)}
+.btn.lite{background:var(--soft);color:var(--accent)}
+.btn.dark{background:var(--ink1);color:#fff}
+.btn:active{transform:translateY(1px)}
+
+.entry{margin:12px 14px 0;background:var(--surface);border:1px solid var(--line2);border-radius:var(--r);
+  padding:14px;display:flex;align-items:center;gap:12px;width:calc(100% - 28px)}
+.entry .ico{width:38px;height:38px;border-radius:var(--r);background:var(--soft);display:grid;place-items:center;color:var(--accent);flex:0 0 auto}
+.entry .t{flex:1;min-width:0}
+.entry .t b{display:block;font-size:14.5px;font-weight:600}
+.entry .t small{display:block;font-size:12px;color:var(--ink3);margin-top:2px}
+.entry .ic.ar{color:var(--ink3);width:18px;height:18px}
+
+/* ===== 网上社区 ===== */
+.segwrap{position:sticky;top:0;z-index:3;background:var(--bg);padding:8px 14px 0;
+  border-bottom:1px solid var(--line2)}
+.seg{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.seg::-webkit-scrollbar{display:none}
+.seg button{padding:0 9px;height:34px;border-radius:var(--rbtn);font-size:12px;letter-spacing:-.01em;color:var(--ink3);white-space:nowrap}
+.seg button.on{background:var(--accent);color:#fff;font-weight:600}
+
+.pane{padding:14px 14px 20px}
+.pane h3{font-size:15.5px;font-weight:700;margin-bottom:8px}
+.pane p.lead{font-size:13.5px;line-height:1.72;color:var(--ink2)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line2);
+  border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;margin:12px 0}
+.stats div{background:var(--surface);padding:12px 13px}
+.stats div b{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stats div small{display:block;font-size:11.5px;color:var(--ink3);margin-top:2px}
+
+.news{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--line2);align-items:center;width:100%}
+.news img{width:96px;height:72px;object-fit:cover;border-radius:var(--r)}
+.news .t b{display:block;font-size:14px;font-weight:600;line-height:1.45}
+.news .t small{display:block;font-size:12px;color:var(--ink3);margin-top:5px}
+
+.thread{display:block;padding:14px 0;border-bottom:1px solid var(--line2);width:100%}
+.thread .h{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink3)}
+.thread .h .av{width:26px;height:26px;border-radius:50%;background:var(--panel);display:grid;place-items:center;font-size:11px;color:var(--ink2)}
+.thread h4{font-size:14.5px;font-weight:600;margin:7px 0 5px;line-height:1.45}
+.thread p{font-size:13px;color:var(--ink2);line-height:1.66;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.thread .f{display:flex;gap:12px;margin-top:8px;font-size:12px;color:var(--ink3)}
+.thread .f .ic{width:15px;height:15px}
+
+.ratebox{background:var(--surface);border:1px solid var(--line2);border-radius:var(--r);padding:14px;margin-bottom:14px}
+.stars{display:flex;gap:8px;margin:8px 0 4px}
+.stars button{color:var(--ink3)}
+.stars button.on{color:var(--accent2)}
+.ratebox .dims{display:grid;gap:9px;margin-top:12px}
+.ratebox .dim{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:var(--ink2)}
+.ratebox .dim .mini{display:flex;gap:5px}
+.ratebox .dim .mini i{width:9px;height:9px;border-radius:50%;background:var(--panel);display:block}
+.ratebox .dim .mini i.on{background:var(--accent)}
+
+/* ===== 群组邀请 ===== */
+.tabs2{display:flex;gap:2px;margin:12px 14px 0;background:var(--surface);border:1px solid var(--line2);border-radius:var(--r);padding:4px}
+.tabs2 button{flex:1;min-width:0;height:36px;border-radius:var(--rbtn);font-size:12.5px;letter-spacing:-.01em;color:var(--ink3);white-space:nowrap}
+.tabs2 button.on{background:var(--accent);color:#fff;font-weight:600}
+
+.pick{display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%;border-bottom:1px solid var(--line2)}
+.pick .av{width:38px;height:38px;border-radius:var(--r);background:var(--panel2,#EDF2F1);display:grid;place-items:center;
+  font-size:14px;font-weight:600;color:var(--ink2);flex:0 0 auto}
+.pick .t{flex:1;min-width:0}
+.pick .t b{display:block;font-size:14px;font-weight:600}
+.pick .t small{display:block;font-size:12px;color:var(--ink3);margin-top:2px}
+.pick .box{width:22px;height:22px;border:1.4px solid var(--line);border-radius:4px;display:grid;place-items:center;color:transparent;flex:0 0 auto}
+.pick.on .box{background:var(--accent);border-color:var(--accent);color:#fff}
+.pick.on{background:var(--soft)}
+.pickin{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line);
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;z-index:4}
+.pickin .say{flex:1;font-size:12.5px;color:var(--ink3)}
+
+.codebox{background:var(--ink1);color:#fff;border-radius:var(--r);padding:18px;text-align:center;margin:0 14px}
+.codebox .ct{font-size:11px;letter-spacing:.16em;opacity:.7;margin-bottom:10px}
+.codebox .cv{font-size:34px;font-weight:700;letter-spacing:.12em;font-variant-numeric:tabular-nums}
+.codebox .cm{font-size:12px;opacity:.72;margin-top:10px}
+.codebox .acts{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.codebox .acts .btn{height:34px;font-size:12.5px}
+.codebox .acts .btn.gho{color:#fff;border-color:rgba(255,255,255,.34)}
+
+/* ===== 居民登记 ===== */
+.steps{display:flex;align-items:center;gap:6px;margin:14px 16px 4px}
+.steps .st{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink3);white-space:nowrap}
+.steps .st i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:600;
+  background:var(--panel);color:var(--ink3);font-style:normal}
+.steps .st.on i{background:var(--accent);color:#fff}
+.steps .st.on{color:var(--ink1);font-weight:600}
+.steps .ln{flex:1;height:1px;background:var(--line);min-width:12px}
+.form{background:var(--surface);border:1px solid var(--line2);border-radius:var(--r);margin:12px 14px;overflow:hidden}
+.fr{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line2)}
+.fr:last-child{border-bottom:0}
+.fr label{width:78px;flex:0 0 auto;font-size:13px;color:var(--ink2)}
+.fr input,.fr select,.fr textarea{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:14px;color:var(--ink1)}
+.fr textarea{resize:none;min-height:64px;line-height:1.6;padding:0}
+.fr input::placeholder,.fr textarea::placeholder{color:#A8B5B3}
+.fr .unit{font-size:12.5px;color:var(--ink3);flex:0 0 auto}
+.fr.two{gap:8px}
+.note{margin:10px 14px;padding:10px 14px;background:var(--panel);border-radius:var(--r);font-size:11.5px;color:var(--ink3);line-height:1.6}
+.form .note{margin:0;border-radius:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px}
+.chips.sm{gap:6px;padding:0 0 10px}
+.chips.sm button{height:30px;padding:0 9px;font-size:12px}
+.chips button{height:32px;padding:0 12px;border-radius:var(--rbtn);border:1px solid var(--line);font-size:12.5px;color:var(--ink2)}
+.chips button.on{background:var(--soft);border-color:rgba(23,108,107,.34);color:var(--accent);font-weight:600}
+.upload{display:flex;gap:10px;padding:12px 14px}
+.upload .u{flex:1;height:78px;border:1px dashed rgba(23,108,107,.34);border-radius:var(--r);
+  display:grid;place-items:center;gap:5px;color:var(--accent);font-size:12px;background:rgba(23,108,107,.04)}
+.upload .u .ic{width:20px;height:20px}
+.nav2{display:flex;gap:10px;padding:14px 14px calc(14px + env(safe-area-inset-bottom))}
+.nav2 .btn{flex:1;height:44px}
+
+/* ===== 群聊 ===== */
+.chatwrap{display:flex;flex-direction:column;height:100%}
+.chatlog{flex:1;overflow-y:auto;padding:12px 14px 10px;background:#EDF2F1}
+.daytag{text-align:center;font-size:11px;color:#8d9b99;margin:6px 0 12px}
+.msg{display:flex;gap:8px;margin-bottom:12px;align-items:flex-start}
+.msg .av{width:32px;height:32px;border-radius:var(--r);display:grid;place-items:center;font-size:12px;font-weight:600;color:#fff;background:var(--accent2);flex:0 0 auto}
+.msg .bub{max-width:250px;background:#fff;border-radius:var(--r);padding:9px 11px;font-size:13.5px;line-height:1.6;
+  box-shadow:0 1px 0 rgba(14,36,34,.04)}
+.msg .who{font-size:11.5px;color:#8d9b99;margin-bottom:4px}
+.msg.me{flex-direction:row-reverse}
+.msg.me .av{background:var(--ink1)}
+.msg.me .bub{background:var(--accent);color:#fff}
+.msg.me .who{text-align:right;color:rgba(255,255,255,.75)}
+.voice{display:flex;align-items:center;gap:8px;min-width:150px}
+.voice .wv{display:flex;align-items:flex-end;gap:2px;height:16px;flex:1}
+.voice .wv i{width:2px;background:currentColor;opacity:.45;border-radius:1px}
+.voice .d{font-size:12px;font-variant-numeric:tabular-nums}
+.filed{display:flex;align-items:center;gap:10px;min-width:210px}
+.filed .fi{width:32px;height:32px;border-radius:var(--r);display:grid;place-items:center;background:rgba(14,36,34,.06)}
+.filed b{display:block;font-size:12.5px;font-weight:600}
+.filed small{display:block;font-size:11px;opacity:.72}
+.chatbar{display:flex;align-items:center;gap:8px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line)}
+.chatbar .rt{flex:1;height:36px;border-radius:var(--rbtn);border:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:0 12px;color:var(--ink3);font-size:13px;background:var(--bg)}
+.chatbar button{width:36px;height:36px;display:grid;place-items:center;color:var(--ink2)}
+.chatbar button.call{background:var(--accent);color:#fff;border-radius:50%}
+
+/* ===== 覆盖层：音频会话 / 留言 ===== */
+.callscreen{position:absolute;inset:0;z-index:90;background:linear-gradient(170deg,#123 0%,#0E2422 52%,#123 100%);
+  color:#fff;display:flex;flex-direction:column;padding:0 22px;opacity:0;pointer-events:none;
+  transition:opacity .22s var(--ease)}
+.callscreen.on{opacity:1;pointer-events:auto}
+.callscreen .ch{display:flex;align-items:center;gap:8px;padding-top:52px;font-size:12px;opacity:.66}
+.callscreen .bigav{width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.10);margin:30px auto 0;
+  display:grid;place-items:center;font-size:24px;font-weight:600}
+.callscreen .who{text-align:center;font-size:19px;font-weight:600;margin-top:14px}
+.callscreen .state{text-align:center;font-size:12.5px;opacity:.7;margin-top:6px;font-variant-numeric:tabular-nums}
+.callscreen .wave{display:flex;align-items:flex-end;justify-content:center;gap:3px;height:34px;margin:22px 0 0}
+.callscreen .wave i{width:2.5px;background:rgba(255,255,255,.62);border-radius:1px}
+.callscreen .enc{text-align:center;font-size:11px;opacity:.5;margin-top:12px}
+.callscreen .lv{margin-top:16px;display:flex;align-items:center;gap:10px;font-size:11px;opacity:.8}
+.callscreen .lv .bar{flex:1;height:3px;background:rgba(255,255,255,.2);border-radius:2px;position:relative}
+.callscreen .lv .bar i{position:absolute;left:0;top:0;bottom:0;width:62%;background:rgba(255,255,255,.72);border-radius:2px}
+.callscreen .info{margin-top:18px;border:1px solid rgba(255,255,255,.16);border-radius:var(--r);padding:12px;font-size:11.5px}
+.callscreen .info div{display:flex;justify-content:space-between;gap:10px;padding:3px 0;opacity:.78}
+.callscreen .acts{margin-top:auto;padding:18px 0 calc(24px + env(safe-area-inset-bottom));display:flex;gap:16px;justify-content:center}
+.callscreen .acts button{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;gap:2px;
+  background:rgba(255,255,255,.13);color:#fff;font-size:11px}
+.callscreen .acts button.hang{background:var(--accent2)}
+
+/* ===== 弹层 ===== */
+.mask{position:absolute;inset:0;z-index:92;background:rgba(9,20,18,.42);opacity:0;pointer-events:none;transition:opacity .2s var(--ease)}
+.mask.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:93;background:var(--surface);
+  border-radius:14px 14px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));
+  transform:translateY(102%);transition:transform .26s var(--ease);max-height:80%;overflow-y:auto}
+.sheet.on{transform:translateY(0)}
+.sheet h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.sheet .hint{font-size:12.5px;color:var(--ink3);margin-bottom:14px}
+.sheet .field{margin-bottom:12px}
+.sheet .field label{display:block;font-size:12.5px;color:var(--ink2);margin-bottom:6px}
+.sheet .field input,.sheet .field textarea{width:100%;border:1px solid var(--line);border-radius:var(--r);
+  padding:10px 12px;font:inherit;font-size:14px;background:var(--bg);outline:0}
+.sheet .field textarea{height:88px;resize:none;line-height:1.6}
+.sheet .row2{display:flex;gap:10px;margin-top:6px}
+.sheet .row2 .btn{flex:1;height:44px}
+.sheet .picklist{border:1px solid var(--line2);border-radius:var(--r);max-height:200px;overflow:auto;margin-bottom:14px}
+
+.toast{position:absolute;left:50%;bottom:96px;transform:translate(-50%,12px);z-index:99;
+  background:rgba(14,36,34,.94);color:#fff;font-size:13px;padding:10px 16px;border-radius:var(--rbtn);
+  opacity:0;pointer-events:none;transition:all .24s var(--ease);white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ===== 底部 tab ===== */
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:var(--tab);z-index:77;background:var(--surface);
+  border-top:1px solid var(--line2);display:grid;grid-template-columns:repeat(4,1fr);
+  padding-bottom:env(safe-area-inset-bottom)}
+.tabbar button{display:grid;justify-items:center;align-content:center;gap:3px;color:var(--ink3);font-size:11.5px}
+.tabbar button .ic{width:23px;height:23px}
+.tabbar button.on{color:var(--accent)}
+.tabbar button.on span{font-weight:600}
+.tabbar{display:none}
+.tabbar.on{display:grid}
+.rolebar{display:flex;gap:6px;margin:0 14px 12px;width:calc(100% - 28px);box-sizing:border-box}
+.rolebar button{flex:1 1 0;min-width:0;padding:0 6px;height:36px;border-radius:var(--rbtn);background:var(--panel);color:var(--ink3);font-size:12.5px}
+.rolebar button.on{background:var(--accent);color:#fff;font-weight:600}
+.rolebar button.on.alt{background:var(--accent2)}
+.gridstat{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.gridstat div{background:var(--surface);padding:12px 10px}
+.gridstat b{display:block;font-size:20px;font-weight:700;color:var(--ink1);font-variant-numeric:tabular-nums}
+.gridstat small{display:block;margin-top:2px;font-size:11.5px;color:var(--ink3)}
+.row .tag.risk{background:rgba(196,99,63,.14);color:#9E4A2C}
+
+/* ===== 页脚 ===== */
+.foot{margin:22px 14px 6px;font-size:11.5px;color:#98A5A3;line-height:1.7;text-align:center}
+
+/* ===== 全局一键报警 FAB ===== */
+@keyframes alarmpulse{0%,100%{box-shadow:0 8px 20px rgba(196,70,43,.42)}50%{box-shadow:0 8px 28px rgba(196,70,43,.66)}}
+.alarmfab{position:absolute;right:14px;bottom:calc(var(--tab) + 16px + env(safe-area-inset-bottom));z-index:78;
+  width:60px;height:60px;border-radius:50%;border:none;color:#fff;cursor:pointer;
+  background:linear-gradient(165deg,#E05A3A,#C4462B);
+  display:grid;place-items:center;gap:1px;
+  box-shadow:0 8px 20px rgba(196,70,43,.42);animation:alarmpulse 2.4s infinite;
+  transition:transform .15s var(--ease)}
+.alarmfab:active{transform:scale(.94)}
+.alarmfab .ic{width:24px;height:24px}
+.alarmfab small{font-size:9.5px;font-weight:700;letter-spacing:.02em;line-height:1}
+.screen{position:absolute;inset:0;z-index:86;background:var(--bg);display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .26s var(--ease)}
+.screen.on{transform:translateX(0)}
+.screen[hidden]{display:none}
+.sbody{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.screen .topbar{flex:0 0 auto}
+.kvline{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px dashed var(--line2);font-size:13px;color:var(--ink3)}
+.kvline:last-child{border-bottom:0}
+.kvline b{font-weight:600;color:var(--ink1);text-align:right;max-width:64%}
+
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="phone" id="phone">
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<symbol id="i-house" viewBox="0 0 256 256"><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"/></symbol>
+<symbol id="i-buildings" viewBox="0 0 256 256"><path d="M240,208H224V96a16,16,0,0,0-16-16H144V32a16,16,0,0,0-24.88-13.32L39.12,72A16,16,0,0,0,32,85.34V208H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM208,96V208H144V96ZM48,85.34,128,32V208H48ZM112,112v16a8,8,0,0,1-16,0V112a8,8,0,1,1,16,0Zm-32,0v16a8,8,0,0,1-16,0V112a8,8,0,1,1,16,0Zm0,56v16a8,8,0,0,1-16,0V168a8,8,0,0,1,16,0Zm32,0v16a8,8,0,0,1-16,0V168a8,8,0,0,1,16,0Z"/></symbol>
+<symbol id="i-chat-circle-dots" viewBox="0 0 256 256"><path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"/></symbol>
+<symbol id="i-users-three" viewBox="0 0 256 256"><path d="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z"/></symbol>
+<symbol id="i-siren" viewBox="0 0 256 256"><path d="M120,16V8a8,8,0,0,1,16,0v8a8,8,0,0,1-16,0Zm80,32a8,8,0,0,0,5.66-2.34l8-8a8,8,0,0,0-11.32-11.32l-8,8A8,8,0,0,0,200,48ZM50.34,45.66A8,8,0,0,0,61.66,34.34l-8-8A8,8,0,0,0,42.34,37.66Zm87,26.45a8,8,0,1,0-2.64,15.78C153.67,91.08,168,108.32,168,128a8,8,0,0,0,16,0C184,100.6,163.93,76.57,137.32,72.11ZM232,176v24a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V176a16,16,0,0,1,16-16V128a88,88,0,0,1,88.67-88c48.15.36,87.33,40.29,87.33,89v31A16,16,0,0,1,232,176ZM56,160H200V129c0-40-32.05-72.71-71.45-73H128a72,72,0,0,0-72,72Zm160,40V176H40v24H216Z"/></symbol>
+<symbol id="i-star" viewBox="0 0 256 256"><path d="M239.18,97.26A16.38,16.38,0,0,0,224.92,86l-59-4.76L143.14,26.15a16.36,16.36,0,0,0-30.27,0L90.11,81.23,31.08,86a16.46,16.46,0,0,0-9.37,28.86l45,38.83L53,211.75a16.38,16.38,0,0,0,24.5,17.82L128,198.49l50.53,31.08A16.4,16.4,0,0,0,203,211.75l-13.76-58.07,45-38.83A16.43,16.43,0,0,0,239.18,97.26Zm-15.34,5.47-48.7,42a8,8,0,0,0-2.56,7.91l14.88,62.8a.37.37,0,0,1-.17.48c-.18.14-.23.11-.38,0l-54.72-33.65a8,8,0,0,0-8.38,0L69.09,215.94c-.15.09-.19.12-.38,0a.37.37,0,0,1-.17-.48l14.88-62.8a8,8,0,0,0-2.56-7.91l-48.7-42c-.12-.1-.23-.19-.13-.5s.18-.27.33-.29l63.92-5.16A8,8,0,0,0,103,91.86l24.62-59.61c.08-.17.11-.25.35-.25s.27.08.35.25L153,91.86a8,8,0,0,0,6.75,4.92l63.92,5.16c.15,0,.24,0,.33.29S224,102.63,223.84,102.73Z"/></symbol>
+<symbol id="i-magnifying-glass" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></symbol>
+<symbol id="i-phone" viewBox="0 0 256 256"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"/></symbol>
+<symbol id="i-phone-call" viewBox="0 0 256 256"><path d="M144.27,45.93a8,8,0,0,1,9.8-5.66,86.22,86.22,0,0,1,61.66,61.66,8,8,0,0,1-5.66,9.8A8.23,8.23,0,0,1,208,112a8,8,0,0,1-7.73-5.94,70.35,70.35,0,0,0-50.33-50.33A8,8,0,0,1,144.27,45.93Zm-2.33,41.8c13.79,3.68,22.65,12.54,26.33,26.33A8,8,0,0,0,176,120a8.23,8.23,0,0,0,2.07-.27,8,8,0,0,0,5.66-9.8c-5.12-19.16-18.5-32.54-37.66-37.66a8,8,0,1,0-4.13,15.46Zm81.94,95.35A56.26,56.26,0,0,1,168,232C88.6,232,24,167.4,24,88A56.26,56.26,0,0,1,72.92,32.12a16,16,0,0,1,16.62,9.52l21.12,47.15,0,.12A16,16,0,0,1,109.39,104c-.18.27-.37.52-.57.77L88,129.45c7.49,15.22,23.41,31,38.83,38.51l24.34-20.71a8.12,8.12,0,0,1,.75-.56,16,16,0,0,1,15.17-1.4l.13.06,47.11,21.11A16,16,0,0,1,223.88,183.08Zm-15.88-2s-.07,0-.11,0h0l-47-21.05-24.35,20.71a8.44,8.44,0,0,1-.74.56,16,16,0,0,1-15.75,1.14c-18.73-9.05-37.4-27.58-46.46-46.11a16,16,0,0,1,1-15.7,6.13,6.13,0,0,1,.57-.77L96,95.15l-21-47a.61.61,0,0,1,0-.12A40.2,40.2,0,0,0,40,88,128.14,128.14,0,0,0,168,216,40.21,40.21,0,0,0,208,181.07Z"/></symbol>
+<symbol id="i-phone-disconnect" viewBox="0 0 256 256"><path d="M231.59,90.13h0C175.44,34,80.56,34,24.41,90.13c-20,20-21.92,49.49-4.69,71.71A16,16,0,0,0,32.35,168a15.8,15.8,0,0,0,5.75-1.08l49-17.37.29-.11a16,16,0,0,0,9.75-11.73l5.9-29.52a76.52,76.52,0,0,1,49.68-.11h0l6.21,29.75a16,16,0,0,0,9.72,11.59l.29.11,49,17.39a16,16,0,0,0,18.38-5.06C253.51,139.62,251.58,110.13,231.59,90.13ZM223.67,152l-.3-.12-48.82-17.33-6.21-29.74A16,16,0,0,0,158,93a92.56,92.56,0,0,0-60.34.13,16,16,0,0,0-10.32,12l-5.9,29.51L32.63,151.86c-.1,0-.17.13-.27.17-12.33-15.91-11-36.23,3.36-50.58,25-25,58.65-37.53,92.28-37.53s67.27,12.51,92.28,37.53C234.61,115.8,236,136.12,223.67,152Zm.32,48a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,200Z"/></symbol>
+<symbol id="i-microphone" viewBox="0 0 256 256"><path d="M128,176a48.05,48.05,0,0,0,48-48V64a48,48,0,0,0-96,0v64A48.05,48.05,0,0,0,128,176ZM96,64a32,32,0,0,1,64,0v64a32,32,0,0,1-64,0Zm40,143.6V240a8,8,0,0,1-16,0V207.6A80.11,80.11,0,0,1,48,128a8,8,0,0,1,16,0,64,64,0,0,0,128,0,8,8,0,0,1,16,0A80.11,80.11,0,0,1,136,207.6Z"/></symbol>
+<symbol id="i-microphone-slash" viewBox="0 0 256 256"><path d="M213.92,218.62l-160-176A8,8,0,0,0,42.08,53.38L80,95.09V128a48,48,0,0,0,69.11,43.12l11.1,12.2A63.41,63.41,0,0,1,128,192a64.07,64.07,0,0,1-64-64,8,8,0,0,0-16,0,80.11,80.11,0,0,0,72,79.6V240a8,8,0,0,0,16,0V207.59a78.83,78.83,0,0,0,35.16-12.22l30.92,34a8,8,0,1,0,11.84-10.76ZM128,160a32,32,0,0,1-32-32V112.69l41.66,45.82A32,32,0,0,1,128,160Zm57.52-3.91A63.32,63.32,0,0,0,192,128a8,8,0,0,1,16,0,79.16,79.16,0,0,1-8.11,35.12,8,8,0,0,1-7.19,4.49,7.88,7.88,0,0,1-3.51-.82A8,8,0,0,1,185.52,156.09ZM84,44.87A48,48,0,0,1,176,64v64a49.19,49.19,0,0,1-.26,5,8,8,0,0,1-8,7.17,8.13,8.13,0,0,1-.84,0,8,8,0,0,1-7.12-8.79c.11-1.1.17-2.24.17-3.36V64A32,32,0,0,0,98.64,51.25,8,8,0,1,1,84,44.87Z"/></symbol>
+<symbol id="i-speaker-high" viewBox="0 0 256 256"><path d="M155.51,24.81a8,8,0,0,0-8.42.88L77.25,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H77.25l69.84,54.31A8,8,0,0,0,160,224V32A8,8,0,0,0,155.51,24.81ZM32,96H72v64H32ZM144,207.64,88,164.09V91.91l56-43.55Zm54-106.08a40,40,0,0,1,0,52.88,8,8,0,0,1-12-10.58,24,24,0,0,0,0-31.72,8,8,0,0,1,12-10.58ZM248,128a79.9,79.9,0,0,1-20.37,53.34,8,8,0,0,1-11.92-10.67,64,64,0,0,0,0-85.33,8,8,0,1,1,11.92-10.67A79.83,79.83,0,0,1,248,128Z"/></symbol>
+<symbol id="i-camera" viewBox="0 0 256 256"><path d="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.71,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,0,1,8-8H80a8,8,0,0,0,6.66-3.56L100.28,48h55.43l13.63,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z"/></symbol>
+<symbol id="i-upload-simple" viewBox="0 0 256 256"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0ZM93.66,77.66,120,51.31V144a8,8,0,0,0,16,0V51.31l26.34,26.35a8,8,0,0,0,11.32-11.32l-40-40a8,8,0,0,0-11.32,0l-40,40A8,8,0,0,0,93.66,77.66Z"/></symbol>
+<symbol id="i-check-circle" viewBox="0 0 256 256"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></symbol>
+<symbol id="i-file-text" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></symbol>
+<symbol id="i-shield-check" viewBox="0 0 256 256"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></symbol>
+<symbol id="i-identification-card" viewBox="0 0 256 256"><path d="M200,112a8,8,0,0,1-8,8H152a8,8,0,0,1,0-16h40A8,8,0,0,1,200,112Zm-8,24H152a8,8,0,0,0,0,16h40a8,8,0,0,0,0-16Zm40-80V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56ZM216,200V56H40V200H216Zm-80.26-34a8,8,0,1,1-15.5,4c-2.63-10.26-13.06-18-24.25-18s-21.61,7.74-24.25,18a8,8,0,1,1-15.5-4,39.84,39.84,0,0,1,17.19-23.34,32,32,0,1,1,45.12,0A39.76,39.76,0,0,1,135.75,166ZM96,136a16,16,0,1,0-16-16A16,16,0,0,0,96,136Z"/></symbol>
+<symbol id="i-map-pin" viewBox="0 0 256 256"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/></symbol>
+<symbol id="i-bell" viewBox="0 0 256 256"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"/></symbol>
+<symbol id="i-bell-ringing" viewBox="0 0 256 256"><path d="M224,71.1a8,8,0,0,1-10.78-3.42,94.13,94.13,0,0,0-33.46-36.91,8,8,0,1,1,8.54-13.54,111.46,111.46,0,0,1,39.12,43.09A8,8,0,0,1,224,71.1ZM35.71,72a8,8,0,0,0,7.1-4.32A94.13,94.13,0,0,1,76.27,30.77a8,8,0,1,0-8.54-13.54A111.46,111.46,0,0,0,28.61,60.32,8,8,0,0,0,35.71,72Zm186.1,103.94A16,16,0,0,1,208,200H167.2a40,40,0,0,1-78.4,0H48a16,16,0,0,1-13.79-24.06C43.22,160.39,48,138.28,48,112a80,80,0,0,1,160,0C208,138.27,212.78,160.38,221.81,175.94ZM150.62,200H105.38a24,24,0,0,0,45.24,0ZM208,184c-10.64-18.27-16-42.49-16-72a64,64,0,0,0-128,0c0,29.52-5.38,53.74-16,72Z"/></symbol>
+<symbol id="i-plus" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></symbol>
+<symbol id="i-arrow-left" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></symbol>
+<symbol id="i-caret-right" viewBox="0 0 256 256"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></symbol>
+<symbol id="i-user" viewBox="0 0 256 256"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/></symbol>
+<symbol id="i-gear" viewBox="0 0 256 256"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm88-29.84q.06-2.16,0-4.32l14.92-18.64a8,8,0,0,0,1.48-7.06,107.21,107.21,0,0,0-10.88-26.25,8,8,0,0,0-6-3.93l-23.72-2.64q-1.48-1.56-3-3L186,40.54a8,8,0,0,0-3.94-6,107.71,107.71,0,0,0-26.25-10.87,8,8,0,0,0-7.06,1.49L130.16,40Q128,40,125.84,40L107.2,25.11a8,8,0,0,0-7.06-1.48A107.6,107.6,0,0,0,73.89,34.51a8,8,0,0,0-3.93,6L67.32,64.27q-1.56,1.49-3,3L40.54,70a8,8,0,0,0-6,3.94,107.71,107.71,0,0,0-10.87,26.25,8,8,0,0,0,1.49,7.06L40,125.84Q40,128,40,130.16L25.11,148.8a8,8,0,0,0-1.48,7.06,107.21,107.21,0,0,0,10.88,26.25,8,8,0,0,0,6,3.93l23.72,2.64q1.49,1.56,3,3L70,215.46a8,8,0,0,0,3.94,6,107.71,107.71,0,0,0,26.25,10.87,8,8,0,0,0,7.06-1.49L125.84,216q2.16.06,4.32,0l18.64,14.92a8,8,0,0,0,7.06,1.48,107.21,107.21,0,0,0,26.25-10.88,8,8,0,0,0,3.93-6l2.64-23.72q1.56-1.48,3-3L215.46,186a8,8,0,0,0,6-3.94,107.71,107.71,0,0,0,10.87-26.25,8,8,0,0,0-1.49-7.06Zm-16.1-6.5a73.93,73.93,0,0,1,0,8.68,8,8,0,0,0,1.74,5.48l14.19,17.73a91.57,91.57,0,0,1-6.23,15L187,173.11a8,8,0,0,0-5.1,2.64,74.11,74.11,0,0,1-6.14,6.14,8,8,0,0,0-2.64,5.1l-2.51,22.58a91.32,91.32,0,0,1-15,6.23l-17.74-14.19a8,8,0,0,0-5-1.75h-.48a73.93,73.93,0,0,1-8.68,0,8,8,0,0,0-5.48,1.74L100.45,215.8a91.57,91.57,0,0,1-15-6.23L82.89,187a8,8,0,0,0-2.64-5.1,74.11,74.11,0,0,1-6.14-6.14,8,8,0,0,0-5.1-2.64L46.43,170.6a91.32,91.32,0,0,1-6.23-15l14.19-17.74a8,8,0,0,0,1.74-5.48,73.93,73.93,0,0,1,0-8.68,8,8,0,0,0-1.74-5.48L40.2,100.45a91.57,91.57,0,0,1,6.23-15L69,82.89a8,8,0,0,0,5.1-2.64,74.11,74.11,0,0,1,6.14-6.14A8,8,0,0,0,82.89,69L85.4,46.43a91.32,91.32,0,0,1,15-6.23l17.74,14.19a8,8,0,0,0,5.48,1.74,73.93,73.93,0,0,1,8.68,0,8,8,0,0,0,5.48-1.74L155.55,40.2a91.57,91.57,0,0,1,15,6.23L173.11,69a8,8,0,0,0,2.64,5.1,74.11,74.11,0,0,1,6.14,6.14,8,8,0,0,0,5.1,2.64l22.58,2.51a91.32,91.32,0,0,1,6.23,15l-14.19,17.74A8,8,0,0,0,199.87,123.66Z"/></symbol>
+<symbol id="i-paper-plane-tilt" viewBox="0 0 256 256"><path d="M227.32,28.68a16,16,0,0,0-15.66-4.08l-.15,0L19.57,82.84a16,16,0,0,0-2.49,29.8L102,154l41.3,84.87A15.86,15.86,0,0,0,157.74,248q.69,0,1.38-.06a15.88,15.88,0,0,0,14-11.51l58.2-191.94c0-.05,0-.1,0-.15A16,16,0,0,0,227.32,28.68ZM157.83,231.85l-.05.14,0-.07-40.06-82.3,48-48a8,8,0,0,0-11.31-11.31l-48,48L24.08,98.25l-.07,0,.14,0L216,40Z"/></symbol>
+<symbol id="i-image-square" viewBox="0 0 256 256"><path d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM48,48H208v77.38l-24.69-24.7a16,16,0,0,0-22.62,0L53.37,208H48ZM208,208H76l96-96,36,36v60ZM96,120A24,24,0,1,0,72,96,24,24,0,0,0,96,120Zm0-32a8,8,0,1,1-8,8A8,8,0,0,1,96,88Z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"/></symbol>
+<symbol id="i-warning-circle" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/></symbol>
+<symbol id="i-x" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></symbol>
+<symbol id="i-list-checks" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H128a8,8,0,0,1,0-16h88A8,8,0,0,1,224,128ZM128,72h88a8,8,0,0,0,0-16H128a8,8,0,0,0,0,16Zm88,112H128a8,8,0,0,0,0,16h88a8,8,0,0,0,0-16ZM82.34,42.34,56,68.69,45.66,58.34A8,8,0,0,0,34.34,69.66l16,16a8,8,0,0,0,11.32,0l32-32A8,8,0,0,0,82.34,42.34Zm0,64L56,132.69,45.66,122.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Zm0,64L56,196.69,45.66,186.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Z"/></symbol>
+<symbol id="i-seal-check" viewBox="0 0 256 256"><path d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-11.55,39.29c-4.79,5-9.75,10.17-12.38,16.52-2.52,6.1-2.63,13.07-2.73,19.82-.1,7-.21,14.33-3.32,17.43s-10.39,3.22-17.43,3.32c-6.75.1-13.72.21-19.82,2.73-6.35,2.63-11.52,7.59-16.52,12.38S132,224,128,224s-9.15-4.92-14.11-9.69-10.17-9.75-16.52-12.38c-6.1-2.52-13.07-2.63-19.82-2.73-7-.1-14.33-.21-17.43-3.32s-3.22-10.39-3.32-17.43c-.1-6.75-.21-13.72-2.73-19.82-2.63-6.35-7.59-11.52-12.38-16.52S32,132,32,128s4.92-9.15,9.69-14.11,9.75-10.17,12.38-16.52c2.52-6.1,2.63-13.07,2.73-19.82.1-7,.21-14.33,3.32-17.43S70.51,56.9,77.55,56.8c6.75-.1,13.72-.21,19.82-2.73,6.35-2.63,11.52-7.59,16.52-12.38S124,32,128,32s9.15,4.92,14.11,9.69,10.17,9.75,16.52,12.38c6.1,2.52,13.07,2.63,19.82,2.73,7,.1,14.33.21,17.43,3.32s3.22,10.39,3.32,17.43c.1,6.75.21,13.72,2.73,19.82,2.63,6.35,7.59,11.52,12.38,16.52S224,124,224,128,219.08,137.15,214.31,142.11ZM173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"/></symbol>
+<symbol id="i-newspaper" viewBox="0 0 256 256"><path d="M88,112a8,8,0,0,1,8-8h80a8,8,0,0,1,0,16H96A8,8,0,0,1,88,112Zm8,40h80a8,8,0,0,0,0-16H96a8,8,0,0,0,0,16ZM232,64V184a24,24,0,0,1-24,24H32A24,24,0,0,1,8,184.11V88a8,8,0,0,1,16,0v96a8,8,0,0,0,16,0V64A16,16,0,0,1,56,48H216A16,16,0,0,1,232,64Zm-16,0H56V184a23.84,23.84,0,0,1-1.37,8H208a8,8,0,0,0,8-8Z"/></symbol>
+</svg>
+
+
+  <div class="status"><span class="n">10:24</span><span class="r"><span>5G</span><i class="bar"></i><span>78</span></span></div>
+
+  <header class="topbar">
+    <div class="toprow">
+      <button class="tback" id="back" aria-label="返回"><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+      <div class="ttitle" id="apptitle">社区服务</div>
+      <div style="width:40px"></div>
+    </div>
+    <div class="titles">
+      <h1 id="ptitle">消息</h1>
+      <div class="ta" id="ptact">
+        <button data-toast="有 3 条新消息"><svg class="ic sm"><use href="#i-bell" xlink:href="#i-bell"></use></svg><i class="dot"></i></button>
+        <button data-toast="可以搜人、搜群、搜通知"><svg class="ic sm"><use href="#i-magnifying-glass" xlink:href="#i-magnifying-glass"></use></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="views">
+
+    <!-- ===== 视图：消息 ===== -->
+    <section class="view" id="v-msg">
+      <div class="hero">
+        <img src="assets/hero-community.jpg" alt="小区夜景">
+        <div class="scrim"></div>
+        <div class="hb">
+          <div class="k">龙华社区 · 今日</div>
+          <div class="t">晚上 20:00，东门集合走一圈</div>
+          <div class="m">志愿巡逻报名 · 已 12 人 · 还差 4 人</div>
+        </div>
+      </div>
+
+      <div class="quick">
+        <button data-web="overview"><svg class="ic"><use href="#i-buildings" xlink:href="#i-buildings"></use></svg><span>概况</span></button>
+        <button data-web="news"><svg class="ic"><use href="#i-newspaper" xlink:href="#i-newspaper"></use></svg><span>新闻</span></button>
+        <button data-web="notice"><svg class="ic"><use href="#i-bell-ringing" xlink:href="#i-bell-ringing"></use></svg><span>通知</span></button>
+        <button data-web="forum"><svg class="ic"><use href="#i-chat-circle-dots" xlink:href="#i-chat-circle-dots"></use></svg><span>论坛</span></button>
+        <button data-web="rate"><svg class="ic"><use href="#i-star" xlink:href="#i-star"></use></svg><span>评价</span></button>
+      </div>
+
+      <div class="sec"><h2>消息</h2><span class="sub">按时间</span>
+        <button class="more" data-web="overview">去网上社区<svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+      </div>
+
+      <div class="rows">
+        <button class="row" data-open="chat">
+          <span class="av">群</span>
+          <span class="txt"><b>龙华社区综合群</b><small>李梅：今晚巡逻还差 4 人，报名接龙</small></span>
+          <span class="meta">10:12<span class="badge">2</span></span>
+        </button>
+        <button class="row" data-open="audit">
+          <span class="av warn">审</span>
+          <span class="txt"><b>登记审核结果</b><small>你的居住信息已通过，网格员周四上门复核</small></span>
+          <span class="meta">09:41</span>
+        </button>
+        <button class="row" data-web="notice">
+          <span class="av alt">通</span>
+          <span class="txt"><b>物业通知 · 停水</b><small>11 月 8 日 09:00—16:00，A 区 3 栋至 9 栋</small></span>
+          <span class="meta">昨天</span>
+        </button>
+        <button class="row" data-open="reg">
+          <span class="av">登</span>
+          <span class="txt"><b>居民登记还没填完</b><small>差居住信息与证明材料，三分钟就能补完</small></span>
+          <span class="meta">昨天</span>
+        </button>
+      </div>
+
+      <div class="foot">群防群治 · 居民端 · 示例数据</div>
+    </section>
+
+    <!-- ===== 视图：好友 ===== -->
+    <section class="view" id="v-friend" hidden>
+      <div class="sec"><h2>联系得上的几个人</h2><span class="sub">都在你这栋</span></div>
+      <div class="rows">
+        <button class="row" data-open="chat">
+          <span class="av">王</span>
+          <span class="txt"><b>王秀兰 · 3 栋 602 邻居</b><small>单元长 · 昨晚替你对过水表</small></span>
+          <span class="tag ok">在岗</span>
+        </button>
+        <button class="row" data-toast="已拨出内部号码，稍后回拨">
+          <span class="av alt">刘</span>
+          <span class="txt"><b>刘志强 · 网格员</b><small>负责 A 区 1—6 栋 · 登记复核找他</small></span>
+          <span class="tag plain">网格员</span>
+        </button>
+        <button class="row" data-toast="已发起会话请求">
+          <span class="av">李</span>
+          <span class="txt"><b>李梅 · 志愿巡逻队</b><small>群管理员 · 今晚 20:00 东门集合</small></span>
+          <span class="tag need">群主</span>
+        </button>
+        <button class="row" data-toast="社区民警值班电话 0379-88xxxxx">
+          <span class="av alt">陈</span>
+          <span class="txt"><b>陈警官 · 社区民警</b><small>值班到 22:00 · 急事直接打</small></span>
+          <span class="tag plain">民警</span>
+        </button>
+      </div>
+
+      <div class="sec"><h2>我这栋的人</h2><span class="sub">已实名复核</span>
+        <button class="more" data-toast="名单只含已实名复核的居民，显示共享资料">全部 23 人<svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+      </div>
+      <div class="rows">
+        <button class="row" data-toast="共享资料：张桂芳 · 601，仅显示楼栋、单元与联系电话">
+          <span class="av">张</span>
+          <span class="txt"><b>张桂芳 · 601</b><small>60 岁以上 · 子女在外地</small></span>
+          <svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg>
+        </button>
+        <button class="row" data-toast="共享资料：周振华 · 603，仅显示楼栋、单元与联系电话">
+          <span class="av">周</span>
+          <span class="txt"><b>周振华 · 603</b><small>租住 · 已上传租赁合同</small></span>
+          <svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg>
+        </button>
+      </div>
+
+      <div class="foot">只有已实名复核的居民，才会出现在这份名单里</div>
+    </section>
+
+    <!-- ===== 视图：群聊列表 ===== -->
+    <section class="view" id="v-group" hidden>
+      <div class="entry" data-open="gapply">
+        <span class="ico"><svg class="ic"><use href="#i-plus" xlink:href="#i-plus"></use></svg></span>
+        <span class="t"><b>申请加群</b><small>选社区、小区或楼栋群，填房号与理由提交</small></span>
+        <svg class="ic ar"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg>
+      </div>
+
+      <div class="sec"><h2>我参与的群</h2><span class="sub">3 个</span></div>
+      <div class="rows">
+        <button class="row" data-open="chat">
+          <span class="av">群</span>
+          <span class="txt"><b>龙华社区综合群</b><small>386 人 · 通知、报名、求助都在这里</small></span>
+          <span class="meta">10:12<span class="badge">2</span></span>
+        </button>
+        <button class="row" data-open="chat">
+          <span class="av alt">楼</span>
+          <span class="txt"><b>龙华小区 3 栋群</b><small>23 人 · 楼栋事务、漏水、快递</small></span>
+          <span class="meta">09:20</span>
+        </button>
+        <button class="row" data-open="chat">
+          <span class="av warn">巡</span>
+          <span class="txt"><b>志愿巡逻队</b><small>18 人 · 今晚 20:00 东门集合</small></span>
+          <span class="meta">08:47</span>
+        </button>
+      </div>
+
+      <div class="sec"><h2>群公告</h2><span class="sub">网格员、民警发布的都在这</span></div>
+      <div class="rows">
+        <button class="row" data-open="notice">
+          <span class="av warn">水</span>
+          <span class="txt"><b>停水通知 · 11 月 8 日 09:00—16:00</b><small>A 区 3—9 栋 · 提前储水</small></span>
+          <span class="tag need">置顶</span>
+        </button>
+        <button class="row" data-toast="今晚 20:00 东门集合，走 3 栋到 9 栋">
+          <span class="av">巡</span>
+          <span class="txt"><b>志愿巡逻召集</b><small>今晚 20:00 · 东门集合 · 还差 4 人</small></span>
+          <svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg>
+        </button>
+      </div>
+
+      <div class="foot">群分为社区综合群 · 小区群 · 楼栋群三级</div>
+    </section>
+
+    <!-- ===== 视图：我的 ===== -->
+    <section class="view" id="v-me" hidden>
+      <div class="sec" style="margin-top:12px"><h2>演示身份</h2><span class="sub">群众与网格员共用一套 app</span></div>
+      <div class="rolebar" data-roleswitch>
+        <button class="on" data-role="resident">群众</button>
+        <button data-role="grid">网格员</button>
+      </div>
+      <div class="card" style="margin-top:12px;padding:16px;display:flex;gap:14px;align-items:center">
+        <span class="av" style="width:54px;height:54px;border-radius:var(--r);display:grid;place-items:center;font-size:20px;font-weight:600;color:#fff;background:var(--accent)">张</span>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px"><b style="font-size:17px;font-weight:700">张凯</b><span class="tag ok">已实名复核</span></div>
+          <div style="font-size:12.5px;color:var(--ink3);margin-top:4px">龙华社区 · A 区 3 栋 602 · 常住</div>
+        </div>
+        <button class="btn gho" style="height:32px;font-size:12.5px" data-open="profile">编辑</button>
+      </div>
+
+      <div class="entry" data-open="reg">
+        <span class="ico"><svg class="ic"><use href="#i-identification-card" xlink:href="#i-identification-card"></use></svg></span>
+        <span class="t"><b>居民登记</b><small>基本信息 · 居住信息 · 提交与复核，三步</small></span>
+        <span class="tag wait">待补</span>
+      </div>
+
+      <div class="sec"><h2>我的事</h2><span class="sub">都在这里收口</span></div>
+      <div class="rows">
+        <button class="row" data-open="audit">
+          <span class="av alt">审</span>
+          <span class="txt"><b>登记审核进度</b><small>已通过 · 周四 14:00 上门复核</small></span>
+          <span class="tag ok">已通过</span>
+        </button>
+        <button class="row" data-open="chat">
+          <span class="av">群</span>
+          <span class="txt"><b>我上报的线索与诉求</b><small>3 件 · 2 件办结 · 1 件办理中</small></span>
+          <svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg>
+        </button>
+        <button class="row" data-web="rate">
+          <span class="av warn">评</span>
+          <span class="txt"><b>给社区办事打分</b><small>服务态度 · 办理效率 · 办理结果</small></span>
+          <svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg>
+        </button>
+      </div>
+
+      <div class="sec"><h2>账号</h2></div>
+      <div class="rows">
+        <button class="row" data-open="quit">
+          <span class="txt"><b>注销登记（搬离本小区）</b><small>提交原因 → 网格员确认 → 迁出核销</small></span>
+          <span class="tag plain">按需</span>
+        </button>
+      </div>
+
+      <div class="foot">群防群治 · 居民端 · 示例数据</div>
+    </section>
+
+    <!-- ===== 角色：网格员 ===== -->
+    <section class="view" id="v-g-todo" hidden>
+      <div class="sec" style="margin-top:12px"><h2>今天要办</h2><span class="sub">14 件 · 已办 7 件</span></div>
+      <div style="margin:0 14px"><div class="gridstat">
+        <div><b>6</b><small>待审注册</small></div>
+        <div><b>3</b><small>上门复核</small></div>
+        <div><b>5</b><small>待回 + 报警</small></div>
+      </div></div>
+
+      <div class="rows" style="margin-top:12px">
+        <button class="row" data-open="alarm">
+          <span class="av warn">警</span>
+          <span class="txt"><b>一键报警 · 3 栋 2 单元 602</b><small>21:40 连按门铃 · 派出所值班已到场</small></span>
+          <span class="tag risk">紧急</span>
+        </button>
+        <button class="row" data-open="dm">
+          <span class="av">私</span>
+          <span class="txt"><b>居民私聊 · 2 条未回</b><small>王秀兰：门禁今天下午真来修吗 · 10:36</small></span>
+          <span class="tag wait">2</span>
+        </button>
+        <button class="row" data-open="auditq">
+          <span class="av alt">审</span>
+          <span class="txt"><b>登记审核队列</b><small>6 条新提交，最早 09:12 · 超 24 小时 1 条</small></span>
+          <span class="tag wait">6</span>
+        </button>
+        <button class="row" data-open="review">
+          <span class="av">核</span>
+          <span class="txt"><b>上门复核</b><small>今天 3 户：3 栋 601、603，9 栋 1102</small></span>
+          <span class="tag plain">3</span>
+        </button>
+        <button class="row" data-open="moderate">
+          <span class="av dark">群</span>
+          <span class="txt"><b>加群与发帖审核</b><small>加群 2 条 · 待审帖子 2 条</small></span>
+          <span class="tag wait">4</span>
+        </button>
+        <button class="row" data-open="quitq">
+          <span class="av dark">销</span>
+          <span class="txt"><b>注销申请</b><small>张凯 · 3 栋 602 · 09:40 提交 · 搬离</small></span>
+          <span class="tag wait">1</span>
+        </button>
+        <button class="row" data-open="feedback">
+          <span class="av warn">反</span>
+          <span class="txt"><b>通知反馈处理</b><small>政策咨询 1 · 报名 1 · 意见 1</small></span>
+          <svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg>
+        </button>
+      </div>
+
+      <div class="foot">网格员端 · 刘志强 · A 区 1—6 栋</div>
+    </section>
+
+    <section class="view" id="v-g-roll" hidden>
+      <div class="sec" style="margin-top:12px"><h2>A 区 3 栋花名册</h2><span class="sub">36 户 52 人</span></div>
+      <div class="chips" style="margin:0 14px 10px">
+        <button class="on" data-toast="显示全部 36 户">全部 36</button>
+        <button data-toast="未复核 4 户">待复核 4</button>
+        <button data-toast="租住 11 户">租住 11</button>
+      </div>
+      <div class="rows">
+        <button class="row" data-open="review"><span class="av">张</span><span class="txt"><b>张桂芳 · 601</b><small>60 岁以上 · 子女在外地 · 已实名</small></span><span class="tag ok">已复核</span></button>
+        <button class="row" data-open="review"><span class="av">周</span><span class="txt"><b>周振华 · 603</b><small>租住 · 租赁合同已核</small></span><span class="tag ok">已复核</span></button>
+        <button class="row" data-open="review"><span class="av alt">王</span><span class="txt"><b>王秀兰 · 602</b><small>新提交 · 证件已传 · 待上门</small></span><span class="tag wait">待复核</span></button>
+        <button class="row" data-open="review"><span class="av alt">吴</span><span class="txt"><b>吴玉兰 · 703</b><small>不便出门 · 电话通知上门</small></span><span class="tag wait">待复核</span></button>
+      </div>
+      <div class="sec"><h2>本栋群</h2><span class="sub">46 人在群里</span></div>
+      <div class="rows">
+        <button class="row" data-open="ginvite"><span class="av dark">群</span><span class="txt"><b>3 栋群 · 46 / 52</b><small>还差 6 人：4 户未复核，2 户拒收</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+      </div>
+    </section>
+
+    <section class="view" id="v-g-group" hidden>
+      <div class="entry" data-sheet="gcreate">
+        <span class="ico"><svg class="ic"><use href="#i-plus" xlink:href="#i-plus"></use></svg></span>
+        <span class="t"><b>新建群组</b><small>社区综合群 / 小区群 / 楼栋群三级，建好自动挂到名册</small></span>
+        <svg class="ic ar"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg>
+      </div>
+
+      <div class="sec" style="margin-top:14px"><h2>我管的群</h2><span class="sub">3 个 · 点开进群聊窗</span></div>
+      <div class="rows">
+        <button class="row" data-open="chat"><span class="av dark">综</span><span class="txt"><b>龙华社区综合群</b><small>386 人 · 昨天 21 条 · 待审申请 2</small></span><span class="tag wait">2</span></button>
+        <button class="row" data-open="chat"><span class="av dark">栋</span><span class="txt"><b>3 栋群</b><small>46 人 · 今天 8 条</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+        <button class="row" data-open="chat"><span class="av dark">志</span><span class="txt"><b>志愿巡逻队</b><small>18 人 · 今晚 20:00 集合</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+      </div>
+
+      <div class="sec"><h2>群管理</h2><span class="sub">按文档 4-2</span></div>
+      <div class="rows">
+        <button class="row" data-open="gnotice"><span class="av alt">公</span><span class="txt"><b>发群公告</b><small>治安通报、通告、志愿者召集</small></span><span class="tag wait">今日 1 条待发</span></button>
+        <button class="row" data-open="ginvite"><span class="txt"><b>拉人进群 · 入群审核</b><small>邀请码 / 花名册勾选 / 待审 2 条</small></span><span class="tag wait">2</span></button>
+        <button class="row" data-toast="群资料：名称、简介、群规已在管理面板"><span class="txt"><b>群资料与群规</b><small>名称 / 简介 / 群规公约 / 多级群</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+        <button class="row" data-open="gmember"><span class="txt"><b>群内用户管理</b><small>综治数据中心加人 · 屏蔽/删除不良发言 · 移出成员</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+        <button class="row" data-toast="不良发言 2 条已屏蔽（广告 / 争吵）"><span class="txt"><b>不良发言</b><small>广告 1 条、争吵 1 条，待处置</small></span><span class="tag risk">2</span></button>
+        <button class="row" data-toast="转让群主需二次确认，已进入确认页"><span class="txt"><b>转让群主 / 解散群</b><small>需二次确认，解散后消息保留 7 天</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+      </div>
+      <div class="foot">网格员端 · 群组按社区综合群 / 小区群 / 楼栋群三级</div>
+    </section>
+
+    <section class="view" id="v-g-me" hidden>
+      <div class="sec" style="margin-top:12px"><h2>演示身份</h2><span class="sub">当前：网格员</span></div>
+      <div class="rolebar" data-roleswitch>
+        <button data-role="resident">群众</button>
+        <button class="on" data-role="grid">网格员</button>
+      </div>
+      <div class="card" style="padding:16px;display:flex;gap:14px;align-items:center">
+        <span class="av" style="width:54px;height:54px;display:grid;place-items:center;font-size:20px;font-weight:600;color:#fff;background:var(--accent)">刘</span>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px"><b style="font-size:17px;font-weight:700">刘志强</b><span class="tag ok">网格员</span></div>
+          <div style="font-size:12.5px;color:var(--ink3);margin-top:4px">龙华社区 · A 区 1—6 栋 · 值班 08:00—18:00</div>
+        </div>
+        <button class="btn gho" style="height:32px;font-size:12.5px" data-open="gprofile">编辑</button>
+      </div>
+      <div class="sec"><h2>今天</h2><span class="sub">台账自动记</span></div>
+      <div class="rows">
+        <button class="row" data-open="auditq"><span class="av alt">审</span><span class="txt"><b>已审 4 条 / 待审 6 条</b><small>平均 6 分钟一条</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+        <button class="row" data-open="review"><span class="av">核</span><span class="txt"><b>复核 2 户 / 待复核 3 户</b><small>14:00 3 栋 601，15:30 9 栋 1102</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+        <button class="row" data-open="gpublish"><span class="av alt">发</span><span class="txt"><b>发新闻 / 发通告</b><small>社区新闻 · 通知通告 · 同步综合群</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+        <button class="row" data-open="stats"><span class="av warn">评</span><span class="txt"><b>居民评分 4.7</b><small>态度 4.7 · 效率 4.5 · 结果 4.8</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+      </div>
+
+      <div class="foot">网格员端 · 示例数据</div>
+    </section>
+
+  </div>
+
+  <nav class="tabbar on" data-role-tab="resident">
+    <button class="on" data-tab="msg"><svg class="ic"><use href="#i-chat-circle-dots" xlink:href="#i-chat-circle-dots"></use></svg><span>消息</span></button>
+    <button data-tab="friend"><svg class="ic"><use href="#i-user" xlink:href="#i-user"></use></svg><span>好友</span></button>
+    <button data-tab="group"><svg class="ic"><use href="#i-users-three" xlink:href="#i-users-three"></use></svg><span>群聊</span></button>
+    <button data-tab="me"><svg class="ic"><use href="#i-identification-card" xlink:href="#i-identification-card"></use></svg><span>我的</span></button>
+  </nav>
+
+  <nav class="tabbar" data-role-tab="grid">
+    <button class="on" data-tab="g-todo"><svg class="ic"><use href="#i-list-checks" xlink:href="#i-list-checks"></use></svg><span>待办</span></button>
+    <button data-tab="g-roll"><svg class="ic"><use href="#i-users-three" xlink:href="#i-users-three"></use></svg><span>名册</span></button>
+    <button data-tab="g-group"><svg class="ic"><use href="#i-users-three" xlink:href="#i-users-three"></use></svg><span>群组</span></button>
+    <button data-tab="g-me"><svg class="ic"><use href="#i-identification-card" xlink:href="#i-identification-card"></use></svg><span>我的</span></button>
+  </nav>
+
+  <!-- 全局一键报警 -->
+  <button class="alarmfab" data-sheet="alarmconfirm" aria-label="一键报警">
+    <svg class="ic"><use href="#i-siren" xlink:href="#i-siren"></use></svg>
+    <small>一键报警</small>
+  </button>
+
+
+  <!-- ===== 屏：网上社区 ===== -->
+  <section class="screen" id="s-web" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">网上社区</div>
+        <div class="topact"><button data-toast="已收藏这个社区"><svg class="ic sm"><use href="#i-star" xlink:href="#i-star"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="segwrap">
+      <div class="seg" id="webseg">
+        <button class="on" data-pane="overview">社区概况</button>
+        <button data-pane="news">社区新闻</button>
+        <button data-pane="notice">通知通告</button>
+        <button data-pane="forum">网上论坛</button>
+        <button data-pane="rate">居民评价</button>
+      </div>
+    </div>
+    <div class="sbody" id="webbody">
+
+      <div class="pane" data-pane="overview">
+        <h3>龙华社区 · 龙泉驿区大面街道</h3>
+        <p class="lead">2008 年村改居，辖区 0.86 平方公里，3 个小区 21 栋。居委会 7 人，下设 6 个网格、1 个警务室。大事有人管，小事有人应。</p>
+        <div class="stats">
+          <div><b>6180</b><small>常住人口</small></div>
+          <div><b>2180</b><small>户数</small></div>
+          <div><b>6</b><small>个网格</small></div>
+        </div>
+
+        <div class="sec" style="margin:16px 0 8px"><h2>基础设施</h2><span class="sub">位置与开放时间</span></div>
+        <div class="rows" style="margin:0">
+          <button class="row" data-toast="警务室：A 区东门旁，08:30—22:00"><span class="av alt">警</span><span class="txt"><b>社区警务室</b><small>A 区东门旁 · 08:30—22:00</small></span><span class="tag plain">在岗</span></button>
+          <button class="row" data-toast="卫生服务站：3 栋北侧，08:00—17:30"><span class="av">卫</span><span class="txt"><b>卫生服务站</b><small>3 栋北侧 · 08:00—17:30</small></span><span class="tag plain">开放</span></button>
+          <button class="row" data-toast="微型消防站：9 栋架空层，24 小时"><span class="av warn">消</span><span class="txt"><b>微型消防站</b><small>9 栋架空层 · 24 小时</small></span><span class="tag ok">24 小时</span></button>
+          <button class="row" data-toast="应急避难场所：中心广场，全天开放"><span class="av">避</span><span class="txt"><b>应急避难场所</b><small>中心广场 · 全天开放</small></span><span class="tag plain">开放</span></button>
+          <button class="row" data-toast="文化活动中心：社区楼 2 层，09:00—21:00"><span class="av">文</span><span class="txt"><b>文化活动中心</b><small>社区楼 2 层 · 09:00—21:00</small></span><span class="tag plain">开放</span></button>
+        </div>
+
+        <div class="sec" style="margin:18px 0 8px"><h2>办事说明</h2><span class="sub">条件、材料、流程、窗口</span></div>
+        <div class="rows" style="margin:0">
+          <button class="row" data-toast="户籍办理：身份证、户口本；社区窗口初审后转派出所，3 个工作日"><span class="txt"><b>户籍办理</b><small>身份证 + 户口本 · 社区窗口 1 号 · 转派出所</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+          <button class="row" data-toast="居住证明：租房合同或房产证 + 身份证，当场办结"><span class="txt"><b>居住证明</b><small>租房合同 / 房产证 + 身份证 · 当场办结</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+          <button class="row" data-toast="老年优待：满 60 岁，身份证 + 一寸照，社区窗口 2 号"><span class="txt"><b>老年优待</b><small>满 60 岁 · 身份证 + 一寸照 · 窗口 2 号</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+          <button class="row" data-toast="生育登记：结婚证、身份证，线上可办，也可到窗口"><span class="txt"><b>生育登记</b><small>结婚证 + 身份证 · 线上可办</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+          <button class="row" data-toast="社会救助：收入证明、病历等，社区受理后报街道"><span class="txt"><b>社会救助</b><small>收入证明 + 病历 · 社区受理报街道</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+        </div>
+        <div class="foot">窗口地址：社区楼 1 层服务大厅 · 电话 028-88xx xxxx</div>
+      </div>
+
+      <div class="pane" data-pane="news" hidden>
+        <h3>社区新闻</h3>
+        <div class="chips sm"><button class="on">全部</button><button>党建引领</button><button>群防群治</button><button>平安建设</button><button>社区动态</button></div>
+        <button class="news" data-open="thread"><img src="assets/news-patrol-night.jpg" alt="夜间巡逻"><span class="t"><b>红袖标夜巡队上岗，一晚走完 21 栋</b><small>11 月 5 日 · 社区综治办</small></span></button>
+        <button class="news" data-open="thread"><img src="assets/news-visit-02.jpg" alt="入户走访"><span class="t"><b>网格员入户复核：先看材料，再问一句"住得惯吗"</b><small>11 月 3 日 · 网格中心</small></span></button>
+        <button class="news" data-open="thread"><img src="assets/news-red-sleeve.jpg" alt="银发志愿者"><span class="t"><b>十几位银发志愿者，把院子里的活儿分了班</b><small>11 月 1 日 · 居民自治小组</small></span></button>
+        <button class="news" data-open="thread"><img src="assets/news-visit-01.jpg" alt="入户走访"><span class="t"><b>独居老人台账更新，登记表上多了一栏"由谁代办"</b><small>10 月 29 日 · 社区服务站</small></span></button>
+      </div>
+
+      <div class="pane" data-pane="notice" hidden>
+        <h3>通知通告</h3>
+        <p class="lead">物业、社区、派出所三类通知，进群也会同步一条。</p>
+        <div class="rows" style="margin:0">
+          <button class="row" data-open="notice"><span class="av warn">水</span><span class="txt"><b>停水通知 · 11 月 8 日 09:00—16:00</b><small>A 区 3 栋至 9 栋 · 请提前储水</small></span><span class="tag need">置顶</span></button>
+          <button class="row" data-toast="警情通报：本周入室盗窃 0 起"><span class="av alt">警</span><span class="txt"><b>本周警情通报</b><small>入室盗窃 0 起 · 电动车被盗 1 起</small></span><span class="tag plain">已读 236</span></button>
+          <button class="row" data-sheet="join"><span class="av">巡</span><span class="txt"><b>志愿巡逻报名</b><small>今晚 20:00 · 东门集合 · 还差 4 人</small></span><span class="tag ok">报名中</span></button>
+          <button class="row" data-toast="业主大会 11 月 12 日 19:00，社区活动室"><span class="av alt">会</span><span class="txt"><b>业主大会通知</b><small>11 月 12 日 19:00 · 社区活动室</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+        </div>
+      </div>
+
+      <div class="pane" data-pane="forum" hidden>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+          <h3 style="margin:0">网上论坛</h3>
+          <span style="font-size:12px;color:var(--ink3)">本周 46 条</span>
+          <button class="btn lite" style="margin-left:auto;height:32px;font-size:12.5px" data-sheet="post"><svg class="ic sm"><use href="#i-plus" xlink:href="#i-plus"></use></svg>发帖</button>
+        </div>
+        <div class="chips sm"><button class="on">全部</button><button>平安共建</button><button>邻里互助</button><button>环境整治</button><button>物业交流</button></div>
+        <p class="lead">发帖要管理员审核后才公开；会自动带上你的楼栋。</p>
+        <button class="thread" data-open="thread">
+          <span class="h"><span class="av">王</span>王秀兰 · 3 栋 602<span style="margin-left:auto">2 小时前</span></span>
+          <h4>3 栋 2 单元门禁坏了三天，谁能跟物业说一下</h4>
+          <p>昨晚十点还有人在楼下按门铃，门磁一直响。我已经在群里说了两次，想在这里再留个记录。</p>
+          <span class="f"><span><svg class="ic"><use href="#i-chat-circle-dots" xlink:href="#i-chat-circle-dots"></use></svg> 12</span><span>已转物业 · 待处理</span></span>
+        </button>
+        <button class="thread" data-open="thread">
+          <span class="h"><span class="av">李</span>李梅 · 志愿巡逻队<span style="margin-left:auto">昨天</span></span>
+          <h4>今晚巡逻还差 4 人，报名的在下面接龙</h4>
+          <p>19:50 东门集合，走一圈大约 50 分钟。带手电就行，红袖标我们发。</p>
+          <span class="f"><span><svg class="ic"><use href="#i-chat-circle-dots" xlink:href="#i-chat-circle-dots"></use></svg> 18</span><span>已报名 12 人</span></span>
+        </button>
+        <button class="thread" data-open="thread">
+          <span class="h"><span class="av">周</span>周振华 · 603 租住<span style="margin-left:auto">2 天前</span></span>
+          <h4>租房也要登记吗？房东说他已经报过了</h4>
+          <p>我这边刚搬来半个月，房东说登记过一次就不用管了，想确认一下要不要自己再填。</p>
+          <span class="f"><span><svg class="ic"><use href="#i-chat-circle-dots" xlink:href="#i-chat-circle-dots"></use></svg> 7</span><span>网格员已回复</span></span>
+        </button>
+      </div>
+
+      <div class="pane" data-pane="rate" hidden>
+        <h3>居民评价</h3>
+        <p class="lead">对办过的事打分，分数会进社区月度复盘，不记名。</p>
+        <div class="ratebox">
+          <div style="display:flex;align-items:baseline;gap:10px">
+            <b style="font-size:32px;font-weight:700;letter-spacing:-.03em">4.6</b>
+            <span style="font-size:12.5px;color:var(--ink3)">综合分 · 近 30 天 186 条评价</span>
+          </div>
+          <div class="dims">
+            <div class="dim"><span>服务态度</span><span class="mini"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><b class="n">4.7</b></div>
+            <div class="dim"><span>办理效率</span><span class="mini"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><b class="n">4.5</b></div>
+            <div class="dim"><span>办理结果</span><span class="mini"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><b class="n">4.8</b></div>
+          </div>
+          <div style="margin-top:14px"><button class="btn pri" style="width:100%" data-sheet="rate">我要评价</button></div>
+        </div>
+        <div class="sec" style="margin:6px 0 8px"><h2>最近两条</h2><span class="sub">已隐去姓名</span></div>
+        <div class="rows" style="margin:0">
+          <button class="row" data-toast="这条评价已归档"><span class="av alt">3</span><span class="txt"><b>3 栋 · 报修水管</b><small>"上午报的，下午就来人了。就是来之前没打电话。"</small></span><span class="tag plain">4 分</span></button>
+          <button class="row" data-toast="这条评价已归档"><span class="av">7</span><span class="txt"><b>7 栋 · 登记复核</b><small>"上门的小伙子讲得清楚，材料一次就过了。"</small></span><span class="tag ok">5 分</span></button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 屏：通知详情 ===== -->
+  <section class="screen" id="s-notice" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">通知通告</div>
+        <div class="topact"><button data-toast="已转发到 3 栋群"><svg class="ic sm"><use href="#i-paper-plane-tilt" xlink:href="#i-paper-plane-tilt"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div style="padding:20px 16px 8px">
+        <div style="font-size:11px;letter-spacing:.16em;color:var(--accent2);margin-bottom:8px">物业通知 · 置顶</div>
+        <h2 style="font-size:21px;font-weight:700;line-height:1.4">11 月 8 日停水，从 3 栋到 9 栋</h2>
+        <div style="font-size:12px;color:var(--ink3);margin-top:8px">龙华社区物业服务中心 · 11 月 6 日 17:20</div>
+      </div>
+      <div class="card" style="padding:16px;margin-top:8px">
+        <div class="kvline"><span>停水时间</span><b>11 月 8 日 09:00—16:00</b></div>
+        <div class="kvline"><span>影响范围</span><b>A 区 3 栋至 9 栋（含 1 层商户）</b></div>
+        <div class="kvline"><span>原因</span><b>二次供水泵房换阀，计划内检修</b></div>
+        <div class="kvline"><span>要做什么</span><b>提前储水；出门前关好水龙头</b></div>
+      </div>
+      <div style="padding:14px 16px 0;font-size:13.5px;line-height:1.85;color:var(--ink2)">
+        检修当天 3 号楼前会停一辆送水车，行动不便的老人可以让网格员送上门。登记过的独居老人，社区会提前一天打电话。
+      </div>
+      <div style="padding:16px"><button class="btn pri" style="width:100%;height:44px" data-toast="已登记需要送水上门">需要送水上门</button></div>
+      <div class="sec" style="margin:20px 14px 8px"><h2>相关通知</h2></div>
+      <div class="rows" style="margin:0 14px">
+        <button class="row" data-toast="11 月 9 日起高层电梯分时段检修"><span class="av alt">电</span><span class="txt"><b>电梯检修安排</b><small>11 月 9 日—11 日 · 分时段停用</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+        <button class="row" data-toast="送水车停在 3 号楼前，10:00 起"><span class="av">水</span><span class="txt"><b>送水车位置与时间</b><small>3 号楼前 · 11 月 8 日 10:00 起</small></span><svg class="ic sm"><use href="#i-caret-right" xlink:href="#i-caret-right"></use></svg></button>
+      </div>
+      <div class="foot">发给了 21 栋 · 已读 412 人 · 已转发 63 次</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：论坛帖子 ===== -->
+  <section class="screen" id="s-thread" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">帖子</div>
+        <div class="topact"><button data-toast="已记下，处理后会通知你"><svg class="ic sm"><use href="#i-bell" xlink:href="#i-bell"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div style="padding:18px 16px 0">
+        <h2 style="font-size:18px;font-weight:700;line-height:1.45">3 栋 2 单元门禁坏了三天，谁能跟物业说一下</h2>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;color:var(--ink3)">
+          <span style="width:24px;height:24px;border-radius:50%;background:var(--panel);display:grid;place-items:center;font-size:11px">王</span>
+          <span>王秀兰 · 3 栋 602</span><span>·</span><span>2 小时前</span>
+          <span class="tag need" style="margin-left:auto">已转物业</span>
+        </div>
+        <div style="font-size:14px;line-height:1.9;color:var(--ink2);margin-top:12px">
+          昨晚十点还有人在楼下按门铃，门磁一直响。我已经在群里说了两次，想在这里再留个记录。<br><br>
+          坏的是 2 单元那台，刷卡没反应，只能用钥匙。老人夜里回来容易卡在门口。
+        </div>
+        <div style="margin-top:14px;border-left:2px solid var(--line);padding-left:14px">
+          <div style="padding-bottom:12px"><div style="font-size:11.5px;color:var(--ink3)">11 月 4 日 21:40</div><div style="font-size:13px;color:var(--ink2);line-height:1.7">2 单元门禁刷卡失效，只能用钥匙</div></div>
+          <div style="padding-bottom:12px"><div style="font-size:11.5px;color:var(--ink3)">11 月 5 日 09:10</div><div style="font-size:13px;color:var(--ink2);line-height:1.7">群里报过两次，物业未回</div></div>
+          <div><div style="font-size:11.5px;color:var(--ink3)">11 月 6 日 10:20</div><div style="font-size:13px;color:var(--ink2);line-height:1.7">网格员转物业，定今天 14:00 上门</div></div>
+        </div>
+      </div>
+      <div class="sec" style="margin:20px 16px 8px"><h2>3 条回复</h2></div>
+      <div style="padding:0 16px">
+        <div style="padding:12px 0;border-bottom:1px solid var(--line2)">
+          <div style="font-size:12px;color:var(--ink3);margin-bottom:5px">刘志强 · 网格员 · 1 小时前</div>
+          <div style="font-size:13.5px;line-height:1.75;color:var(--ink2)">已经转给物业了，今天下午来看。需要换主板的话会贴一张临时通知在单元门口。</div>
+        </div>
+        <div style="padding:12px 0;border-bottom:1px solid var(--line2)">
+          <div style="font-size:12px;color:var(--ink3);margin-bottom:5px">张桂芳 · 3 栋 601 · 1 小时前</div>
+          <div style="font-size:13.5px;line-height:1.75;color:var(--ink2)">我昨天也被卡在外面，按了五分钟才有人开。希望能早点修。</div>
+        </div>
+        <div style="padding:12px 0">
+          <div style="font-size:12px;color:var(--ink3);margin-bottom:5px">物业值班 · 40 分钟前</div>
+          <div style="font-size:13.5px;line-height:1.75;color:var(--ink2)">今天 14:00 上门检修，若需换件先装临时门吸，费用从维修基金出。</div>
+        </div>
+      </div>
+      <div style="padding:16px;display:flex;gap:10px">
+        <button class="btn gho" style="flex:1;height:42px" data-toast="也在关注这件事">我也遇到过</button>
+        <button class="btn pri" style="flex:1;height:42px" data-sheet="post">写回复</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：群聊 ===== -->
+  <section class="screen" id="s-chat" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">龙华社区综合群<span style="display:block;font-size:11px;font-weight:400;color:var(--ink3)">386 人</span></div>
+        <div class="topact">
+          <button data-toast="已一键报警：网格员、派出所值班、物业保安同时收到" style="color:#C4633F"><svg class="ic sm"><use href="#i-siren" xlink:href="#i-siren"></use></svg></button>
+          <button data-toast="群成员 386 人，名单与权限由管理员维护"><svg class="ic sm"><use href="#i-users-three" xlink:href="#i-users-three"></use></svg></button>
+          <button data-toast="群资料、群规、免打扰"><svg class="ic sm"><use href="#i-gear" xlink:href="#i-gear"></use></svg></button>
+        </div>
+      </div>
+    </header>
+    <div class="sbody chatwrap" style="padding-bottom:0">
+      <div class="chatlog" id="chatlog">
+        <div class="daytag">今天 10:02</div>
+        <div class="msg"><span class="av">李</span><div><div class="who">李梅 · 志愿巡逻队</div><div class="bub">今晚 20:00 东门集合，走 3 栋到 9 栋，一圈 1.8 公里。还差 4 人。</div></div></div>
+        <div class="msg"><span class="av">王</span><div><div class="who">王秀兰 · 3 栋 602</div>
+          <div class="bub"><div class="voice"><span class="d">0:06</span><span class="wv"><i style="height:7px"></i><i style="height:12px"></i><i style="height:16px"></i><i style="height:9px"></i><i style="height:14px"></i><i style="height:6px"></i><i style="height:10px"></i><i style="height:15px"></i><i style="height:8px"></i><i style="height:11px"></i></span><svg class="ic sm"><use href="#i-speaker-high" xlink:href="#i-speaker-high"></use></svg></div>
+          <div style="font-size:11.5px;opacity:.66;margin-top:3px">语音 · 转文字：我报名，帮我记上</div></div></div></div>
+        <div class="msg me"><span class="av">我</span><div><div class="who">我</div><div class="bub">我也去，从 3 栋门口等你们。带个手电。</div></div></div>
+        <div class="msg"><span class="av">刘</span><div><div class="who">刘志强 · 网格员</div>
+          <div class="bub"><div class="filed"><span class="fi"><svg class="ic sm"><use href="#i-file-text" xlink:href="#i-file-text"></use></svg></span><span style="flex:1"><b>巡逻路线_1106.mp3</b><small>4.2MB · 群里同步收听</small></span><span class="tag plain">播放</span></div></div></div></div>
+        <div class="msg"><span class="av">李</span><div><div class="who">李梅 · 志愿巡逻队</div><div class="bub">群里说一声"我报名"就行，语音、打字都算。报表我按语音条一条条核。</div></div></div>
+      </div>
+    </div>
+    <div class="chatbar">
+      <button data-toast="按住说话，松手就发出"><svg class="ic"><use href="#i-microphone" xlink:href="#i-microphone"></use></svg></button>
+      <div class="rt">说点什么，或按住说话</div>
+      <button data-toast="可以发图片、语音、文件"><svg class="ic"><use href="#i-plus" xlink:href="#i-plus"></use></svg></button>
+      <button class="call" data-call><svg class="ic"><use href="#i-phone-call" xlink:href="#i-phone-call"></use></svg></button>
+    </div>
+  </section>
+
+  <!-- ===== 屏：群组邀请加群 ===== -->
+  <section class="screen" id="s-ginvite" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">拉人进群</div>
+        <div class="topact"><button data-toast="当前群 386 人，本月新增 24 人"><svg class="ic sm"><use href="#i-users-three" xlink:href="#i-users-three"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="tabs2" id="gitabs">
+      <button class="on" data-gi="code">邀请码</button>
+      <button data-gi="roll">花名册</button>
+      <button data-gi="req">待审核</button>
+    </div>
+    <div class="sbody" id="gibody">
+
+      <div data-gi-pane="code">
+        <div style="margin-top:14px" class="codebox">
+          <div class="ct">龙华社区综合群 · 邀请码</div>
+          <div class="cv">382641</div>
+          <div class="cm">有效期到 11 月 13 日 · 新居民输码后进"待审核"</div>
+          <div class="acts"><button class="btn gho" data-toast="邀请码已复制">复制</button><button class="btn gho" data-toast="已生成分享卡片，可发给邻居">分享给邻居</button></div>
+        </div>
+        <div class="sec" style="margin:18px 14px 8px"><h2>为什么要邀请码</h2></div>
+        <div class="card" style="padding:14px;font-size:13px;line-height:1.85;color:var(--ink2)">
+          群里只放本社区已实名复核的居民。新来的人先用码进门，再由管理员对着花名册核一遍——不把人挡在外面，也不让陌生号混进来。
+        </div>
+        <div class="sec" style="margin:18px 14px 8px"><h2>最近用码进来的</h2></div>
+        <div class="rows" style="margin:0 14px">
+          <button class="row" data-toast="待审核，管理员确认后才进群"><span class="av alt">周</span><span class="txt"><b>周振华</b><small>3 栋 603 · 昨天 18:20 用码进入</small></span><span class="tag wait">待审核</span></button>
+          <button class="row" data-toast="已通过复核，已在群里"><span class="av">张</span><span class="txt"><b>张桂芳</b><small>3 栋 601 · 11 月 4 日进入</small></span><span class="tag ok">已进群</span></button>
+        </div>
+      </div>
+
+      <div data-gi-pane="roll" hidden>
+        <div class="sec" style="margin:14px 14px 6px"><h2>3 栋花名册</h2><span class="sub">只列已实名复核</span></div>
+        <div style="padding:0 14px 6px;font-size:12px;color:var(--ink3)">勾选后直接拉进群，不用等对方申请。</div>
+        <div class="rows" style="margin:0 14px" id="roll">
+          <button class="pick" data-pick><span class="av">张</span><span class="t"><b>张桂芳</b><small>601 · 60 岁以上 · 子女在外地</small></span><span class="box"><svg class="ic sm"><use href="#i-check-circle" xlink:href="#i-check-circle"></use></svg></span></button>
+          <button class="pick" data-pick><span class="av">周</span><span class="t"><b>周振华</b><small>603 · 租住 · 材料已核</small></span><span class="box"><svg class="ic sm"><use href="#i-check-circle" xlink:href="#i-check-circle"></use></svg></span></button>
+          <button class="pick" data-pick><span class="av">赵</span><span class="t"><b>赵国庆</b><small>604 · 退役军人 · 常年在岗</small></span><span class="box"><svg class="ic sm"><use href="#i-check-circle" xlink:href="#i-check-circle"></use></svg></span></button>
+          <button class="pick" data-pick><span class="av">孙</span><span class="t"><b>孙立</b><small>702 · 上班族 · 晚上在线</small></span><span class="box"><svg class="ic sm"><use href="#i-check-circle" xlink:href="#i-check-circle"></use></svg></span></button>
+          <button class="pick" data-pick><span class="av">吴</span><span class="t"><b>吴玉兰</b><small>703 · 不便出门 · 需电话通知</small></span><span class="box"><svg class="ic sm"><use href="#i-check-circle" xlink:href="#i-check-circle"></use></svg></span></button>
+        </div>
+        <div class="foot" style="text-align:left;margin:14px">不在名单里？说明还没完成居民登记或复核，先补登记再拉群。</div>
+      </div>
+
+      <div data-gi-pane="req" hidden>
+        <div class="sec" style="margin:14px 14px 8px"><h2>待审核申请</h2><span class="sub">2 条</span></div>
+        <div class="rows" style="margin:0 14px">
+          <div class="row" style="align-items:flex-start">
+            <span class="av warn">周</span>
+            <span class="txt"><b>周振华 · 3 栋 603</b><small>申请加入 3 栋群 · 18:20</small><small style="color:var(--ink2);margin-top:6px">材料：租赁合同、身份证 · 比对：与登记信息一致</small></span>
+          </div>
+          <div class="row" style="align-items:flex-start">
+            <span class="av warn">陈</span>
+            <span class="txt"><b>陈小雨 · 9 栋 1102</b><small>申请加入 9 栋群 · 昨天 21:05</small><small style="color:var(--ink2);margin-top:6px">材料：房产证 · 比对：姓名一致，楼栋待核</small></span>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;padding:14px">
+          <button class="btn gho" style="flex:1;height:42px" data-toast="已驳回，会通知申请人补材料">暂时不进</button>
+          <button class="btn pri" style="flex:1;height:42px" data-toast="已通过，两人已进群">同意进群</button>
+        </div>
+        <div class="card" style="padding:14px;font-size:12.5px;line-height:1.85;color:var(--ink3)">
+          审核只看两件事：人是不是这栋的，材料是不是本人。拿不准就点"暂时不进"，让他补一张材料再来。
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 屏：居民登记 ===== -->
+  <section class="screen" id="s-reg" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">居民登记</div>
+        <div class="topact"><button data-toast="登记信息只用于社区治理"><svg class="ic sm"><use href="#i-shield-check" xlink:href="#i-shield-check"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="steps" id="regsteps">
+      <span class="st on" data-st="1"><i>1</i>基本信息</span><span class="ln"></span>
+      <span class="st" data-st="2"><i>2</i>居住信息</span><span class="ln"></span>
+      <span class="st" data-st="3"><i>3</i>提交复核</span>
+    </div>
+    <div class="sbody" id="regbody">
+
+      <div data-step="1">
+        <div class="form">
+          <div class="fr"><label>登录手机号</label><input value="138 **** 6020" placeholder="注册后用这个号登录"></div>
+          <div class="fr"><label>短信验证码</label><input placeholder="6 位数字"><button class="btn lite" style="height:28px;font-size:12px;margin-left:8px" data-toast="验证码已发到 138 **** 6020">获取</button></div>
+          <div class="fr"><label>登录密码</label><input value="••••••••" placeholder="8 位以上"></div>
+          <div class="fr"><label>真实姓名</label><input value="张凯" placeholder="与身份证一致"></div>
+          <div class="fr"><label>身份证号</label><input value="5101 **** **** 3721" placeholder="18 位"><button class="btn lite" style="height:28px;font-size:12px;margin-left:8px" data-toast="已拍照识别，姓名与号码自动回填">拍照识别</button></div>
+        </div>
+        <div class="form">
+          <div class="fr" style="border-bottom:0"><label>性别</label></div>
+          <div class="chips" data-chips="sex"><button class="on">男</button><button>女</button></div>
+          <div class="note">已有个人码的，可用「个人码导入」带出姓名与居住信息，作为辅助方式。</div>
+        </div>
+        <div class="nav2"><button class="btn pri" data-reg="2">下一步：居住信息</button></div>
+      </div>
+
+      <div data-step="2" hidden>
+        <div class="form">
+          <div class="fr"><label>社区（村）</label><input value="龙华社区" placeholder="选择所在社区"></div>
+          <div class="fr"><label>小区</label><input value="龙华小区" placeholder="选择或填写"></div>
+          <div class="fr two"><label>楼栋单元</label><input value="3 栋 2 单元" style="flex:1"><span class="unit">门牌</span><input value="602" style="flex:0 0 64px;text-align:right"></div>
+        </div>
+        <div class="form">
+          <div class="fr" style="border-bottom:0"><label>居住属性</label></div>
+          <div class="chips" data-chips="live"><button class="on">自住业主</button><button>承租人</button><button>家庭成员</button></div>
+          <div class="note">自住传不动产权证；承租人传租房合同；家庭成员传户口本。</div>
+        </div>
+        <div class="form">
+          <div class="fr" style="border-bottom:0"><label>证明材料</label><span class="unit">已传 1 项</span></div>
+          <div class="upload">
+            <button class="u" data-toast="不动产权证首页已上传"><svg class="ic"><use href="#i-file-text" xlink:href="#i-file-text"></use></svg>不动产权证 · 已传</button>
+            <button class="u" data-toast="拍照或从相册选，可传户口本"><svg class="ic"><use href="#i-camera" xlink:href="#i-camera"></use></svg>再传一项</button>
+          </div>
+        </div>
+        <div class="nav2"><button class="btn gho" data-reg="1">上一步</button><button class="btn pri" data-reg="3">下一步：提交复核</button></div>
+      </div>
+
+      <div data-step="3" hidden>
+        <div class="form">
+          <div class="fr" style="border-bottom:0"><label>证明材料</label><span class="unit">已传 1 项</span></div>
+          <div class="upload">
+            <button class="u" data-toast="房产证首页已上传"><svg class="ic"><use href="#i-file-text" xlink:href="#i-file-text"></use></svg>房产证 · 已传</button>
+            <button class="u" data-toast="拍照或从相册选"><svg class="ic"><use href="#i-camera" xlink:href="#i-camera"></use></svg>身份证背面 · 待传</button>
+          </div>
+        </div>
+        <div class="form">
+          <div class="fr"><label>登记地址</label><input value="龙华社区 · 龙华小区 · 3 栋 2 单元 602" readonly></div>
+          <div class="fr"><label>材料</label><input value="不动产权证 1 项" readonly></div>
+        </div>
+        <div class="note">点提交后提示「注册信息已提交，等待网格员确认」，账号进入待审核状态；网格员确认并上门复核后，才正式获得群与网上社区权限。</div>
+        <div class="nav2"><button class="btn gho" data-reg="2">上一步</button><button class="btn pri" data-reg="submit">提交登记</button></div>
+      </div>
+
+      <div data-step="done" hidden>
+        <div class="card" style="margin-top:16px;padding:18px;text-align:center">
+          <svg class="ic lg" style="color:var(--up);margin:0 auto 10px;display:block"><use href="#i-check-circle" xlink:href="#i-check-circle"></use></svg>
+          <div style="font-size:17px;font-weight:700">登记已提交，等复核</div>
+          <div style="font-size:13px;color:var(--ink2);line-height:1.85;margin-top:8px">网格员刘志强会在周四 14:00—16:00 上门。三天内出结果，结果推到消息里。</div>
+        </div>
+        <div class="rows" style="margin:16px 14px 0">
+          <div class="row"><span class="txt"><b>登记编号</b><small>LH-20261106-0362</small></span><span class="tag wait">待复核</span></div>
+          <div class="row"><span class="txt"><b>复核人</b><small>刘志强 · A 区 1—6 栋</small></span><span class="tag plain">已排期</span></div>
+        </div>
+        <div class="sec" style="margin:18px 14px 8px"><h2>接下来会发生什么</h2></div>
+        <div class="rows" style="margin:0 14px">
+          <div class="row"><span class="txt"><b>1. 网格员核对材料</b><small>比对身份证与房产证，缺材料会通知你补</small></span><span class="tag plain">当天</span></div>
+          <div class="row"><span class="txt"><b>2. 按预约时段上门</b><small>周四 14:00—16:00，上门前 10 分钟打电话</small></span><span class="tag plain">周四</span></div>
+          <div class="row"><span class="txt"><b>3. 结果进消息</b><small>通过后花名册更新，你就能被拉进楼栋群</small></span><span class="tag plain">三天内</span></div>
+        </div>
+        <div class="nav2"><button class="btn gho" data-close>先回首页</button><button class="btn pri" data-open="audit">看审核进度</button></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 屏：登记审核 ===== -->
+  <section class="screen" id="s-audit" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">登记审核</div>
+        <div class="topact"><button data-toast="今天还有 2 户上门复核"><svg class="ic sm"><use href="#i-list-checks" xlink:href="#i-list-checks"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin:14px 14px 8px"><h2>待复核 2 户</h2><span class="sub">按预约时段</span></div>
+      <div class="rows" style="margin:0 14px">
+        <button class="row" data-toast="已打开材料核对页"><span class="av warn">张</span><span class="txt"><b>张凯 · A 区 3 栋 602</b><small>周四 14:00—16:00 · 自有住房 · 材料 1/2</small></span><span class="tag wait">待复核</span></button>
+        <button class="row" data-toast="已打开材料核对页"><span class="av alt">陈</span><span class="txt"><b>陈小雨 · A 区 9 栋 1102</b><small>周四 19:00—21:00 · 租住 · 材料 2/2</small></span><span class="tag wait">待复核</span></button>
+      </div>
+      <div class="sec" style="margin:18px 14px 8px"><h2>核对清单 · 张凯</h2></div>
+      <div class="rows" style="margin:0 14px">
+        <div class="row"><span class="txt"><b>身份证与姓名一致</b><small>系统比对：通过</small></span><span class="tag ok">已核</span></div>
+        <div class="row"><span class="txt"><b>房产证首页</b><small>3 栋 602 · 权利人张凯</small></span><span class="tag ok">已核</span></div>
+        <div class="row"><span class="txt"><b>身份证背面</b><small>还没上传</small></span><span class="tag need">缺材料</span></div>
+        <div class="row"><span class="txt"><b>上门实见</b><small>周四 14:00 后填写</small></span><span class="tag plain">待办</span></div>
+      </div>
+      <div style="display:flex;gap:10px;padding:14px">
+        <button class="btn gho" style="flex:1;height:42px" data-toast="已驳回，并通知补身份证背面">驳回补材料</button>
+        <button class="btn pri" style="flex:1;height:42px" data-toast="复核通过，居民会收到通知">复核通过</button>
+      </div>
+      <div class="foot">复核结论会同步到居民消息里，也会更新花名册</div>
+    </div>
+  </section>
+
+  <!-- ===== 覆盖层：音频会话 ===== -->
+  <div class="callscreen" id="call">
+    <div class="ch"><svg class="ic sm" style="color:#fff"><use href="#i-shield-check" xlink:href="#i-shield-check"></use></svg><span>群内音频会话 · 端到端加密</span></div>
+    <div class="bigav">李</div>
+    <div class="who">李梅 · 志愿巡逻队</div>
+    <div class="state" id="callstate">已接通 · 00:12</div>
+    <div class="wave" id="wave"></div>
+    <div class="enc">通话内容仅双方留存，群里只留一条"通话 1 分 20 秒"</div>
+    <div class="lv"><svg class="ic sm" style="color:#fff;opacity:.6"><use href="#i-speaker-high" xlink:href="#i-speaker-high"></use></svg><span class="bar"><i></i></span><span>音量 62</span></div>
+    <div class="info">
+      <div><span>通话对象</span><span>李梅 · 3 栋 602</span></div>
+      <div><span>会话留存</span><span>仅文字摘要进群</span></div>
+      <div><span>拒接 / 30 秒未应答</span><span>提示后转语音留言</span></div>
+    </div>
+    <div style="margin-top:14px;border:1px solid rgba(255,255,255,.16);border-radius:var(--r);padding:14px">
+      <div style="font-size:11px;letter-spacing:.1em;opacity:.58">群组音频会话</div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;font-size:12.5px;opacity:.86">
+        <span>综合群在线 12 人</span><span style="opacity:.62">可随时静音 / 调音量</span>
+      </div>
+      <div style="margin-top:10px;font-size:11.5px;line-height:1.7;opacity:.6">群里可共享音频文件同步收听，单个不超过 10MB</div>
+    </div>
+    <div class="acts">
+      <button data-toast="已静音"><svg class="ic"><use href="#i-microphone-slash" xlink:href="#i-microphone-slash"></use></svg>静音</button>
+      <button data-vm><svg class="ic"><use href="#i-microphone" xlink:href="#i-microphone"></use></svg>留言</button>
+      <button class="hang" data-hang><svg class="ic"><use href="#i-phone-disconnect" xlink:href="#i-phone-disconnect"></use></svg>挂断</button>
+    </div>
+  </div>
+
+  <!-- ===== 覆盖层：离线语音留言 ===== -->
+  <div class="callscreen" id="voicemail">
+    <div class="ch"><svg class="ic sm" style="color:#fff"><use href="#i-clock" xlink:href="#i-clock"></use></svg><span>离线语音留言 · 对方没接</span></div>
+    <div class="bigav">李</div>
+    <div class="who">给李梅留言</div>
+    <div class="state">她上线时会收到弹窗提醒</div>
+    <div style="margin-top:26px;border:1px solid rgba(255,255,255,.16);border-radius:var(--r);padding:16px;font-size:12px;line-height:1.85;opacity:.8">
+      说什么：说清情况就够，比如"今晚巡逻我到，从 3 栋门口等你们"。<br>多长：最多 60 秒，只说重点。<br>对方收到：上线弹窗 + 消息列表红点，听过即清。
+    </div>
+
+    <div style="margin-top:14px;border:1px solid rgba(255,255,255,.16);border-radius:var(--r);padding:14px 16px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <svg class="ic sm" style="color:#fff;opacity:.7"><use href="#i-microphone" xlink:href="#i-microphone"></use></svg>
+        <div style="display:flex;align-items:flex-end;gap:3px;flex:1;height:26px">
+          <i style="width:3px;background:#fff;opacity:.55;height:10px"></i><i style="width:3px;background:#fff;opacity:.55;height:16px"></i><i style="width:3px;background:#fff;opacity:.55;height:22px"></i><i style="width:3px;background:#fff;opacity:.55;height:14px"></i><i style="width:3px;background:#fff;opacity:.55;height:20px"></i><i style="width:3px;background:#fff;opacity:.55;height:26px"></i><i style="width:3px;background:#fff;opacity:.55;height:12px"></i><i style="width:3px;background:#fff;opacity:.55;height:18px"></i><i style="width:3px;background:#fff;opacity:.55;height:8px"></i><i style="width:3px;background:#fff;opacity:.55;height:16px"></i><i style="width:3px;background:#fff;opacity:.55;height:22px"></i><i style="width:3px;background:#fff;opacity:.55;height:14px"></i><i style="width:3px;background:#fff;opacity:.55;height:19px"></i><i style="width:3px;background:#fff;opacity:.55;height:24px"></i><i style="width:3px;background:#fff;opacity:.55;height:11px"></i><i style="width:3px;background:#fff;opacity:.55;height:17px"></i><i style="width:3px;background:#fff;opacity:.55;height:21px"></i><i style="width:3px;background:#fff;opacity:.55;height:9px"></i>
+        </div>
+        <span style="font-size:12px;opacity:.72">00:07</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:11.5px;opacity:.62">
+        <span>录到一半可以停，还有 53 秒</span>
+        <button style="border:0;background:none;color:#fff;font-size:12px;opacity:.9;text-decoration:underline;text-underline-offset:3px" data-toast="已重录，从头开始">重录</button>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;border:1px solid rgba(255,255,255,.16);border-radius:var(--r);padding:14px 16px">
+      <div style="font-size:11px;letter-spacing:.08em;opacity:.55">自动转文字 · 对方不用听也能看</div>
+      <div style="margin-top:8px;font-size:13px;line-height:1.8;opacity:.9">“今晚巡逻我去，从 3 栋门口集合，别等我太久。”</div>
+    </div>
+    <div class="acts">
+      <button data-hang><svg class="ic"><use href="#i-x" xlink:href="#i-x"></use></svg>取消</button>
+      <button class="hang" data-toast="已发送留言，对方上线会收到"><svg class="ic"><use href="#i-paper-plane-tilt" xlink:href="#i-paper-plane-tilt"></use></svg>发送</button>
+    </div>
+  </div>
+
+  <!-- ===== 屏：登记审核队列（网格员） ===== -->
+  <section class="screen" id="s-auditq" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">登记审核</div>
+        <div class="topact"><button data-toast="按提交时间排，超 24 小时置顶"><svg class="ic sm"><use href="#i-clock" xlink:href="#i-clock"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin-top:12px"><h2>待审 6 条</h2><span class="sub">超时 1 条 · 平均 6 分钟</span></div>
+      <div class="rows">
+        <button class="row" data-toast="切到王秀兰的核对卡"><span class="av alt">王</span><span class="txt"><b>王秀兰 · 3 栋 602</b><small>09:12 提交 · 房产证、身份证已传</small></span><span class="tag risk">超时</span></button>
+        <button class="row" data-toast="切到陈小雨的核对卡"><span class="av alt">陈</span><span class="txt"><b>陈小雨 · 9 栋 1102</b><small>10:05 提交 · 租赁合同、身份证</small></span><span class="tag wait">待审</span></button>
+        <button class="row" data-toast="切到赵国安的核对卡"><span class="av">赵</span><span class="txt"><b>赵国庆 · 3 栋 604</b><small>10:48 提交 · 退伍军人 · 常住</small></span><span class="tag wait">待审</span></button>
+        <button class="row" data-toast="切到孙立的核对卡"><span class="av">孙</span><span class="txt"><b>孙立 · 9 栋 702</b><small>11:30 提交 · 上班族 · 户口本</small></span><span class="tag wait">待审</span></button>
+        <button class="row" data-toast="切到吴玉兰的核对卡"><span class="av">吴</span><span class="txt"><b>吴玉兰 · 9 栋 703</b><small>13:02 提交 · 不便出门 · 需电话预约</small></span><span class="tag wait">待审</span></button>
+        <button class="row" data-toast="李梅已在此前通过复核"><span class="av">李</span><span class="txt"><b>李梅 · 3 栋 602</b><small>14:20 提交 · 配偶 · 材料齐全</small></span><span class="tag ok">已通过</span></button>
+      </div>
+
+      <div class="sec"><h2>核对 · 王秀兰</h2><span class="sub">第 1 条，超时 3 小时</span></div>
+      <div class="card" style="margin:0 14px;padding:14px 16px">
+        <div class="kvline"><span>姓名</span><b>王秀兰</b></div>
+        <div class="kvline"><span>身份证</span><b>5101 **** **** 4826</b></div>
+        <div class="kvline"><span>手机号</span><b>139 **** 2281</b></div>
+        <div class="kvline"><span>登记地址</span><b>A 区 3 栋 2 单元 602</b></div>
+        <div class="kvline"><span>居住属性</span><b>自有住房</b></div>
+        <div class="kvline"><span>同住</span><b>2 人（配偶、孙女 6 岁）</b></div>
+        <div class="kvline"><span>材料</span><b>不动产权证、身份证</b></div>
+      </div>
+      <div class="note" style="margin:10px 14px">材料齐全，地址与名册一致；证件原件留到上门复核时核。可先按材料通过，复核任务自动落到今天这条线。</div>
+      <div class="nav2"><button class="btn gho" data-toast="已退回：房产证照片模糊，请重传">退回补材料</button><button class="btn pri" data-toast="已通过，已生成上门复核任务">审核通过</button></div>
+      <div class="foot">网格员端 · 材料审核与上门复核分开记，各留一条</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：上门复核（网格员） ===== -->
+  <section class="screen" id="s-review" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">上门复核</div>
+        <div class="topact"><button data-toast="今天这条线：3 栋 601、603，9 栋 1102"><svg class="ic sm"><use href="#i-map-pin" xlink:href="#i-map-pin"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin-top:12px"><h2>3 栋 601 · 张桂芳</h2><span class="sub">第 1 户 / 共 3 户</span></div>
+      <div class="card" style="margin:0 14px;padding:14px 16px">
+        <div class="kvline"><span>预约时段</span><b>今天 14:00—14:30</b></div>
+        <div class="kvline"><span>复核原因</span><b>新提交 · 60 岁以上独居</b></div>
+        <div class="kvline"><span>已核材料</span><b>身份证、房产证</b></div>
+        <div class="kvline"><span>上次走访</span><b>2026-10-28 · 本人在家</b></div>
+      </div>
+
+      <div class="sec"><h2>到门口核这四件</h2><span class="sub">点一下记为已核</span></div>
+      <div class="rows">
+        <button class="row" data-check="1"><span class="txt"><b>见到本人</b><small>不是租客代答、不是只有邻居说在</small></span><span class="tag wait">待核</span></button>
+        <button class="row" data-check="1"><span class="txt"><b>证件原件一致</b><small>身份证、房产证与登记表对得上</small></span><span class="tag wait">待核</span></button>
+        <button class="row" data-check="1"><span class="txt"><b>确实住在这里</b><small>门牌、钥匙、屋内生活痕迹</small></span><span class="tag wait">待核</span></button>
+        <button class="row" data-check="1"><span class="txt"><b>同住人对得上</b><small>登记 2 人，实际见到几人</small></span><span class="tag wait">待核</span></button>
+      </div>
+
+      <div class="sec"><h2>录入结果</h2></div>
+      <div class="form" style="margin:0 14px">
+        <div class="fr"><label>结果</label><input value="复核通过（待点确认）" readonly></div>
+        <div class="fr"><label>备注</label><input placeholder="例如：本人开门，孙女在场"></div>
+      </div>
+      <div class="note" style="margin:10px 14px">复核结果录入后，居民端「登记审核进度」同步变成已通过，花名册当场更新，就能被拉进楼栋群。</div>
+      <div class="nav2"><button class="btn gho" data-toast="已记为异常：本人不在，改约明天 10:00">记异常</button><button class="btn pri" data-toast="复核通过，花名册已更新">确认复核</button></div>
+      <div class="foot">网格员端 · 复核必到门口见人，不接受电话代替</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：加群与发帖审核（网格员） ===== -->
+  <section class="screen" id="s-moderate" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">审核</div>
+        <div class="topact"><button data-toast="两条加群、两条帖子，按提交时间排"><svg class="ic sm"><use href="#i-clock" xlink:href="#i-clock"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin-top:12px"><h2>加群申请</h2><span class="sub">2 条 · 都已实名复核</span></div>
+      <div class="rows">
+        <div class="row">
+          <span class="av alt">周</span>
+          <span class="txt"><b>周振华 · 3 栋 603</b><small>申请加入 3 栋群 · 18:20 · 理由：同栋邻居</small></span>
+        </div>
+        <div class="row" style="gap:8px;padding-bottom:14px">
+          <span style="flex:1"></span>
+          <button class="btn gho" style="height:32px;font-size:12px;padding:0 12px" data-toast="已拒绝并注明原因：房号不符">拒绝</button>
+          <button class="btn pri" style="height:32px;font-size:12px;padding:0 14px" data-toast="已同意周振华加入 3 栋群">同意进群</button>
+        </div>
+        <div class="row">
+          <span class="av">陈</span>
+          <span class="txt"><b>陈小雨 · 9 栋 1102</b><small>申请加入 9 栋群 · 21:05 · 理由：新租户</small></span>
+        </div>
+        <div class="row" style="gap:8px;padding-bottom:14px">
+          <span style="flex:1"></span>
+          <button class="btn gho" style="height:32px;font-size:12px;padding:0 12px" data-toast="已拒绝并注明原因：租赁合同待复核">拒绝</button>
+          <button class="btn pri" style="height:32px;font-size:12px;padding:0 14px" data-toast="已同意陈小雨加入 9 栋群">同意进群</button>
+        </div>
+      </div>
+
+      <div class="sec"><h2>待审帖子</h2><span class="sub">2 条 · 通过后才对外公开</span></div>
+      <div class="rows">
+        <div class="row">
+          <span class="av warn">帖</span>
+          <span class="txt"><b>3 栋 2 单元门禁坏了三天</b><small>王秀兰 · 平安共建 · 含 1 张图</small></span>
+          <span class="tag wait">待审</span>
+        </div>
+        <div class="row" style="gap:8px;padding-bottom:14px">
+          <span style="flex:1"></span>
+          <button class="btn gho" style="height:32px;font-size:12px;padding:0 12px" data-toast="已驳回并通知发帖人：请补门禁照片">驳回</button>
+          <button class="btn pri" style="height:32px;font-size:12px;padding:0 14px" data-toast="已通过，帖子已在平安共建板块公开">通过</button>
+        </div>
+        <div class="row">
+          <span class="av warn">帖</span>
+          <span class="txt"><b>求推荐靠谱的开锁师傅</b><small>孙立 · 邻里互助 · 无图</small></span>
+          <span class="tag risk">疑似广告</span>
+        </div>
+        <div class="row" style="gap:8px;padding-bottom:14px">
+          <span style="flex:1"></span>
+          <button class="btn gho" style="height:32px;font-size:12px;padding:0 12px" data-toast="已删除并封禁该账号发言 7 天">删帖封禁</button>
+          <button class="btn pri" style="height:32px;font-size:12px;padding:0 14px" data-toast="已通过，仅 3 栋居民可见">通过</button>
+        </div>
+      </div>
+      <div class="sec"><h2>帖子列表 · 删帖</h2><span class="sub">已公开的也能删，删了贴说明</span></div>
+      <div class="chips sm" style="margin:0 14px 10px">
+        <button class="on">全部</button><button>平安共建</button><button>邻里互助</button><button>环境整治</button><button>物业交流</button>
+      </div>
+      <div class="rows">
+        <div class="row">
+          <span class="av">王</span>
+          <span class="txt"><b>3 栋 2 单元门禁坏了三天</b><small>王秀兰 · 平安共建 · 已公开 · 12 回复</small></span>
+          <button class="btn gho" style="height:36px;padding:0 12px;font-size:12px" data-toast="已删帖并回帖说明：问题已转物业工单，避免重复信息">删帖</button>
+        </div>
+        <div class="row">
+          <span class="av">李</span>
+          <span class="txt"><b>今晚巡逻还差 4 人，报名接龙</b><small>李梅 · 平安共建 · 已公开 · 18 回复</small></span>
+          <button class="btn gho" style="height:36px;padding:0 12px;font-size:12px" data-toast="已删帖：活动已结束，归档保留原帖数据">删帖</button>
+        </div>
+      </div>
+      <div class="note" style="margin:10px 14px">板块由管理员维护：增删板块、改名称在后台进行；删帖会通知发帖人并留操作记录。</div>
+      <div class="foot">网格员端 · 加群与发帖都在这一屏处理，不跳后台</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：通知反馈处理（网格员） ===== -->
+  <section class="screen" id="s-feedback" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">反馈处理</div>
+        <div class="topact"><button data-toast="按政策咨询 / 活动报名 / 意见建议自动归类"><svg class="ic sm"><use href="#i-file-text" xlink:href="#i-file-text"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin-top:12px"><h2>待回 3 条</h2><span class="sub">来自「11 月 8 日停水」通知</span></div>
+      <div class="rows">
+        <div class="row"><span class="av alt">咨</span><span class="txt"><b>停水期间送水车几点到</b><small>张桂芳 · 3 栋 601 · 政策咨询 · 09:20</small></span><span class="tag wait">待回</span></div>
+        <div class="row"><span class="av">报</span><span class="txt"><b>报名要一桶水（老人，6 楼）</b><small>吴玉兰 · 9 栋 703 · 活动报名 · 09:42</small></span><span class="tag ok">已登记</span></div>
+        <div class="row"><span class="av warn">意</span><span class="txt"><b>能不能提前一天通知</b><small>周振华 · 3 栋 603 · 意见建议 · 10:15</small></span><span class="tag wait">待回</span></div>
+      </div>
+
+      <div class="sec"><h2>回复 · 张桂芳</h2></div>
+      <div class="card" style="margin:0 14px;padding:14px 16px">
+        <div class="kvline"><span>原问</span><b>送水车几点到，行动不便怎么取</b></div>
+        <div class="kvline"><span>口径</span><b>10:00 起在 3 号楼前；老人由网格员送上门</b></div>
+        <div class="kvline"><span>指派</span><b>刘志强（本网格）· 今日 18:00 前回复</b></div>
+      </div>
+      <div class="form" style="margin:12px 14px 0">
+        <div class="fr"><label>回复</label><input value="送水车 10:00 到 3 号楼前，我 10:30 给您送上去"></div>
+      </div>
+      <div class="nav2"><button class="btn gho" data-toast="已标记为同类问题，回复时统一答复">合并同类</button><button class="btn pri" data-toast="已回复，居民端收到消息">回复并结单</button></div>
+      <div class="foot">网格员端 · 反馈按三类归集，处理完回填一条结论</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：发群公告（网格员 / 民警均可发） ===== -->
+  <section class="screen" id="s-gnotice" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">发群公告</div>
+        <div class="topact"><button data-toast="公告会置顶 24 小时，居民端弹一次提醒"><svg class="ic sm"><use href="#i-bell" xlink:href="#i-bell"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin-top:12px"><h2>类型</h2><span class="sub">网格员/民警发治安类，居委会发民生类</span></div>
+      <div class="chips" style="margin:0 14px">
+        <button class="on">治安通报</button><button>防范提示</button><button>线索征集</button><button>通知要求</button><button>惠民政策</button><button>志愿者召集</button>
+      </div>
+      <div class="form" style="margin:12px 14px 0">
+        <div class="fr"><label>标题</label><input value="昨晚 3 栋 2 单元连按门铃，已到场处置"></div>
+        <div class="fr"><label>正文</label><input value="21:40 有人连按门铃 3 次，民警 11 分钟到场，未发现异常。夜间有人敲门先看猫眼，别急着开门。"></div>
+        <div class="fr"><label>推送</label><input value="综合群 + 3 栋群 + 9 栋群（386 + 46 + 62 人）" readonly></div>
+      </div>
+      <div class="rows" style="margin-top:12px">
+        <button class="row" data-toast="已开启：公告置顶 24 小时"><span class="txt"><b>置顶 24 小时</b><small>居民端消息列表第一条</small></span><span class="tag ok">已开</span></button>
+        <button class="row" data-toast="已开启：只发群内，不外传"><span class="txt"><b>仅群内可见</b><small>不生成对外链接，避免二次传播</small></span><span class="tag ok">已开</span></button>
+        <button class="row" data-open="feedback"><span class="av warn">反</span><span class="txt"><b>群员反馈 · 社情民意</b><small>各群员反馈可疑情况与诉求，引导实地调查、线索查证</small></span><span class="tag wait">3 待回</span></button>
+      </div>
+      <div class="nav2"><button class="btn gho" data-toast="已存草稿">存草稿</button><button class="btn pri" data-toast="已发出，3 个群共 494 人收到">发布</button></div>
+      <div class="foot">网格员 / 民警均可发布，记录发布人与时间；居（村）委会用「通知要求 / 惠民政策 / 志愿者召集」类型发布</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：群内用户管理（网格员 4-4） ===== -->
+  <section class="screen" id="s-gmember" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">群内用户管理</div>
+        <div class="topact"><button data-toast="成员变动都会记入群管理日志"><svg class="ic sm"><use href="#i-list-checks" xlink:href="#i-list-checks"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin-top:12px"><h2>从综治数据中心添加</h2><span class="sub">网格员、片警、物业等人员或组织</span></div>
+      <div class="rows">
+        <button class="row" data-toast="已从综治数据中心添加：张警官（社区民警）进综合群与 3 栋群">
+          <span class="av alt">警</span><span class="txt"><b>张警官 · 社区民警</b><small>综治数据中心 · 片警 · 管龙华社区 A 区</small></span><span class="tag plain">添加</span>
+        </button>
+        <button class="row" data-toast="已从综治数据中心添加：李华（本网格网格员）进 3 栋群">
+          <span class="av">网</span><span class="txt"><b>李华 · 网格员</b><small>综治数据中心 · 负责 A 区 1—6 栋</small></span><span class="tag plain">添加</span>
+        </button>
+        <button class="row" data-toast="已添加组织：龙腾物业安保部（值班负责人 1 + 保安 2）进综合群">
+          <span class="av dark">物</span><span class="txt"><b>龙腾物业安保部</b><small>综治数据中心 · 组织账号 · 值班负责人 + 保安 2 人</small></span><span class="tag plain">添加</span>
+        </button>
+      </div>
+      <div class="note" style="margin:10px 14px">这里的人员和组织不从手机上手工录入，统一以综治数据中心为准；添加后在本群获得对应身份标识，居民端可见。</div>
+
+      <div class="sec"><h2>不良发言</h2><span class="sub">屏蔽或删除，删了群里就看不见</span></div>
+      <div class="rows">
+        <div class="row" style="align-items:flex-start">
+          <span class="av warn">广</span>
+          <span class="txt"><b>「加我微信 XXXXX，内部渠道低价烟」</b><small>临时账号 · 今天 09:12 · 广告推销</small></span>
+        </div>
+        <div style="display:flex;gap:10px;padding:0 14px 12px">
+          <button class="btn gho" style="flex:1;height:40px" data-toast="已屏蔽：该消息仅发布者自己可见">屏蔽</button>
+          <button class="btn pri" style="flex:1;height:40px" data-toast="已删除不良发言，并提示发布者群规">删除发言</button>
+        </div>
+        <div class="row" style="align-items:flex-start">
+          <span class="av warn">吵</span>
+          <span class="txt"><b>「你就是故意的，什么素质！」</b><small>赵国庆 · 3 栋 604 · 昨天 21:30 · 邻里争吵</small></span>
+        </div>
+        <div style="display:flex;gap:10px;padding:0 14px 12px">
+          <button class="btn gho" style="flex:1;height:40px" data-toast="已禁言 24 小时，双方都发过提醒">禁言一天</button>
+          <button class="btn pri" style="flex:1;height:40px" data-toast="已删除该争吵发言，网格员今天上门调解">删除发言</button>
+        </div>
+      </div>
+
+      <div class="sec"><h2>删除不良成员</h2><span class="sub">移出后可重新申请，需审核</span></div>
+      <div class="rows">
+        <div class="row">
+          <span class="av warn">临</span>
+          <span class="txt"><b>临时账号 #4471</b><small>未完成实名复核 · 发广告 2 条 · 今天 09:12</small></span>
+          <button class="btn pri" style="height:36px;padding:0 14px;font-size:12.5px" data-toast="已移出群聊：未实名 + 屡发广告，已同步群管理日志">移出群聊</button>
+        </div>
+      </div>
+      <div class="note" style="margin:10px 14px">删除成员前先看两条：有没有未结的诉求、是不是误会。真要移出的，群里发一句说明，避免邻居猜。</div>
+      <div class="foot">网格员端 · 增人按综治数据中心，管言按群规，移人留记录</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：发布新闻 / 通告（网格员 5-2、5-3） ===== -->
+  <section class="screen" id="s-gpublish" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">发新闻 / 通告</div>
+        <div class="topact"><button data-toast="发布记录：谁发的、何时发的、推给了谁"><svg class="ic sm"><use href="#i-file-text" xlink:href="#i-file-text"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin-top:12px"><h2>发布什么</h2><span class="sub">两类出口，居民端对应两个栏目</span></div>
+      <div class="chips" style="margin:0 14px">
+        <button class="on">社区新闻</button><button>通知通告</button>
+      </div>
+      <div class="note" style="margin:10px 14px">
+        社区新闻：群防群治组织的活动新闻、政府宣传信息、群众身边的新闻。<br>
+        通知通告：通知要求、宣传信息、利民惠民政策、志愿者召集——居民反馈会进「反馈处理」汇总分类。
+      </div>
+      <div class="form" style="margin:0 14px">
+        <div class="fr"><label>标题</label><input value="红袖标夜巡队上岗，一晚走完 21 栋"></div>
+        <div class="fr"><label>正文</label><textarea placeholder="时间、地点、谁参与了、居民怎么配合">昨晚 20:00，红袖标夜巡队 12 人从东门出发，走完 21 栋，重点查了 3 处楼道堆物。今晚继续，欢迎报名。</textarea></div>
+        <div class="fr"><label>配图</label><input placeholder="从相册选 1—3 张（可选）"></div>
+      </div>
+      <div class="rows" style="margin-top:12px">
+        <button class="row" data-toast="已开启：发布后同步推送一条到综合群"><span class="txt"><b>同步到综合群</b><small>群内点击可回到网上社区详情</small></span><span class="tag ok">已开</span></button>
+        <button class="row" data-toast="已开启：通告类自动挂反馈入口"><span class="txt"><b>征集反馈（通告类）</b><small>居民的反馈进「反馈处理」，分类汇总后答复</small></span><span class="tag ok">已开</span></button>
+      </div>
+      <div class="nav2"><button class="btn gho" data-toast="已存草稿，可在发布记录里继续编辑">存草稿</button><button class="btn pri" data-toast="已发布到「社区新闻」，并同步综合群">发布</button></div>
+      <div class="foot">网格员 / 居委会账号可发 · 发布记录留痕，反馈闭环进综治信息中心</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：报警处置（网格员） ===== -->
+  <section class="screen" id="s-alarm" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">报警处置</div>
+        <div class="topact"><button data-toast="可直接回拨报警人"><svg class="ic sm"><use href="#i-phone" xlink:href="#i-phone"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin-top:12px"><h2>3 栋 2 单元 602</h2><span class="sub">21:40 · 连按门铃 3 次</span></div>
+      <div class="card" style="margin:0 14px;padding:14px 16px">
+        <div class="kvline"><span>报警人</span><b>王秀兰（602）· 138 **** 2281</b></div>
+        <div class="kvline"><span>报警方式</span><b>群内一键报警</b></div>
+        <div class="kvline"><span>同时收到</span><b>网格员、派出所、保安 2 人</b></div>
+        <div class="kvline"><span>处置人</span><b>刘志强 · 派出所 21:49 到场</b></div>
+        <div class="kvline"><span>现场</span><b>未发现可疑人员 · 楼道监控正常</b></div>
+      </div>
+
+      <div class="sec"><h2>处置进度</h2></div>
+      <div class="rows">
+        <button class="row" data-toast="已标记：已到场 21:51"><span class="av">1</span><span class="txt"><b>到场</b><small>21:51 · 与网格员同时到</small></span><span class="tag ok">已完成</span></button>
+        <button class="row" data-toast="已记录：报警人情绪稳定，门禁正常"><span class="av">2</span><span class="txt"><b>问清情况</b><small>本人开门，称有人拍门后离开</small></span><span class="tag ok">已完成</span></button>
+        <button class="row" data-toast="已调取 3 栋 2 单元门口监控，未发现异常"><span class="av">3</span><span class="txt"><b>调监控</b><small>门口 21:30—21:50 无外来人员</small></span><span class="tag wait">待做</span></button>
+        <button class="row" data-toast="已反馈报警人，并同步群内通报"><span class="av">4</span><span class="txt"><b>回告 + 通报</b><small>报警人确认，群内已发防范提示</small></span><span class="tag wait">待做</span></button>
+      </div>
+
+      <div class="note" style="margin:12px 14px">这类警情多数是邻里误认或醉酒走错门。先到场、再调监控、最后回告，三步做完再结案，别直接判"无异常"。</div>
+      <div class="nav2"><button class="btn gho" data-toast="已流转给值班组，附现场记录">转值班组</button><button class="btn pri" data-toast="已结案，处置记录已归档">结案</button></div>
+      <div class="foot">网格员端 · 报警数据与派出所同步，处置记录两边一致</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：评价统计（网格员） ===== -->
+  <section class="screen" id="s-stats" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">本月数据</div>
+        <div class="topact"><button data-toast="可按月度 / 季度导出报表"><svg class="ic sm"><use href="#i-file-text" xlink:href="#i-file-text"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin-top:12px"><h2>11 月 · 龙华社区</h2><span class="sub">截至 11-07</span></div>
+      <div class="gridstat" style="margin:0 14px">
+        <div><b>4.7</b><small>居民评分</small></div>
+        <div><b>186</b><small>本月评价</small></div>
+        <div><b>92%</b><small>好评率</small></div>
+      </div>
+      <div class="card" style="margin:12px 14px 0;padding:14px 16px">
+        <div class="kvline"><span>响应速度</span><b>4.7</b></div>
+        <div class="kvline"><span>办事效率</span><b>4.5</b></div>
+        <div class="kvline"><span>办理结果</span><b>4.8</b></div>
+        <div class="kvline"><span>差评督办</span><b>2 条 · 已下发整改单</b></div>
+      </div>
+      <div class="sec"><h2>本月办件</h2></div>
+      <div class="rows">
+        <div class="row"><span class="txt"><b>登记审核</b><small>提交 38 · 通过 31 · 退回 7</small></span><span class="tag plain">38</span></div>
+        <div class="row"><span class="txt"><b>上门复核</b><small>完成 29 · 改约 5 · 异常 4</small></span><span class="tag plain">29</span></div>
+      </div>
+      <div class="foot">数据反馈至综治信息中心，作为年度考核依据</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：申请加群（居民 4-1-1） ===== -->
+  <section class="screen" id="s-gapply" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">申请加群</div>
+        <div class="topact"><button data-toast="按小区、楼栋名搜群"><svg class="ic sm"><use href="#i-magnifying-glass" xlink:href="#i-magnifying-glass"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin-top:12px"><h2>可申请的群</h2><span class="sub">社区综合群 / 小区群 / 楼栋群</span></div>
+      <div class="form" style="margin:0 14px 10px">
+        <div class="fr"><label>搜索</label><input placeholder="输入小区或楼栋名，如 3 栋"></div>
+      </div>
+      <div class="rows">
+        <button class="row" data-toast="申请已发送，等待管理员审核"><span class="av dark">综</span><span class="txt"><b>龙华社区综合群 · 386 人</b><small>本社区自治群 · 需实名复核</small></span><span class="tag ok">已加入</span></button>
+        <button class="row" data-toast="申请已发送，等待管理员审核"><span class="av dark">区</span><span class="txt"><b>龙华小区群 · 128 人</b><small>本小区事务 · 需实名复核</small></span><span class="tag wait">申请</span></button>
+        <button class="row" data-toast="申请已发送，等待管理员审核"><span class="av dark">栋</span><span class="txt"><b>3 栋群 · 46 人</b><small>本楼栋 · 需实名复核</small></span><span class="tag wait">申请</span></button>
+      </div>
+      <div class="sec"><h2>申请信息</h2><span class="sub">填房号与理由</span></div>
+      <div class="form" style="margin:0 14px">
+        <div class="fr"><label>房号</label><input value="3 栋 2 单元 602"></div>
+        <div class="fr"><label>理由</label><input placeholder="如：同栋邻居，想跟进楼栋事务"></div>
+      </div>
+      <div class="note" style="margin:10px 14px">提交后提示「申请已发送，等待管理员审核」；管理员（网格员）核对实名复核状态后同意或拒绝并注明原因。</div>
+      <div class="nav2"><button class="btn gho" data-close>取消</button><button class="btn pri" data-toast="申请已发送，等待管理员审核">提交申请</button></div>
+      <div class="foot">居民端 · 加入群需先完成注册与实名复核</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：注销申请（居民） ===== -->
+  <section class="screen" id="s-quit" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">注销登记</div>
+        <div class="topact"><button data-toast="注销只影响本社区权限，不影响户籍"><svg class="ic sm"><use href="#i-shield-check" xlink:href="#i-shield-check"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div id="quitform">
+        <div class="card" style="margin-top:12px;padding:14px 16px">
+          <div class="kvline"><span>当前登记</span><b>张凯 · A 区 3 栋 2 单元 602</b></div>
+          <div class="kvline"><span>状态</span><b>已实名复核 · 群与网上社区权限在</b></div>
+          <div class="kvline"><span>注销后</span><b>收回群权限，花名册记为迁出</b></div>
+        </div>
+        <div class="sec"><h2>为什么注销</h2><span class="sub">网格员要能对上人</span></div>
+        <div class="chips" style="margin:0 14px" id="quitreason">
+          <button class="on">搬离本小区</button><button>已买房迁出</button><button>长期外出</button><button>其他</button>
+        </div>
+        <div class="form" style="margin:12px 14px 0">
+          <div class="fr"><label>迁往</label><input placeholder="新地址，写小区或街道即可"></div>
+          <div class="fr"><label>说明</label><input placeholder="如：11 月 20 日搬走，钥匙已交房东"></div>
+        </div>
+        <div class="note" style="margin:10px 14px">提交后由网格员确认；确认后数据同步综治中心，再由综治中心同步公安数据中心，完成人口底册迁出核销。搬回来可以随时重新登记。</div>
+        <div class="nav2"><button class="btn gho" data-close>暂不注销</button><button class="btn pri" data-quit="submit">提交申请</button></div>
+      </div>
+
+      <div id="quitdone" hidden>
+        <div class="card" style="margin-top:12px;padding:20px 16px;text-align:center">
+          <div style="display:grid;place-items:center;width:44px;height:44px;margin:0 auto;border-radius:50%;background:rgba(23,108,107,.1);color:var(--accent)">
+            <svg class="ic"><use href="#i-clock" xlink:href="#i-clock"></use></svg>
+          </div>
+          <div style="margin-top:12px;font-size:17px;font-weight:700">注销申请已提交，等网格员确认</div>
+          <div style="margin-top:6px;font-size:12.5px;line-height:1.8;color:var(--ink3)">刘志强会在 24 小时内联系你核对搬离情况；确认前群权限照常，别提前退群。</div>
+        </div>
+        <div class="sec"><h2>这条申请会怎么走</h2></div>
+        <div class="rows">
+          <div class="row"><span class="txt"><b>1. 网格员确认搬离</b><small>上门或电话核实，问清钥匙、水电交接</small></span><span class="tag plain">24 小时内</span></div>
+          <div class="row"><span class="txt"><b>2. 社区侧注销</b><small>收回群与网上社区权限，花名册转迁出</small></span><span class="tag plain">确认当天</span></div>
+          <div class="row"><span class="txt"><b>3. 同步核销</b><small>综治中心 → 公安数据中心，迁出底册</small></span><span class="tag plain">1—3 天</span></div>
+        </div>
+        <div class="nav2"><button class="btn gho" data-close>回首页</button><button class="btn pri" data-toast="已撤回注销申请，登记状态不变">撤回申请</button></div>
+        <div class="foot">居民端 · 注销也可在网格员处当面办理</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：注销确认（网格员） ===== -->
+  <section class="screen" id="s-quitq" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">注销确认</div>
+        <div class="topact"><button data-toast="可回拨申请人：138 **** 6020"><svg class="ic sm"><use href="#i-phone" xlink:href="#i-phone"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="sec" style="margin-top:12px"><h2>待确认 1 条</h2><span class="sub">11-07 09:40 提交</span></div>
+      <div class="card" style="margin:0 14px;padding:14px 16px">
+        <div class="kvline"><span>申请人</span><b>张凯 · A 区 3 栋 2 单元 602</b></div>
+        <div class="kvline"><span>原因</span><b>搬离本小区</b></div>
+        <div class="kvline"><span>迁往</span><b>龙泉驿区大面街道 · 自述 11-20 搬走</b></div>
+        <div class="kvline"><span>名下</span><b>3 栋群、综合群、网上社区 · 已实名复核</b></div>
+        <div class="kvline"><span>未结事项</span><b>报修 1 件（门禁，已结）</b></div>
+      </div>
+      <div class="sec"><h2>确认前核两件</h2></div>
+      <div class="rows">
+        <button class="row" data-check="1"><span class="txt"><b>人确实搬走了</b><small>上门或电话核实，别只信申请理由</small></span><span class="tag wait">待核</span></button>
+        <button class="row" data-check="1"><span class="txt"><b>没欠着没结的事</b><small>报修、缴费、群内未处理诉求</small></span><span class="tag wait">待核</span></button>
+      </div>
+      <div class="note" style="margin:12px 14px">确认注销后，社区侧先收回权限 → 综治中心接收 → 公安数据中心做完迁出核销，三步都留痕。人没走就点「暂不注销」，别直接驳回。</div>
+      <div class="nav2"><button class="btn gho" data-toast="已暂不注销，已通知申请人补充搬离时间">暂不注销</button><button class="btn pri" data-toast="已注销：权限已收回，已同步综治中心与公安数据中心">确认注销</button></div>
+      <div class="foot">网格员端 · 注销后花名册记为迁出，不删历史记录</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：网格员个人信息 ===== -->
+  <section class="screen" id="s-gprofile" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">个人信息</div>
+        <div class="topact"><button data-toast="身份信息以综治数据中心为准，此处不可改"><svg class="ic sm"><use href="#i-shield-check" xlink:href="#i-shield-check"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="card" style="margin-top:12px;padding:16px;display:flex;gap:14px;align-items:center">
+        <span class="av" style="width:54px;height:54px;border-radius:var(--r);display:grid;place-items:center;font-size:20px;font-weight:600;color:#fff;background:var(--accent)">刘</span>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px"><b style="font-size:17px;font-weight:700">刘志强</b><span class="tag ok">网格员</span></div>
+          <div style="font-size:12.5px;color:var(--ink3);margin-top:4px">龙华社区 · A 区 1—6 栋</div>
+        </div>
+        <button class="btn gho" style="height:32px;font-size:12.5px" data-toast="更换头像：拍照或从相册选择">换头像</button>
+      </div>
+
+      <div class="sec"><h2>基本信息</h2><span class="sub">工号与网格由综治数据中心下发</span></div>
+      <div class="card" style="padding:6px 14px">
+        <div class="kvline"><span>姓名</span><b>刘志强</b></div>
+        <div class="kvline"><span>工号</span><b>WG-0342</b></div>
+        <div class="kvline"><span>负责网格</span><b>龙华社区 A 区 1—6 栋（6 栋 218 户）</b></div>
+        <div class="kvline"><span>联系电话</span><b>139 **** 3345（居民端信息公开）</b></div>
+        <div class="kvline"><span>入职时间</span><b>2023 年 6 月</b></div>
+      </div>
+
+      <div class="sec"><h2>值班状态</h2><span class="sub">居民端与派单可见</span></div>
+      <div class="chips" style="margin:0 14px" id="gstate">
+        <button class="on">在岗</button><button>外出入户</button><button>离岗</button>
+      </div>
+      <div class="form" style="margin:12px 14px 0">
+        <div class="fr"><label>值班时段</label><input value="08:00—18:00" readonly></div>
+        <div class="fr"><label>代办人</label><input value="王倩（B 区网格）· 离岗时段转派" readonly></div>
+      </div>
+
+      <div class="sec"><h2>今天台账</h2><span class="sub">自动统计，不可编辑</span></div>
+      <div class="rows">
+        <div class="row"><span class="txt"><b>登记审核</b><small>已审 4 · 待审 6 · 平均 6 分钟一条</small></span><span class="tag plain">10</span></div>
+        <div class="row"><span class="txt"><b>上门复核</b><small>完成 2 · 待复核 3</small></span><span class="tag plain">5</span></div>
+        <div class="row"><span class="txt"><b>群处置</b><small>加群审核 2 · 不良发言 2 · 公告 1 条</small></span><span class="tag plain">5</span></div>
+      </div>
+
+      <div class="nav2" style="margin-top:18px"><button class="btn gho" data-toast="已发送密码修改链接到绑定手机，10 分钟内有效">修改登录密码</button><button class="btn pri" data-toast="值班状态已更新，居民端同步显示">保存</button></div>
+      <div class="foot">网格员端 · 姓名工号网格不可改，改动走综治数据中心</div>
+    </div>
+  </section>
+
+  <!-- ===== 屏：个人聊天（网格员 ↔ 居民单聊） ===== -->
+  <section class="screen" id="s-dm" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">王秀兰 · 3 栋 602<span style="display:block;font-size:11px;font-weight:400;color:var(--up)">在线 · 已实名复核</span></div>
+        <div class="topact">
+          <button data-toast="回拨 138 **** 2281" style="color:var(--accent)"><svg class="ic sm"><use href="#i-phone" xlink:href="#i-phone"></use></svg></button>
+          <button data-toast="可标记为待办：今日回复"><svg class="ic sm"><use href="#i-list-checks" xlink:href="#i-list-checks"></use></svg></button>
+        </div>
+      </div>
+    </header>
+    <div class="sbody chatwrap" style="padding-bottom:0">
+      <div class="chatlog" id="dmlog">
+        <div class="daytag">今天 10:36</div>
+        <div class="msg"><span class="av">王</span><div><div class="who">王秀兰 · 3 栋 602</div><div class="bub">刘师傅，2 单元门禁今天下午真的来修吗？昨天说 14:00，我在家等了一上午。</div></div></div>
+        <div class="msg me"><span class="av">我</span><div><div class="who">我</div><div class="bub">王阿姨不好意思，昨天物业临时改约了。今天确定 14:00，换主板的话会贴临时通知在单元门口。</div></div></div>
+        <div class="msg"><span class="av">王</span><div><div class="who">王秀兰 · 3 栋 602</div>
+          <div class="bub"><div class="voice"><span class="d">0:09</span><span class="wv"><i style="height:7px"></i><i style="height:13px"></i><i style="height:9px"></i><i style="height:16px"></i><i style="height:8px"></i><i style="height:12px"></i><i style="height:6px"></i><i style="height:14px"></i><i style="height:10px"></i></span><svg class="ic sm"><use href="#i-speaker-high" xlink:href="#i-speaker-high"></use></svg></div>
+          <div style="font-size:11.5px;opacity:.66;margin-top:3px">语音 · 转文字：那麻烦你们修的时候帮我跟师傅说一声，我 601 老姊妹也想知道</div></div></div></div>
+        <div class="msg me"><span class="av">我</span><div><div class="who">我</div><div class="bub">好的，修完我第一时间在群里说一声，也给 601 张阿姨打个电话。</div></div></div>
+      </div>
+    </div>
+    <div class="chatbar">
+      <button data-toast="按住说话，松手就发出"><svg class="ic"><use href="#i-microphone" xlink:href="#i-microphone"></use></svg></button>
+      <div class="rt">说点什么，或按住说话</div>
+      <button data-toast="可以发图片、语音、文件"><svg class="ic"><use href="#i-plus" xlink:href="#i-plus"></use></svg></button>
+      <button class="call" data-call><svg class="ic"><use href="#i-phone-call" xlink:href="#i-phone-call"></use></svg></button>
+    </div>
+    <div class="foot" style="margin:8px 14px 10px">会话记录按文档要求保存在本地，空间已满只保留最近信息</div>
+  </section>
+
+  <div class="mask" id="mask"></div>
+
+  <!-- ===== 弹层：报名 ===== -->
+  <div class="sheet" id="sheet-join">
+    <h3>报名今晚巡逻</h3>
+    <div class="hint">11 月 6 日 20:00 · 东门集合 · 走 3 栋到 9 栋</div>
+    <div class="field"><label>怎么称呼你</label><input value="3 栋 602 张凯"></div>
+    <div class="field"><label>能带什么</label><input value="手电、反光背心" placeholder="不带也行"></div>
+    <div class="row2"><button class="btn gho" data-x>再想想</button><button class="btn pri" data-toast="已报名，晚上东门见">确认报名</button></div>
+  </div>
+
+  <!-- ===== 弹层：评价 ===== -->
+  <div class="sheet" id="sheet-rate">
+    <h3>给这次办事打分</h3>
+    <div class="hint">水管报修 · 11 月 3 日 · 不记名</div>
+    <div class="stars" id="stars">
+      <button data-s="1"><svg class="ic lg"><use href="#i-star" xlink:href="#i-star"></use></svg></button>
+      <button data-s="2"><svg class="ic lg"><use href="#i-star" xlink:href="#i-star"></use></svg></button>
+      <button data-s="3"><svg class="ic lg"><use href="#i-star" xlink:href="#i-star"></use></svg></button>
+      <button data-s="4" class="on"><svg class="ic lg"><use href="#i-star" xlink:href="#i-star"></use></svg></button>
+      <button data-s="5"><svg class="ic lg"><use href="#i-star" xlink:href="#i-star"></use></svg></button>
+    </div>
+    <div class="field"><label>一句话说说</label><textarea>来得挺快，就是来之前没打电话，白等了一小时。</textarea></div>
+    <div class="row2"><button class="btn gho" data-x>取消</button><button class="btn pri" data-toast="评价已提交，会进月度复盘">提交</button></div>
+  </div>
+
+  <!-- ===== 弹层：发帖 ===== -->
+  <div class="sheet" id="sheet-post">
+    <h3>发个帖</h3>
+    <div class="hint">会自动带上你的楼栋：3 栋 602</div>
+    <div class="field"><label>标题</label><input placeholder="一句话说清是什么事"></div>
+    <div class="field"><label>说细一点</label><textarea placeholder="什么时候、在哪、已经跟谁说过"></textarea></div>
+    <div class="row2"><button class="btn gho" data-x>取消</button><button class="btn pri" data-toast="已发布，同栋的人会收到提醒">发布</button></div>
+  </div>
+
+  <!-- ===== 屏：个人资料管理（居民 4-2-2） ===== -->
+  <section class="screen" id="s-profile" hidden>
+    <header class="topbar">
+      <div class="toprow">
+        <button class="tback" data-close><svg class="ic"><use href="#i-arrow-left" xlink:href="#i-arrow-left"></use></svg></button>
+        <div class="ttitle">个人资料管理</div>
+        <div class="topact"><button data-toast="实名信息以登记复核结果为准，此处不可改"><svg class="ic sm"><use href="#i-shield-check" xlink:href="#i-shield-check"></use></svg></button></div>
+      </div>
+    </header>
+    <div class="sbody">
+      <div class="card" style="margin-top:12px;padding:16px;display:flex;gap:14px;align-items:center">
+        <span class="av" style="width:54px;height:54px;border-radius:var(--r);display:grid;place-items:center;font-size:20px;font-weight:600;color:#fff;background:var(--accent)">张</span>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px"><b style="font-size:17px;font-weight:700">张凯</b><span class="tag ok">已实名复核</span></div>
+          <div style="font-size:12.5px;color:var(--ink3);margin-top:4px">龙华社区 · A 区 3 栋 602 · 常住</div>
+        </div>
+        <button class="btn gho" style="height:32px;font-size:12.5px" data-toast="更换头像：拍照或从相册选择">换头像</button>
+      </div>
+
+      <div class="sec"><h2>基本资料</h2><span class="sub">可随时修改</span></div>
+      <div class="form" style="margin:0 14px">
+        <div class="fr"><label>昵称（群内显示）</label><input value="张凯 · 3-602"></div>
+        <div class="fr"><label>联系电话</label><input value="138 **** 6020"></div>
+      </div>
+
+      <div class="sec"><h2>补充资料</h2><span class="sub">登记时没填的，现在补上</span></div>
+      <div class="form" style="margin:0 14px">
+        <div class="fr"><label>职业（选填）</label><input placeholder="还没填 · 如：退休教师"></div>
+        <div class="fr"><label>紧急联系人（选填）</label><input placeholder="还没填 · 姓名 + 电话"></div>
+        <div class="fr"><label>车牌（选填）</label><input value="川A · 8F2z6" placeholder="登记后出入登记更快"></div>
+      </div>
+      <div class="note" style="margin:10px 14px">补充资料只在你开启共享时，按下面「共享范围」展示给同栋居民；不填不影响任何功能。</div>
+
+      <div class="sec"><h2>显示状态</h2><span class="sub">同栋名单里怎么显示你</span></div>
+      <div class="chips" style="margin:0 14px" id="prostate">
+        <button class="on">在线</button><button>忙碌</button><button>隐身</button>
+      </div>
+      <div class="note" style="margin:10px 14px">「隐身」后你还在群和名单里，只是别人看不到你的在线状态，消息照常收到。</div>
+
+      <div class="sec"><h2>共享范围</h2><span class="sub">别人能看到你什么</span></div>
+      <div class="rows">
+        <button class="row" data-check="1"><span class="txt"><b>楼栋房号</b><small>同栋居民可见</small></span><span class="tag ok">已共享</span></button>
+        <button class="row" data-check="1"><span class="txt"><b>联系电话</b><small>同栋居民可见，方便互助</small></span><span class="tag ok">已共享</span></button>
+        <button class="row" data-check="1"><span class="txt"><b>补充资料（职业、紧急联系人）</b><small>默认不共享，勾选后才可见</small></span><span class="tag wait">未共享</span></button>
+      </div>
+
+      <div class="sec"><h2>其他居民共享的资料</h2><span class="sub">仅限已实名复核 · 更多在「好友」页</span></div>
+      <div class="rows">
+        <button class="row" data-toast="张桂芳 · 601 · 共享：楼栋、电话 · 60 岁以上，子女在外地">
+          <span class="av">张</span><span class="txt"><b>张桂芳 · 601</b><small>共享：楼栋 601 · 电话 · 60 岁以上</small></span><span class="tag plain">已复核</span>
+        </button>
+        <button class="row" data-toast="周振华 · 603 · 共享：楼栋、电话 · 租住，租赁合同已核">
+          <span class="av">周</span><span class="txt"><b>周振华 · 603</b><small>共享：楼栋 603 · 电话 · 租住</small></span><span class="tag plain">已复核</span>
+        </button>
+      </div>
+
+      <div class="nav2" style="margin-top:18px"><button class="btn gho" data-toast="已发送密码修改链接到绑定手机，10 分钟内有效">修改登录密码</button><button class="btn pri" data-toast="个人资料已保存">保存修改</button></div>
+      <div class="foot">居民端 · 群内昵称与显示状态即时生效，资料修改会同步到花名册备注</div>
+    </div>
+  </section>
+
+  <!-- ===== 弹层：一键报警确认（全局） ===== -->
+  <div class="sheet" id="sheet-alarmconfirm">
+    <h3>确认报警？</h3>
+    <div class="hint" style="color:#C4462B;font-weight:600">报警信息将直接传送到网格员、公安、保安等相关人员</div>
+    <div class="card" style="padding:12px 14px;margin-bottom:14px">
+      <div class="kvline"><span>报警位置</span><b>自动附带：A 区 3 栋 2 单元 602</b></div>
+      <div class="kvline"><span>同时通知</span><b>网格员 · 派出所值班 · 物业保安 2 人</b></div>
+      <div class="kvline"><span>误报</span><b>处置前可在群内撤回，不影响信用</b></div>
+    </div>
+    <div class="row2"><button class="btn gho" data-x>取消</button><button class="btn pri" style="background:#C4462B" data-toast="已一键报警：网格员、派出所值班、物业保安同时收到，请保持电话畅通">确认报警</button></div>
+  </div>
+
+  <!-- ===== 弹层：新建群组（网格员） ===== -->
+  <div class="sheet" id="sheet-gcreate">
+    <h3>新建群组</h3>
+    <div class="hint">按社区综合群 / 小区群 / 楼栋群三级建，名称会带层级前缀</div>
+    <div class="chips sm" style="margin:0 0 12px" id="gtype">
+      <button>社区综合群</button><button>小区群</button><button class="on">楼栋群</button>
+    </div>
+    <div class="field"><label>群名称</label><input value="3 栋 2 单元群" placeholder="如：3 栋 2 单元群"></div>
+    <div class="field"><label>初始成员</label><input value="本单元已复核居民 12 户 · 从花名册勾选"></div>
+    <div class="field"><label>群公告</label><textarea placeholder="建群后的第一条公告（可选）">本群只拉本单元已实名复核的居民，有事在群里说，急事打电话。</textarea></div>
+    <div class="row2"><button class="btn gho" data-x>取消</button><button class="btn pri" data-toast="群已创建：初始成员已从花名册拉入，邀请码已生成">创建群组</button></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+</div>
+<script>
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+
+/* ---------- toast ---------- */
+let tt=null;
+function toast(msg){
+  const el=$('#toast'); el.textContent=msg; el.classList.add('on');
+  clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('on'),1800);
+}
+
+/* ---------- tab ---------- */
+const TABTITLE={msg:'消息',friend:'好友',group:'群聊',me:'我的',
+  'g-todo':'待办','g-roll':'名册','g-group':'群组','g-me':'我的'};
+const ROLE_HOME={resident:'msg',grid:'g-todo'};
+function setRole(r){
+  $('#phone').dataset.role=r;
+  $$('.tabbar').forEach(t=>t.classList.toggle('on',t.dataset.roleTab===r));
+  $$('.screen').forEach(x=>{x.classList.remove('on');x.hidden=true});
+  $$('.rolebar button').forEach(b=>b.classList.toggle('on',b.dataset.role===r));
+  goTab(ROLE_HOME[r]||'msg');
+}
+function goTab(k){
+  $$('.tabbar button').forEach(b=>b.classList.toggle('on',b.dataset.tab===k));
+  $$('.view').forEach(v=>{v.hidden = v.id!=='v-'+k;});
+  $('#ptitle').textContent=TABTITLE[k]||'消息';
+  const v=$('#v-'+k); if(v) v.scrollTop=0;
+}
+
+/* ---------- screens ---------- */
+const screens=['web','notice','thread','chat','ginvite','reg','audit'];
+function openScreen(id){
+  $$('.screen').forEach(s=>{s.hidden=true;s.classList.remove('on')});
+  const el=$('#s-'+id); if(!el) return;
+  el.hidden=false; requestAnimationFrame(()=>el.classList.add('on'));
+  const body=el.querySelector('.sbody'); if(body) body.scrollTop=0;
+}
+function closeScreen(){
+  const on=$$('.screen').find(s=>!s.hidden);
+  if(!on) return;
+  on.classList.remove('on');
+  setTimeout(()=>{on.hidden=true},220);
+}
+function closeAll(){
+  $$('.screen').forEach(s=>{s.classList.remove('on');s.hidden=true});
+  closeSheet(); $('#call').classList.remove('on'); $('#voicemail').classList.remove('on');
+}
+
+/* ---------- sheets ---------- */
+function openSheet(name){
+  closeSheet();
+  const el=$('#sheet-'+name); if(!el) return;
+  $('#mask').classList.add('on'); el.classList.add('on');
+}
+function closeSheet(){
+  $$('.sheet').forEach(s=>s.classList.remove('on'));
+  $('#mask').classList.remove('on');
+}
+
+/* ---------- 网上社区分段 ---------- */
+function webPane(p){
+  $$('#webseg button').forEach(b=>b.classList.toggle('on',b.dataset.pane===p));
+  $$('#webbody .pane').forEach(d=>{d.hidden = d.dataset.pane!==p;});
+  $('#webbody').scrollTop=0;
+}
+
+/* ---------- 群组邀请三分段 ---------- */
+function giPane(p){
+  $$('#gitabs button').forEach(b=>b.classList.toggle('on',b.dataset.gi===p));
+  $$('#gibody > [data-gi-pane]').forEach(d=>{d.hidden=d.dataset.giPane!==p;});
+}
+
+/* ---------- 登记步骤 ---------- */
+let regStep=1;
+function setStep(n){
+  regStep=n;
+  $$('#regsteps .st').forEach(s=>{
+    const on = (String(n)==='done') ? true : s.dataset.st===String(n);
+    s.classList.toggle('on', on);
+  });
+  $$('#regbody > [data-step]').forEach(d=>{d.hidden = d.dataset.step!==String(n);});
+  $('#regbody').scrollTop=0;
+}
+
+/* ---------- 音频会话 ---------- */
+let callTimer=null, callSec=12;
+function openCall(){
+  $('#voicemail').classList.remove('on');
+  $('#call').classList.add('on');
+  callSec=12;
+  $('#callstate').textContent='已接通 · 00:12';
+  clearInterval(callTimer);
+  callTimer=setInterval(()=>{
+    callSec++;
+    const m=String(Math.floor(callSec/60)).padStart(2,'0'), s=String(callSec%60).padStart(2,'0');
+    $('#callstate').textContent='已接通 · '+m+':'+s;
+  },1000);
+}
+function hangUp(){
+  clearInterval(callTimer);
+  $('#call').classList.remove('on');
+  $('#voicemail').classList.remove('on');
+}
+function openVM(){
+  clearInterval(callTimer);
+  $('#call').classList.remove('on');
+  $('#voicemail').classList.add('on');
+}
+
+/* ---------- 初始化 ---------- */
+const wave=$('#wave');
+if(wave){ let html=''; for(let i=0;i<22;i++){ const h=6+Math.round(Math.abs(Math.sin(i*1.7))*22); html+='<i style="height:'+h+'px"></i>'; } wave.innerHTML=html; }
+
+const picks=new Set();
+const pickin=document.createElement('div');
+pickin.className='pickin'; pickin.style.display='none';
+pickin.innerHTML='<span class="say" id="picksay">还没选人</span><button class="btn pri" id="pickok" style="height:38px">确认拉入群</button>';
+const roll=$('#roll');
+if(roll){ roll.parentElement.appendChild(pickin); }
+function syncPicks(){
+  if(!picks.size){ pickin.style.display='none'; return; }
+  pickin.style.display='flex';
+  $('#picksay').textContent='已选 '+picks.size+' 人 · 拉进 3 栋群';
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-role],[data-check],[data-pick],[data-gi],[data-pane],[data-reg],[data-s],[data-sheet],[data-web],[data-open],[data-close],[data-tab],[data-call],[data-hang],[data-vm],[data-x],[data-toast],[data-st],[data-step]');
+  if(!t) return;
+
+  if(t.hasAttribute('data-role')){ setRole(t.dataset.role); return; }
+  if(t.hasAttribute('data-quit')){
+    $('#quitform').hidden=true; $('#quitdone').hidden=false;
+    $('#s-quit').querySelector('.sbody').scrollTop=0;
+    toast('注销申请已提交，等网格员确认');
+    return;
+  }
+  if(t.hasAttribute('data-check')){
+    const row=t.closest('.row'), tag=row&&row.querySelector('.tag');
+    const on=row.classList.toggle('on');
+    row.style.background = on ? 'var(--soft)' : '';
+    if(tag){ tag.textContent = on?'已核':'待核'; tag.className='tag '+(on?'ok':'wait'); }
+    return;
+  }
+  if(t.hasAttribute('data-toast')) toast(t.dataset.toast);
+  if(t.hasAttribute('data-sheet')){ openSheet(t.dataset.sheet); return; }
+  if(t.hasAttribute('data-x')){ closeSheet(); return; }
+  if(t.hasAttribute('data-web')){ openScreen('web'); webPane(t.dataset.web); return; }
+  if(t.hasAttribute('data-open')){ openScreen(t.dataset.open); return; }
+  if(t.hasAttribute('data-close')){ closeScreen(); return; }
+  if(t.hasAttribute('data-tab')){ goTab(t.dataset.tab); return; }
+  if(t.hasAttribute('data-call')){ openCall(); return; }
+  if(t.hasAttribute('data-vm')){ openVM(); return; }
+  if(t.hasAttribute('data-hang')){ hangUp(); return; }
+  if(t.hasAttribute('data-pane')){ webPane(t.dataset.pane); return; }
+  if(t.hasAttribute('data-gi')){ giPane(t.dataset.gi); return; }
+  if(t.hasAttribute('data-pick')){
+    if(picks.has(t)){ picks.delete(t); t.classList.remove('on'); }
+    else { picks.add(t); t.classList.add('on'); }
+    syncPicks(); return;
+  }
+  if(t.hasAttribute('data-reg')){
+    if(t.dataset.reg==='submit'){ setStep('done'); toast('登记已提交，等网格员上门复核'); }
+    else setStep(t.dataset.reg);
+    return;
+  }
+  if(t.hasAttribute('data-s')){
+    const n=+t.dataset.s;
+    $$('#stars button').forEach((b,i)=>b.classList.toggle('on',i<n));
+    return;
+  }
+});
+
+$('#mask').addEventListener('click',closeSheet);
+$('#back').addEventListener('click',()=>{
+  if($('#mask').classList.contains('on')){ closeSheet(); return; }
+  const on=$$('.screen').find(s=>!s.hidden);
+  if(on){ closeScreen(); return; }
+  closeAll();
+});
+
+/* 弹层按钮里的 toast 也要能关 */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.sheet .btn.pri'); if(!b) return;
+  if(b.hasAttribute('data-toast')) setTimeout(closeSheet,300);
+});
+
+/* 花名册确认 */
+document.addEventListener('click',e=>{
+  if(e.target.id!=='pickok') return;
+  const n=picks.size;
+  toast('已把 '+n+' 人拉进 3 栋群');
+  picks.forEach(el=>el.classList.remove('on'));
+  picks.clear(); syncPicks();
+});
+
+/* ---------- 状态捕获 ---------- */
+window.__UI_CAPTURE__={
+  reset:()=>{ closeAll(); setStep(1); webPane('overview'); giPane('code'); setRole('resident'); $('#quitform').hidden=false; $('#quitdone').hidden=true; },
+  states:[
+    {id:'msg',label:'消息',go:()=>goTab('msg')},
+    {id:'friend',label:'好友',go:()=>goTab('friend')},
+    {id:'group',label:'群聊',go:()=>goTab('group')},
+    {id:'me',label:'我的',go:()=>goTab('me')},
+    {id:'web-overview',label:'网上社区·概况',go:()=>{openScreen('web');webPane('overview')}},
+    {id:'web-news',label:'网上社区·新闻',go:()=>{openScreen('web');webPane('news')}},
+    {id:'web-notice',label:'网上社区·通知',go:()=>{openScreen('web');webPane('notice')}},
+    {id:'web-forum',label:'网上社区·论坛',go:()=>{openScreen('web');webPane('forum')}},
+    {id:'web-rate',label:'网上社区·评价',go:()=>{openScreen('web');webPane('rate')}},
+    {id:'notice',label:'通知详情',go:()=>openScreen('notice')},
+    {id:'thread',label:'帖子详情',go:()=>openScreen('thread')},
+    {id:'chat',label:'群聊',go:()=>openScreen('chat')},
+    {id:'call',label:'音频会话',go:()=>{openScreen('chat');openCall()}},
+    {id:'voicemail',label:'离线留言',go:()=>{openScreen('chat');openVM()}},
+    {id:'ginvite',label:'拉人·邀请码',go:()=>{openScreen('ginvite');giPane('code')}},
+    {id:'ginvite-roll',label:'拉人·勾选花名册',go:()=>{openScreen('ginvite');giPane('roll')}},
+    {id:'ginvite-req',label:'拉人·待审核',go:()=>{openScreen('ginvite');giPane('req')}},
+    {id:'reg1',label:'登记·基本信息',go:()=>{openScreen('reg');setStep(1)}},
+    {id:'reg2',label:'登记·居住信息',go:()=>{openScreen('reg');setStep(2)}},
+    {id:'reg3',label:'登记·提交复核',go:()=>{openScreen('reg');setStep(3)}},
+    {id:'regdone',label:'登记·已提交',go:()=>{openScreen('reg');setStep('done')}},
+    {id:'audit',label:'登记审核',go:()=>openScreen('audit')},
+    {id:'rate',label:'评价弹层',go:()=>{openScreen('web');webPane('rate');openSheet('rate')}},
+    {id:'post',label:'发帖弹层',go:()=>{openScreen('web');webPane('forum');openSheet('post')}},
+    {id:'grid-todo',label:'网格员·待办',go:()=>setRole('grid')},
+    {id:'grid-roll',label:'网格员·名册',go:()=>{setRole('grid');goTab('g-roll')}},
+    {id:'grid-group',label:'网格员·群组',go:()=>{setRole('grid');goTab('g-group')}},
+    {id:'grid-me',label:'网格员·我的',go:()=>{setRole('grid');goTab('g-me')}},
+    {id:'auditq',label:'登记审核队列',go:()=>{setRole('grid');openScreen('auditq')}},
+    {id:'review',label:'上门复核',go:()=>{setRole('grid');openScreen('review')}},
+    {id:'moderate',label:'加群/发帖审核',go:()=>{setRole('grid');openScreen('moderate')}},
+    {id:'gpublish',label:'发新闻/发通告（网格员）',go:()=>{setRole('grid');openScreen('gpublish')}},
+    {id:'feedback',label:'反馈处理',go:()=>{setRole('grid');openScreen('feedback')}},
+    {id:'gnotice',label:'发群公告',go:()=>{setRole('grid');openScreen('gnotice')}},
+    {id:'gmember',label:'群内用户管理',go:()=>{setRole('grid');openScreen('gmember')}},
+    {id:'gchat',label:'网格员·群聊窗',go:()=>{setRole('grid');goTab('g-group');openScreen('chat')}},
+    {id:'dm',label:'网格员·个人聊天窗',go:()=>{setRole('grid');openScreen('dm')}},
+    {id:'dm-call',label:'个人聊天·音频',go:()=>{setRole('grid');openScreen('dm');openCall()}},
+    {id:'gprofile',label:'网格员个人信息',go:()=>{setRole('grid');openScreen('gprofile')}},
+    {id:'gcreate',label:'新建群组（网格员）',go:()=>{setRole('grid');goTab('g-group');openSheet('gcreate')}},
+    {id:'stats',label:'本月数据',go:()=>{setRole('grid');openScreen('stats')}},
+    {id:'alarm',label:'报警处置（网格员）',go:()=>{setRole('grid');openScreen('alarm')}},
+    {id:'alarm-sheet',label:'一键报警确认（全局 FAB）',go:()=>{setRole('resident');openSheet('alarmconfirm')}},
+    {id:'profile',label:'个人资料管理（群众）',go:()=>{setRole('resident');openScreen('profile')}},
+    {id:'me-set',label:'我的·设置区',go:()=>{setRole('resident');goTab('me');setTimeout(()=>{const v=$('#v-me'); if(v) v.scrollTop=v.scrollHeight;},300)}},
+    {id:'gapply',label:'申请加群（群众）',go:()=>{setRole('resident');openScreen('gapply')}},
+    {id:'quit',label:'注销申请（群众）',go:()=>{setRole('resident');openScreen('quit')}},
+    {id:'quitdone',label:'注销已提交',go:()=>{setRole('resident');openScreen('quit');$('#quitform').hidden=true;$('#quitdone').hidden=false}},
+    {id:'quitq',label:'注销确认（网格员）',go:()=>{setRole('grid');openScreen('quitq')}}
+  ]};
+
+const qs=new URLSearchParams(location.search).get('state');
+if(qs){
+  window.__UI_CAPTURE__.reset();
+  const st=window.__UI_CAPTURE__.states.find(x=>x.id===qs);
+  if(st&&st.go) setTimeout(()=>st.go(),60);
+}
+</script>
+</body>
+</html>
